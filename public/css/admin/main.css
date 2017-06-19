@@ -7,11 +7,11 @@ html,body{
 /* pxgridsicons字体 */
 @font-face {
     font-family: 'pxgridsicons';
-    src: url('font/pxgridsicons.eot');
-    src: url('font/pxgridsicons.eot') format('embedded-opentype'), 
-    url('font/pxgridsicons.woff') format('woff'), 
-    url('font/pxgridsicons.ttf') format('truetype'), 
-    url('font/pxgridsicons.svg') format('svg');
+    src: url('../../fonts/pxgridsicons.eot');
+    src: url('../../fonts/pxgridsicons.eot') format('embedded-opentype'), 
+    url('../../fonts/pxgridsicons.woff') format('woff'), 
+    url('../../fonts/pxgridsicons.ttf') format('truetype'), 
+    url('../../fonts/pxgridsicons.svg') format('svg');
     font-weight: normal;
     font-style: normal;
 }
@@ -51,8 +51,8 @@ html,body{
 }
 .larry-grid{
 	width: calc(100% - 30px);
-	width: -moz-calc(100%-30px);
-	width: -webkit-calc(100%-30px);
+	width: -moz-calc(100% - 30px);
+	width: -webkit-calc(100% - 30px);
 	margin: 0 auto;
 }
 .larry-wrapper{padding:15px;}

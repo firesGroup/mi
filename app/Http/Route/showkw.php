@@ -9,3 +9,7 @@
  * Time: 11:34
  */
 
+Route::group(['namespace'=>'Admin','prefix'=>'admin'], function(){
+    Route::get('/', 'AdminController@index');
+    Route::resource('product', 'ProductController');
+});
