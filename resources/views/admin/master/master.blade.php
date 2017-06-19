@@ -1,17 +1,5 @@
 <?php
 /**
- * File Name: master.php
- * Description:
- * Created by PhpStorm.
- * Group FiresGroup
- * Auth: Jun
- * User: ppjun
- * Date: 2017/6/19
- * Time: 17:37
- */
-?>
-<?php
-/**
  * File Name: index.blade.php
  * Description: 后台首页模板文件
  * Created by PhpStorm.
@@ -37,6 +25,7 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('/css/admin/global.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('/css/admin/font.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('/css/admin/backstage.css') }}">
+    <!--<link rel="stylesheet" type="text/css" href="{{ asset('/plugin/bootstrap/css/bootstrap.css') }}">-->
 </head>
 <body>
 <!-- 内容正文-->
@@ -54,6 +43,10 @@
             </div>
             <!-- 右侧常用菜单导航 -->
             <div class="larry-right-menu posb">
+                <button class="layui-btn layui-btn-small" id="dianzhan">
+                    <i class="larry-icon larry-dianzan"></i>
+                    打赏作者
+                </button>
                 <ul class="layui-nav clearfix">
                     <li class="layui-nav-item">
                         <a class="onFullScreen" id="FullScreen"><i class="larry-icon larry-quanping"></i>全屏</a>
@@ -116,9 +109,9 @@
                 </ul>
                 <div class="title-right" id="titleRbox">
                     <div class="go-right key-press pressKey" id="titleRight" title="滚动至最左侧"><i
-                            class="larry-icon larry-right"></i></div>
+                                class="larry-icon larry-right"></i></div>
                     <div class="refresh key-press" id="refresh_iframe"><i
-                            class="larry-icon larry-shuaxin2"></i><cite>刷新</cite></div>
+                                class="larry-icon larry-shuaxin2"></i><cite>刷新</cite></div>
                     <div class="often key-press" lay-filter='larryOperate' id="buttonRCtrl">
                         <ul class="layui-nav posr">
                             <li class="layui-nav-item posb">
@@ -129,14 +122,14 @@
                                     </dd>
                                     <dd>
                                         <a data-eName="closeOther"><i
-                                                class="larry-icon larry-guanbiqita"></i>关闭其他选项卡</a>
+                                                    class="larry-icon larry-guanbiqita"></i>关闭其他选项卡</a>
                                     </dd>
                                     <dd>
                                         <a data-eName="closeAll"><i class="larry-icon larry-guanbiquanbufenzu"></i>关闭全部选项卡</a>
                                     </dd>
                                     <dd>
                                         <a data-eName="refreshAdmin"><i
-                                                class="larry-icon larry-kuangjia_daohang_shuaxin"></i>刷新最外层框架</a>
+                                                    class="larry-icon larry-kuangjia_daohang_shuaxin"></i>刷新最外层框架</a>
                                     </dd>
                                 </dl>
                             </li>
@@ -146,12 +139,12 @@
                 </div>
             </div>
             <div class="layui-tab-content">
-                <div class="layui-tab-item layui-show">
-                    {{--<iframe class="larry-iframe" data-id='0' name="ifr_0" id='ifr0' src="html/main.php"></iframe>--}}
+                <div class="layui-tab-item layui-show clearfix">
+                    {{--<iframe class="larry-iframe" data-id='0' name="ifr_0" id='ifr0' src="">--}}
                     @yield('content')
+                    {{--</iframe>--}}
                 </div>
             </div>
-
         </div>
     </div>
     <!-- footer -->
@@ -235,7 +228,3 @@
 <script type="text/javascript" src="{{ asset('/js/admin/larry.js') }}"></script>
 </body>
 </html>
-
-
-
-
