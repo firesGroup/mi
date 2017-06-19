@@ -38,7 +38,8 @@ input,select{height:20px;font-size:12px;line-height:20px;}
 button::-moz-focus-inner,input::-moz-focus-inner {border: 0;padding: 0;}
 textarea {overflow: auto; /* 1 */vertical-align: top; /* 2 */}
 table{border-collapse: collapse;border-spacing: 0;}
-caption,th{text-align:left;}
+table td,table th{text-align: center!important;}
+caption{text-align:left;}
 button,html input[type="button"],
 input[type="reset"],input[type="submit"] {-webkit-appearance: button;
 cursor: pointer;

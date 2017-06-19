@@ -11,11 +11,19 @@
 |
 */
 
-$factory->define(App\User::class, function (Faker\Generator $faker) {
-    return [
-        'name' => $faker->name,
-        'email' => $faker->safeEmail,
-        'password' => bcrypt(str_random(10)),
-        'remember_token' => str_random(10),
+$factory->define(App\Entity\Product::class, function (Faker\Generator $faker) {
+//    return [
+//        'name' => $faker->name,
+//        'email' => $faker->safeEmail,
+//        'password' => bcrypt(str_random(10)),
+//        'remember_token' => str_random(10),
+//    ];
+
+    return[
+        'cid'=> $faker->randomDigitNotNull,
+        'bid'=> $faker->randomDigitNotNull,
+        'p_name'=> $faker->sentence,
+        'price' => $faker->randomFloat(),
+        'market_price' => $faker->randomFloat(),
     ];
 });
