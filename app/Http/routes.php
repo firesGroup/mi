@@ -10,11 +10,14 @@
 | and give it the controller to call when that URI is requested.
 |
 */
+//肖开文-路由文件
+include('Route/showkw.php');
 
-Route::get('/', function () {
-    return view('welcome');
-});
+//王明-路由文件
+include('Route/wim.php');
 
-Route::group(['prefix'=>'admin'], function () {
-    Route::get('/', 'Admin\AdminController@index');
-});
+//龙彪-路由文件
+include('Route/long.php');
+
+//潘珺-路由文件
+include('Route/jun,php');
