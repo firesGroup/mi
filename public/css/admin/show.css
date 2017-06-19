@@ -1,0 +1,65 @@
+.layui-elem-quote{
+    color: #0ba4da !important;
+    background-color: rgba(79, 192, 232, 0.11) !important;
+    display: block;
+    height: 100%;
+    padding: 6px 9px;
+    border-radius: 0px;
+    position: relative;
+    overflow: hidden;
+}
+.layui-elem-quote .title{
+    white-space: nowrap;
+    position: relative;
+    cursor: pointer;
+}
+.layui-elem-quote .title i{
+    font-size:20px;
+    vertical-align: middle;
+    margin-right: 6px;
+}
+.layui-elem-quote h4{
+    display:inline-block;
+    font-size:16px;
+}
+.layui-elem-quote ul{
+    color: #748A8F;
+    margin-left: 10px;
+}
+.layui-elem-quote ul li{
+    line-height: 20px;
+    padding-left: 16px;
+    margin-bottom: 4px;
+}
+.btn-group{
+    display:inline-block;
+}
+
+.layui-form-inline{
+    display:inline-block;
+    margin-left:30px;
+    border:1px solid #009688;
+}
+.layui-form-inline select{
+    height:34px;
+    width:200px;
+    border:0px;
+    border-right:1px solid #009688;
+    text-align:center;
+}
+.layui-form-inline input{
+    height:27px;
+    width:200px;
+    border:0px;
+    padding-left:10px;
+    vertical-align: baseline;
+}
+.layui-form-inline button{
+    height:100%;
+    font-size: 12px;
+    vertical-align: top;
+    letter-spacing: normal;
+    border-radius: 0;
+    cursor: pointer;
+    border: solid 2px #009688;
+}

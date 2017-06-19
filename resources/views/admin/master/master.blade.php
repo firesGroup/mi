@@ -1,6 +1,6 @@
 <?php
 /**
- * File Name: master.blade.php
+ * File Name: index.blade.php
  * Description: 后台首页模板文件
  * Created by PhpStorm.
  * Group: FiresGroup
@@ -9,7 +9,7 @@
  * Time: 16:14
  */
 ?>
-        <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -25,7 +25,7 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('/css/admin/global.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('/css/admin/font.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('/css/admin/backstage.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('/plugin/bootstrap/css/bootstrap.css') }}">
+    <!--<link rel="stylesheet" type="text/css" href="{{ asset('/plugin/bootstrap/css/bootstrap.css') }}">-->
 </head>
 <body>
 <!-- 内容正文-->
@@ -101,7 +101,7 @@
         <div class="layui-tab" id="larry-tab" lay-filter="larryTab">
             <div class="larry-title-box">
                 <div class="go-left key-press pressKey" id="titleLeft" title="滚动至最右侧"><i
-                            class="larry-icon larry-weibiaoti6-copy"></i></div>
+                        class="larry-icon larry-weibiaoti6-copy"></i></div>
                 <ul class="layui-tab-title" lay-allowClose="true" id="layui-tab-title" lay-filter="subadd">
                     <li class="layui-this" id="admin-home" lay-id="0" fresh=1>
                         <i class="larry-icon larry-houtaishouye"></i><em>后台首页</em>
@@ -228,4 +228,3 @@
 <script type="text/javascript" src="{{ asset('/js/admin/larry.js') }}"></script>
 </body>
 </html>
-
