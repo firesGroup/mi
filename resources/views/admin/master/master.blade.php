@@ -1,7 +1,7 @@
 <?php
 /**
- * File Name: index.blade.php
- * Description: 后台首页模板文件
+ * File Name: master.blade.php
+ * Description: 后台首页布局模板文件
  * Created by PhpStorm.
  * Group: FiresGroup
  * Auth: Showkw
@@ -20,12 +20,13 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="format-detection" content="telephone=no">
-    <link rel="Shortcut Icon" href="/favicon.ico"/>
+    <link rel="Shortcut Icon" href="/favicon.ico" />
     <link rel="stylesheet" type="text/css" href="{{ asset('/plugin/layui/css/layui.css') }}" media="all">
     <link rel="stylesheet" type="text/css" href="{{ asset('/css/admin/global.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('/css/admin/font.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('/css/admin/backstage.css') }}">
-    <!--<link rel="stylesheet" type="text/css" href="{{ asset('/plugin/bootstrap/css/bootstrap.css') }}">-->
+    <link rel="stylesheet" type="text/css" href="{{ asset('plugin/bootstrap/css/bootstrap.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('plugin/bootstrap/css/bootstrap-theme.css') }}">
 </head>
 <body>
 <!-- 内容正文-->
@@ -35,7 +36,7 @@
         <div class="logo posb" id="log"><img src="{{ asset('/images/admin/logo.png')  }}"></div>
         <div class="layui-main posb">
             <!-- 左侧导航收缩开关 -->
-            <div class="side-menu-switch posb" id="toggle"><span class="switch" ara-hidden="true"></span></div>
+            <div class="side-menu-switch posb" id="toggle"><span class="switch"  ara-hidden="true"></span></div>
             <!-- 顶级菜单 -->
             <div class="larry-top-menu posb">
                 <ul class="layui-nav clearfix" id="menu">
@@ -72,7 +73,7 @@
                         </dl>
                     </li>
                     <li class="layui-nav-item exit">
-                        <a id="logout"><i class="larry-icon larry-exit"></i><cite>退出</cite></a>
+                        <a  id="logout"><i class="larry-icon larry-exit"></i><cite>退出</cite></a>
                     </li>
                 </ul>
             </div>
@@ -80,7 +81,7 @@
     </div>
     <!-- 左侧导航 -->
     <div class="layui-side larrycms-left" id="larry-side">
-        <div class="layui-side-scroll">
+        <div class="layui-side-scroll" >
             <!-- 管理员信息      -->
             <div class="user-info">
                 <div class="photo">
@@ -89,8 +90,8 @@
                 <p>admin您好！欢迎登录</p>
             </div>
             <!-- 系统菜单 -->
-            <div class="sys-menu-box">
-                <ul class="layui-nav layui-nav-tree" id="larrySideNav" lay-filter="side">
+            <div class="sys-menu-box" >
+                <ul class="layui-nav layui-nav-tree" id="larrySideNav" lay-filter="side" >
 
                 </ul>
             </div>
@@ -100,10 +101,10 @@
     <div class="layui-body" id="larry-body">
         <div class="layui-tab" id="larry-tab" lay-filter="larryTab">
             <div class="larry-title-box">
-                <div class="go-left key-press pressKey" id="titleLeft" title="滚动至最右侧"><i
-                        class="larry-icon larry-weibiaoti6-copy"></i></div>
+                <div class="go-left key-press pressKey" id="titleLeft" title="滚动至最右侧">
+                <i class="larry-icon larry-weibiaoti6-copy"></i> </div>
                 <ul class="layui-tab-title" lay-allowClose="true" id="layui-tab-title" lay-filter="subadd">
-                    <li class="layui-this" id="admin-home" lay-id="0" fresh=1>
+                    <li class="layui-this" id="admin-home"  lay-id="0" fresh=1>
                         <i class="larry-icon larry-houtaishouye"></i><em>后台首页</em>
                     </li>
                 </ul>
@@ -138,19 +139,21 @@
 
                 </div>
             </div>
-            <div class="layui-tab-content">
-                <div class="layui-tab-item layui-show clearfix">
-                    {{--<iframe class="larry-iframe" data-id='0' name="ifr_0" id='ifr0' src="">--}}
-                    @yield('content')
-                    {{--</iframe>--}}
-                </div>
+            {{--<div class="layui-tab-content">--}}
+                {{--<div class="layui-tab-item layui-show">--}}
+                    {{--<iframe class="larry-iframe" data-id='0' name="ifr_0" id='ifr0'></iframe>--}}
+            <div>
+                    @section('content')
+                        @show
             </div>
+                {{--</div>--}}
+            {{--</div>--}}
         </div>
     </div>
     <!-- footer -->
     <div class="layui-footer layui-larry-foot psob" id="larry-footer">
         <div class="layui-main">
-            <p>2016-2017 © Write by FiresGroup 基于前端框架Layui 1.09</p>
+            <p>2016-2017 © Write by FiresGroup  基于前端框架Layui 1.09</p>
         </div>
     </div>
     <!-- footer end -->
@@ -164,7 +167,7 @@
             <div class="layui-form-item select-theme">
                 <label class="layui-form-label">主题选择</label>
                 <div class="layui-input-block">
-                    <select lay-filter="larryTheme" lay-verify="" id="themeName">
+                    <select lay-filter="larryTheme"  lay-verify="" id="themeName">
                         <option value="larry">LarryCMS默认主题</option>
                         <option value="A">LarryCMS深蓝主题</option>
                         <option value="B">LarryCMS墨绿主题</option>
@@ -175,7 +178,7 @@
             <div class="layui-form-item fullscreen">
                 <label class="layui-form-label">是否全屏</label>
                 <div class="layui-input-block">
-                    <input type="checkbox" lay-filter="fullscreen" lay-skin="switch" value="1">
+                    <input type="checkbox" lay-filter="fullscreen" lay-skin="switch"  value="1">
                 </div>
             </div>
             <div class="layui-form-item submit-form">

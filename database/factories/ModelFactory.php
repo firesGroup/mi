@@ -20,7 +20,6 @@
 //         'status' => str_random(1),
 //     ];
 // });
-
 // $factory->define(App\adminRole::class, function (Faker\Generator $faker) {
 //     $userIds = \App\adminGroup::lists('id')->toArray();
 //     return [
@@ -42,6 +41,18 @@
 //     ];
 // });
 
+//=================
+//龙彪使用::
+// $factory->define(App\Member::class, function (Faker\Generator $faker) {
+//     return [
+//         'nick_name' => $faker->name,
+//         'email' => $faker->safeEmail,
+//         'phone' => $faker->phoneNumber,
+//         'status' => $faker->internetExplorer,
+//         'last_ip' => $faker->ipv4,
+//         'remember_token' => str_random(10),
+//     ];
+// });
 
 //===================================
 //潘珺使用:
