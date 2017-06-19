@@ -13,11 +13,12 @@ class CreateMemberDetailTable extends Migration
     public function up()
     {
         Schema::create( 'memberDetail', function(Blueprint $table){
-            $table->integer('mid')->unique()->comment('用户id');
+            $table->integer('mid')->comment('用户id');
             $table->tinyInteger('sex')->default('0')->comment('用户性别,0为保密,1为男,2为女');
             $table->date('birthday')->comment('生日');
             $table->string('avator')->default('/uploads/avator/default.jpg')->comment('头像路径');
             $table->timestamps();
+            $table->primary('mid');
             $table->charset='utf8';
             $table->engine='InnoDB';
         } );
