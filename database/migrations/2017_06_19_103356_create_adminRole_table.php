@@ -20,6 +20,8 @@ class CreateAdminRoleTable extends Migration
             $table->string('role')->comment('操作码,格式:操作控制器+方法名');
             $table->tinyInteger('status')->default(0)->comment('权限状态;默认为0正常,1为禁止');
             $table->timestamps();
+            $table->charset='utf8';
+            $table->engine='InnoDB';
         });
     }
 

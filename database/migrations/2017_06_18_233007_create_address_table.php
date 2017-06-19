@@ -20,6 +20,8 @@ class CreateAddressTable extends Migration
             $table->string('address')->comment('收货地址');
             $table->tinyInteger('status')->default(0)->comment('地址状态,默认为0,1为普通');
             $table->timestamps();
+            $table->charset='utf8';
+            $table->engine='InnoDB';
         });
     }
 

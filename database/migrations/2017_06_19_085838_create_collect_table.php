@@ -17,6 +17,8 @@ class CreateCollectTable extends Migration
             $table->integer('mid')->comment('用户id');
             $table->integer('pid')->comment('商品id');
             $table->timestamps();
+            $table->charset='utf8';
+            $table->engine='InnoDB';
         } );
     }
 

@@ -22,6 +22,8 @@ class CreateProductTable extends Migration
             $table->tinyInteger('status')->default(0)->comment('商品状态:0为在售,1为下架,2为预购,3为缺货,4为新品上市');
             $table->tinyInteger('recommend')->default(1)->comment('是否推荐,默认1为不推荐,0为推荐');
             $table->timestamps();
+            $table->charset='utf8';
+            $table->engine='InnoDB';
         } );
     }
 

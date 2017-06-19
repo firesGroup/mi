@@ -22,6 +22,8 @@ class CreateProductDetailTable extends Migration
             $table->integer('sell_num')->default(0)->comment('商品成交量');
             $table->integer('click_num')->default(0)->commnet('商品点击量');
             $table->timestamps();
+            $table->charset='utf8';
+            $table->engine='InnoDB';
         });
     }
 

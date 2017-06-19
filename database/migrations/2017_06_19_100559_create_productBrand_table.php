@@ -22,6 +22,8 @@ class CreateProductBrandTable extends Migration
             $table->integer('cid')->comment('所属分类');
             $table->tinyInteger('is_hot')->default(1)->comment('是否推荐,0为推荐,1为不推荐');
             $table->timestamps();
+            $table->charset='utf8';
+            $table->engine='InnoDB';
             });
     }
 

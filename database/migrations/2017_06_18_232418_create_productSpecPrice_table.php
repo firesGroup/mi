@@ -20,6 +20,8 @@ class CreateProductSpecPriceTable extends Migration
             $table->integer('store')->default(0)->comment('库存量');
             $table->string('sku')->comment('SKU');
             $table->timestamps();
+            $table->charset='utf8';
+            $table->engine='InnoDB';
         });
     }
 

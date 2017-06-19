@@ -19,6 +19,8 @@ class CreateProductAttributeTable extends Migration
             $table->tinyInteger('attr_input_type')->default(0)->comment('属性录入方式,默认0为手工录入,1为列表中选择');
             $table->text('attr_values')->comment('属性可选值列表');
             $table->timestamps();
+            $table->charset='utf8';
+            $table->engine='InnoDB';
         });
     }
 

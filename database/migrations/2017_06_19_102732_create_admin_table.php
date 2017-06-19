@@ -22,6 +22,8 @@ class CreateAdminTable extends Migration
             $table->timestamp('last_time')->comment('最后登陆时间');
             $table->ipAddress('last_ip')->comment('最后登陆ip');
             $table->timestamps();
+            $table->charset='utf8';
+            $table->engine='InnoDB';
         });
     }
 

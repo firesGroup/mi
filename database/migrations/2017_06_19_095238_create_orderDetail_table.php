@@ -19,6 +19,8 @@ class CreateOrderDetailTable extends Migration
             $table->decimal('p_price', 12, 2)->comment('商品单价');
             $table->integer('p_num')->comment('商品数量');
             $table->timestamps();
+            $table->charset='utf8';
+            $table->engine='InnoDB';
         });
     }
 

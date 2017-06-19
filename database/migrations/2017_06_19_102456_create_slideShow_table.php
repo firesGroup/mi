@@ -17,6 +17,8 @@ class CreateSlideShowTable extends Migration
             $table->string('images')->comment('轮播图图片地址');
             $table->string('url')->comment('轮播图网址');
             $table->timestamps();
+            $table->charset='utf8';
+            $table->engine='InnoDB';
         });
     }
 

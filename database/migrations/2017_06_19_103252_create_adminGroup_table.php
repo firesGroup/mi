@@ -19,6 +19,8 @@ class CreateAdminGroupTable extends Migration
             $table->string('role_list')->comment('分配权限id列表');
             $table->tinyInteger('status')->default(0)->comment('用户组状态,默认为0 代表启用,1为锁定');
             $table->timestamps();
+            $table->charset='utf8';
+            $table->engine='InnoDB';
         });
     }
 

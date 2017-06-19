@@ -22,6 +22,8 @@ class CreateCommentTable extends Migration
             $table->tinyInteger('is_hide')->default(0)->comment('是否匿名,默认0为匿名,1为显示用户名');
             $table->tinyInteger('type')->comment('评论类型,0为首次评价,1为追加,2为回复');
             $table->timestamps();
+            $table->charset='utf8';
+            $table->engine='InnoDB';
         });
     }
 

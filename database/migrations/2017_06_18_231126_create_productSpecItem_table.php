@@ -17,6 +17,8 @@ class CreateProductSpecItemTable extends Migration
             $table->integer('spec_id')->index()->comment('规格id');
             $table->string('spec_item')->index()->comment('规格项名称');
             $table->timestamps();
+            $table->charset='utf8';
+            $table->engine='InnoDB';
             });
     }
 

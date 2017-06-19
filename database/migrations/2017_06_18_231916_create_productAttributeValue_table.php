@@ -19,6 +19,8 @@ class CreateProductAttributeValueTable extends Migration
             $table->text('attr_value')->comment('属性值名称');
             $table->decimal('attr_price')->default(0.00)->comment('属性价格');
             $table->timestamps();
+            $table->charset='utf8';
+            $table->engine='InnoDB';
         });
     }
 

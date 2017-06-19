@@ -18,6 +18,8 @@ class CreateMemberDetailTable extends Migration
             $table->date('birthday')->comment('生日');
             $table->string('avator')->default('/uploads/avator/default.jpg')->comment('头像路径');
             $table->timestamps();
+            $table->charset='utf8';
+            $table->engine='InnoDB';
         } );
     }
 

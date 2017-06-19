@@ -26,6 +26,8 @@ class CreateCartTable extends Migration
             $table->tinyInteger('select_status')->default(0)->comment('选中状态,默认0为选中,1为未选中');
             $table->timestamp('add_time')->comment('添加时间');
             $table->timestamps();
+            $table->charset='utf8';
+            $table->engine='InnoDB';
         });
     }
 

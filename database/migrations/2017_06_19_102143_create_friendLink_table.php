@@ -18,6 +18,8 @@ class CreateFriendLinkTable extends Migration
             $table->string('link_url')->comment('友情链接网址');
             $table->string('link_logo')->comment('友情链接logo');
             $table->timestamps();
+            $table->charset='utf8';
+            $table->engine='InnoDB';
             });
     }
 

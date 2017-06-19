@@ -19,6 +19,8 @@ class CreateProductSpecTable extends Migration
             $table->index('mid');
             $table->index('spec_name');
             $table->timestamps();
+            $table->charset='utf8';
+            $table->engine='InnoDB';
         });
     }
 

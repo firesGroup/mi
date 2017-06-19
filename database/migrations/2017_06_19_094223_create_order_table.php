@@ -23,6 +23,8 @@ class CreateOrderTable extends Migration
             $table->timestamp('add_time')->comment('下单时间');
             $table->tinyInteger('order_status')->default(0)->comment('订单状态,默认为0代表未支付,1代表已支付,2代表未发货,3代表已发货,4代表已收货,5代表退款中,6代表交易成功');
             $table->timestamps();
+            $table->charset='utf8';
+            $table->engine='InnoDB';
         });
     }
 

@@ -21,6 +21,8 @@ class CreateMemberTable extends Migration
             $table->ipAddress('last_ip')->comment('最后登陆ip');
             $table->rememberToken();
             $table->timestamps();
+            $table->charset='utf8';
+            $table->engine='InnoDB';
         } );
     }
 

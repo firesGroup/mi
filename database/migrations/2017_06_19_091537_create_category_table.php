@@ -19,6 +19,8 @@ class CreateCategoryTable extends Migration
             $table->string('path')->comment('家族图谱');
             $table->tinyInteger('sort')->comment('排序');
             $table->timestamps();
+            $table->charset='utf8';
+            $table->engine='InnoDB';
         });
     }
 
