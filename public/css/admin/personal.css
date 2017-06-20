@@ -40,6 +40,7 @@ header.larry-personal-tit span{
 }
 .larry-personal-body{
 	padding: 20px;
+	padding-top: 0px;
 }
 .layui-form{
 	padding: 0px;
@@ -151,9 +152,7 @@ header.larry-personal-tit span{
 .table-hover tbody tr:hover{ 
 	background-color: #EEEEEE; 
 }
-.layui-btn i{
-	padding-right: 5px;
-}
+
 .larry-table-page{
 	width: 100%;
 	height: 50px;
