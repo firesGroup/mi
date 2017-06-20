@@ -25,7 +25,7 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('/css/admin/global.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('/css/admin/font.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('/css/admin/backstage.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('/plugin/bootstrap/css/bootstrap.css') }}">
+    {{--<link rel="stylesheet" type="text/css" href="{{ asset('/plugin/bootstrap/css/bootstrap.css') }}">--}}
 </head>
 <body>
 <!-- 内容正文-->
@@ -140,9 +140,8 @@
             </div>
             <div class="layui-tab-content">
                 <div class="layui-tab-item layui-show clearfix">
-                    {{--<iframe class="larry-iframe" data-id='0' name="ifr_0" id='ifr0' src="">--}}
-                    @yield('content')
-                    {{--</iframe>--}}
+                    <iframe class="larry-iframe" data-id='0' name="ifr_0" id='ifr0' src="{{url('/admin/userManager')}}">
+                    </iframe>
                 </div>
             </div>
         </div>

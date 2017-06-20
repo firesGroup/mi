@@ -63,9 +63,9 @@ class UserController extends Controller
     public function edit($id)
     {
         $data = admin::find($id);
-        dd($data);
-
-        return view('');
+//        dd($data);
+        $status = [0=>'启用', 1=>'锁定'];
+        return view('admin/userManager/editUser', compact('data', 'status'));
     }
 
     /**
