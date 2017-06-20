@@ -153,6 +153,7 @@
                             , type: "POST"
                             , data: {'_method': 'DELETE', '_token': '{{ csrf_token() }}' }
                             ,success:function (data) {
+                                alert(data);
                                 layer.close(l);
                                 if( data == 1 ){
                                     layer.alert('删除成功', {icon: 1});

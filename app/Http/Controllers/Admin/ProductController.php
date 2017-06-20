@@ -14,6 +14,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Entity\Product;
+use App\Entity\ProductImages;
 use App\Http\Requests\Admin\ProductRequest;
 use App\Http\Controllers\Controller;
 use DB;
@@ -99,5 +100,33 @@ class ProductController extends Controller
     public function destroy(ProductRequest $request,$id)
     {
         return DB::table('product')->delete($id);
+    }
+
+    /**
+     * 获取商品相册图片
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+
+    public function getImages(ProductRequest $request,$id)
+    {
+        $list = ProductImages::where('pid',$id)->get();
+        return $list;
+    }
+
+    /**
+     * 存储商品相册图片到数据库
+     *
+     * @return \Illuminate\Http\Response
+     */
+
+    public function postImages(ProductRequest $request)
+    {
+        if( $request->isMethod('post') ){
+            $id = $request->input('id');
+            $src = $request->input('src');
+           DB::table('productImages')->insert(['pid'=>$id, 'path' => $src]);
+        }
     }
 }

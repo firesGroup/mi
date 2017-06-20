@@ -4,8 +4,10 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Entity\Member;
+use App\Entity\MemberDetail;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use DB;
 
 class MemberController extends Controller
 {
@@ -51,7 +53,11 @@ class MemberController extends Controller
      */
     public function show($id)
     {
-        //
+        $data = Member::find($id);
+        $user_detail = MemberDetail::find($data->id);
+        $state = array('0'=>'普通', '1' => '锁定');
+        $arr = array('0'=>'保密', '1'=>'男', '2'=>'女');
+        return view('admin/member/member_detail', compact('data', 'user_detail', 'state', 'arr'));
     }
 
     /**
@@ -63,7 +69,9 @@ class MemberController extends Controller
     public function edit($id)
     {
        $data = Member::find($id);
-       return view('admin/member/edit', compact('data'));
+       $user_detail = MemberDetail::find($data->id);
+       //dd($user_detail);
+       return view('admin/member/edit', compact('data', 'user_detail'));
     }
 
     /**
@@ -84,14 +92,11 @@ class MemberController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
         //dd($id);
-           $data = Member::destroy($id);
-           if($data == 1){
-               return redirect('admin/member')->with(['success' => '1']);
-           }else{
-               return redirect ('admin/member')->with(['success' => '0']);
-           };
+        $data = Member::find($id);
+        DB::table('member')->delete($id);
+       return DB::table('memberdetail')->where('mid', $data->id)->delete();
     }
 }
