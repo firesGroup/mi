@@ -26,6 +26,7 @@
 
 @section('css')
     @parent
+    <meta name="_token" content="{{ csrf_token() }}">
 @endsection
 
 @section('content')
@@ -47,20 +48,20 @@
             </blockquote>
         </div>
         <div class="larry-personal-body clearfix">
-            <div class="layui-tab">
+            <div class="layui-tab"  lay-filter="tab">
                 <ul class="layui-tab-title">
                     <li class="layui-this">商品信息</li>
-                    <li>商品相册</li>
+                    <li  id="p-images">商品相册</li>
                     <li>商品模型</li>
                 </ul>
                 <div class="layui-tab-content">
                     <div class="layui-tab-item layui-show" style="padding-top:20px">
                         <div class="form-body">
-                            <form class="layui-form" action="" method="post">
+                            <form class="layui-form"method="post">
                                 <div class="layui-form-item">
                                     <label class="layui-form-label">商品名称</label>
                                     <div class="layui-input-block">
-                                        <input type="text" name="p_name" lay-verify="required" placeholder="请输入商品名称" autocomplete="off" class="layui-input">
+                                        <input type="text" name="p_name" lay-verify="required" placeholder="请输入商品名称" autocomplete="off" class="layui-input" value="{{ $info->p_name }}">
                                     </div>
                                 </div>
                                 <div class="layui-form-item">
@@ -127,7 +128,9 @@
                                 <div class="layui-form-item">
                                     <label class="layui-form-label">商品封面</label>
                                     <div class="layui-input-block">
-                                        <input type="file" name="p_index_image" class="layui-upload-file" lay-title="上传商品封面图片">
+                                        <div class="layui-box layui-upload-button">
+                                            <span class="layui-upload-icon"><i class="layui-icon"></i>上传商品封面图片</span>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="layui-form-item">
@@ -138,7 +141,7 @@
                                 </div>
                                 <div class="layui-form-item">
                                     <div class="layui-input-block">
-                                        <button class="layui-btn" lay-submit="" lay-filter="demo1">立即提交</button>
+                                        <button class="layui-btn" lay-submit="" lay-filter="productInfo">立即提交</button>
                                         <button type="reset" class="layui-btn layui-btn-primary">重置</button>
                                     </div>
                                 </div>
@@ -146,14 +149,7 @@
                         </div>
                     </div>
                     <div class="layui-tab-item">
-                        <div class="form-body">
-                            <form class="layui-form">
-                                <div class="layui-form-item">
-                                    <div class="layui-input-block">
-                                        <input type="file" name="p_index_image" class="layui-upload-file">
-                                    </div>
-                                </div>
-                            </form>
+                        <div class="p-images-list-box clearfix" id="p-images-list">
                         </div>
                     </div>
                     <div class="layui-tab-item">内容3</div>
@@ -166,25 +162,60 @@
 
 @section('js')
     @parent
-<script>
-    layui.use(['jquery','layer','form', 'upload','layedit', 'element'], function () {
+    <!--上传文件插件-->
+    <script type="text/javascript" src="{{ asset('/js/public/jquery-1.12.4.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('/js/public/uploadFile.js') }}"></script>
+    <script>
+    layui.use(['jquery','layer','form', 'upload','layedit','element'], function () {
         var form = layui.form()
             ,$ = layui.jquery
             ,layedit = layui.layedit
             ,element = layui.element()
-            layer = layui.layer;
+            ,layer = layui.layer;
+        var token = $('meta[name=_token]').attr('content');
 
-        //上传封面图片
-        layui.upload({
-            url: '' //上传接口
-            ,success: function(res){ //上传成功后的回调
-                console.log(res)
-            }
-        });
 
         //构建一个默认的编辑器
         var index = layedit.build('editor');
-    });
+        var id = '{{ $info->id }}';
+        var rootUrl = '{{ url('/') }}';
 
+        element.on('tab(tab)',function(){
+            if ($(this).attr('id') == 'p-images') {
+                $.ajax({
+                    url: '{{ url('/admin/product').'/'.$info->id.'/images'  }}',
+                    method: 'get',
+                    success: function (res) {
+                        var str = '<div class="images-list"><ul>';
+                        for (var i = 0; i < res.length; i++) {
+                            str += '<li>';
+                            str += '<img  src="' + rootUrl + res[i].path + '">'
+                            str += '</li>';
+                        }
+                        str += '<ul></div><div class="uploadFile" id="uploadFile"><i class="layui-icon"></i> </div>';
+
+                        $('div#p-images-list').html(str);
+                    }
+                });
+            }
+        } );
+
+
+        /*
+         * 文件上传
+         * auth  showkw
+         *
+         * param  url   文件上传处理地址
+         * param  token  防csrf令牌
+         * param  dir    文件上传保存目录名(相对于/public/uploads/下的目录)
+         * param rtUri   上传成功后后台需要后续处理的操作 uri
+         * param rtParams   需要传递的参数 json格式传入
+         * param  rtMethod   后续处理请求方式 GET/POST/PUT/DELETE
+         */
+       uploadFile( '{{ url('/upload')  }}', token, 'test',
+           '{{ url('admin/product').'/'.$info->id.'/images'  }}',{ 'id': id }, 'POST'  );
+
+
+        });
 </script>
 @endsection
