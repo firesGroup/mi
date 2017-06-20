@@ -31,7 +31,7 @@ layui.use(['elements','jquery','layer','larry','navtab','form','common'],functio
 		AdminInit();
 		//绑定导航数据
 		$.ajaxSettings.async = false;
-		$.getJSON('/backstage/datas/menu.php?t='+new Date(), {
+		$.getJSON(''+new Date(), {
 			Param: 'index_menu'
 		}, function(result) {
 			larry.set({
@@ -49,7 +49,7 @@ layui.use(['elements','jquery','layer','larry','navtab','form','common'],functio
 			$that.on('click', function() {
 				var id = $that.data('pid');
 				$.ajaxSettings.async = false;
-				$.getJSON('/backstage/datas/menu.php?t='+new Date(), {
+				$.getJSON(''+new Date(), {
 					pid: id,
 					Param: 'index_menu'
 				}, function(result) {
@@ -363,4 +363,8 @@ layui.use(['elements','jquery','layer','larry','navtab','form','common'],functio
 	// $('.sys-public-menu .layui-nav li').on('click',function(){
     //     $('#larrySideNav .layui-this').removeClass('layui-this');
 	// });
+
+    $('i#closeInfo').on('click', function(){
+        $(this).parent().parent().remove();
+    });
 })
