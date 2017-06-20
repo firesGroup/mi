@@ -1,7 +1,7 @@
 <?php
 /**
  * File Name: admin.blade.php
- * Description: 后台布局模板文件
+ * Description: 后台首页布局模板文件(请勿动)
  * Created by PhpStorm.
  * Group: FiresGroup
  * Auth: Showkw
@@ -14,7 +14,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>@yield('title') - 小米商城系统 - FiresGroup</title>
+    <title>后台管理- 小米商城系统 - FiresGroup</title>
     <meta name="renderer" content="webkit">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">

@@ -10,7 +10,13 @@
  */
 ?>
 
-@extends('admin.master.master')
+@extends('layouts.iframe')
+
+@section('title','管理员管理首页')
+
+@section('css')
+    @parent
+@endsection
 
 @section('content')
 
@@ -42,4 +48,8 @@
         <input class="layui-btn layui-btn-radius layui-btn-normal" type="submit" value="修改">
         <input class="layui-btn layui-btn-radius layui-btn-warm" type="reset" value="重置">
     </form>
+@endsection
+
+@section('js')
+    @parent
 @endsection
