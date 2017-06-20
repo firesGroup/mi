@@ -14,7 +14,7 @@
 
 @section('order')
 
-    <h2>订单列表 (共计{{$sum}}条)</h2>
+    <h4>订单列表 (共计{{$sum}}条)</h4>
     <table class="layui-table">
         <tr>
             <th>id</th>
@@ -46,11 +46,12 @@
                 <td>{{$orders->order_status}}</td>
                 <td>{{$orders->created_at}}</td>
                 <td>{{$orders->updated_at}}</td>
-                <td></td>
+                <td><a href='{{url('admin/order/'.$orders->id)}}'>查看</a></td>
             </tr>
 
         @endforeach
     </table>
-
-    {{$data->links()}}
+    <div class="pagination center-block" style="text-align:center">
+        {{$data->links()}}
+    </div>
 @endsection

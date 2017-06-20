@@ -25,6 +25,7 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('/css/admin/global.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('/css/admin/font.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('/css/admin/backstage.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('/plugin/bootstrap/css/bootstrap.css') }}">
 </head>
 <body>
 <!-- 内容正文-->
