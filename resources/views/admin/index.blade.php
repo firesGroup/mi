@@ -40,7 +40,7 @@
 
 </div>
 <div class="pagination center-block">
-    {{$data->links()}}
+{{--    {{$data->links()}}--}}
 </div>
 
 

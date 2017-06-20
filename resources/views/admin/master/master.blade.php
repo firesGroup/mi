@@ -25,8 +25,8 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('/css/admin/global.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('/css/admin/font.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('/css/admin/backstage.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('plugin/bootstrap/css/bootstrap.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('plugin/bootstrap/css/bootstrap-theme.css') }}">
+    {{--<link rel="stylesheet" type="text/css" href="{{ asset('plugin/bootstrap/css/bootstrap.css') }}">--}}
+    {{--<link rel="stylesheet" type="text/css" href="{{ asset('plugin/bootstrap/css/bootstrap-theme.css') }}">--}}
 </head>
 <body>
 <!-- 内容正文-->
@@ -139,15 +139,11 @@
 
                 </div>
             </div>
-            {{--<div class="layui-tab-content">--}}
-                {{--<div class="layui-tab-item layui-show">--}}
-                    {{--<iframe class="larry-iframe" data-id='0' name="ifr_0" id='ifr0'></iframe>--}}
-            <div>
-                    @section('content')
-                        @show
+            <div class="layui-tab-content">
+                <div class="layui-tab-item layui-show">
+                    <iframe class="larry-iframe" data-id='0' name="ifr_0" id='ifr0' src="{{ url('/admin/product') }}"></iframe>
+                </div>
             </div>
-                {{--</div>--}}
-            {{--</div>--}}
         </div>
     </div>
     <!-- footer -->
