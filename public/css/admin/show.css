@@ -1,0 +1,89 @@
+.layui-elem-quote{
+    color: #0ba4da !important;
+    background-color: rgba(79, 192, 232, 0.11) !important;
+    display: block;
+    height: 100%;
+    padding: 6px 9px;
+    border-radius: 0px;
+    position: relative;
+    overflow: hidden;
+}
+.layui-elem-quote .title{
+    white-space: nowrap;
+    position: relative;
+    cursor: pointer;
+}
+.layui-elem-quote .title i{
+    font-size:20px;
+    vertical-align: middle;
+    margin-right: 6px;
+}
+.layui-elem-quote h4{
+    display:inline-block;
+    font-size:16px;
+}
+.layui-elem-quote ul{
+    color: #748A8F;
+    margin-left: 10px;
+}
+.layui-elem-quote ul li{
+    line-height: 20px;
+    padding-left: 16px;
+    margin-bottom: 4px;
+}
+.btn-group{
+    display:inline-block;
+    float:left;
+}
+.btn-group button{
+    height:30px;
+}
+
+div.order{
+    display:inline-block;
+    border:1px solid #e2e2e2;
+    padding:0px;
+    float:right;
+    margin-bottom:10px;
+}
+div.order:hover,div.order:hover select{
+    border-color: #009688;
+}
+div.order:hover span{
+    background-color: #009688;
+    border-color: #009688;
+}
+div.order select{
+    height:31px;
+    width:150px;
+    border:0px;
+    border-right:1px solid #e2e2e2;
+    text-align:center;
+}
+div.order  input{
+    width:200px;
+    height: 30px;
+    border:0px;
+    padding-left:10px;
+    vertical-align: baseline;
+}
+div.order span{
+    height: 32px;
+    line-height: 32px;
+    font-size: 12px;
+    -webkit-border-radius: 0px;
+    -moz-border-radius: 0px;
+    border-radius: 0px;:
+    margin: 0px;
+    background-color: #e2e2e2;
+}
+div.form-body {
+    width: 90%;
+    margin-left: 30px;
+}
+.layui-input:hover,.layui-textarea:hover{
+    border-color:#009688!important;
+}
+.layui-input:focus,.layui-textarea:focus{
+    border-color:#009688;
+}

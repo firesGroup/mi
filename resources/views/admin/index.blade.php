@@ -13,6 +13,11 @@
 
 @section('content')
     {{--{{dd($data)}}--}}
+    
+    <div style="width:100px;height:900px;text-align:center"><dt>会员</dt>
+        <dd class=""><a href="{{url('admin/member')}}" data-param="index|User">会员列表</a><i class="fa fa-check-square-o"></i></dd>
+        <dd class=""><a href="javascript:void(0);" data-param="levelList|User">会员等级</a><i class="fa fa-check-square-o"></i></dd>
+
     <div class="clearfix">
         <div class="admincp-container-left col-md-1">
             <div id="admincpNavTabs_system" class="nav-tabs">
@@ -34,13 +39,7 @@
             <table class="layui-table col-md-11 ">
                 @yield('admin')
             </table>
-        </div>
+       </div> 
+{{--    {{$data->links()}}--}}
     </div>
-    <div class="pagination center-block" style="text-align: center">
-        {{$data->links()}}
-    </div>
-
-
-    {{--@yield('order')--}}
-
 @endsection
