@@ -62,7 +62,8 @@ class MemberController extends Controller
      */
     public function edit($id)
     {
-        //
+       $data = Member::find($id);
+       return view('admin/member/edit', compact('data'));
     }
 
     /**
@@ -85,6 +86,12 @@ class MemberController extends Controller
      */
     public function destroy($id)
     {
-        //
+        //dd($id);
+           $data = Member::destroy($id);
+           if($data == 1){
+               return redirect('admin/member')->with(['success' => '1']);
+           }else{
+               return redirect ('admin/member')->with(['success' => '0']);
+           };
     }
 }
