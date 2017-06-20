@@ -25,8 +25,6 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('/css/admin/global.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('/css/admin/font.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('/css/admin/backstage.css') }}">
-    {{--<link rel="stylesheet" type="text/css" href="{{ asset('plugin/bootstrap/css/bootstrap.css') }}">--}}
-    {{--<link rel="stylesheet" type="text/css" href="{{ asset('plugin/bootstrap/css/bootstrap-theme.css') }}">--}}
 </head>
 <body>
 <!-- 内容正文-->
@@ -223,7 +221,6 @@
         </div>
     </div>
 </div>
-<script type="text/javascript" src="{{ asset('/plugin/layui/layui.js') }}"></script>
-<script type="text/javascript" src="{{ asset('/js/admin/larry.js') }}"></script>
+
 </body>
 </html>

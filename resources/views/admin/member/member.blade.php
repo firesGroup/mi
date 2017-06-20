@@ -8,11 +8,15 @@
  * Time: 下午 7:38
  */
 ?>
+@extends('layouts.iframe')
 
-@extends('admin.master.master')
+@section('title','会员管理首页')
+
+@section('css')
+    @parent
+@endsection
 
 @section('content')
-
     <div>
         <table class="layui-table">
 
@@ -37,7 +41,6 @@
             </tr>
             </thead>
             <tbody>
-
             @foreach( $data as $v )
 
                 <tr>
@@ -48,8 +51,17 @@
                     <td>{{$v->phone}}</td>
                     <td>{{$state[$v->status]}}</td>
                     <td>{{$v->last_ip}}</td>
-                </tr>
+                    <form action="{{url('admin/member/'.$v->id )}}" method="post">
+                        <td>
+                            <a class="layui-btn ayui-btn-normal" href="{{url('admin/member/'.$v->id.'/edit')}}">编辑</a>
+                            <input type="hidden" name="_token" value="{{csrf_token()}}">
+                            <input type="hidden" name="_method" value="DELETE">
+                            <input type="submit" class="layui-btn layui-btn-danger"
+                                   value="删除" style="text-color:#fff">
+                        </td>
+                    </form>
             @endforeach
+                </tr>
             </tbody>
         </table>
         <div class="pagination center-block" style="text-align:center">
@@ -58,11 +70,17 @@
 
         </div>
     </div>
-    <script>
-        layui.use('layer',function(){
-            var layer=layui.layer;
+@endsection
 
-            layer.msg('hello!GAY明');
-        });
-    </script>
+@section('js')
+    @parent
+
+    @if(session('success') == 1)
+        <script>
+            layui.use('layer', function () {
+                var layer = layui.layer;
+                layer.msg('删除成功');
+            });
+        </script>
+    @endif
 @endsection
