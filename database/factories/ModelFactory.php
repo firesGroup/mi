@@ -21,9 +21,9 @@
 //     ];
 // });
 // $factory->define(App\adminRole::class, function (Faker\Generator $faker) {
-//     $userIds = \App\adminGroup::lists('id')->toArray();
+//     $gid = \App\adminGroup::lists('id')->toArray();
 //     return [
-//         'group_id' => $faker->randomElement($userIds),
+//         'group_id' => $faker->randomElement($gid),
 //         'role_name' => $faker->name,
 //         'role_desc' => $faker->paragraph,
 //         'role' => str_random(1),
