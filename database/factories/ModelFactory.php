@@ -21,6 +21,8 @@ $factory->define(App\order::class, function (Faker\Generator $faker) {
         'mid' => str_random(1),
         'user' => $faker->name,
         'phone' => str_random(11),
+        'delivery' => str_random(11),
+        'delivery_orderid' => str_random(20),
         'address' => $faker->paragraph,
         'total' => str_random(3),
         'order_status' => str_random(1),
