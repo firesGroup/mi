@@ -4,7 +4,7 @@
  * Description: 后台首页模板
  * Created by PhpStorm.
  * Group: FiresGroup
- * Auth: Wim
+ * Auth: Showkw
  * Date: 2017/6/19
  * Time: 23:36
  */
@@ -124,6 +124,7 @@
                 </div>
                 <div class="layui-tab-content">
                     <div class="layui-tab-item layui-show">
+
                         <iframe class="larry-iframe" data-id='0' name="ifr_0" id='ifr0' src="{{ url('/admin/member') }}"></iframe>
                     </div>
                 </div>

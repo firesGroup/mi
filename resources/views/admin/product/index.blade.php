@@ -112,7 +112,7 @@
                 </tbody>
             </table>
                 <div class="larry-table-page">
-                 {{ $productList->render() }}
+                    {{ $productList->render() }}
                 </div>
             </>
         </div>

@@ -7,6 +7,8 @@ use App\Entity\order;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
+use DB;
+
 class OrderController extends Controller
 {
     /**
@@ -18,9 +20,8 @@ class OrderController extends Controller
     {
         $data = order::orderby('id')->paginate(5);
         $sum = order::count('id');
-        return view('admin/order', compact('data', 'sum'));
-
-
+        $status = [0 => '未支付', 1 => '已支付', 2 => '未发货', 3 => '已发货', 4 => '已收货', 5 => '退款中', 6 => '交易已完成'];
+        return view('admin/order/order', compact('data', 'sum', 'status'));
     }
 
     /**
@@ -36,7 +37,7 @@ class OrderController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -47,19 +48,21 @@ class OrderController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
     {
         $data = order::find($id);
-        return view('admin/show_order', compact('data'));
+        $odetail = DB::table('orderdetail')->where('order_id', $id)->first();
+        $status = [0 => '未支付', 1 => '已支付', 2 => '未发货', 3 => '已发货', 4 => '已收货', 5 => '退款中', 6 => '交易已完成'];
+        return view('admin/order/showOrder', compact('data', 'odetail', 'status'));
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
@@ -70,19 +73,19 @@ class OrderController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \Illuminate\Http\Request $request
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
     {
-        //
+
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
