@@ -25,10 +25,6 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('/css/admin/global.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('/css/admin/font.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('/css/admin/backstage.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('plugin/bootstrap/css/bootstrap.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('plugin/bootstrap/css/bootstrap-theme.css') }}">
-    <script type="text/javascript" src="{{ asset('/plugin/layui/layui.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('/js/admin/larry.js') }}"></script>
 </head>
 <body>
 <!-- 内容正文-->
@@ -143,7 +139,7 @@
             </div>
             <div class="layui-tab-content">
                 <div class="layui-tab-item layui-show">
-                    <iframe class="larry-iframe" data-id='0' name="ifr_0" id='ifr0' src="{{ url('/admin/member') }}" ></iframe>
+                    <iframe class="larry-iframe" data-id='0' name="ifr_0" id='ifr0' src="{{ url('/admin/product') }}"></iframe>
                 </div>
             </div>
         </div>

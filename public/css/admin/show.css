@@ -33,33 +33,57 @@
 }
 .btn-group{
     display:inline-block;
+    float:left;
+}
+.btn-group button{
+    height:30px;
 }
 
-.layui-form-inline{
+div.order{
     display:inline-block;
-    margin-left:30px;
-    border:1px solid #009688;
+    border:1px solid #e2e2e2;
+    padding:0px;
+    float:right;
+    margin-bottom:10px;
 }
-.layui-form-inline select{
-    height:34px;
-    width:200px;
+div.order:hover,div.order:hover select{
+    border-color: #009688;
+}
+div.order:hover span{
+    background-color: #009688;
+    border-color: #009688;
+}
+div.order select{
+    height:31px;
+    width:150px;
     border:0px;
-    border-right:1px solid #009688;
+    border-right:1px solid #e2e2e2;
     text-align:center;
 }
-.layui-form-inline input{
-    height:27px;
+div.order  input{
     width:200px;
+    height: 30px;
     border:0px;
     padding-left:10px;
     vertical-align: baseline;
 }
-.layui-form-inline button{
-    height:100%;
+div.order span{
+    height: 32px;
+    line-height: 32px;
     font-size: 12px;
-    vertical-align: top;
-    letter-spacing: normal;
-    border-radius: 0;
-    cursor: pointer;
-    border: solid 2px #009688;
+    -webkit-border-radius: 0px;
+    -moz-border-radius: 0px;
+    border-radius: 0px;:
+    margin: 0px;
+    background-color: #e2e2e2;
+}
+div.form-body {
+    width: 90%;
+    margin-left: 30px;
+}
+.layui-input:hover,.layui-textarea:hover{
+    border-color:#009688!important;
+}
+.layui-input:focus,.layui-textarea:focus{
+    border-color:#009688;
 }

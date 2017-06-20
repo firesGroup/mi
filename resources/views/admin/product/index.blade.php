@@ -50,14 +50,15 @@
             </blockquote>
         </div>
         <div class="larry-personal-body clearfix">
-            <div class="btn-group">
-                <button class="layui-btn layui-btn-small">
-                    <i class="layui-icon">&#xe608;</i> 添加商品
-                </button>
-                <button class="layui-btn layui-btn-small" id="refresh">
-                    <i class="layui-icon">&#x1002;</i> 刷新本页
-                </button>
-                <form action="" method="get" class="layui-form-inline">
+                <div class="btn-group">
+                    <button class="layui-btn layui-btn-small">
+                        <i class="layui-icon">&#xe608;</i> 添加商品
+                    </button>
+                    <button class="layui-btn layui-btn-small" id="refresh">
+                        <i class="layui-icon">&#x1002;</i> 刷新本页
+                    </button>
+                </div>
+                <div class="order">
                     <select name="category">
                         <option value="0">所有分类</option>
                     </select>
@@ -70,11 +71,10 @@
                         <option value="2">按价格由低到高</option>
                     </select>
                     <input class="layui-input-inline" placeholder="搜索关键词" name="search" value="">
-                    <button class="layui-btn layui-btn-small" >
-                        <i class="layui-icon">&#xe615;</i>搜索
-                    </button>
-                </form>
-            </div>
+                    <span class="layui-btn" >
+                                <i class="layui-icon">&#xe615;</i>搜索
+                            </span>
+                </div>
             <table class="layui-table larry-table-info">
             <colgroup>
                 <col width="100">
@@ -127,7 +127,7 @@
             <div class="larry-table-page">
              {{ $productList->render() }}
             </div>
-        </div>
+        </>
     </div>
 </section>
 <!-- 加载js文件-->
@@ -180,10 +180,6 @@
             }, function(Index){
                 layer.close(Index);
             });
-        });
-
-        $('i#closeInfo').on('click', function(){
-            $(this).parent().parent().remove();
         });
         $('button#refresh').on('click', function(){
             location.href=location.href;

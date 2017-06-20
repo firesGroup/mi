@@ -35,9 +35,7 @@
     </div>
 
 </div>
-{{--<div class="pagination center-block">--}}
-    {{--{{$data->links()}}--}}
-{{--</div>--}}
+{{--    {{$data->links()}}--}}
 
 
         @yield('order')
