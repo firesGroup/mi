@@ -20,29 +20,16 @@
  * Time: 16:09
  */
 ?>
-        <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>商品管理首页 - 小米商城系统 - FiresGroup</title>
-    <meta name="renderer" content="webkit">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="format-detection" content="telephone=no">
-    <link rel="Shortcut Icon" href="/favicon.ico" />
-    <!-- load css -->
-    <link rel="stylesheet" type="text/css" href="{{ asset('/plugin/layui/css/layui.css') }}" media="all">
-    <link rel="stylesheet" type="text/css" href="{{ asset('/css/admin/global.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('/css/admin/font.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('/css/admin/common.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('/css/admin/personal.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('/css/admin/main.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('/css/admin/show.css') }}">
-</head>
-<body>
-<section class="larry-grid">
+@extends('layouts.iframe')
+
+@section('title','修改商品信息')
+
+@section('css')
+    @parent
+@endsection
+
+@section('content')
+    <section class="larry-grid">
     <div class="larry-personal">
         <header class="larry-personal-tit">
             <span>商品管理-修改信息</span>
@@ -175,9 +162,10 @@
         </div>
     </div>
 </section>
-<!-- 加载js文件-->
-<script type="text/javascript" src="{{ asset('/plugin/layui/layui.js') }}"></script>
-<script type="text/javascript" src="{{ asset('/js/admin/larry.js') }}"></script>
+@endsection
+
+@section('js')
+    @parent
 <script>
     layui.use(['jquery','layer','form', 'upload','layedit', 'element'], function () {
         var form = layui.form()
@@ -199,5 +187,4 @@
     });
 
 </script>
-</body>
-</html>
+@endsection
