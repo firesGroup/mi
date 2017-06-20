@@ -114,7 +114,7 @@
                 <div class="larry-table-page">
                     {{ $productList->render() }}
                 </div>
-            </>
+            </div>
         </div>
     </section>
 @endsection
