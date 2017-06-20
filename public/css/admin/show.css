@@ -1,3 +1,6 @@
+*{
+    box-sizing: border-box;
+}
 .layui-elem-quote{
     color: #0ba4da !important;
     background-color: rgba(79, 192, 232, 0.11) !important;
@@ -81,9 +84,48 @@ div.form-body {
     width: 90%;
     margin-left: 30px;
 }
-.layui-input:hover,.layui-textarea:hover{
+.layui-input:hover,
+.layui-textarea:hover,
+div.layui-upload-button:hover,
+div.uploadFile:hover{
     border-color:#009688!important;
 }
 .layui-input:focus,.layui-textarea:focus{
     border-color:#009688;
+}
+
+div.p-images-list-box {
+    margin-left: 30px;
+}
+div#p-images-list ul li{
+    width: 200px;
+    height: 150px;
+    float: left;
+    text-align: center;
+    cursor: pointer;
+    border:1px solid #e2e2e2;
+    margin:10px;
+}
+div#p-images-list ul li:hover{
+    border-color: #009688;
+}
+div#p-images-list ul li img{
+    margin-top:8%;
+}
+div.uploadFile{
+    float:left;
+    cursor: pointer;
+    width:200px;
+    height: 150px;
+    border:1px solid #e2e2e2;
+    text-align: center;
+    padding-top:5%;
+    margin:10px;
+}
+div.uploadFile i{
+    font-size:50px;
+    color: #333;
+}
+div.uploadFile:hover i{
+    color: #009688;
 }

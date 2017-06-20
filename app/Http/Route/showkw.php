@@ -12,4 +12,7 @@
 Route::group(['namespace'=>'Admin','prefix'=>'admin'], function(){
     Route::get('/', 'AdminController@index');
     Route::resource('product', 'ProductController');
+    Route::get('product/{id}/images', 'ProductController@getImages');
+    Route::post('product/{id}/images', 'ProductController@postImages');
 });
+Route::post( '/upload', 'PublicC\UploadController@upload' );
