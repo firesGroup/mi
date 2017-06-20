@@ -17,8 +17,24 @@
 @endsection
 
 @section('content')
+    <header class="larry-personal-tit clearfix">
+        <span>会员管理-列表</span>
+    </header>
+    <div class="btn-group clearfix">
+        <span class="layui-btn layui-btn-small">
+            <i class="layui-icon">&#xe615;</i>搜索会员
+        </span>
+        <button class="layui-btn layui-btn-small">
+            <i class="layui-icon">&#xe608;</i> 添加会员
+        </button>
+        <button class="layui-btn layui-btn-small" id="refresh">
+            <i class="layui-icon">&#x1002;</i> 刷新本页
+        </button>
+        <input class="layui-input clearfix" placeholder="搜索关键词" name="search" value=""
+               style="width:400px;margin-top:10px;">
+    </div>
     <div>
-        <table class="layui-table">
+        <table class="layui-table" style="margin-top: 20px;">
 
             <colgroup>
                 <col width="150">
@@ -51,23 +67,28 @@
                     <td>{{$v->phone}}</td>
                     <td>{{$state[$v->status]}}</td>
                     <td>{{$v->last_ip}}</td>
-                    <form action="{{url('admin/member/'.$v->id )}}" method="post">
-                        <td>
-                            <a class="layui-btn ayui-btn-normal" href="{{url('admin/member/'.$v->id.'/edit')}}">编辑</a>
-                            <input type="hidden" name="_token" value="{{csrf_token()}}">
-                            <input type="hidden" name="_method" value="DELETE">
-                            <input type="submit" class="layui-btn layui-btn-danger"
-                                   value="删除" style="text-color:#fff">
-                        </td>
-                    </form>
-            @endforeach
+                    <td>
+                        <div class="layui-btn-group">
+                            <a href="{{ url('admin/member').'/'.$v->id }}" class="layui-btn"
+                               data-alt="查看">
+                                <i class="layui-icon">&#xe60b;</i>
+                            </a>
+                            <a href="{{ url('admin/member').'/'.$v->id."/edit" }}" class="layui-btn"
+                               data-alt="修改">
+                                <i class="layui-icon">&#xe642;</i>
+                            </a>
+                            <a id="delete" data-id="{{ $v->id }}" class="layui-btn" data-alt="删除">
+                                <i class="layui-icon">&#xe640;</i>
+                            </a>
+
+                        </div>
+                    </td>
+                    @endforeach
                 </tr>
             </tbody>
         </table>
-        <div class="pagination center-block" style="text-align:center">
-
-            {{ $data->links() }}
-
+        <div class="larry-table-page" style="text-align:center">
+            {{ $data->render() }}
         </div>
     </div>
 @endsection
@@ -81,6 +102,61 @@
                 var layer = layui.layer;
                 layer.msg('删除成功');
             });
+            @endif
         </script>
-    @endif
+        <script>
+            layui.use(['jquery', 'layer'], function () {
+                var $ = layui.jquery,
+                    layer = layui.layer;
+                var index;
+                $('a.layui-btn').on('mouseover', function () {
+                    var alt = $(this).attr('data-alt');
+                    index = layer.tips(alt, $(this), {tips: [1, '#0FA6D8']});
+                });
+                $('a.layui-btn').on('mouseout', function () {
+                    layer.close(index);
+                });
+                $('a#delete').on('click', function () {
+                    var th = $(this),
+                        t = th.parent().parent().parent('tr');
+                    layer.confirm('确定要删除吗?', {
+                        btn: ['确定', '取消'] //按钮
+                        , btnAlign: 'c'
+                        , shade: 0.8
+                        , id: 'MI_delTips' //设定一个id，防止重复弹出
+                        , moveType: 1 //拖拽模式，0或者1
+                        , resize: false
+                    }, function () {
+                        var id = th.data('id');
+                        var l = layer.msg('正在加载请稍后...', {
+                            icon: 6
+                        });
+                        $.ajax({
+                            url: '{{ url('/admin/member') }}' + '/' + id
+                            , type: "POST"
+                            , data: {'_method': 'DELETE', '_token': '{{ csrf_token() }}'}
+                            , success: function (data) {
+//                                alert(data);
+                                layer.close(l);
+                                if (data == 1) {
+                                    layer.msg('删除成功', {icon: 1});
+                                    t.remove();
+                                } else if (data == 0) {
+                                    layer.msg('数据不存在!', {icon: 2});
+                                } else {
+                                    layer.msg('id错误!', {icon: 2});
+                                }
+                            }
+                        });
+
+                    }, function (Index) {
+                        layer.close(Index);
+                    });
+                });
+                $('button#refresh').on('click', function () {
+                    location.href = location.href;
+                });
+            })
+        </script>
+
 @endsection
