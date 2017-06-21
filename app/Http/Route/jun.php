@@ -18,4 +18,6 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function () {
     Route::get('/', 'AdminController@index');
 
     Route::resource('order', 'OrderController');
+    Route::get('orderStatus', 'OrderController@updateStatus');
+
 });

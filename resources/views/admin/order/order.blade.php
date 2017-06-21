@@ -22,9 +22,22 @@
 @section('content')
     <section class="larry-grid">
         <div class="larry-personal">
+            <div class="row" id="infoSwitch">
+                <blockquote class="layui-elem-quote col-md-12 head-con">
+                    <div class="title">
+                        <i class="larry-icon larry-caozuo"></i>
+                        <h4 title="提示相关设置操作时应注意的要点">操作提示</h4>
+                    </div>
+                    <ul>
+                        <li>商品订单管理</li>
+                        <li>点击操作可查看订单详情</li>
+                    </ul>
+                </blockquote>
+            </div>
             <header class="larry-personal-tit">
-                <span>商品订单</span>
-                共计({{$sum}})
+
+
+                <span style="font-size: 25px;">商品订单</span><span>(共计{{$sum}}条)</span>
                 <button class="layui-btn layui-btn-radius layui-btn-primary" id="refresh">
                     <i class="layui-icon">&#x1002;</i> 刷新本页
                 </button>
@@ -36,8 +49,8 @@
                     <th>订单编号</th>
                     <th>用户</th>
                     <th>收货人</th>
-                    <th>收货手机</th>
-                    <th>收货地址</th>
+                    <th>收货手机号</th>
+                    {{--<th>收货地址</th>--}}
                     <th>订单总价</th>
                     <th>下单时间</th>
                     <th>订单状态</th>
@@ -52,7 +65,7 @@
                         <td>{{$v->mid}}</td>
                         <td>{{$v->user}}</td>
                         <td>{{$v->phone}}</td>
-                        <td>{{$v->address}}</td>
+                        {{--<td>{{$v->address}}</td>--}}
                         <td>{{$v->total}}</td>
                         <td>{{$v->add_time}}</td>
                         <td>{{$status[$v->order_status]}}</td>
