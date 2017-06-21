@@ -41,7 +41,9 @@
                     <div class="layui-tab-content">
                         <div class="layui-tab-item layui-show" style="padding-top:20px">
                             <div class="form-body">
-                                <form class="layui-form" action="" method="post">
+                                <form class="layui-form" action="{{url('admin/member/'.$data->id)}}" method="post" enctype="multipart/form-data">
+                                    {{csrf_field()}}
+                                    <input type="hidden" name="_method" value="PUT">
                                     <div class="layui-form-item">
                                         <label class="layui-form-label">会员呢称</label>
                                         <div class="layui-input-block">
