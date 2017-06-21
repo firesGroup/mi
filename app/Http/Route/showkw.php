@@ -14,5 +14,9 @@ Route::group(['namespace'=>'Admin','prefix'=>'admin'], function(){
     Route::resource('product', 'ProductController');
     Route::get('product/{id}/images', 'ProductController@getImages');
     Route::post('product/{id}/images', 'ProductController@postImages');
+    Route::get('product/{id}/indexImage', 'ProductController@getIndexImage');
+    Route::post('product/{id}/indexImage', 'ProductController@postIndexImage');
+    Route::delete('product/{id}/images', 'ProductController@deleteImages');
 });
-Route::post( '/upload', 'PublicC\UploadController@upload' );
+Route::get( '/upload/{path}/{id}/{url}', 'PublicC\UploadController@getUpload' );
+Route::post( '/upload', 'PublicC\UploadController@postUpload' );

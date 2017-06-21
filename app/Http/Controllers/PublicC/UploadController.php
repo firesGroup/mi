@@ -10,22 +10,31 @@ use App\Http\Controllers\Controller;
 class UploadController extends Controller
 {
     /*
+     * 获取上传页模板
+     */
+    public function getUpload(Request $request, $path, $id, $url)
+    {
+        $url = strtr( $url, ['@'=>'/'] );
+        return view('public.upload',compact('path', 'id', 'url'));
+    }
+
+    /*
      * 实现文件上传方法
      *
      * @return
      */
-    public function upload(Request $request)
+    public function postUpload(Request $request)
     {
         //获取表单提交的上传文件Input的属性name的值
         $inputName = $request->input('inputName')?$request->input('inputName'):'file';
 
         //定义文件存储路径
-        $dir = $request->input('path')?$request->input('path'):date('Ymd',time());
+        $path = $request->input('path')?$request->input('path'):date('Ymd',time());
 
         //检查目录是否存在
         //若不存在则创建目录
-        if( !file_exists( $dir ) ) {
-            mkdir($dir, 0755, true);
+        if( !file_exists( $path ) ) {
+            mkdir($path, 0755, true);
         }
 
         //判断是否为POST请求---文件上传必须为post
@@ -50,22 +59,17 @@ class UploadController extends Controller
                 $fileName = md5(date('YmdHis').$originalName).'.'.$ext;
 
                 //拼接文件存储路径
-                $path = $dir.'/'.$fileName;
+                $newPath = $path.'/'.date('Ymd',time()).'/'.$fileName;
 
                 //移动文件
-                $bool = Storage::disk('uploads')->put( $path , file_get_contents($realPath));
+                $bool = Storage::disk('uploads')->put( $newPath, file_get_contents($realPath));
 
                 if( $bool ){
                     $res['status'] = 0;
-                    $res['src'] = '/uploads/'.$path;
+                    $res['src'] = '/uploads/'.$newPath;
                 }else{
                     $res['status'] = 1;
                 }
-                //获取成功后回调 控制器名称,方法名,参数
-                $rtUri = $request->input('rtUri');
-                $rtParams = $request->input('rtParams');
-
-
                 return json_encode($res);
             }
         }else{

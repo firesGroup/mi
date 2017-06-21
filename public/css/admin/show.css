@@ -110,7 +110,8 @@ div[id^='upload-div'] ul li:hover{
     border-color: #009688;
 }
 div[id^='upload-div'] ul li img{
-    margin-top:8%;
+    width: 200px;
+    height: 150px;
 }
 div.uploadFile{
     float:left;
@@ -131,9 +132,12 @@ div.uploadFile:hover i{
 }
 
 div.upload-alert-box{
-    width:100%;
-    height:100%;
+    width: 500px;
+    height: 203px;
+    position:relative;
+    z-index: 100;
     cursor: pointer;
+    overflow: hidden;
 }
 div.upload-alert-box input{
     width: 0px;
@@ -145,4 +149,35 @@ div.upload-alert-box .layui-upload-button{
 }
 div.upload-alert-box span{
     margin-top:70px;
+}
+div.images-list li{
+    position:relative;
+    z-index:30;
+}
+
+div.images-list li span{
+    display:none;
+    position:absolute;
+    z-index:20;
+    left:0;
+    bottom:0px;
+    width:100%;
+    height:40px;
+    line-height:40px;
+    -webkit-border-radius:2px;
+    -moz-border-radius:2px;
+    border-radius:2px;
+    text-align: center;
+    background: #283133;
+    color: #009688;
+}
+div.images-list li:hover img{
+    opacity:.5;
+}
+div.images-list li:hover span{
+    display: inline-block;
+}
+span.layui-btn{
+    display:inline-block;
+    border-radius: 0;
 }

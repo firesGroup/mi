@@ -129,9 +129,8 @@
                                 <div class="layui-form-item">
                                     <label class="layui-form-label">商品封面</label>
                                     <div class="layui-input-block">
-                                        <div class="layui-box layui-upload-button">
-                                            <span class="layui-upload-icon"><i class="layui-icon"></i>上传商品封面图片</span>
-                                        </div>
+                                            <input id="upload-input" type="text" class="layui-input layui-input-inline" name="p_index_image" value="{{ $detail->p_index_image }}" style="width:520px;height:38px;margin:0px" placeholder="输入图片地址或点击上传">
+                                            <span class="layui-btn" id="uploadImage"><i class="layui-icon"></i>上传商品封面图片</span>
                                     </div>
                                 </div>
                                 <div class="layui-form-item">
@@ -199,41 +198,58 @@
             var i = 2;
             var th = $(this);
             if (th.attr('id') == 'p-images') {
-                $.ajax({
-                    url: '{{ url('/admin/product').'/'.$info->id.'/images'  }}',
-                    method: 'get',
-                    success: function (res) {
-                        var str = '<div class="images-list"><ul>';
-                        for (var i = 0; i < res.length; i++) {
-                            str += '<li>';
-                            str += '<img  src="' + rootUrl + res[i].path + '">'
-                            str += '</li>';
-                        }
-                        str += '<ul></div><div class="uploadFile" id="uploadFile"><i class="layui-icon"></i> </div>';
+                if( !$('div.images-list').hasClass('request') ){
+                    ajaxGetImagesList('{{ $info->id }}', '{{ $info->p_name }}');
+                }
 
-                        $('div#upload-div-1').html(str);
-                    }
-                });
             }
         } );
 
+        $( '#uploadImage' ).on('click', function(){
+            openUpload(id,'{{ $info->p_name }}', 'product',"@admin@product@"+ id +"@indexImage", function(){
+                $.ajax({
+                    url: "{{ url('/admin/product/'.$info->id.'/indexImage') }}",
+                    type:"get",
+                    success:function(data){
+                        $('input#upload-input').val(data);
+                    }
+                });
+            });
+        });
 
+        $('div#upload-div-1').on('click', '#uploadFile',function(){
+            if( $('div.images-list li').length < 5 ){
+                openUpload( id ,'{{ $info->p_name }}' ,'product', '@admin@product@' + id + '@images')
+            }else{
+                layer.alert('最多上传5张图片!',{title:'提示',icon:2});
+            }
+        } );
 
-        /*
-         * 文件上传
-         * auth  showkw
-         *
-         * param  url   文件上传处理地址
-         * param  token  防csrf令牌
-         * param  dir    文件上传保存目录名(相对于/public/uploads/下的目录)
-         * param rtUri   上传成功后后台需要后续处理的操作 uri
-         * param rtParams   需要传递的参数 json格式传入
-         * param  rtMethod   后续处理请求方式 GET/POST/PUT/DELETE
-         */
-       uploadFile( '{{ url('/upload')  }}', token, 'test',
-           '{{ url('admin/product').'/'.$info->id.'/images'  }}',{ 'id': id }, 'POST'  );
+        $('div#upload-div-1').on( 'click', 'span.del', function(){
+             var index = layer.load(),
+                 img = $( this ).siblings('img'),
+                 iid = img.attr('data-id'),
+                 path = img.attr('src');
+             $.ajax({
+                 url: '{{ url('/admin/product') }}/' + iid + "/images",
+                 type: 'DELETE',
+                 data: {'id': iid, 'path': path , '_token': token },
+                 success: function(res){
+                     layer.close(index);
+                        if( res == 0 ){
+                            layer.msg('删除成功!',{ icon:6,time:1000 });
+                        }else if( res == 1 ){
+                            layer.msg('磁盘文件删除失败!',{ icon:2,time:1000 });
+                        }else if( res == 2 ){
+                            layer.msg('数据删除失败!',{ icon:2,time:1000 });
+                        }else{
+                            layer.msg('未知错误!删除失败!',{ icon:2,time:1000 });
+                        }
+                     ajaxGetImagesList('{{ $info->id }}', '{{ $info->p_name }}');
+                 }
+             });
 
-
+        } );
         });
 </script>
 @endsection
