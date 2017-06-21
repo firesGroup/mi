@@ -17,6 +17,7 @@ use App\Entity\Product;
 use App\Entity\ProductImages;
 use App\Http\Requests\Admin\ProductRequest;
 use App\Http\Controllers\Controller;
+use Storage;
 use DB;
 
 class ProductController extends Controller
@@ -103,6 +104,27 @@ class ProductController extends Controller
         return DB::table('product')->delete($id);
     }
 
+
+    public function getIndexImage(ProductRequest $request, $id)
+    {
+        $path = DB::table('productDetail')->where('pid',$id)->value('p_index_image');
+        return $path;
+    }
+
+    public function postIndexImage(ProductRequest $request)
+    {
+        //判断是否post提交
+        if( $request->isMethod('post') ) {
+            $id = $request->input('id');
+            $src = $request->input('src');
+            $id = DB::table('productDetail')->where('pid', $id)->update(['p_index_image' => $src]);
+            if( $id ){
+                return 0;
+            }
+        }
+    }
+
+
     /**
      * 获取商品相册图片
      *
@@ -124,10 +146,52 @@ class ProductController extends Controller
 
     public function postImages(ProductRequest $request)
     {
+        //判断是否post提交
         if( $request->isMethod('post') ){
             $id = $request->input('id');
             $src = $request->input('src');
-           DB::table('productImages')->insert(['pid'=>$id, 'path' => $src]);
+
+//            dd($id.$src);
+            //获取当前商品已上传的数量
+            $count = ProductImages::where('pid',$id)->count();
+            if( $count < 6 ){
+                $id = DB::table('productImages')->insertGetId(['pid'=>$id, 'path' => $src]);
+                if( $id ){
+                    return '{"id":'.$id.', "status":0}';
+                }
+            }else{
+                return 1;
+            }
+
         }
+    }
+
+    /**
+     * 删除商品相册中图片
+     *
+     * 需表单传递参数:  id   int       被删除图片的id
+     *               path string     被删除图片的以/uploads开头的路径
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function deleteImages(ProductRequest $request)
+    {
+        //接收表单传递的id与path
+        $id = $request->input('id');
+        $path = $request->input('path');
+        //分割路径
+        $path = substr( $path, 8 );
+        //从磁盘删除图片
+        $bool1 = Storage::disk('uploads')->delete($path);
+        //从数据库删除对应id的图片数据
+        $bool2 = DB::table('productImages')->delete($id);
+        if( $bool1 && $bool2 ){
+            return 0;
+        }elseif ( !$bool1 ) {
+            return 1;
+        }else{
+            return 2;
+        }
+
     }
 }
