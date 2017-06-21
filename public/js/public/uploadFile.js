@@ -9,6 +9,19 @@
 * param rtParams   需要传递的参数 json格式
 * param  rtMethod   后续处理请求方式 GET/POST/PUT/DELETE
 *
+*
+*
+* 使用方法
+* 引入js文件 与 show.css
+*
+* HTML:
+*
+* 添加一个div  id为:upload-div-1   因为可能存在一个页面多个上传所以这里的1可以变
+* <div id="upload-div-1"></div>
+*
+* <script>
+*   uploadFile( url, token, dir, rtUri, rtParams, rtMethod  );  //传入相应参数调用,ok
+* </script>
 */
 
 function uploadFile ( url, token, dir, rtUri, rtParams, rtMethod ) {
@@ -20,12 +33,12 @@ function uploadFile ( url, token, dir, rtUri, rtParams, rtMethod ) {
         var  src;
 
         //上传按钮
-        $('div#p-images-list').on('click', 'div#uploadFile' , function(){
+        $('div[id^=upload-div]').on('click', 'div#uploadFile' , function(){
             var th = $(this),
                 id = th.attr('id'),
                 str;
 
-            str = '<div class="form-body"><div class="layui-input-block"><input type="file" name="file" class="layui-upload-file" id="up"></div></div>';
+            str = '<div class="upload-alert-box"><input type="file" name="file" class="layui-upload-file" id="up" lay-title="点击此处或拖拽文件至此处"></div>';
 
             //显示弹窗
             var op = layer.open({

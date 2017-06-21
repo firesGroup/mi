@@ -101,3 +101,15 @@
 // //        'remember_token' => str_random(10),
 //     ];
 // });
+// $factory->define(App\Entity\ProductDetail::class, function (Faker\Generator $faker) {
+//     return [
+//        'pid'=> rand(8,40),
+//        'p_index_image' => $faker->imageUrl(),
+//        'summary' => $faker->paragraph,
+//         'description' => $faker->sentence,
+//         'remind_title' => $faker->paragraph,
+//         'store' => $faker->randomDigitNotNull,
+//         'sell_num' => $faker->randomDigitNotNull,
+//         'click_num' => $faker->randomDigitNotNull,
+//     ];
+// });

@@ -30,6 +30,7 @@
 @endsection
 
 @section('content')
+{{--    {{var_dump($detail)}}--}}
     <section class="larry-grid">
     <div class="larry-personal">
         <header class="larry-personal-tit">
@@ -57,7 +58,7 @@
                 <div class="layui-tab-content">
                     <div class="layui-tab-item layui-show" style="padding-top:20px">
                         <div class="form-body">
-                            <form class="layui-form"method="post">
+                            <form class="layui-form" method="post">
                                 <div class="layui-form-item">
                                     <label class="layui-form-label">商品名称</label>
                                     <div class="layui-input-block">
@@ -67,21 +68,21 @@
                                 <div class="layui-form-item">
                                     <label class="layui-form-label">商品简介</label>
                                     <div class="layui-input-block">
-                                        <textarea type="text" name="summary" lay-verify="required" placeholder="请输入商品简介" autocomplete="off" class="layui-input"></textarea>
+                                        <textarea type="text" name="summary" lay-verify="required" placeholder="请输入商品简介" autocomplete="off" class="layui-input">{{ $detail->summary }}</textarea>
                                     </div>
                                 </div>
                                 <div class="layui-form-item">
                                     <label class="layui-form-label">商品分类</label>
                                     <div class="layui-input-block">
                                         <div class="layui-input-inline">
-                                            <select name="category1">
+                                            <select >
                                                 <option value="">请选择分类</option>
                                                 <option value="你的工号">江西省</option>
                                                 <option value="你最喜欢的老师">福建省</option>
                                             </select>
                                         </div>
                                         <div class="layui-input-inline">
-                                            <select name="category1">
+                                            <select >
                                                 <option value="">请选择分类</option>
                                                 <option value="杭州">杭州</option>
                                                 <option value="宁波" disabled="">宁波</option>
@@ -91,7 +92,7 @@
                                             </select>
                                         </div>
                                         <div class="layui-input-inline">
-                                            <select name="category1">
+                                            <select >
                                                 <option value="">请选择分类</option>
                                                 <option value="西湖区">西湖区</option>
                                                 <option value="余杭区">余杭区</option>
@@ -103,7 +104,7 @@
                                 <div class="layui-form-item">
                                     <label class="layui-form-label">商品品牌</label>
                                     <div class="layui-input-block">
-                                        <select name="bid" lay-filter="brand">
+                                        <select lay-filter="brand">
                                             <option value=""></option>
                                             <option value="0">写作</option>
                                             <option value="1" selected="">阅读</option>
@@ -116,13 +117,13 @@
                                 <div class="layui-form-item">
                                     <label class="layui-form-label">商品价格</label>
                                     <div class="layui-input-block">
-                                        <input type="text" name="price" lay-verify="required" placeholder="请输入商品价格" autocomplete="off" class="layui-input">
+                                        <input type="text" name="price" lay-verify="required" placeholder="请输入商品价格" autocomplete="off" class="layui-input" value="{{ $info->price }}">
                                     </div>
                                 </div>
                                 <div class="layui-form-item">
                                     <label class="layui-form-label">市场价格</label>
                                     <div class="layui-input-block">
-                                        <input type="text" name="market_price" lay-verify="required" placeholder="请输入市场价格" autocomplete="off" class="layui-input">
+                                        <input type="text" name="market_price" lay-verify="required" placeholder="请输入市场价格" autocomplete="off" class="layui-input" value="{{ $info->market_price }}">
                                     </div>
                                 </div>
                                 <div class="layui-form-item">
@@ -136,12 +137,12 @@
                                 <div class="layui-form-item">
                                     <label class="layui-form-label">商品详情</label>
                                     <div class="layui-input-block">
-                                        <textarea class="layui-textarea" id="editor" style="display: none" name="description">把编辑器的初始内容放在这textarea即可</textarea>
+                                        <textarea class="layui-textarea" id="editor" style="display: none" name="description">{{ $detail->description }}</textarea>
                                     </div>
                                 </div>
                                 <div class="layui-form-item">
                                     <div class="layui-input-block">
-                                        <button class="layui-btn" lay-submit="" lay-filter="productInfo">立即提交</button>
+                                        <button class="layui-btn" lay-submit="" lay-filter="editInfo">立即提交</button>
                                         <button type="reset" class="layui-btn layui-btn-primary">重置</button>
                                     </div>
                                 </div>
@@ -149,7 +150,7 @@
                         </div>
                     </div>
                     <div class="layui-tab-item">
-                        <div class="p-images-list-box clearfix" id="p-images-list">
+                        <div class="p-images-list-box clearfix" id="upload-div-1">
                         </div>
                     </div>
                     <div class="layui-tab-item">内容3</div>
@@ -180,8 +181,24 @@
         var id = '{{ $info->id }}';
         var rootUrl = '{{ url('/') }}';
 
+        //修改商品信息
+
+        form.on('submit(editInfo)', function(){
+            $.ajax({
+                url:'{{ url('/admin/product').'/'.$info->id }}',
+                type:PUT,
+                data: serializeArray(),
+                success: function(res){
+                    console.log(res);
+                }
+            });
+        });
+
+        //tab切换到相册
         element.on('tab(tab)',function(){
-            if ($(this).attr('id') == 'p-images') {
+            var i = 2;
+            var th = $(this);
+            if (th.attr('id') == 'p-images') {
                 $.ajax({
                     url: '{{ url('/admin/product').'/'.$info->id.'/images'  }}',
                     method: 'get',
@@ -194,11 +211,12 @@
                         }
                         str += '<ul></div><div class="uploadFile" id="uploadFile"><i class="layui-icon"></i> </div>';
 
-                        $('div#p-images-list').html(str);
+                        $('div#upload-div-1').html(str);
                     }
                 });
             }
         } );
+
 
 
         /*
