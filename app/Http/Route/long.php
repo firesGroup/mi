@@ -11,6 +11,8 @@
 Route::group( ['namespace'=>'Admin', 'prefix'=>'admin'], function(){
     Route::get('/', 'AdminController@index');
     Route::resource( 'member', 'MemberController' );
+    Route::resource('level', 'LevelController');
+    Route::post('ajax', 'LevelController@ajax');
 } );
 
 
