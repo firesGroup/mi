@@ -78,7 +78,7 @@
                             <td>{{ $status[$user->status] }}</td>
                             <td>{{ $user->add_time }}</td>
                             <td>{{ $user->last_time }}</td>
-                            <td>{{ $user->ip }}</td>
+                            <td>{{ $user->last_ip }}</td>
                             <td>
                                 <div class="layui-btn-group">
                                     <a href="{{ url('admin/user').'/'.$user->id }}" class="layui-btn  layui-btn-small" data-alt="查看">
