@@ -40,12 +40,13 @@
             <div class="larry-personal-body clearfix">
                 <div class="btn-group">
                     <button class="layui-btn layui-btn-small">
-                        <i class="layui-icon">&#xe608;</i> 添加管理员
+                        <i class="layui-icon">&#xe608;</i> <a href="{{url('admin/user/create')}}" style="color:white">添加管理员</a>
                     </button>
                     <button class="layui-btn layui-btn-small" id="refresh">
                         <i class="layui-icon">&#x1002;</i> 刷新本页
                     </button>
                 </div>
+                <br><br>
 
                 <table class="layui-table larry-table-info">
                     <colgroup>
