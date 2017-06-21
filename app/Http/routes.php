@@ -11,7 +11,7 @@
 |
 */
 // //肖开文-路由文件
- include('Route/showkw.php');
+// include('Route/showkw.php');
 
 // //王明-路由文件
 // include('Route/wim.php');
@@ -20,4 +20,4 @@
  include('Route/long.php');
 
 //潘珺-路由文件
-//include('Route/jun,php');
+//include('Route/jun.php');

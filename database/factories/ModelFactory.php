@@ -21,9 +21,9 @@
 //     ];
 // });
 // $factory->define(App\adminRole::class, function (Faker\Generator $faker) {
-//     $userIds = \App\adminGroup::lists('id')->toArray();
+//     $gid = \App\adminGroup::lists('id')->toArray();
 //     return [
-//         'group_id' => $faker->randomElement($userIds),
+//         'group_id' => $faker->randomElement($gid),
 //         'role_name' => $faker->name,
 //         'role_desc' => $faker->paragraph,
 //         'role' => str_random(1),
@@ -43,14 +43,26 @@
 
 //=================
 //龙彪使用::
-// $factory->define(App\Member::class, function (Faker\Generator $faker) {
+// $factory->define(App\Entity\Member::class, function (Faker\Generator $faker) {
 //     return [
 //         'nick_name' => $faker->name,
 //         'email' => $faker->safeEmail,
 //         'phone' => $faker->phoneNumber,
 //         'status' => $faker->internetExplorer,
 //         'last_ip' => $faker->ipv4,
+//         'password' => str_random(9),
 //         'remember_token' => str_random(10),
+//     ];
+// });
+
+
+//$factory->define(App\Entity\MemberDetail::class, function (Faker\Generator $faker) {
+//     $userIds = \App\Entity\Member::lists('id')->toArray();
+//     return [
+//         'mid' => $faker->randomElement($userIds),
+//         'sex' =>$faker->internetExplorer,
+//         'birthday' => $faker->dateTime,
+//         'avator' => $faker->imageUrl(),
 //     ];
 // });
 
