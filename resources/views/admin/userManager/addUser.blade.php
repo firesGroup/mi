@@ -192,8 +192,10 @@
 //                            that.data('u', username);
                             console.log(data);
                             if (data == 1) {
-
+                                that.css({'border':'1px solid #ff5722'});
                                 layer.msg('用户名已存在');
+                            } else {
+                                that.css({'border':'1px solid #f2f2f2'});
                             }
 
                         },

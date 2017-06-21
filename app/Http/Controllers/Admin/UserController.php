@@ -21,8 +21,37 @@ class UserController extends Controller
      */
     public function index()
     {
-        $data = admin::orderby('id')->paginate(5);
-//        dd(1111);
+        $data = DB::table('admin')->orderby('id')->paginate(5);
+//        dd($data->gid);
+//        foreach($data as $k=>$v) {
+////            dump($v->gid);
+//            $arr[$k] = $v->gid;
+//
+//        }
+//        dump($arr);
+//
+//        $array = DB::table('admingroup')->where('id',$arr[$k])->select();
+//        dump($array);
+//
+//
+//        foreach ($array as $k=>$row) {
+////            dump($row);
+////            dump($k);
+////            dump($row->group_name);
+//
+//            $group[$k] = $row->group_name;
+//        }
+////        dump($group);
+//
+//        $adgroup = array();
+//        for ($i=0;$i<count($arr); $i++) {
+////            dump($arr[$i]);
+////            dump($group[$i]);
+//           $adgroup += [$arr[$i] => $group[$i]];
+//        }
+//
+////        dump($adgroup);
+
         $sum = admin::count('id');
         $status = $this->status;
         return view('admin/userManager/index', compact('data', 'status', 'sum'));
@@ -130,10 +159,13 @@ class UserController extends Controller
      */
     public function edit($id)
     {
+        $arr = adminGroup::get();
         $data = admin::find($id);
-//        dd($data);
+//        dd($data->gid);
+
+        $str = adminGroup::find($data->gid);
         $status = [0 => '启用', 1 => '锁定'];
-        return view('admin/userManager/editUser', compact('data', 'status'));
+        return view('admin/userManager/editUser', compact('data', 'status', 'arr', 'str'));
     }
 
     /**

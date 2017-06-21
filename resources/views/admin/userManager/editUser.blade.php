@@ -19,7 +19,8 @@
 @endsection
 
 @section('content')
-
+{{--{{dd($arr)}}--}}
+{{--{{dd($str)}}--}}
 <section class="larry-grid">
     <div class="larry-personal">
         <header class="larry-personal-tit">
@@ -59,13 +60,20 @@
                                 <div class="layui-form-item">
                                     <label class="layui-form-label">密码</label>
                                     <div class="layui-input-block">
-                                        <input type="text" name="password" lay-verify="required" autocomplete="off" class="layui-input" value="{{$data->password}}">
+                                        <input type="password" name="password" lay-verify="required" autocomplete="off" class="layui-input" value="{{$data->password}}">
                                     </div>
                                 </div>
                                 <div class="layui-form-item">
-                                    <label class="layui-form-label">所属组id</label>
-                                    <div class="layui-input-inline"  style="margin-left: 40px">
-                                        <input type="text" name="gid" lay-verify="required" autocomplete="off" class="layui-input" value="{{$data->gid}}">
+                                    <label class="layui-form-label">所属于的权限组</label>
+                                    <div class="layui-input-block">
+                                        <select name="gid" lay-verify="required">
+                                            {{--<option value="{{$str->id}}">{{$str->group_name}}</option>--}}
+                                            @foreach($arr as $v)
+                                                {{--{{dump($v)}}--}}
+                                                <option value="{{$v->id}}">{{$v->group_name}}</option>
+
+                                            @endforeach
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="layui-form-item">
