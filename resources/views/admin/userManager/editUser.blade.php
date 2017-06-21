@@ -64,7 +64,7 @@
                                 </div>
                                 <div class="layui-form-item">
                                     <label class="layui-form-label">所属组id</label>
-                                    <div class="layui-input-inline">
+                                    <div class="layui-input-inline"  style="margin-left: 40px">
                                         <input type="text" name="gid" lay-verify="required" autocomplete="off" class="layui-input" value="{{$data->gid}}">
                                     </div>
                                 </div>

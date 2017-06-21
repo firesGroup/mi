@@ -12,7 +12,7 @@ use DB;
 
 class UserController extends Controller
 {
-    public $status = [0=>'启用', 1=>'锁定'];
+    public $status = [0 => '启用', 1 => '锁定'];
 
     /**
      * Display a listing of the resource.
@@ -35,24 +35,59 @@ class UserController extends Controller
      */
     public function create()
     {
-        //
+
+        $data = adminGroup::get();
+//        dd($data);
+
+        return view('admin/userManager/addUser', compact('data', 'arr'));
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
-        //
+        // 使用 请求 Request $request->all()
+        $data = $request->all();
+//        dd($data);
+//        dd($data['password']);
+
+        $arr = DB::table('admin')->select('username')->get();
+
+//        dd($arr);
+
+        foreach ($arr as $k => $v) {
+            $name[$k] = $v->username;
+        }
+
+//        dd($name);
+        if (in_array($data['username'], $name)) {
+            return back()->with(['success' => '添加失败！！！！！！！']);
+        } else {
+            $passwd = bcrypt($data['password']);
+//        dd($passwd);
+
+            $data['password'] = $passwd;
+//        dd($data);
+
+            if (admin::create($data)) {
+                return redirect('admin/user')->with(['success' => '添加成功！！！！！！！']);
+            } else {
+                return back()->withInput();
+            }
+
+        }
+
+
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -71,7 +106,7 @@ class UserController extends Controller
         $arr = explode(',', $str->role_list);
 //        dd($arr);
 
-        foreach($arr as $k=>$v) {
+        foreach ($arr as $k => $v) {
 //            dump($v);
             $group_id[$k] = DB::table('adminrole')->where('id', $v)->first();
 
@@ -83,36 +118,35 @@ class UserController extends Controller
 //        dd($array);
 
 
-       return view('admin/userManager/showUser', compact('data', 'str', 'array', 'status'));
+        return view('admin/userManager/showUser', compact('data', 'str', 'array', 'status'));
     }
 
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
     {
         $data = admin::find($id);
 //        dd($data);
-        $status = [0=>'启用', 1=>'锁定'];
+        $status = [0 => '启用', 1 => '锁定'];
         return view('admin/userManager/editUser', compact('data', 'status'));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \Illuminate\Http\Request $request
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
     {
 //        dd($request->status);
-        if (admin::where('id','=',$id)->update(['username'=>$request->username, 'password'=>bcrypt($request->password), 'gid'=>$request->gid, 'status'=>$request->status ]))
-        {
+        if (admin::where('id', '=', $id)->update(['username' => $request->username, 'password' => bcrypt($request->password), 'gid' => $request->gid, 'status' => $request->status])) {
 //            dd(111);
             return redirect('/admin/user');
         } else {
@@ -123,11 +157,32 @@ class UserController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
-       return DB::table('admin')->delete($id);
+        return DB::table('admin')->delete($id);
     }
+
+    public function ajax(Request $request)
+    {
+//        dd($request->input('username'));
+        $name = $request->input('username');
+
+        $username = DB::table('admin')->select('username')->get();
+//        dd($username);
+        foreach ($username as $k => $v) {
+//            dump($v);
+            $user[$k] = $v->username;
+
+        }
+//        var_dump($user);
+        if (in_array($name, $user)) {
+            return 1;
+        } else {
+            return 2;
+        }
+    }
+
 }
