@@ -11,7 +11,7 @@
 ?>
 @extends('layouts.iframe')
 
-@section('title','会员管理首页')
+@section('title','商品管理首页')
 
 @section('css')
     @parent
@@ -63,54 +63,62 @@
                                 </span>
                     </div>
                 <table class="layui-table larry-table-info">
-                <colgroup>
-                    <col width="100">
-                    <col width="200">
-                    <col>
-                </colgroup>
-                <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>商品名称</th>
-                    <th>所属分类</th>
-                    <th>品牌</th>
-                    <th>市场价</th>
-                    <th>商城价</th>
-                    <th>状态</th>
-                    <th>操作</th>
-                </tr>
-                </thead>
-                <tbody>
-                @foreach( $productList as $product )
-                <tr>
-                    <td>{{ $product->id }}</td>
-                    <td>{{ $product->p_name }}</td>
-                    <td>{{ $product->cid }}</td>
-                    <td>{{ $product->bid }}</td>
-                    <td>{{ $product->market_price }}元</td>
-                    <td>{{ $product->price }}元</td>
-                    <td>
-                        @if( $product->status == 0 )
-                            在售
-                        @endif
-                    </td>
-                    <td>
-                        <div class="layui-btn-group">
-                            <a href="{{ url('admin/product').'/'.$product->id }}" class="layui-btn  layui-btn-small" data-alt="查看">
-                                <i class="layui-icon" >&#xe60b;</i>
-                            </a>
-                            <a href="{{ url('admin/product').'/'.$product->id."/edit" }}" class="layui-btn  layui-btn-small" data-alt="修改">
-                                <i class="layui-icon">&#xe642;</i>
-                            </a>
-                            <a id="delete" data-id="{{ $product->id }}" class="layui-btn  layui-btn-small" data-alt="删除">
-                                <i class="layui-icon">&#xe640;</i>
-                            </a>
-                        </div>
-                    </td>
-                </tr>
-                @endforeach
-                </tbody>
-            </table>
+                    <colgroup>
+                        <col width="100">
+                        <col width="200">
+                        <col>
+                    </colgroup>
+                    <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>商品名称</th>
+                        <th>所属分类</th>
+                        <th>品牌</th>
+                        <th>市场价</th>
+                        <th>商城价</th>
+                        <th>状态</th>
+                        <th>操作</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    @foreach( $productList as $product )
+                    <tr>
+                        <td>{{ $product->id }}</td>
+                        <td>{{ $product->p_name }}</td>
+                        <td>{{ $product->cid }}</td>
+                        <td>{{ $product->bid }}</td>
+                        <td>{{ $product->market_price }}元</td>
+                        <td>{{ $product->price }}元</td>
+                        <td>
+                            @if( $product->status == 0 )
+                                在售
+                            @elseif( $product->status == 1 )
+                                下架
+                            @elseif( $product->status == 2 )
+                                预购
+                            @elseif( $product->status == 3 )
+                                缺货
+                            @elseif( $product->status == 4 )
+                                新品上市
+                            @endif
+                        </td>
+                        <td>
+                            <div class="layui-btn-group">
+                                <a href="{{ url('admin/product').'/'.$product->id }}" class="layui-btn  layui-btn-small" data-alt="查看">
+                                    <i class="layui-icon" >&#xe60b;</i>
+                                </a>
+                                <a href="{{ url('admin/product').'/'.$product->id."/edit" }}" class="layui-btn  layui-btn-small" data-alt="修改">
+                                    <i class="layui-icon">&#xe642;</i>
+                                </a>
+                                <a id="delete" data-id="{{ $product->id }}" class="layui-btn  layui-btn-small" data-alt="删除">
+                                    <i class="layui-icon">&#xe640;</i>
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                    @endforeach
+                    </tbody>
+                </table>
                 <div class="larry-table-page">
                     {{ $productList->render() }}
                 </div>

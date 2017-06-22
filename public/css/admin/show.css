@@ -37,6 +37,7 @@
 .btn-group{
     display:inline-block;
     float:left;
+    margin-bottom:10px;
 }
 .btn-group button{
     height:30px;

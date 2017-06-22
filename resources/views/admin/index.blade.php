@@ -75,7 +75,37 @@
                 <!-- 系统菜单 -->
                 <div class="sys-menu-box" >
                     <ul class="layui-nav layui-nav-tree" id="larrySideNav" lay-filter="side" >
-
+                        <li class="layui-nav-item" data-pid="undefined"><a data-url="{{url('/admin/welcome')}}"><i class="larry-icon larry-houtaishouye" data-icon="larry-houtaishouye"aria-hidden="true"></i><cite>后台首页</cite></a></li>
+                        <li class="layui-nav-item" data-pid="undefined">
+                            <a data-url="{{url('/admin/menu')}}">
+                                <i class="larry-icon larry-houtaishouye" data-icon="larry-houtaishouye" aria-hidden="true"></i>
+                                <cite>菜单管理</cite>
+                            </a>
+                        </li>
+                        <li class="layui-nav-item" data-pid="undefined">
+                            <a data-url="{{url('/admin/product')}}">
+                                <i class="larry-icon larry-houtaishouye" data-icon="larry-houtaishouye" aria-hidden="true"></i>
+                                <cite>商品管理</cite>
+                            </a>
+                        </li>
+                        <li class="layui-nav-item" data-pid="undefined">
+                            <a data-url="{{url('/admin/user')}}">
+                                <i class="larry-icon larry-houtaishouye" data-icon="larry-houtaishouye" aria-hidden="true"></i>
+                                <cite>管理员管理</cite>
+                            </a>
+                        </li>
+                        <li class="layui-nav-item" data-pid="undefined">
+                            <a data-url="{{url('/admin/order')}}">
+                                <i class="larry-icon larry-houtaishouye" data-icon="larry-houtaishouye" aria-hidden="true"></i>
+                                <cite>订单管理</cite>
+                            </a>
+                        </li>
+                        <li class="layui-nav-item" data-pid="undefined">
+                            <a data-url="{{url('/admin/member')}}">
+                                <i class="larry-icon larry-houtaishouye" data-icon="larry-houtaishouye" aria-hidden="true"></i>
+                                <cite>会员管理</cite>
+                            </a>
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -84,7 +114,7 @@
         <div class="layui-body" id="larry-body">
             <div class="layui-tab" id="larry-tab" lay-filter="larryTab">
                 <div class="larry-title-box">
-                    <div class="go-left key-press pressKey" id="titleLeft" title="滚动至最右侧">
+                    <div class="go-left key-press pressKey" onclick="javascript:history.go(-1);" id="titleLeft" title="后退">
                         <i class="larry-icon larry-weibiaoti6-copy"></i> </div>
                     <ul class="layui-tab-title" lay-allowClose="true" id="layui-tab-title" lay-filter="subadd">
                         <li class="layui-this" id="admin-home"  lay-id="0" fresh=1>
@@ -92,10 +122,8 @@
                         </li>
                     </ul>
                     <div class="title-right" id="titleRbox">
-                        <div class="go-right key-press pressKey" id="titleRight" title="滚动至最左侧"><i
-                                    class="larry-icon larry-right"></i></div>
-                        <div class="refresh key-press" id="refresh_iframe"><i
-                                    class="larry-icon larry-shuaxin2"></i><cite>刷新</cite></div>
+                        <div class="go-right key-press pressKey" onclick="javascript:history.go(1);" id="titleRight" title="前进"><i class="larry-icon larry-right"></i></div>
+                        <div class="refresh key-press" id="refresh_iframe"><i class="larry-icon larry-shuaxin2"></i><cite>刷新</cite></div>
                         <div class="often key-press" lay-filter='larryOperate' id="buttonRCtrl">
                             <ul class="layui-nav posr">
                                 <li class="layui-nav-item posb">
@@ -105,15 +133,13 @@
                                             <a data-eName="closeCurrent"><i class="larry-icon larry-guanbidangqianye"></i>关闭当前选项卡</a>
                                         </dd>
                                         <dd>
-                                            <a data-eName="closeOther"><i
-                                                        class="larry-icon larry-guanbiqita"></i>关闭其他选项卡</a>
+                                            <a data-eName="closeOther"><i class="larry-icon larry-guanbiqita"></i>关闭其他选项卡</a>
                                         </dd>
                                         <dd>
                                             <a data-eName="closeAll"><i class="larry-icon larry-guanbiquanbufenzu"></i>关闭全部选项卡</a>
                                         </dd>
                                         <dd>
-                                            <a data-eName="refreshAdmin"><i
-                                                        class="larry-icon larry-kuangjia_daohang_shuaxin"></i>刷新最外层框架</a>
+                                            <a data-eName="refreshAdmin"><i class="larry-icon larry-kuangjia_daohang_shuaxin"></i>刷新后台</a>
                                         </dd>
                                     </dl>
                                 </li>
@@ -174,7 +200,7 @@
                 <i class="larry-icon "></i>刷新当前页面
             </li>
             <li data-target="refreshKj">
-                <i class="larry-icon "></i>刷新外层框架
+                <i class="larry-icon "></i>刷新后台
             </li>
             <li data-target="closeCurrent">
                 <i class="larry-icon "></i>关闭当前选项卡
@@ -206,4 +232,35 @@
             </div>
         </div>
     </div>
+@endsection
+@section('js')
+    @parent
+    <script>
+        layui.use(['jquery','layer','navtab'],function() {
+            var $ = layui.jquery,
+                layer = layui.layer,
+                navtab = layui.navtab({
+                    elem: '#larry-tab'
+                });
+            $('div.sys-menu-box li.layui-nav-item').each(function(){
+                $(this).on('click', function(){
+                    var th = $(this);
+                    var href,title,icon,str,data;
+gi
+                        href = th.children('a').attr('data-url');
+
+                    if(href == undefined ){
+                            th.addClass('layui-nav-itemed');
+                    }else{
+                            title = th.children('a').children('cite').html();
+                            icon = th.children('a').children('i').attr('data-icon');
+                            str  = '{"title":"'+title+'","icon":"'+icon+'","href":"'+href+'"}';
+                            data =  eval('(' + str + ')');
+                    }
+                    navtab.tabAdd(data);
+                    layui.stope(e);
+                });
+            });
+        });
+    </script>
 @endsection

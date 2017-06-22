@@ -65,7 +65,7 @@ return [
     |
     */
 
-    'locale' => 'en',
+    'locale' => 'zh-cn',
 
     /*
     |--------------------------------------------------------------------------
@@ -149,6 +149,9 @@ return [
         Illuminate\View\ViewServiceProvider::class,
         Intervention\Image\ImageServiceProvider::class,
         Collective\Html\HtmlServiceProvider::class,
+        Stevenyangecho\UEditor\UEditorServiceProvider::class,
+
+
         /*
          * Application Service Providers...
          */

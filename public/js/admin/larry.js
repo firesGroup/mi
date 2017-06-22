@@ -31,7 +31,7 @@ layui.use(['elements','jquery','layer','larry','navtab','form','common'],functio
 		AdminInit();
 		//绑定导航数据
 		$.ajaxSettings.async = false;
-		$.getJSON(''+new Date(), {
+		$.getJSON('', {
 			Param: 'index_menu'
 		}, function(result) {
 			larry.set({
@@ -357,11 +357,11 @@ layui.use(['elements','jquery','layer','larry','navtab','form','common'],functio
      // 左侧导航菜单控制
 	// $('#larrySideNav').on('click', function() {
 	// 	if($('#larrySideNav .layui-this').length>0){
-    //     $('.sys-public-menu .layui-nav li').removeClass('layui-this');
-	// 	}	
+     //    $('.sys-public-menu .layui-nav li').removeClass('layui-this');
+	// 	}
 	// });
 	// $('.sys-public-menu .layui-nav li').on('click',function(){
-    //     $('#larrySideNav .layui-this').removeClass('layui-this');
+     //    $('#larrySideNav .layui-this').removeClass('layui-this');
 	// });
 
     $('i#closeInfo').on('click', function(){

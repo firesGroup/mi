@@ -29,7 +29,7 @@ function openUpload(id, pName, path, url , func)
         type: 2,
         skin: 'layui-layer-molv', //样式类名
         closeBtn: 1, //显示关闭按钮
-        anim: 3,//动画类型
+        anim: Math.ceil(Math.random() * 6),//动画类型
         shade: 0.5,//遮罩透明
         area: ['500px', '245px'],//设置弹窗区域宽高
         shadeClose: false, //开启遮罩关闭
