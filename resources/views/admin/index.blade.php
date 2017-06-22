@@ -246,7 +246,7 @@
                 $(this).on('click', function(){
                     var th = $(this);
                     var href,title,icon,str,data;
-gi
+                    
                         href = th.children('a').attr('data-url');
 
                     if(href == undefined ){
