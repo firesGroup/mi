@@ -82,7 +82,30 @@
                                 <cite>菜单管理</cite>
                             </a>
                         </li>
-                        <li class="layui-nav-item" data-pid="undefined"><a><i class="larry-icon larry-gerenxinxi5" data-icon="larry-gerenxinxi5" aria-hidden="true"></i><cite>我的面板</cite><span class="layui-nav-more"></span></a><dl class="layui-nav-child"><dd class=""><a data-url="html/personInfo.html"><i class="larry-icon larry-gerenxinxi1" data-icon="larry-gerenxinxi1" aria-hidden="true"></i><cite>个人信息</cite></a></dd><dd class=""><a data-url="html/changepwd.html"><i class="larry-icon larry-xiugaimima2" data-icon="larry-xiugaimima2" aria-hidden="true"></i><cite>修改密码</cite></a></dd><dd class=""><a data-url="html/temp.html"><i class="larry-icon larry-rizhi2" data-icon="larry-rizhi2" aria-hidden="true"></i><cite>日志信息</cite></a></dd></dl></li>
+                        <li class="layui-nav-item" data-pid="undefined">
+                            <a data-url="{{url('/admin/product')}}">
+                                <i class="larry-icon larry-houtaishouye" data-icon="larry-houtaishouye" aria-hidden="true"></i>
+                                <cite>商品管理</cite>
+                            </a>
+                        </li>
+                        <li class="layui-nav-item" data-pid="undefined">
+                            <a data-url="{{url('/admin/user')}}">
+                                <i class="larry-icon larry-houtaishouye" data-icon="larry-houtaishouye" aria-hidden="true"></i>
+                                <cite>管理员管理</cite>
+                            </a>
+                        </li>
+                        <li class="layui-nav-item" data-pid="undefined">
+                            <a data-url="{{url('/admin/order')}}">
+                                <i class="larry-icon larry-houtaishouye" data-icon="larry-houtaishouye" aria-hidden="true"></i>
+                                <cite>订单管理</cite>
+                            </a>
+                        </li>
+                        <li class="layui-nav-item" data-pid="undefined">
+                            <a data-url="{{url('/admin/member')}}">
+                                <i class="larry-icon larry-houtaishouye" data-icon="larry-houtaishouye" aria-hidden="true"></i>
+                                <cite>会员管理</cite>
+                            </a>
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -223,7 +246,7 @@
                 $(this).on('click', function(){
                     var th = $(this);
                     var href,title,icon,str,data;
-
+                    
                         href = th.children('a').attr('data-url');
 
                     if(href == undefined ){
@@ -234,8 +257,6 @@
                             str  = '{"title":"'+title+'","icon":"'+icon+'","href":"'+href+'"}';
                             data =  eval('(' + str + ')');
                     }
-
-//                    console.log(data.title);
                     navtab.tabAdd(data);
                     layui.stope(e);
                 });
