@@ -47,25 +47,19 @@
                                     <div class="layui-form-item">
                                         <label class="layui-form-label">会员呢称</label>
                                         <div class="layui-input-block">
-                                            <input type="text" name="p_name" lay-verify="required" autocomplete="off" class="layui-input" value="{{$data->nick_name}}">
+                                            <input type="text" name="nick_name" lay-verify="required" autocomplete="off" class="layui-input" value="{{$data->nick_name}}">
                                         </div>
                                     </div>
                                     <div class="layui-form-item">
                                         <label class="layui-form-label">会员邮箱</label>
                                         <div class="layui-input-block">
-                                            <input type="text" name="price" lay-verify="required"  autocomplete="off" class="layui-input" value="{{$data->email}}">
+                                            <input type="text" name="email" lay-verify="required"  autocomplete="off" class="layui-input" value="{{$data->email}}">
                                         </div>
                                     </div>
-                                    {{--<div class="layui-form-item">--}}
-                                        {{--<label class="layui-form-label">会员密码</label>--}}
-                                        {{--<div class="layui-input-block">--}}
-                                            {{--<input type="text" name="market_price" lay-verify="required" autocomplete="off" class="layui-input" value="{{$data->password}}">--}}
-                                        {{--</div>--}}
-                                    {{--</div>--}}
                                     <div class="layui-form-item">
                                         <label class="layui-form-label">会员电话</label>
                                         <div class="layui-input-block">
-                                            <input type="text" name="p_index_image" class="layui-input" value="{{$data->phone}}">
+                                            <input type="text" name="phone" class="layui-input" value="{{$data->phone}}">
                                         </div>
                                     </div>
                                     <div class="layui-form-item" pane>
@@ -86,18 +80,10 @@
                                     <div class="layui-form-item">
                                         <label class="layui-form-label">会员生日</label>
                                         <div class="layui-input-block">
-                                            <input type="date" name="p_index_image" class="layui-input" value="{{$user_detail->birthday}}">
+                                            <input type="date" name="brthday" class="layui-input" value="{{$user_detail->birthday}}">
                                         </div>
                                     </div>
-                                    <div class="layui-form-item">
-                                        <label class="layui-form-label">会员头像</label>
-                                        <div class="layui-input-block">
-                                            <input type="file" name="p_index_image" class="layui-upload-file" lay-title="上传会员头像">
-                                        </div>
-                                        <div class="layui-input-block">
-                                            <img src="{{$user_detail->avator}}">
-                                        </div>
-                                    </div>
+                                    <input type="hidden" name="last_ip" value="{{$data->last_ip}}">
                                     <div class="layui-form-item">
                                         <div class="layui-input-block">
                                             <button class="layui-btn" lay-submit="" lay-filter="demo1">立即提交</button>
@@ -107,18 +93,6 @@
                                 </form>
                             </div>
                         </div>
-                        {{--<div class="layui-tab-item">--}}
-                            {{--<div class="form-body">--}}
-                                {{--<form class="layui-form">--}}
-                                    {{--<div class="layui-form-item">--}}
-                                        {{--<div class="layui-input-block">--}}
-                                            {{--<input type="file" name="p_index_image" class="layui-upload-file">--}}
-                                        {{--</div>--}}
-                                    {{--</div>--}}
-                                {{--</form>--}}
-                            {{--</div>--}}
-                        {{--</div>--}}
-                        {{--<div class="layui-tab-item">内容3</div>--}}
                     </div>
                 </div>
             </div>
@@ -128,25 +102,4 @@
 
 @section('js')
     @parent
-    <script>
-        layui.use(['jquery','layer','form', 'upload','layedit', 'element'], function () {
-            var form = layui.form()
-                ,$ = layui.jquery
-                ,layedit = layui.layedit
-                ,element = layui.element()
-            layer = layui.layer;
-
-            //上传封面图片
-            layui.upload({
-                url: '' //上传接口
-                ,success: function(res){ //上传成功后的回调
-                    console.log(res)
-                }
-            });
-
-            //构建一个默认的编辑器
-            var index = layedit.build('editor');
-        });
-
-    </script>
 @endsection

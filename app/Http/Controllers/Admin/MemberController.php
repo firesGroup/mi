@@ -8,6 +8,7 @@ use App\Entity\MemberDetail;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use DB;
+use Image;
 
 class MemberController extends Controller
 {
@@ -83,7 +84,17 @@ class MemberController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+            $data = Member::find($id);
+//            dd($data);
+        $arr = $request->all();
+        dd($arr);
+            $nick_name = $request->get('nick_name');
+            $email = $request->get('email');
+            $phone= $request->get('phone');
+            $status = $request->get('status');
+            $arr = array($nick_name, $email, $phone, $status);
+            $a = $data::save();
+            dd($a);
     }
 
     /**
@@ -99,4 +110,48 @@ class MemberController extends Controller
         DB::table('member')->delete($id);
        return DB::table('memberdetail')->where('mid', $data->id)->delete();
     }
+
+    public function changeavator(Request $request)
+    {
+
+        $id = $_POST['id'];
+        $file = $request->file('avator');
+        $destinationpath = 'uploads/avator/';
+        $filename = $id.'-'.time()."-".$file->getClientOriginalName();
+        $file->move($destinationpath, $filename);
+        Image::make($destinationpath.$filename)->fit(500)->save();
+//        $avator = MemberDetail::find($id);
+//
+//        $avator->avator = '/'.$destinationpath.$filename;
+//
+//        $avator->save();
+        $url = '/'.$destinationpath.$filename;
+        $res["message"]= "图片上传成功！";
+        $res["status"] = 1;
+        $res["src"] = $url;
+        return json_encode($res);
+
+     }
+
+     //对视图传过来的图排尿进行裁剪
+     public function change(Request $request)
+     {
+         $photo = mb_substr($request->get('photo'),1);
+         $w = $request->get('w');
+         $h = $request->get('h');
+         $x = $request->get('x');
+         $y = $request->get('y');
+         $id = $request->get('id');
+         Image::make($photo)->crop($w, $h, $x, $y)->save();
+
+         $avator = MemberDetail::find($id);
+
+        $avator->avator = $request->get('photo');
+
+        $avator->save();
+
+        return redirect('/admin/member/'.$id);
+
+
+     }
 }
