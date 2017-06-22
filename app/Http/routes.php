@@ -21,3 +21,7 @@
 
 //潘珺-路由文件
 //include('Route/jun.php');
+
+Route::get('/admin/welcome', function(){
+    return view('welcome');
+});
