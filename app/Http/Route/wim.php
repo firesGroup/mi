@@ -18,4 +18,11 @@ Route::group( ['namespace' => 'Admin', 'prefix' => 'admin' ], function () {
 
     Route::get('ajax', 'UserController@ajax');
 
+    Route::post('ajaxPassword', 'UserController@ajaxPassword');
+
+
+
+
+    Route::resource('group', 'GroupController');
+
 } );
