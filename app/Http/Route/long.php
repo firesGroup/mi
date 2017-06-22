@@ -13,6 +13,8 @@ Route::group( ['namespace'=>'Admin', 'prefix'=>'admin'], function(){
     Route::resource( 'member', 'MemberController' );
     Route::resource('level', 'LevelController');
     Route::post('ajax', 'LevelController@ajax');
+    Route::post('avator', 'MemberController@changeavator');
+    Route::post('change', 'MemberController@change');
 } );
 
 
