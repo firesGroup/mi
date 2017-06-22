@@ -32,7 +32,7 @@
 @section('content')
 {{--    {{var_dump($detail)}}--}}
     <section class="larry-grid">
-    <div class="larry-personal">
+        <div class="larry-personal">
         <header class="larry-personal-tit">
             <span>商品管理-修改信息</span>
         </header>
