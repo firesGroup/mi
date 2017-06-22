@@ -58,7 +58,9 @@
                 <div class="layui-tab-content">
                     <div class="layui-tab-item layui-show" style="padding-top:20px">
                         <div class="form-body">
-                            <form class="layui-form" method="post">
+                            <form class="layui-form" method="post" id="productDetail">
+                                {{ csrf_field() }}
+                                <input type="hidden" name="_method" value="PUT">
                                 <div class="layui-form-item">
                                     <label class="layui-form-label">商品名称</label>
                                     <div class="layui-input-block">
@@ -72,18 +74,24 @@
                                     </div>
                                 </div>
                                 <div class="layui-form-item">
+                                    <label class="layui-form-label">活动提醒</label>
+                                    <div class="layui-input-block">
+                                        <textarea type="text" name="remind_title" lay-verify="required" placeholder="请输入商品前活动提醒" autocomplete="off" class="layui-input">{{ $detail->remind_title }}</textarea>
+                                    </div>
+                                </div>
+                                <div class="layui-form-item">
                                     <label class="layui-form-label">商品分类</label>
                                     <div class="layui-input-block">
                                         <div class="layui-input-inline">
                                             <select >
-                                                <option value="">请选择分类</option>
+                                                <option value="">请选择商品分类</option>
                                                 <option value="你的工号">江西省</option>
                                                 <option value="你最喜欢的老师">福建省</option>
                                             </select>
                                         </div>
                                         <div class="layui-input-inline">
                                             <select >
-                                                <option value="">请选择分类</option>
+                                                <option value="">请选择商品分类</option>
                                                 <option value="杭州">杭州</option>
                                                 <option value="宁波" disabled="">宁波</option>
                                                 <option value="温州">温州</option>
@@ -93,7 +101,7 @@
                                         </div>
                                         <div class="layui-input-inline">
                                             <select >
-                                                <option value="">请选择分类</option>
+                                                <option value="">请选择商品分类</option>
                                                 <option value="西湖区">西湖区</option>
                                                 <option value="余杭区">余杭区</option>
                                                 <option value="拱墅区">临安市</option>
@@ -104,13 +112,14 @@
                                 <div class="layui-form-item">
                                     <label class="layui-form-label">商品品牌</label>
                                     <div class="layui-input-block">
-                                        <select lay-filter="brand">
-                                            <option value=""></option>
-                                            <option value="0">写作</option>
-                                            <option value="1" selected="">阅读</option>
-                                            <option value="2">游戏</option>
-                                            <option value="3">音乐</option>
-                                            <option value="4">旅行</option>
+                                        <select name="bid">
+                                            @foreach( $brand as $b )
+                                                @if( $info->bid == $b->id )
+                                                    <option value="{{ $b->id  }}" selected >{{ $b->brand_name }}</option>
+                                                @else
+                                                    <option value="{{ $b->id  }}">{{ $b->brand_name }}</option>
+                                                @endif
+                                            @endforeach
                                         </select>
                                     </div>
                                 </div>
@@ -127,6 +136,56 @@
                                     </div>
                                 </div>
                                 <div class="layui-form-item">
+                                    <label class="layui-form-label">商品库存量</label>
+                                    <div class="layui-input-block">
+                                        <input type="text" name="store" lay-verify="required" placeholder="请输入商品库存量" autocomplete="off" class="layui-input" value="{{ $detail->store }}">
+                                    </div>
+                                </div>
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">商品单位</label>
+                                    <div class="layui-input-block">
+                                        <input type="text" name="unit" lay-verify="required" placeholder="请输入商品单位" autocomplete="off" class="layui-input" value="{{ $detail->unit }}">
+                                    </div>
+                                </div>
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">商品成交量</label>
+                                    <div class="layui-input-block">
+                                        <div class="layui-input">{{ $detail->sell_num }}<font style="color:#e2e2e2">(无法修改)</font></div>
+                                    </div>
+                                </div>
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">商品点击量</label>
+                                    <div class="layui-input-block">
+                                        <div class="layui-input">{{ $detail->click_num }}<font style="color:#e2e2e2">(无法修改)</font></div>
+                                    </div>
+                                </div>
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">商品状态</label>
+                                    <div class="layui-input-block">
+                                        <select name="status">
+                                            @for( $i=0;$i<5;$i++ )
+                                                @if( $i == $info->status  )
+                                                    <option value="{{$info->status}}" selected>{{ $zhStatus[$i]}}</option>
+                                                @else
+                                                    <option value="{{$i}}">{{ $zhStatus[$i]}}</option>
+                                                @endif
+                                            @endfor
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">是否推荐</label>
+                                    <div class="layui-input-block">
+                                        @if( $info->recommend == 0 )
+                                        <input type="radio" name="recommend" value="0" checked title="推荐">
+                                        <input type="radio" name="recommend" value="1" title="不推荐">
+                                        @elseif( $info->recommend == 1 )
+                                        <input type="radio" name="recommend" value="0" title="推荐">
+                                        <input type="radio" name="recommend" value="1" checked title="不推荐">
+                                        @endif
+                                    </div>
+                                </div>
+                                <div class="layui-form-item">
                                     <label class="layui-form-label">商品封面</label>
                                     <div class="layui-input-block">
                                             <input id="upload-input" type="text" class="layui-input layui-input-inline" name="p_index_image" value="{{ $detail->p_index_image }}" style="width:520px;height:38px;margin:0px" placeholder="输入图片地址或点击上传">
@@ -136,7 +195,8 @@
                                 <div class="layui-form-item">
                                     <label class="layui-form-label">商品详情</label>
                                     <div class="layui-input-block">
-                                        <textarea class="layui-textarea" id="editor" style="display: none" name="description">{{ $detail->description }}</textarea>
+                                        <!-- 加载uefitor编辑器的容器 -->
+                                        <script id="ueditor" name="description" type="text/plain">{{ $description }}</script>
                                     </div>
                                 </div>
                                 <div class="layui-form-item">
@@ -165,32 +225,74 @@
     <!--上传文件插件-->
     <script type="text/javascript" src="{{ asset('/js/public/jquery-1.12.4.min.js') }}"></script>
     <script type="text/javascript" src="{{ asset('/js/public/uploadFile.js') }}"></script>
+    <!--富文本编辑器插件-->
+    <script type="text/javascript" src="{!!asset('/plugin/ueditor/ueditor.config.js')!!}"></script>
+    <script type="text/javascript" src="{!!asset('/plugin/ueditor/ueditor.all.min.js')!!}"></script>
+    {{-- 载入语言文件,根据laravel的语言设置自动载入 --}}
+    <script type="text/javascript" src="{!!asset($UeditorLangFile)!!}"></script>
+    <script type="text/javascript">
+        //富文本编辑器
+        var ue = UE.getEditor('ueditor');
+        ue.ready(function() {
+            ue.execCommand('serverparam', '_token', '{{ csrf_token() }}');//此处为支持laravel5 csrf ,根据实际情况修改,目的就是设置 _token 值.
+            ue.sync('productDetail');//设置编辑器内容同步到from的id
+        });
+    </script>
     <script>
-    layui.use(['jquery','layer','form', 'upload','layedit','element'], function () {
+    layui.use(['jquery','layer','form', 'upload','element'], function () {
         var form = layui.form()
             ,$ = layui.jquery
             ,layedit = layui.layedit
             ,element = layui.element()
             ,layer = layui.layer;
         var token = $('meta[name=_token]').attr('content');
-
-
-        //构建一个默认的编辑器
-        var index = layedit.build('editor');
-        var id = '{{ $info->id }}';
+        var id = {{ $info->id }};
         var rootUrl = '{{ url('/') }}';
+        //页面加载时一些处理
+        $('div#edui1').css('width','auto').css('z-index','2');
+        $('div#edui1_iframeholder').css('width','auto');
 
-        //修改商品信息
+        $('select[name=bid]').siblings('div.layui-unselect').children('dl dd').each(function(){
+            console.log( $(this)[0] );
+            if( $(this).attr('lay-value') == {{ $info->bid }}){
+                $(this).addclass('layui-this');
+                $( 'select[name=bid] option[value={{ $info->bid }}]').attr('selected','true');
+            }
+        });
+        $('select[name=status] option').each(function(){
+            if( $(this).val() == {{ $info->status }} ){
+                $(this).attr('selected','true');
+            }
+        });
 
-        form.on('submit(editInfo)', function(){
-            $.ajax({
-                url:'{{ url('/admin/product').'/'.$info->id }}',
-                type:PUT,
-                data: serializeArray(),
-                success: function(res){
-                    console.log(res);
-                }
-            });
+
+        //序列化表单值 用于判断是否被修改过
+        var loadFormData = $('form#productDetail').serialize();
+        //表单提交监听
+        form.on('submit(editInfo)', function(data){
+            var submitFormData = $('form#productDetail').serialize();
+            if( submitFormData == loadFormData ){
+                layer.msg('您什么都没修改呀!', {'icon':3, 'time':2000,anim: Math.ceil(Math.random() * 6)});
+            }else{
+                var index = layer.load();
+                $.ajax({
+                    url:'{{ url('/admin/product').'/'.$info->id }}',
+                    type: 'put',
+                    data: data.field,
+                    success: function(res){
+                        if( res == 0 ){
+                            layer.msg('修改成功!', {'icon':6, 'time':1000,end:function(){
+                                location.href = location.href;
+                            }});
+                        }else if( res == 1 ){
+                            layer.msg('修改失败!', {'icon':2, 'time':3000, end:function(){
+                                location.href = location.href;
+                            }});
+                        }
+                    }
+                });
+            }
+            return false;
         });
 
         //tab切换到相册
@@ -249,7 +351,8 @@
                  }
              });
 
-        } );
+        });
+
         });
 </script>
 @endsection

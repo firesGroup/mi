@@ -17,6 +17,8 @@ use App\Entity\Product;
 use App\Entity\ProductImages;
 use App\Http\Requests\Admin\ProductRequest;
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Admin\ProductBrandController as Brand;
+use Illuminate\Support\HtmlString;
 use Storage;
 use DB;
 
@@ -31,9 +33,7 @@ class ProductController extends Controller
     {
         $productList = Product::all();
         $productList = Product::paginate(5);
-
-//        dd($productList);
-        return view('admin.product.index',compact('productList', 'total'));
+        return view('admin.product.index',compact('productList'));
     }
 
     /**
@@ -78,7 +78,10 @@ class ProductController extends Controller
     {
         $info = Product::find($id);
         $detail = $info->detail;
-        return view('admin.product.edit',compact('info', 'detail'));
+        $description = new HtmlString($detail->description);
+        $zhStatus = ['在售','下架','预购','缺货','新品上市'];
+        $brand = (new Brand())->getIdAndName();
+        return view('admin.product.edit',compact('info', 'detail','brand', 'description','zhStatus'));
     }
 
     /**
@@ -90,7 +93,35 @@ class ProductController extends Controller
      */
     public function update(ProductRequest $request, $id)
     {
-        //
+        $product = [
+            'cid'          => '3',
+            'bid'          => $request->input('bid'),
+            'price'        => $request->input('price'),
+            'market_price' => $request->input('market_price'),
+            'p_name'       => $request->input('p_name'),
+            'status'       => $request->input('status'),
+            'recommend'    => $request->input('recommend'),
+        ];
+        $detail = [
+            'p_index_image' => $request->input('p_index_image'),
+            'summary'       => $request->input('summary'),
+            'description'   => $request->input('description'),
+            'remind_title'  => $request->input('remind_title'),
+            'store'         => $request->input('store'),
+            'unit'         => $request->input('unit')
+        ];
+        $bool1 = DB::table('product')->where('id',$id)->update($product);
+        $bool2 = DB::table('productDetail')->where('pid',$id)->update($detail);
+        if( $bool1 == 0 && $bool2 == 1 ){
+            return 0;
+        }elseif( $bool1 == 1 && $bool2 == 0  ){
+            return 0;
+        }elseif( $bool1 == 1 && $bool2 == 1 ){
+            return 0;
+        }else{
+            return 1;
+        }
+
     }
 
     /**
