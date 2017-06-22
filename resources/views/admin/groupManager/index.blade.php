@@ -1,24 +1,25 @@
 <?php
 /**
- * File Name: user.php
- * Description:管理员列表页
+ * File Name: index.blade.php
+ * Description: 权限组首页
  * Created by PhpStorm.
  * Group: FiresGroup
  * Auth: Wim
- * Date: 2017/6/19
- * Time: 20:24
+ * Date: 2017/6/22
+ * Time: 15:56
  */
 ?>
-{{--{{dd(1111)}}--}}
+{{--{{dd($data)}}--}}
 @extends('layouts.iframe')
 
-@section('title','管理员首页')
+@section('title','权限组首页')
 
 @section('css')
     @parent
 @endsection
 
 @section('content')
+
     <section class="larry-grid">
         <div class="larry-personal">
             <header class="larry-personal-tit">
@@ -31,8 +32,8 @@
                         <h4 title="提示相关设置操作时应注意的要点">操作提示</h4>
                     </div>
                     <ul>
-                        <li>请不要随意更改个人信息</li>
-                        <li>请不要窥探个人隐私</li>
+                        <li>请不要随意更改权限组信息</li>
+                        <li>按需求给组添加权限</li>
                     </ul>
                     <i class="larry-icon larry-guanbi close" id="closeInfo"></i>
                 </blockquote>
@@ -45,7 +46,7 @@
 
                         <button class="layui-btn layui-btn-small">
                             <i class="layui-icon">&#xe608;</i>
-                            添加管理员
+                            添加权限组
                         </button>
                     </a>
 
@@ -64,39 +65,33 @@
                     <thead>
                     <tr>
                         <th>ID</th>
-                        <th>所属组</th>
-                        <th>管理员名</th>
-                        <th>密码</th>
-                        <th>状态</th>
-                        <th>添加时间</th>
-                        <th>最后登录时间</th>
-                        <th>最后ip地址</th>
+                        <th>所属组名称</th>
+                        <th>所属组状态</th>
+                        <th>所属组权限内容</th>
+                        <th>所属组描述</th>
                         <th>操作</th>
                     </tr>
                     </thead>
                     <tbody>
                     {{--{{dd($data)}}--}}
-                    @foreach( $data as $user )
+                    @foreach( $data as $group )
                         <tr>
-                            <td>{{ $user->id }}</td>
-                            <td>{{ $group_name[$user->gid] }}</td>
-                            <td style="color:#1E9FFF">{{ $user->username }}</td>
-                            <td>{{ $user->password }}</td>
-                            <td>{{ $status[$user->status] }}</td>
-                            <td>{{ $user->add_time }}</td>
-                            <td>{{ $user->last_time }}</td>
-                            <td>{{ $user->last_ip }}</td>
+                            <td>{{ $group->id }}</td>
+                            <td style="color:#1E9FFF">{{ $group->group_name }}</td>
+                            <td>{{ $status[$group->status] }}</td>
+                            <td>{{ $group->role_list }}</td>
+                            <td style="width: 600px">{{ $group->group_desc }}</td>
                             <td>
                                 <div class="layui-btn-group">
-                                    <a href="{{ url('admin/user').'/'.$user->id }}" class="layui-btn  layui-btn-small"
+                                    <a href="{{ url('admin/group').'/'.$group->id }}" class="layui-btn  layui-btn-small"
                                        data-alt="查看">
                                         <i class="layui-icon">&#xe60b;</i>
                                     </a>
-                                    <a href="{{ url('admin/user').'/'.$user->id."/edit" }}"
+                                    <a href="{{ url('admin/group').'/'.$group->id."/edit" }}"
                                        class="layui-btn  layui-btn-small" data-alt="修改">
                                         <i class="layui-icon">&#xe642;</i>
                                     </a>
-                                    <a id="delete" data-id="{{ $user->id }}" class="layui-btn  layui-btn-small"
+                                    <a id="delete" data-id="{{ $group->id }}" class="layui-btn  layui-btn-small"
                                        data-alt="删除">
                                         <i class="layui-icon">&#xe640;</i>
                                     </a>
@@ -110,10 +105,11 @@
                     {{ $data->render() }}
                     共计({{$sum}})条
                 </div>
-            </
-            >
+            </div>
+
         </div>
     </section>
+
 @endsection
 
 @section('js')
@@ -146,7 +142,7 @@
                         icon: 6
                     });
                     $.ajax({
-                        url: '{{ url('/admin/user') }}' + '/' + id
+                        url: '{{ url('/admin/group') }}' + '/' + id
                         , type: "POST"
                         , data: {'_method': 'DELETE', '_token': '{{ csrf_token() }}'}
                         , success: function (data) {
