@@ -61,7 +61,7 @@
                                         <div class="layui-input-block">
                                             <input type="text" name="username" required lay-verify="required"
                                                    placeholder="请输入名称" autocomplete="off"
-                                                   class="layui-input" value="">
+                                                   class="layui-input" value="{{old('username')}}">
                                         </div>
                                     </div>
                                     <div class="layui-form-item">
@@ -69,7 +69,7 @@
                                         <div class="layui-input-inline" style="margin-left: 40px">
                                             <input type="password" id="pwd" name="password" required
                                                    lay-verify="required"
-                                                   placeholder="请输入密码" autocomplete="off" class="layui-input" value="">
+                                                   placeholder="请输入密码" autocomplete="off" class="layui-input" value="{{old('password')}}">
                                         </div>
                                         <div class="layui-form-mid layui-word-aux">只能输入6-20个字母、数字、下划线</div>
                                     </div>

@@ -4,7 +4,7 @@ namespace App\Entity;
 
 use Illuminate\Database\Eloquent\Model;
 
-class adminGroup extends Model
+class AdminGroup extends Model
 {
     protected $table = 'admingroup';
 
