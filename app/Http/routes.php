@@ -14,10 +14,10 @@
 // include('Route/showkw.php');
 
 // //王明-路由文件
-// include('Route/wim.php');
+ include('Route/wim.php');
 
 // //龙彪-路由文件
- include('Route/long.php');
+// include('Route/long.php');
 
 //潘珺-路由文件
-//include('Route/jun.php');
+include('Route/jun.php');
