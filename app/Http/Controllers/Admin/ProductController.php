@@ -69,7 +69,7 @@ class ProductController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * 修改商品信息页面
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
@@ -85,7 +85,7 @@ class ProductController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * 处理商品信息修改
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
@@ -168,22 +168,46 @@ class ProductController extends Controller
         }
     }
 
-
+    /*
+     * 获取指定商品的封面图片
+     *
+     */
     public function getIndexImage($img_id)
     {
         $path = DB::table('product_detail')->where('p_id',$img_id)->value('p_index_image');
         return $path;
     }
 
+    /*
+     *
+     * 修改商品封面图片
+     *
+     *
+     */
     public function postIndexImage(ProductRequest $request)
     {
         //判断是否post提交
         if( $request->isMethod('post') ) {
             $id = $request->input('id');
             $src = $request->input('src');
-            $id = DB::table('product_detail')->where('p_id', $id)->update(['p_index_image' => $src]);
-            if( $id ){
-                return 0;
+            //先获取数据库中原来的图片地址
+            $path = Product::find($id)->p_index_image;
+            //分割路径
+            $path = substr( $path, 8 );
+            //从磁盘删除原来的图片
+            $bool1 = Storage::disk('uploads')->delete($path);
+            if( $bool1 ){
+                $id = DB::table('product_detail')->where('p_id', $id)->update(['p_index_image' => $src]);
+                if( $id != -1 ){
+                    //成功
+                    return 0;
+                }else{
+                    //失败
+                    return 1;
+                }
+            }else{
+                //图片删除失败
+                return 2;
             }
         }
     }
@@ -219,7 +243,7 @@ class ProductController extends Controller
             //获取当前商品已上传的数量
             $count = ProductImages::where('p_id',$id)->count();
             if( $count < 6 ){
-                $id = DB::table('product_images')->insertGetId(['pid'=>$id, 'path' => $src]);
+                $id = DB::table('product_images')->insertGetId(['p_id'=>$id, 'path' => $src]);
                 if( $id ){
                     return '{"id":'.$id.', "status":0}';
                 }

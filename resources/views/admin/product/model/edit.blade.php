@@ -29,11 +29,6 @@
 @endsection
 
 @section('content')
-    @if( count($errors) >0  )
-        @foreach ($errors->all() as $error)
-            {{ $error  }}
-        @endforeach
-    @endif
     <section class="larry-grid">
         <div class="larry-personal">
             <header class="larry-personal-tit">
@@ -53,8 +48,9 @@
             </div>
             <div class="larry-personal-body clearfix">
                 <div class="form-body">
-                    <form class="layui-form" method="post" id="model">
+                    <form class="layui-form" action="{{ url('admin/product/model/'.$model->id) }}" method="post" id="model">
                         {{ csrf_field() }}
+                        <input type="hidden" name="_method" value="PUT">
                         <div class="layui-form-item">
                             <label class="layui-form-label">模型名称</label>
                             <div class="layui-input-block">
@@ -63,7 +59,7 @@
                         </div>
                         <div class="layui-form-item">
                             <div class="layui-input-block">
-                                <button class="layui-btn" lay-submit="" lay-filter="editModel">修改</button>
+                                <button class="layui-btn" type="submit" lay-submit="" lay-filter="editModel">修改</button>
                                 <button type="reset" class="layui-btn layui-btn-primary">重置</button>
                             </div>
                         </div>
@@ -95,6 +91,7 @@
                         url: '{{ url('admin/product/model/'.$model->id) }}',
                         type: 'PUT',
                         data: data.field,
+                        dataType: 'json',
                         success: function (res) {
                             layer.close(index);
                             if (res == 0) {
@@ -110,7 +107,15 @@
                                     }
                                 });
                             }
-                        }
+                        },
+                        error:function (XMLHttpRequest) {
+                           var msgObj = XMLHttpRequest.responseJSON;
+                           var msg = '';
+                            for(var name in msgObj){//遍历对象属性名
+                                msg += msgObj[name] + "<br>";
+                            }
+                            layer.msg(msg,{icon:2,time:3000});
+                        },
                     });
                 }
                 return false;

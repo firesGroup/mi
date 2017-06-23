@@ -53,7 +53,7 @@
                 , success: function (res) {
                     if (res.status == 0) {
                         layer.close(l);
-                        layer.msg('上传成功', {'time': 1000});
+                        layer.msg('上传成功', {'time': 2000});
                         $.ajax({
                             url: '{{ url($url) }}',
                             type: 'post',

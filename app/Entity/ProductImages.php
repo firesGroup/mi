@@ -20,11 +20,11 @@ class ProductImages extends Model
     //指定关联数据库表主键
     protected $primaryKey = 'p_id';
 
-//    /**
-//     * 获取关连联商品信息。
-//     */
-//    public function product()
-//    {
-//        return $this->belongsTo('App\Entity\Product','pid');
-//    }
+    /**
+     * 获取关连联商品信息。
+     */
+    public function product()
+    {
+        return $this->belongsTo('App\Entity\Product','pid');
+    }
 }

@@ -24,4 +24,25 @@ class ProductModel extends Model
     protected $fillable = [
         'model_name'
     ];
+
+
+    /*
+     * 关联商品规格
+     *
+     */
+    public function spec()
+    {
+        return $this->hasMany('App\Entity\ProductSpec','model_id');
+    }
+
+    /*
+     * 关联商品属性
+     *
+     */
+    public function attr()
+    {
+        return $this->hasMany('App\Entity\ProductAttribute','model_id');
+    }
+
+
 }

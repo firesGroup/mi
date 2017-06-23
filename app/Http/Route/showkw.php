@@ -27,6 +27,9 @@ Route::group(['namespace'=>'Admin','prefix'=>'admin'], function(){
     Route::resource('product/brand', 'ProductBrandController',['parameters' => [
         'brand' => 'brand_id'
     ]]);
+    Route::resource('product/spec', 'ProductSpecController',['parameters' => [
+        'spec' => 'spec_id'
+    ]]);
     Route::resource('product', 'ProductController',['parameters' => [
         'product' => 'id'
     ]]);

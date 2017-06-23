@@ -1,5 +1,13 @@
 <?php
-
+/**
+ * File Name: Product.php
+ * Description: 商品信息表
+ * Created by PhpStorm.
+ * Group: FiresGroup
+ * Auth: Showkw
+ * Date: 2017/6/21
+ * Time: 22:52
+ */
 namespace App\Entity;
 
 use Illuminate\Database\Eloquent\Model;

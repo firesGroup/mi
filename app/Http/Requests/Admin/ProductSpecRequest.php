@@ -4,7 +4,7 @@ namespace App\Http\Requests\Admin;
 
 use App\Http\Requests\Request;
 
-class ProductModelRequest extends Request
+class ProductSpecRequest extends Request
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,8 +24,11 @@ class ProductModelRequest extends Request
     public function rules()
     {
         return [
-            'model_name'=>[
-                'unique:product_model'
+            'spec_name'=>[
+                'unique:product_spec'
+            ],
+            'model_id'=>[
+                'numeric'
             ]
         ];
     }

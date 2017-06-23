@@ -30,11 +30,10 @@ class UploadController extends Controller
 
         //定义文件存储路径
         $path = $request->input('path')?$request->input('path'):date('Ymd',time());
-
         //检查目录是否存在
         //若不存在则创建目录
-        if( !file_exists( $path ) ) {
-            mkdir($path, 0755, true);
+        if( !file_exists( 'uploads/'.$path ) ) {
+            mkdir('uploads/'.$path, 0755, true);
         }
 
         //判断是否为POST请求---文件上传必须为post
@@ -66,7 +65,7 @@ class UploadController extends Controller
 
                 if( $bool ){
                     $res['status'] = 0;
-                    $res['src'] = '/uploads/'.$newPath;
+                    $res['src'] = 'uploads/'.$newPath;
                 }else{
                     $res['status'] = 1;
                 }
