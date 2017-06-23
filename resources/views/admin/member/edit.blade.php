@@ -86,14 +86,6 @@
                                     <input type="hidden" name="last_ip" value="{{$data->last_ip}}">
                                     <div class="layui-form-item">
                                         <div class="layui-input-block">
-                                            <input type="file" name="avator" class="layui-upload-file" lay-title="上传会员头像">
-                                        </div>
-                                        <div class="layui-input-block">
-                                            <img src="{{$user_detail->avator}}">
-                                        </div>
-                                    </div>
-                                    <div class="layui-form-item">
-                                        <div class="layui-input-block">
                                             <button id="submit" class="layui-btn" lay-submit=""  lay-filter="go">立即提交</button>
                                             <button type="reset" class="layui-btn layui-btn-primary">重置</button>
                                         </div>
@@ -137,6 +129,56 @@
                             } else {
                                 that.css({'border': '1px solid #f2f2f2'});
                                 layer.msg('会员名可用');
+                            }
+                        }
+                    })
+                }
+
+            });
+
+            $("input[name=phone]").blur( function () {
+                var m_phone =  $(this).val();
+                var that = $(this);
+                var origin = that.data('u');
+                if (origin != m_phone) {
+                    $.ajax({
+                        url:"{{url('admin/member_ajax_phone/'.$data->id)}}",
+                        type:"post",
+                        data:{"_token":"{{csrf_token()}}","m_phone":m_phone},
+                        success:function (data) {
+                            if (data == 1) {
+                                that.data('u', m_phone);
+                                that.css({'border': '1px solid #FF5722'});
+                                layer.msg('电话已存在', {time: 1000});
+                                return false;
+                            } else {
+                                that.css({'border': '1px solid #f2f2f2'});
+                                layer.msg('号码可用');
+                            }
+                        }
+                    })
+                }
+
+            });
+
+            $("input[name=email]").blur( function () {
+                var m_email =  $(this).val();
+                var that = $(this);
+                var origin = that.data('u');
+                if (origin != m_email) {
+                    $.ajax({
+                        url:"{{url('admin/member_ajax_email/'.$data->id)}}",
+                        type:"post",
+                        data:{"_token":"{{csrf_token()}}","m_email":m_email},
+                        success:function (data) {
+                            if (data == 1) {
+                                that.data('u', m_email);
+                                that.css({'border': '1px solid #FF5722'});
+                                layer.msg('邮箱已存在', {time: 1000});
+                                return false;
+                            } else {
+                                that.css({'border': '1px solid #f2f2f2'});
+                                layer.msg('邮箱可用');
                             }
                         }
                     })
