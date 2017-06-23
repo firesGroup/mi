@@ -39,9 +39,16 @@
             </div>
             <div class="larry-personal-body clearfix">
                 <div class="btn-group">
-                    <button class="layui-btn layui-btn-small">
-                        <i class="layui-icon">&#xe608;</i> <a href="{{url('admin/user/create')}}" style="color:white">添加管理员</a>
-                    </button>
+
+
+                    <a href="{{url('admin/user/create')}}" style="color:white">
+
+                        <button class="layui-btn layui-btn-small">
+                            <i class="layui-icon">&#xe608;</i>
+                            添加管理员
+                        </button>
+                    </a>
+
                     <button class="layui-btn layui-btn-small" id="refresh">
                         <i class="layui-icon">&#x1002;</i> 刷新本页
                     </button>
@@ -57,7 +64,7 @@
                     <thead>
                     <tr>
                         <th>ID</th>
-                        <th>所属组id</th>
+                        <th>所属组</th>
                         <th>管理员名</th>
                         <th>密码</th>
                         <th>状态</th>
@@ -72,8 +79,8 @@
                     @foreach( $data as $user )
                         <tr>
                             <td>{{ $user->id }}</td>
-                            <td>{{ $user->group_id }}</td>
-                            <td>{{ $user->username }}</td>
+                            <td>{{ $group_name[$user->group_id] }}</td>
+                            <td style="color:#1E9FFF">{{ $user->username }}</td>
                             <td>{{ $user->password }}</td>
                             <td>{{ $status[$user->status] }}</td>
                             <td>{{ $user->add_time }}</td>
@@ -81,13 +88,16 @@
                             <td>{{ $user->last_ip }}</td>
                             <td>
                                 <div class="layui-btn-group">
-                                    <a href="{{ url('admin/user').'/'.$user->id }}" class="layui-btn  layui-btn-small" data-alt="查看">
-                                        <i class="layui-icon" >&#xe60b;</i>
+                                    <a href="{{ url('admin/user').'/'.$user->id }}" class="layui-btn  layui-btn-small"
+                                       data-alt="查看">
+                                        <i class="layui-icon">&#xe60b;</i>
                                     </a>
-                                    <a href="{{ url('admin/user').'/'.$user->id."/edit" }}" class="layui-btn  layui-btn-small" data-alt="修改">
+                                    <a href="{{ url('admin/user').'/'.$user->id."/edit" }}"
+                                       class="layui-btn  layui-btn-small" data-alt="修改">
                                         <i class="layui-icon">&#xe642;</i>
                                     </a>
-                                    <a id="delete" data-id="{{ $user->id }}" class="layui-btn  layui-btn-small" data-alt="删除">
+                                    <a id="delete" data-id="{{ $user->id }}" class="layui-btn  layui-btn-small"
+                                       data-alt="删除">
                                         <i class="layui-icon">&#xe640;</i>
                                     </a>
                                 </div>
@@ -96,11 +106,12 @@
                     @endforeach
                     </tbody>
                 </table>
-                <div class="larry-table-page">
+                <div class="larry-table-page" style="text-align: center">
                     {{ $data->render() }}
                     共计({{$sum}})条
                 </div>
-            </>
+            </
+            >
         </div>
     </section>
 @endsection
@@ -108,56 +119,56 @@
 @section('js')
     @parent
     <script>
-        layui.use(['jquery','layer'], function () {
+        layui.use(['jquery', 'layer'], function () {
             var $ = layui.jquery,
                 layer = layui.layer;
             var index;
-            $('a.layui-btn').on('mouseover', function(){
+            $('a.layui-btn').on('mouseover', function () {
                 var alt = $(this).attr('data-alt');
-                index = layer.tips(alt, $(this),{tips: [1, '#0FA6D8']});
+                index = layer.tips(alt, $(this), {tips: [1, '#0FA6D8']});
             });
-            $('a.layui-btn').on('mouseout',function(){
+            $('a.layui-btn').on('mouseout', function () {
                 layer.close(index);
             });
-            $('a#delete').on('click', function(){
+            $('a#delete').on('click', function () {
                 var th = $(this),
                     t = th.parent().parent().parent('tr');
                 layer.confirm('确定要删除吗?', {
-                    btn: ['确定','取消'] //按钮
-                    ,btnAlign: 'c'
-                    ,shade: 0.8
-                    ,id: 'MI_delTips' //设定一个id，防止重复弹出
-                    ,moveType: 1 //拖拽模式，0或者1
-                    ,resize: false
-                }, function(){
-                    var id =  th.data('id');
+                    btn: ['确定', '取消'] //按钮
+                    , btnAlign: 'c'
+                    , shade: 0.8
+                    , id: 'MI_delTips' //设定一个id，防止重复弹出
+                    , moveType: 1 //拖拽模式，0或者1
+                    , resize: false
+                }, function () {
+                    var id = th.data('id');
                     var l = layer.msg('正在加载请稍后...', {
                         icon: 6
                     });
                     $.ajax({
-                        url:  '{{ url('/admin/user') }}' + '/' + id
+                        url: '{{ url('/admin/user') }}' + '/' + id
                         , type: "POST"
-                        , data: {'_method': 'DELETE', '_token': '{{ csrf_token() }}' }
-                        ,success:function (data) {
+                        , data: {'_method': 'DELETE', '_token': '{{ csrf_token() }}'}
+                        , success: function (data) {
 //                            alert(data);
                             layer.close(l);
-                            if( data == 1 ){
+                            if (data == 1) {
                                 layer.alert('删除成功', {icon: 1});
                                 t.remove();
-                            }else if ( data == 0 ){
+                            } else if (data == 0) {
                                 layer.alert('数据不存在!', {icon: 2});
-                            }else{
+                            } else {
                                 layer.alert('id错误!', {icon: 2});
                             }
                         }
                     });
 
-                }, function(Index){
+                }, function (Index) {
                     layer.close(Index);
                 });
             });
-            $('button#refresh').on('click', function(){
-                location.href=location.href;
+            $('button#refresh').on('click', function () {
+                location.href = location.href;
             });
         });
 

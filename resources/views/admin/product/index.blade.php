@@ -139,7 +139,7 @@
             var index;
             $('a.layui-btn').on('mouseover', function(){
                 var alt = $(this).attr('data-alt');
-                 index = layer.tips(alt, $(this),{tips: [1, '#0FA6D8']});
+                index = layer.tips(alt, $(this),{tips: [1, '#0FA6D8']});
             });
             $('a.layui-btn').on('mouseout',function(){
                 layer.close(index);
@@ -153,7 +153,7 @@
                 var th = $(this),
                     t = th.parent().parent().parent('tr');
                 layer.confirm('确定要删除吗?', {
-                     btn: ['确定','取消'] //按钮
+                    btn: ['确定','取消'] //按钮
                     ,btnAlign: 'c'
                     ,shade: 0.8
                     ,id: 'MI_delTips' //设定一个id，防止重复弹出
@@ -184,8 +184,8 @@
                                 }else{
                                     layer.alert('服务器错误!', {icon: 2});
                                 }
-                            }
-                        });
+                        }
+                    });
 
                 }, function(Index){
                     layer.close(Index);

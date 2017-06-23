@@ -67,7 +67,7 @@
                             <td>{{ $level-> level_deta}}</td>
                             <td>
                                 <div class="layui-btn-group">
-                                    <a href="{{ url('admin/product').'/'.$level->id."/edit" }}" class="layui-btn" data-alt="查看编辑">
+                                    <a href="{{ url('admin/level').'/'.$level->id."/edit" }}" class="layui-btn" data-alt="查看编辑">
                                         <i class="layui-icon">&#xe642;</i>
                                     </a>
                                     <a id="delete" data-id="{{ $level->id }}" class="layui-btn" data-alt="删除">
