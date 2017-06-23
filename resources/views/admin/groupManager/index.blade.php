@@ -67,7 +67,7 @@
                         <th>ID</th>
                         <th>所属组名称</th>
                         <th>所属组状态</th>
-                        <th>所属组权限内容</th>
+                        <th>所属组权限名</th>
                         <th>所属组描述</th>
                         <th>操作</th>
                     </tr>
@@ -79,7 +79,25 @@
                             <td>{{ $group->id }}</td>
                             <td style="color:#1E9FFF">{{ $group->group_name }}</td>
                             <td>{{ $status[$group->status] }}</td>
-                            <td>{{ $group->role_list }}</td>
+                            <td>
+
+                                {{--{{ explode(',', $group->role_list) }}--}}
+
+                                <?php
+
+                                    $rolename = "";
+
+                                    $id = explode(',', $group->role_list);
+//                                    dump($id);
+                                    foreach ($id as $v){
+//                                        dump($v);
+                                        $rolename .= $arr[$v] . ',';
+
+                                    }
+                                    echo rtrim($rolename, ',');
+                                ?>
+
+                            </td>
                             <td style="width: 600px">{{ $group->group_desc }}</td>
                             <td>
                                 <div class="layui-btn-group">

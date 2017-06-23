@@ -139,8 +139,6 @@ class UserController extends Controller
 
         //根据id查询管理员表
         $data = Admin::find($id);
-
-
 //        dd($data->gid);
 
         //将管理员表中的gid给一个变量  为了查询所属组信息
@@ -322,6 +320,9 @@ class UserController extends Controller
         if (in_array($username, $str)) {
             return 1;
         } else {
+
+//            return 2;
+
             $pass = $data[0]->password;
 
             if (Hash::check($password, $pass)) {
@@ -331,10 +332,11 @@ class UserController extends Controller
             } else {
                 return 1;
             }
-//            return 2;
         }
 
 //        dd($pass);
+
+
 
 
     }
