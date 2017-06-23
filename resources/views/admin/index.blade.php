@@ -89,6 +89,12 @@
                             </a>
                         </li>
                         <li class="layui-nav-item" data-pid="undefined">
+                            <a data-url="{{url('/admin/product_model')}}">
+                                <i class="larry-icon larry-houtaishouye" data-icon="larry-houtaishouye" aria-hidden="true"></i>
+                                <cite>模型管理</cite>
+                            </a>
+                        </li>
+                        <li class="layui-nav-item" data-pid="undefined">
                             <a data-url="{{url('/admin/user')}}">
                                 <i class="larry-icon larry-houtaishouye" data-icon="larry-houtaishouye" aria-hidden="true"></i>
                                 <cite>管理员管理</cite>
@@ -247,7 +253,7 @@
                 $(this).on('click', function(){
                     var th = $(this);
                     var href,title,icon,str,data;
-gi
+
                         href = th.children('a').attr('data-url');
 
                     if(href == undefined ){
@@ -259,7 +265,6 @@ gi
                             data =  eval('(' + str + ')');
                     }
                     navtab.tabAdd(data);
-                    layui.stope(e);
                 });
             });
         });

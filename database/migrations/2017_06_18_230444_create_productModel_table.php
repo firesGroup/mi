@@ -14,7 +14,8 @@ class CreateProductModelTable extends Migration
     {
         Schema::create('productModel', function(Blueprint $table){
             $table->increments('id')->comment('模型id');
-            $table->string('name')->comment('模型名称');
+            $table->string('name')->index()->comment('模型名称');
+            $table->timestamps();
             $table->charset='utf8';
             $table->engine='InnoDB';
         });

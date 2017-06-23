@@ -274,7 +274,9 @@
             if( submitFormData == loadFormData ){
                 layer.msg('您什么都没修改呀!', {'icon':3, 'time':2000,anim: Math.ceil(Math.random() * 6)});
             }else{
-                var index = layer.load();
+                var index = layer.msg('正在修改信息!请稍后...', {
+                    icon: 16
+                });
                 $.ajax({
                     url:'{{ url('/admin/product').'/'.$info->id }}',
                     type: 'put',
@@ -282,10 +284,12 @@
                     success: function(res){
                         if( res == 0 ){
                             layer.msg('修改成功!', {'icon':6, 'time':1000,end:function(){
+                                layer.close(index);
                                 location.href = location.href;
                             }});
                         }else if( res == 1 ){
                             layer.msg('修改失败!', {'icon':2, 'time':3000, end:function(){
+                                layer.close(index);
                                 location.href = location.href;
                             }});
                         }

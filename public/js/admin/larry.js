@@ -367,4 +367,14 @@ layui.use(['elements','jquery','layer','larry','navtab','form','common'],functio
     $('i#closeInfo').on('click', function(){
         $(this).parent().parent().remove();
     });
+
+
+	//禁止全局回车键提交表单功能
+	$('form').each(function(){
+		$(this).on('keydown',function(){
+			if( event.keyCode == 13 ){
+				return false;
+			}
+		});
+	});
 })

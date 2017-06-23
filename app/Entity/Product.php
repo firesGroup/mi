@@ -18,4 +18,12 @@ class Product extends Model
     {
         return $this->hasOne('App\Entity\ProductDetail', 'pid');
     }
+
+    /**
+     * 获取商品相册图片集合。
+     */
+    public function images()
+    {
+        return $this->hasMany('App\Entity\ProductImages','pid');
+    }
 }

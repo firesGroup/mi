@@ -17,11 +17,11 @@ Route::group(['namespace'=>'Admin','prefix'=>'admin'], function(){
     Route::delete('product/{id}/images', 'ProductController@deleteImages');
     Route::get('product/{id}/indexImage', 'ProductController@getIndexImage');
     Route::post('product/{id}/indexImage', 'ProductController@postIndexImage');
-
+    Route::resource('product_model', 'ProductModelController');
     Route::resource('brand', 'ProductBrandController');
+    Route::get('brand/get/idandname','ProductBrandController@getIdAndName');
     Route::resource('menu', 'MenuController');
     Route::get('menu/index/welcome','MenuController@getWelcome');
-    Route::get('brand/get/idandname','ProductBrandController@getIdAndName');
 });
 
 Route::get( '/upload/{path}/{id}/{url}', 'PublicC\UploadController@getUpload' );
