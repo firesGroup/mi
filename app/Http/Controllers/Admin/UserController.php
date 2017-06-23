@@ -6,7 +6,6 @@ use Illuminate\Http\Request;
 use App\Entity\Admin;
 use App\Entity\AdminGroup;
 use App\Entity\AdminRole;
-use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use DB;
 use Hash;

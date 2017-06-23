@@ -16,9 +16,9 @@ use Illuminate\Database\Eloquent\Model;
 class ProductImages extends Model
 {
     //指定关联数据库表名
-    protected $table = 'productImages';
+    protected $table = 'product_images';
     //指定关联数据库表主键
-    protected $primaryKey = 'pid';
+    protected $primaryKey = 'p_id';
 
 //    /**
 //     * 获取关连联商品信息。

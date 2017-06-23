@@ -14,8 +14,8 @@ class CreateCommentTable extends Migration
     {
         Schema::create('comment', function(Blueprint $table){
             $table->increments('id')->comment('评论id');
-            $table->integer('mid')->index()->comment('用户id');
-            $table->integer('pid')->index()->comment('商品id');
+            $table->integer('member_id')->index()->comment('用户id');
+            $table->integer('p_id')->index()->comment('商品id');
             $table->string('content')->comment('评论内容');
             $table->string('images')->comment('评论图片路径');
             $table->tinyInteger('star')->default(0)->comment(',默认0代表好评,1为中评,2为差评');

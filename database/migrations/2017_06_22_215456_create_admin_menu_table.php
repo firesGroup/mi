@@ -12,12 +12,12 @@ class CreateAdminMenuTable extends Migration
      */
     public function up()
     {
-        Schema::create('adminMenu', function(Blueprint $table){
+        Schema::create('admin_menu', function(Blueprint $table){
             $table->increments('id')->comment('菜单id');
-            $table->string('title')->index()->comment('菜单名称');
+            $table->string('menu_title')->index()->comment('菜单名称');
             $table->tinyInteger('parent_id')->default(0)->comment('父级id');
-            $table->string('href')->index()->default('')->comment('菜单链接');
-            $table->string('icon')->index()->default('')->comment('菜单图标');
+            $table->string('menu_href')->index()->default('')->comment('菜单链接');
+            $table->string('menu_icon')->index()->default('')->comment('菜单图标');
             $table->tinyInteger('order')->default(0)->comment('排序');
             $table->tinyInteger('status')->default(0)->comment('是否启用菜单,默认0为显示,1为不显示');
             $table->timestamps();
@@ -33,6 +33,6 @@ class CreateAdminMenuTable extends Migration
      */
     public function down()
     {
-        Schema::drop('adminMenu');
+        Schema::drop('admin_menu');
     }
 }

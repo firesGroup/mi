@@ -80,10 +80,18 @@
                                     <div class="layui-form-item">
                                         <label class="layui-form-label">会员生日</label>
                                         <div class="layui-input-block">
-                                            <input class="layui-input" name="birthday" placeholder="自定义日期格式" id="date" onclick="layui.laydate({elem: this, festival: true} )" value="{{$user_detail->birthday}}" lay-verify="required|">
+                                            <input class="layui-input" name="birthday" placeholder="自定义日期格式" id="date" onclick="layui.laydate({elem: this, festival: true} )" value="{{$user_detail->birthday}}" lay-verify="required">
                                         </div>
                                     </div>
                                     <input type="hidden" name="last_ip" value="{{$data->last_ip}}">
+                                    <div class="layui-form-item">
+                                        <div class="layui-input-block">
+                                            <input type="file" name="avator" class="layui-upload-file" lay-title="上传会员头像">
+                                        </div>
+                                        <div class="layui-input-block">
+                                            <img src="{{$user_detail->avator}}">
+                                        </div>
+                                    </div>
                                     <div class="layui-form-item">
                                         <div class="layui-input-block">
                                             <button id="submit" class="layui-btn" lay-submit=""  lay-filter="go">立即提交</button>

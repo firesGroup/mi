@@ -112,9 +112,9 @@
                                 <div class="layui-form-item">
                                     <label class="layui-form-label">商品品牌</label>
                                     <div class="layui-input-block">
-                                        <select name="bid">
+                                        <select name="brand_id">
                                             @foreach( $brand as $b )
-                                                @if( $info->bid == $b->id )
+                                                @if( $info->brand_id == $b->id )
                                                     <option value="{{ $b->id  }}" selected >{{ $b->brand_name }}</option>
                                                 @else
                                                     <option value="{{ $b->id  }}">{{ $b->brand_name }}</option>
@@ -254,9 +254,9 @@
 
         $('select[name=bid]').siblings('div.layui-unselect').children('dl dd').each(function(){
             console.log( $(this)[0] );
-            if( $(this).attr('lay-value') == {{ $info->bid }}){
+            if( $(this).attr('lay-value') == {{ $info->brand_id }}){
                 $(this).addclass('layui-this');
-                $( 'select[name=bid] option[value={{ $info->bid }}]').attr('selected','true');
+                $( 'select[name=bid] option[value={{ $info->brand_id }}]').attr('selected','true');
             }
         });
         $('select[name=status] option').each(function(){
@@ -312,9 +312,9 @@
         } );
 
         $( '#uploadImage' ).on('click', function(){
-            openUpload(id,'{{ $info->p_name }}', 'product',"@admin@product@"+ id +"@indexImage", function(){
+            openUpload(id,'{{ $info->p_name }}', 'product',"@admin@product@indexImage@"+ id, function(){
                 $.ajax({
-                    url: "{{ url('/admin/product/'.$info->id.'/indexImage') }}",
+                    url: "{{ url('/admin/product/indexImage/'.$info->id) }}",
                     type:"get",
                     success:function(data){
                         $('input#upload-input').val(data);
@@ -325,7 +325,7 @@
 
         $('div#upload-div-1').on('click', '#uploadFile',function(){
             if( $('div.images-list li').length < 5 ){
-                openUpload( id ,'{{ $info->p_name }}' ,'product', '@admin@product@' + id + '@images')
+                openUpload( id ,'{{ $info->p_name }}' ,'product', '@admin@product@images@' + id)
             }else{
                 layer.alert('最多上传5张图片!',{title:'提示',icon:2});
             }
@@ -337,7 +337,7 @@
                  iid = img.attr('data-id'),
                  path = img.attr('src');
              $.ajax({
-                 url: '{{ url('/admin/product') }}/' + iid + "/images",
+                 url: "{{ url('/admin/product') }}/images/" + iid,
                  type: 'DELETE',
                  data: {'id': iid, 'path': path , '_token': token },
                  success: function(res){

@@ -12,12 +12,12 @@ class CreateOrderDetailTable extends Migration
      */
     public function up()
     {
-        Schema::create('orderDetail', function(Blueprint $table){
+        Schema::create('order_detail', function(Blueprint $table){
             $table->integer('order_id')->unsigned()->comment('订单id');
-            $table->integer('pid')->index()->comment('商品id');
+            $table->integer('p_id')->index()->comment('商品id');
             $table->string('p_name')->comment('商品名称');
             $table->decimal('p_price', 12, 2)->comment('商品单价');
-            $table->integer('p_num')->comment('商品数量');
+            $table->integer('buy_num')->comment('商品数量');
             $table->timestamps();
             $table->primary('order_id');
             $table->charset='utf8';
@@ -32,6 +32,6 @@ class CreateOrderDetailTable extends Migration
      */
     public function down()
     {
-        Schema::drop('orderDetail');
+        Schema::drop('order_detail');
     }
 }

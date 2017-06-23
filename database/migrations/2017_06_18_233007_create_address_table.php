@@ -14,9 +14,9 @@ class CreateAddressTable extends Migration
     {
         Schema::create('address', function(Blueprint $table){
             $table->increments('id')->comment('地址id');
-            $table->integer('mid')->index()->comment('用户id');
-            $table->string('user')->comment('收货人');
-            $table->integer('phone')->comment('收货人手机号');
+            $table->integer('member_id')->index()->comment('用户id');
+            $table->string('buy_user')->comment('收货人');
+            $table->integer('buy_phone')->comment('收货人手机号');
             $table->string('address')->comment('收货地址');
             $table->tinyInteger('status')->default(0)->comment('地址状态,默认为0,1为普通');
             $table->timestamps();

@@ -17,7 +17,7 @@ use Illuminate\Database\Eloquent\Model;
 class ProductDetail extends Model
 {
     //指定关联数据库表名
-    protected $table = 'productDetail';
+    protected $table = 'product_detail';
     //指定关联数据库表主键
-    protected $primaryKey = 'pid';
+    protected $primaryKey = 'p_id';
 }

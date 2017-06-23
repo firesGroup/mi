@@ -8,5 +8,5 @@ class order extends Model
 {
     protected $table = 'order';
 
-    public $fillable = ['order_sn', 'mid', 'user', 'phone', 'address', 'total', 'order_status'];
+    public $fillable = ['order_sn', 'member_id', 'buy_user', 'buy_phone', 'address', 'total', 'order_status'];
 }

@@ -16,7 +16,7 @@ class Product extends Model
      */
     public function detail()
     {
-        return $this->hasOne('App\Entity\ProductDetail', 'pid');
+        return $this->hasOne('App\Entity\ProductDetail', 'p_id');
     }
 
     /**
@@ -24,6 +24,6 @@ class Product extends Model
      */
     public function images()
     {
-        return $this->hasMany('App\Entity\ProductImages','pid');
+        return $this->hasMany('App\Entity\ProductImages','p_id');
     }
 }

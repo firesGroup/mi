@@ -78,7 +78,7 @@
                     @foreach( $modelList as $model )
                         <tr>
                             <td>{{ $model->id }}</td>
-                            <td>{{ $model->name }}</td>
+                            <td>{{ $model->model_name }}</td>
                             <td>
                                 <div class="layui-btn-group">
                                     <a href="{{ url('admin/product').'/'.$model->id }}"
@@ -89,7 +89,7 @@
                                        class="layui-btn  layui-btn-small" data-alt="查看规格">
                                         <i class="larry-icon larry-chaxun1"></i>规格列表
                                     </a>
-                                    <a href="{{ url('admin/product').'/'.$model->id."/edit" }}"
+                                    <a href="{{ url('admin/product/model').'/'.$model->id."/edit" }}"
                                        class="layui-btn  layui-btn-small" data-alt="修改">
                                         <i class="larry-icon larry-xiugai"></i>编辑
                                     </a>
@@ -120,13 +120,56 @@
                 layer.msg('正在加载!请稍后...', {
                     icon: 16
                 });
-                location.href='{{ url('/admin/product_model/create') }}';
+                location.href='{{ url('/admin/product/model/create') }}';
             });
             $('button#refresh').on('click', function(){
                 layer.msg('正在加载!请稍后...', {
                     icon: 16
                 });
                 location.href=location.href;
+            });
+            //删除模型按钮
+            $('a#delete').on('click', function(){
+                var th = $(this),
+                    t = th.parent().parent().parent('tr');
+                    layer.confirm('确定要删除吗?', {
+                    btn: ['确定','取消'] //按钮
+                    ,btnAlign: 'c'
+                    ,shade: 0.8
+                    ,id: 'MI_delTips' //设定一个id，防止重复弹出
+                    ,moveType: 1 //拖拽模式，0或者1
+                    ,resize: false
+                    ,title: '友情提醒'
+                }, function(){
+                    var id =  th.data('id');
+                    var l = layer.msg('正在删除!请稍后...', {
+                        icon: 16
+                    });
+                    $.ajax({
+                        url:  "{{ url('/admin/product/model') }}/" + id
+                        , type: "POST"
+                        , data: {'_method': 'DELETE', '_token': '{{ csrf_token() }}' }
+                        ,success:function (data) {
+                            if( data != '' ){
+                                layer.close(l);
+                                if( data == 0 ){
+                                    layer.alert('删除成功', {icon: 1,time:2000,yes:function(){
+                                        location.href=location.href;
+                                    }});
+                                }else if ( data == 1 ){
+                                    layer.alert('数据不存在!', {icon: 2});
+                                }else{
+                                    layer.alert('id错误!', {icon: 2});
+                                }
+                            }else{
+                                layer.alert('服务器错误!', {icon: 2});
+                            }
+                        }
+                    });
+
+                }, function(Index){
+                    layer.close(Index);
+                });
             });
         });
     </script>

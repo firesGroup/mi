@@ -12,9 +12,9 @@ class CreateProductImagesTable extends Migration
      */
     public function up()
     {
-        Schema::create( 'productImages', function(Blueprint $table){
+        Schema::create( 'product_images', function(Blueprint $table){
             $table->increments('id')->comment('图片id');
-            $table->integer('pid')->comment('商品id');
+            $table->integer('p_id')->comment('商品id');
             $table->string('path')->index()->comment('商品图片地址');
             $table->timestamps();
         } );
@@ -27,6 +27,6 @@ class CreateProductImagesTable extends Migration
      */
     public function down()
     {
-        Schema::drop( 'productImages' );
+        Schema::drop( 'product_images' );
     }
 }

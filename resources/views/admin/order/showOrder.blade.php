@@ -87,17 +87,15 @@
             <div>
 
                 <legend>收货信息<i class="layui-icon" style="font-size: 30px; color: #01AAED;">&#xe609;</i></legend>
-
-                <div style="text-align: center;width: 500px;height: 250px;float: left;margin-left: 40px;">
-                    <ul style="text-align: left; font-size: 20px;">
-                        <li>收货人: {{$data->user}}</li>
-                        <br>
-                        <li>收货人手机号: {{$data->phone}}</li>
-                        <br>
-                        <li>详细地址: {{$data->address}}</li>
-                    </ul>
-                </div>
-
+            <div style="text-align: center;width: 500px;height: 180px;float: left;margin-left: 40px;">
+                <ul style="text-align: left; font-size: 20px;">
+                    <li>收货人: {{$data->buy_user}}</li>
+                    <br>
+                    <li>收货人手机号: {{$data->buy_phone}}</li>
+                    <br>
+                    <li>详细地址: {{$data->address}}</li>
+                </ul>
+            </div>
                 <div style="text-align: center;width: 500px;height: 150px;float: left;">
                     <ul style="text-align: left;">
                         <li>配送方式: {{$data->delivery}}</li>
@@ -110,9 +108,7 @@
 
             <hr>
             <legend>商品信息<i class="layui-icon" style="font-size: 30px; color: #F7B824;">&#xe62e;</i></legend>
-
             <table class="layui-table" lay-skin="line" style="width:1100px;height:100px;background-color: #c2c2c2;">
-
                 <tr>
                     <th>商品ID</th>
                     <th>商品名称</th>
@@ -122,11 +118,12 @@
                 </tr>
                 @foreach($odetail as $v)
                     <tr>
-                        <td>{{$v->pid}}</td>
-                        <td>{{$v->p_name}}</td>
-                        <td>{{$v->p_price}}</td>
-                        <td>{{$v->p_num}}</td>
-                        <td>{{$data->total}}</td>
+                    {{--{{dd($v)}}--}}
+                    <td>{{$v->p_id}}</td>
+                    <td>{{$v->p_name}}</td>
+                    <td>{{$v->p_price}}</td>
+                    <td>{{$v->p_num}}</td>
+                    <td>{{$data->total}}</td>
                     </tr>
                 @endforeach
 

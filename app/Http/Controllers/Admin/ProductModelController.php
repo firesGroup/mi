@@ -11,9 +11,8 @@
 
 namespace App\Http\Controllers\Admin;
 
-use Illuminate\Http\Request;
 
-use App\Http\Requests;
+use App\Http\Requests\Admin\ProductModelRequest;
 use App\Entity\ProductModel;
 use DB;
 use App\Http\Controllers\Controller;
@@ -49,10 +48,10 @@ class ProductModelController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ProductModelRequest $request)
     {
-        $name = $request->name;
-        if(ProductModel::create(['name'=>$name])){
+        $model_name = $request->model_name;
+        if(ProductModel::create(['model_name'=>$model_name])){
             return 0;
         }else{
             return 1;
@@ -76,9 +75,10 @@ class ProductModelController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($model_id)
     {
-        //
+        $model = ProductModel::find($model_id);
+        return view('admin.product.model.edit',compact('model'));
     }
 
     /**
@@ -88,9 +88,14 @@ class ProductModelController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(ProductModelRequest $request, $model_id)
     {
-        //
+        $bool = ProductModel::where('id',$model_id)->update(['model_name'=>$request->model_name ]);
+        if( $bool != -1 ){
+            return 0;
+        }else{
+            return 1;
+        }
     }
 
     /**
@@ -99,8 +104,13 @@ class ProductModelController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($model_id)
     {
-        //
+        //删除
+        if(ProductModel::destroy($model_id)){
+            return 0;
+        }else{
+            return 1;
+        }
     }
 }

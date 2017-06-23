@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Admin;
 use App\Entity\AdminMenu;
 use Illuminate\Http\Request;
 
-use App\Http\Requests;
 use DB;
 use App\Http\Controllers\Controller;
 
@@ -56,10 +55,10 @@ class MenuController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  int  $menu_id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($menu_id)
     {
         //
     }
@@ -67,10 +66,10 @@ class MenuController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  int  $menu_id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($menu_id)
     {
         //
     }
@@ -79,10 +78,10 @@ class MenuController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  int  $menu_id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $menu_id)
     {
         //
     }

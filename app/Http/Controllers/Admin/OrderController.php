@@ -3,8 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
-use App\Entity\order;
-use App\Http\Requests;
+use App\Entity\Order;
 use App\Http\Controllers\Controller;
 use DB;
 

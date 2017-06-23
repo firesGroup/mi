@@ -14,8 +14,8 @@ class CreateCollectTable extends Migration
     {
         Schema::create( 'collect', function(Blueprint $table){
             $table->increments('id')->comment('收藏id');
-            $table->integer('mid')->comment('用户id');
-            $table->integer('pid')->comment('商品id');
+            $table->integer('member_id')->comment('用户id');
+            $table->integer('p_id')->comment('商品id');
             $table->timestamps();
             $table->charset='utf8';
             $table->engine='InnoDB';

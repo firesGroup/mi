@@ -76,20 +76,18 @@
                                             <input type="password" name="newPassword" lay-verify="required"
                                                    autocomplete="off" class="layui-input" value="">
                                         </div>
-                                    </div>
-                                    <div class="layui-form-item">
-                                        <label class="layui-form-label">所属于的权限组</label>
-                                        <div class="layui-input-block">
-                                            <select name="gid" lay-verify="required">
-                                                <option value="{{$str->id}}">{{$str->group_name}}</option>
-                                                @foreach($arr as $v)
-                                                    {{--{{dump($v)}}--}}
-                                                    <option value="{{$v->id}}">{{$v->group_name}}</option>
+                                   </div>
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">所属于的权限组</label>
+                                    <div class="layui-input-block">
+                                        <select name="group_id" lay-verify="required">
+                                            {{--<option value="{{$str->id}}">{{$str->group_name}}</option>--}}
+                                            @foreach($arr as $v)
+                                                {{--{{dump($v)}}--}}
+                                                <option value="{{$v->id}}">{{$v->group_name}}</option>
 
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                    </div>
+                                            @endforeach
+                                        </select>
                                     <div class="layui-form-item">
                                         <label class="layui-form-label">状态</label>
                                         <div class="layui-input-block" pane>

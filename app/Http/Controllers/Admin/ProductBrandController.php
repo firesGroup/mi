@@ -27,7 +27,7 @@ class ProductBrandController extends Controller
      */
     public function getIdAndName()
     {
-        $list = DB::table('productbrand')->select('id','brand_name')->get();
+        $list = DB::table('product_brand')->select('id','brand_name')->get();
         return $list;
     }
 

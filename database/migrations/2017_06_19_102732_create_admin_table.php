@@ -14,7 +14,7 @@ class CreateAdminTable extends Migration
     {
         Schema::create('admin', function(Blueprint $table){
             $table->increments('id')->comment('管理员id');
-            $table->integer('gid')->comment('管理员用户组id');
+            $table->integer('group_id')->comment('管理员用户组id');
             $table->string('username')->comment('管理员用户名');
             $table->string('password')->comment('登陆密码');
             $table->tinyInteger('status')->comment('管理员状态,0为启用,1为锁定');

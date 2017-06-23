@@ -55,7 +55,7 @@ function ajaxGetImagesList(id,pName)
             icon: 16
         });
     $.ajax({
-        url: '/admin/product/'+ id +'/images',
+        url: '/admin/product/images/'+ id,
         method: 'get',
         statusCode:{400:function(){
             layer.msg('资源不存在!',{ icon:2,time:1000 });
