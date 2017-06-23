@@ -2,12 +2,11 @@
 
 namespace App\Http\Controllers\Admin;
 
-use Illuminate\Http\Request;
 use App\Entity\Member;
 use App\Entity\MemberDetail;
-use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use DB;
+use Illuminate\Http\Request;
 use Image;
 
 class MemberController extends Controller
@@ -20,7 +19,7 @@ class MemberController extends Controller
     public function index()
     {
         $data = Member::orderby('id')->paginate(5);
-        $state = array('0'=>'普通', '1' => '禁用');
+        $state = array('0'=>'普通', '1' => '锁定');
         return view('admin/member/member', compact('data', 'state'));
 
     }
@@ -84,17 +83,33 @@ class MemberController extends Controller
      */
     public function update(Request $request, $id)
     {
-            $data = Member::find($id);
-//            dd($data);
-        $arr = $request->all();
-        dd($arr);
-            $nick_name = $request->get('nick_name');
-            $email = $request->get('email');
-            $phone= $request->get('phone');
-            $status = $request->get('status');
-            $arr = array($nick_name, $email, $phone, $status);
-            $a = $data::save();
-            dd($a);
+        //验证操作
+        $data = DB::table('member')->lists('nick_name');
+        $m_name = Member::find($id)->nick_name;
+        if(in_array($m_name, $data)) {
+            return 1;
+        }else{
+            return 0;
+        }
+
+
+        //添加数据库操作
+        $nick_name = $request->get('nick_name');
+        $email = $request->get('email');
+        $phone= $request->get('phone');
+        $status = $request->get('status');
+        $lastIp = $request->get('last_ip');
+        $sex = $request->get('sex');
+        $birthday = $request->get('birthday');
+        if(Member::where('id', '=' , $id)->update(['nick_name' => $nick_name, 'email' => $email, 'phone' => $phone, 'status'=> $status, 'last_ip' => $lastIp])){
+            if (MemberDetail::where('mid', '=', $id)->update(['sex' => $sex, 'birthday' => $birthday])) {
+                return redirect('admin/member');
+            }else {
+                return back();
+            }
+        }
+
+
     }
 
     /**
@@ -152,6 +167,16 @@ class MemberController extends Controller
 
         return redirect('/admin/member/'.$id);
 
+     }
 
+     public function member_check_name(Request $request, $id)
+     {
+
+         $data = DB::table('member')->lists('nick_name');
+         $s_name = Member::find($id);
+         $m_name = $request->get('m_name');
+         if(in_array($m_name, $data) && $m_name != $s_name->nick_name) {
+             return 1;
+         }
      }
 }

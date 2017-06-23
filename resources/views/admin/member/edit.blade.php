@@ -41,7 +41,7 @@
                     <div class="layui-tab-content">
                         <div class="layui-tab-item layui-show" style="padding-top:20px">
                             <div class="form-body">
-                                <form class="layui-form" action="{{url('admin/member/'.$data->id)}}" method="post" enctype="multipart/form-data">
+                                <form class="layui-form">
                                     {{csrf_field()}}
                                     <input type="hidden" name="_method" value="PUT">
                                     <div class="layui-form-item">
@@ -53,13 +53,13 @@
                                     <div class="layui-form-item">
                                         <label class="layui-form-label">会员邮箱</label>
                                         <div class="layui-input-block">
-                                            <input type="text" name="email" lay-verify="required"  autocomplete="off" class="layui-input" value="{{$data->email}}">
+                                            <input type="text" name="email" lay-verify="required|email"  autocomplete="off" class="layui-input" value="{{$data->email}}">
                                         </div>
                                     </div>
                                     <div class="layui-form-item">
                                         <label class="layui-form-label">会员电话</label>
                                         <div class="layui-input-block">
-                                            <input type="text" name="phone" class="layui-input" value="{{$data->phone}}">
+                                            <input type="text" name="phone" class="layui-input" value="{{$data->phone}}" lay-verify="required|phone">
                                         </div>
                                     </div>
                                     <div class="layui-form-item" pane>
@@ -80,13 +80,13 @@
                                     <div class="layui-form-item">
                                         <label class="layui-form-label">会员生日</label>
                                         <div class="layui-input-block">
-                                            <input type="date" name="brthday" class="layui-input" value="{{$user_detail->birthday}}">
+                                            <input type="date" name="birthday" class="layui-input" value="{{$user_detail->birthday}}" lay-verify="date">
                                         </div>
                                     </div>
                                     <input type="hidden" name="last_ip" value="{{$data->last_ip}}">
                                     <div class="layui-form-item">
                                         <div class="layui-input-block">
-                                            <button class="layui-btn" lay-submit="" lay-filter="demo1">立即提交</button>
+                                            <button id="submit" class="layui-btn" lay-submit=""  lay-filter="go">立即提交</button>
                                             <button type="reset" class="layui-btn layui-btn-primary">重置</button>
                                         </div>
                                     </div>
@@ -102,4 +102,44 @@
 
 @section('js')
     @parent
+    <script>
+
+        layui.use(['form', 'jquery', 'layer'], function () {
+            var $ = layui.jquery,
+                form = layui.form(),
+                layer = layui.layer;
+
+
+
+
+            form.on( 'submit(go)', function(data){
+                $("input[name=nick_name]").blur( function () {
+                    var m_name =  $(this).val();
+                    var that = $(this);
+                    var origin = that.data('u');
+                    if (origin != m_name) {
+                        $.ajax({
+                            url:"{{url('admin/member_check_name/'.$data->id)}}",
+                            type:"post",
+                            data:{"_token":"{{csrf_token()}}","m_name":m_name},
+                            success:function (data) {
+                                if (data == 1) {
+                                    that.data('u', m_name);
+                                    that.css({'border': '1px solid #FF5722'});
+                                    layer.msg('会员名已存在', {time: 1000});
+                                    return false;
+                                } else {
+                                    that.css({'border': '1px solid #f2f2f2'});
+                                    layer.msg('会员名可用');
+                                }
+                            }
+                        })
+                    }
+
+                });
+
+            } );
+
+        });
+    </script>
 @endsection
