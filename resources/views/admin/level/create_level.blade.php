@@ -113,7 +113,7 @@
                 var origin = that.data('u');
                 if (origin != l_name) {
                     $.ajax({
-                        url: '{{url('admin/ajax')}}',
+                        url: '{{url('admin/create_ajax')}}',
                         type: 'post',
                         data: {'_token': '{{ csrf_token() }}', 'level_name': l_name},
                         success: function (data) {

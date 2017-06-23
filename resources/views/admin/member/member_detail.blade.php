@@ -57,6 +57,14 @@
                         </div>
                     </div>
                     <div class="layui-form-item">
+                        <div class="layui-form-label">会员生日</div>
+                        <div class="layui-input-inline" style="width:300px">
+                            <div class="layui-input">
+                                {{$user_detail->birthday}}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
                         <label class="layui-form-label">会员邮箱</label>
                         <div class="layui-input-inline">
                             <div class="layui-input" style="width:300px">

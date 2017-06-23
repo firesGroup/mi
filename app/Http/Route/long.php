@@ -16,8 +16,10 @@ Route::group( ['namespace'=>'Admin', 'prefix'=>'admin'], function(){
     Route::post('member_check_name/{id}', 'MemberController@member_check_name');
 
     //等级路由
+
+    Route::post('create_ajax', 'LevelController@ajax');
+    Route::post('level_edit', 'LevelController@edit_ajax');
     Route::resource('level', 'LevelController');
-    Route::post('ajax', 'LevelController@ajax');
 } );
 
 

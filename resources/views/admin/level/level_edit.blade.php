@@ -1,16 +1,16 @@
 <?php
 /**
- * File Name: edit.blade.php
- * Description:修改会员信息
+ * File Name: level_edit.blade.php
+ * Description:修改会员等级
  * Created by PhpStorm.
  * Auth: Long
- * Date: 2017/6/19 0019
- * Time: 下午 11:54
+ * Date: 2017/6/23 0023
+ * Time: 下午 4:13
  */
 ?>
 @extends('layouts.iframe')
 
-@section('title', '修改会员信息')
+@section('title', '修改等级')
 @section('css')
     @parent
 @endsection
@@ -19,7 +19,7 @@
     <section class="larry-grid">
         <div class="larry-personal">
             <header class="larry-personal-tit">
-                <span>会员管理-修改信息</span>
+                <span>等级管理-修改等级</span>
             </header>
             <div class="row" id="infoSwitch">
                 <blockquote class="layui-elem-quote col-md-12 head-con">
@@ -28,7 +28,7 @@
                         <h4 title="提示相关设置操作时应注意的要点">操作提示</h4>
                     </div>
                     <ul>
-                        <li>请务必正确填写会员信息</li>
+                        <li>请务必正确填写等级信息</li>
                     </ul>
                     <i class="larry-icon larry-guanbi close" id="closeInfo"></i>
                 </blockquote>
@@ -36,7 +36,7 @@
             <div class="larry-personal-body clearfix">
                 <div class="layui-tab">
                     <ul class="layui-tab-title">
-                        <li class="layui-this">会员信息</li>
+                        <li class="layui-this">等级信息</li>
                     </ul>
                     <div class="layui-tab-content">
                         <div class="layui-tab-item layui-show" style="padding-top:20px">
@@ -45,45 +45,29 @@
                                     {{csrf_field()}}
                                     <input type="hidden" name="_method" value="PUT">
                                     <div class="layui-form-item">
-                                        <label class="layui-form-label">会员呢称</label>
+                                        <label class="layui-form-label">等级名称</label>
                                         <div class="layui-input-block">
-                                            <input type="text" name="nick_name" lay-verify="required" autocomplete="off" class="layui-input" value="{{$data->nick_name}}">
+                                            <input type="text" name="nick_name" lay-verify="required" autocomplete="off" class="layui-input" value="{{$data->level_name}}">
                                         </div>
                                     </div>
                                     <div class="layui-form-item">
-                                        <label class="layui-form-label">会员邮箱</label>
+                                        <label class="layui-form-label">消费金额</label>
                                         <div class="layui-input-block">
-                                            <input type="text" name="email" lay-verify="required|email"  autocomplete="off" class="layui-input" value="{{$data->email}}">
+                                            <input type="text" name="email" lay-verify="required"  autocomplete="off" class="layui-input" value="{{$data->consumption}}">
                                         </div>
                                     </div>
                                     <div class="layui-form-item">
-                                        <label class="layui-form-label">会员电话</label>
+                                        <label class="layui-form-label">折扣率</label>
                                         <div class="layui-input-block">
-                                            <input type="text" name="phone" class="layui-input" value="{{$data->phone}}" lay-verify="required|phone">
+                                            <input type="text" name="phone" class="layui-input" value="{{$data->discount}}" lay-verify="required">
                                         </div>
                                     </div>
                                     <div class="layui-form-item" pane>
-                                        <label class="layui-form-label">会员状态</label>
+                                        <label class="layui-form-label">等级描述</label>
                                         <div class="layui-input-block">
-                                            <input type="radio" name="status" value=0 {{($data->status == '0')?'checked':''}} title="普通">
-                                            <input type="radio" name="status" value=1 {{($data->status == '1')?'checked':''}} title="锁定">
+                                            <input type="text" name="phone" class="layui-input" value="{{$data->level_deta}}" lay-verify="required">
                                         </div>
                                     </div>
-                                    <div class="layui-form-item" pane>
-                                        <label class="layui-form-label">会员性别</label>
-                                        <div class="layui-input-block">
-                                            <input type="radio" name="sex" value=0 {{($user_detail->sex == '0')?'checked':''}} title="保密">
-                                            <input type="radio" name="sex" value=1 {{($user_detail->sex == '1')?'checked':''}}  title="男">
-                                            <input type="radio" name="sex" value=2 {{($user_detail->sex == '2')?'checked':''}}  title="女">
-                                        </div>
-                                    </div>
-                                    <div class="layui-form-item">
-                                        <label class="layui-form-label">会员生日</label>
-                                        <div class="layui-input-block">
-                                            <input class="layui-input" name="birthday" placeholder="自定义日期格式" id="date" onclick="layui.laydate({elem: this, festival: true} )" value="{{$user_detail->birthday}}" lay-verify="required|">
-                                        </div>
-                                    </div>
-                                    <input type="hidden" name="last_ip" value="{{$data->last_ip}}">
                                     <div class="layui-form-item">
                                         <div class="layui-input-block">
                                             <button id="submit" class="layui-btn" lay-submit=""  lay-filter="go">立即提交</button>
@@ -98,26 +82,23 @@
             </div>
         </div>
     </section>
-@endsection
-
+    @endsection
 @section('js')
     @parent
-    <script>
 
-        layui.use(['form', 'jquery', 'layer', 'laydate'], function () {
+    <script>
+        layui.use(['form', 'jquery', 'layer'], function () {
             var $ = layui.jquery,
                 form = layui.form(),
                 layer = layui.layer;
-            var laydate = layui.laydate;
 
-//            laydate({elem:'#date', event:'click', format: 'YYYY-MM-DD'});
             $("input[name=nick_name]").blur( function () {
-               var m_name =  $(this).val();
+                var m_name =  $(this).val();
                 var that = $(this);
                 var origin = that.data('u');
                 if (origin != m_name) {
                     $.ajax({
-                        url:"{{url('admin/member_check_name/'.$data->id)}}",
+                        url:"{{url('admin/level_edit/'.$data->id)}}",
                         type:"post",
                         data:{"_token":"{{csrf_token()}}","m_name":m_name},
                         success:function (data) {
@@ -125,7 +106,6 @@
                                 that.data('u', m_name);
                                 that.css({'border': '1px solid #FF5722'});
                                 layer.msg('会员名已存在', {time: 1000});
-//
                             } else {
                                 that.css({'border': '1px solid #f2f2f2'});
                                 layer.msg('会员名可用');
@@ -134,11 +114,6 @@
                     })
                 }
 
-            });
-
-
-
-
-        });
+        })
     </script>
 @endsection
