@@ -146,8 +146,8 @@ layui.define(['jquery','elements','layer','common'],function(exports){
 			//iframe 自适应
 			ELEM.contentBox.find('iframe[data-id=' + globalTabIdIndex + ']').each(function() {
 				$(this).height(ELEM.contentBox.height());
-				layer.msg('正在加载请稍后...', {
-					icon: 6
+				layer.msg('正在加载!请稍后...', {
+					icon: 16
 				});
 			});
 			$('#ifr' + globalTabIdIndex).load(function() {

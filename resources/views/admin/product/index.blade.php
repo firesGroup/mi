@@ -37,31 +37,31 @@
                 </blockquote>
             </div>
             <div class="larry-personal-body clearfix">
-                    <div class="btn-group">
-                        <button class="layui-btn layui-btn-small">
-                            <i class="layui-icon">&#xe608;</i> 添加商品
-                        </button>
-                        <button class="layui-btn layui-btn-small" id="refresh">
-                            <i class="layui-icon">&#x1002;</i> 刷新本页
-                        </button>
-                    </div>
-                    <div class="order">
-                        <select name="category">
-                            <option value="0">所有分类</option>
-                        </select>
-                        <select name="brand">
-                            <option value="0">所有品牌</option>
-                        </select>
-                        <select name="sort_price">
-                            <option value="0">默认排序</option>
-                            <option value="1">按价格由高到低</option>
-                            <option value="2">按价格由低到高</option>
-                        </select>
-                        <input class="layui-input-inline" placeholder="搜索关键词" name="search" value="">
-                        <span class="layui-btn" >
-                                    <i class="layui-icon">&#xe615;</i>搜索
-                                </span>
-                    </div>
+                <div class="btn-group">
+                    <button class="layui-btn layui-btn-small">
+                        <i class="layui-icon">&#xe608;</i> 添加商品
+                    </button>
+                    <button class="layui-btn layui-btn-small" id="refresh">
+                        <i class="layui-icon">&#x1002;</i> 刷新本页
+                    </button>
+                </div>
+                <div class="order">
+                    <select name="category">
+                        <option value="0">所有分类</option>
+                    </select>
+                    <select name="brand">
+                        <option value="0">所有品牌</option>
+                    </select>
+                    <select name="sort_price">
+                        <option value="0">默认排序</option>
+                        <option value="1">按价格由高到低</option>
+                        <option value="2">按价格由低到高</option>
+                    </select>
+                    <input class="layui-input-inline" placeholder="搜索关键词" name="search" value="">
+                    <span class="layui-btn">
+                        <i class="layui-icon">&#xe615;</i>搜索
+                    </span>
+                </div>
                 <table class="layui-table larry-table-info">
                     <colgroup>
                         <col width="100">
@@ -82,40 +82,43 @@
                     </thead>
                     <tbody>
                     @foreach( $productList as $product )
-                    <tr>
-                        <td>{{ $product->id }}</td>
-                        <td>{{ $product->p_name }}</td>
-                        <td>{{ $product->cid }}</td>
-                        <td>{{ $product->bid }}</td>
-                        <td>{{ $product->market_price }}元</td>
-                        <td>{{ $product->price }}元</td>
-                        <td>
-                            @if( $product->status == 0 )
-                                在售
-                            @elseif( $product->status == 1 )
-                                下架
-                            @elseif( $product->status == 2 )
-                                预购
-                            @elseif( $product->status == 3 )
-                                缺货
-                            @elseif( $product->status == 4 )
-                                新品上市
-                            @endif
-                        </td>
-                        <td>
-                            <div class="layui-btn-group">
-                                <a href="{{ url('admin/product').'/'.$product->id }}" class="layui-btn  layui-btn-small" data-alt="查看">
-                                    <i class="layui-icon" >&#xe60b;</i>
-                                </a>
-                                <a href="{{ url('admin/product').'/'.$product->id."/edit" }}" class="layui-btn  layui-btn-small" data-alt="修改">
-                                    <i class="layui-icon">&#xe642;</i>
-                                </a>
-                                <a id="delete" data-id="{{ $product->id }}" class="layui-btn  layui-btn-small" data-alt="删除">
-                                    <i class="layui-icon">&#xe640;</i>
-                                </a>
-                            </div>
-                        </td>
-                    </tr>
+                        <tr>
+                            <td>{{ $product->id }}</td>
+                            <td>{{ $product->p_name }}</td>
+                            <td>{{ $product->cid }}</td>
+                            <td>{{ $product->bid }}</td>
+                            <td>{{ $product->market_price }}元</td>
+                            <td>{{ $product->price }}元</td>
+                            <td>
+                                @if( $product->status == 0 )
+                                    在售
+                                @elseif( $product->status == 1 )
+                                    下架
+                                @elseif( $product->status == 2 )
+                                    预购
+                                @elseif( $product->status == 3 )
+                                    缺货
+                                @elseif( $product->status == 4 )
+                                    新品上市
+                                @endif
+                            </td>
+                            <td>
+                                <div class="layui-btn-group">
+                                    <a href="{{ url('admin/product').'/'.$product->id }}"
+                                       class="layui-btn  layui-btn-small" data-alt="查看">
+                                        <i class="larry-icon larry-chaxun"></i>
+                                    </a>
+                                    <a href="{{ url('admin/product').'/'.$product->id."/edit" }}"
+                                       class="layui-btn  layui-btn-small" data-alt="修改">
+                                        <i class="larry-icon larry-xiugai1"></i>
+                                    </a>
+                                    <a id="delete" data-id="{{ $product->id }}" class="layui-btn  layui-btn-small"
+                                       data-alt="删除">
+                                        <i class="larry-icon larry-huishouzhan"></i>
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
                     @endforeach
                     </tbody>
                 </table>
@@ -141,6 +144,11 @@
             $('a.layui-btn').on('mouseout',function(){
                 layer.close(index);
             });
+            $('a.layui-btn').on('click',function(){
+                var l = layer.msg('正在加载!请稍后...', {
+                    icon: 16
+                });
+            });
             $('a#delete').on('click', function(){
                 var th = $(this),
                     t = th.parent().parent().parent('tr');
@@ -151,26 +159,27 @@
                     ,id: 'MI_delTips' //设定一个id，防止重复弹出
                     ,moveType: 1 //拖拽模式，0或者1
                     ,resize: false
+                    ,title: '友情提醒'
                 }, function(){
                     var id =  th.data('id');
-                    var l = layer.msg('正在加载请稍后...', {
-                        icon: 6
+                    var l = layer.msg('正在删除!请稍后...', {
+                        icon: 16
                     });
-                    $.ajax({
-                        url:  '{{ url('/admin/product') }}' + '/' + id
-                        , type: "POST"
-                        , data: {'_method': 'DELETE', '_token': '{{ csrf_token() }}' }
-                        ,success:function (data) {
-                            alert(data);
-                            layer.close(l);
-                            if( data == 1 ){
-                                layer.alert('删除成功', {icon: 1});
-                                t.remove();
-                            }else if ( data == 0 ){
-                                layer.alert('数据不存在!', {icon: 2});
-                            }else{
-                                layer.alert('id错误!', {icon: 2});
-                            }
+                        $.ajax({
+                            url:  '{{ url('/admin/product') }}' + '/' + id
+                            , type: "POST"
+                            , data: {'_method': 'DELETE', '_token': '{{ csrf_token() }}' }
+                            ,success:function (data) {
+                                layer.close(l);
+                                if( data == 0 ){
+                                    layer.alert('删除成功', {icon: 1,time:2000,yes:function(){
+                                        location.href=location.href;
+                                    }});
+                                }else if ( data == 1 ){
+                                    layer.alert('数据不存在!', {icon: 2});
+                                }else{
+                                    layer.alert('id错误!', {icon: 2});
+                                }
                         }
                     });
 
@@ -179,6 +188,9 @@
                 });
             });
             $('button#refresh').on('click', function(){
+                layer.msg('正在加载请稍后...', {
+                    icon: 16
+                });
                 location.href=location.href;
             });
         });

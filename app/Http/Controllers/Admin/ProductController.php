@@ -32,7 +32,7 @@ class ProductController extends Controller
     public function index()
     {
         $productList = Product::all();
-        $productList = Product::paginate(5);
+        $productList = Product::paginate(10);
         return view('admin.product.index',compact('productList'));
     }
 
@@ -132,7 +132,40 @@ class ProductController extends Controller
      */
     public function destroy(ProductRequest $request,$id)
     {
-        return DB::table('product')->delete($id);
+        //查询该商品的所有图片信息
+        $product = Product::find($id);
+        $detail = $product->detail;
+        $images = $product->images();
+
+        if( $detail ){
+            //获取封面图片地址
+            $p_index_image = $detail->p_index_image;
+            //若存在则删除
+            if( $p_index_image ){
+                //在磁盘删除封面图片
+                Storage::delete($p_index_image);
+            }
+            //删除商品详情表中的当前商品数据
+            $detail->delete();
+        }
+
+        //获取商品相册所有图片
+        //存在图片则删除
+        if( $images ){
+            foreach( $images as $img ){
+                //从磁盘删除封面图片
+                Storage::delete($img->path);
+            }
+            //从数据库删除
+            $images->delete();
+        }
+
+        //删除商品详情
+        if($product->delete()){
+            return 0;
+        }else{
+            return 1;
+        }
     }
 
 

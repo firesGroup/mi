@@ -51,7 +51,9 @@ function openUpload(id, pName, path, url , func)
 //请求图片列表
 function ajaxGetImagesList(id,pName)
 {
-    var index = layer.load();
+    var index = layer.msg('正在加载!请稍后...', {
+            icon: 16
+        });
     $.ajax({
         url: '/admin/product/'+ id +'/images',
         method: 'get',

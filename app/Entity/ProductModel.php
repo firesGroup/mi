@@ -20,4 +20,8 @@ class ProductModel extends Model
     protected $table = 'productModel';
     //指定关联数据库表主键
     protected $primaryKey = 'id';
+
+    protected $fillable = [
+        'name'
+    ];
 }
