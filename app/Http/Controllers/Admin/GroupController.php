@@ -10,7 +10,7 @@ use App\Entity\AdminRole;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use DB;
-use Hash;
+
 
 
 
@@ -28,26 +28,25 @@ class GroupController extends Controller
         $data = DB::table('admingroup')->orderby('id')->paginate(5);
 //        dump($data);
 
-        $arr = AdminGroup::get();
-        foreach ($arr as $k=>$v){
-//            dump($v->role_list);
-            $str[$k] = explode(',', $v->role_list);
+        //查询权限列表id 和 权限名称
+        $list = AdminRole::select('id','role_name')->get();
+//        dump($list);
+
+        //将数据遍历
+        foreach ($list as $v){
+//            dump($v);
+
+            //组成数组
+            $arr[$v->id] = $v->role_name;
 
         }
-
-//        dump($str);
-
-        foreach ($str as $i=>$arr){
-
-            dump($arr);
-            $role_list[$k] = DB::table('adminrole')->where('id', $arr)->first();
-        }
+//        dump($arr);
 
         $status = $this->status;
 
         $sum = AdminGroup::count('id');
 
-        return view('admin/groupManager/index', compact('data', 'status', 'sum'));
+        return view('admin/groupManager/index', compact('data', 'status', 'sum', 'arr'));
     }
 
     /**
@@ -79,7 +78,42 @@ class GroupController extends Controller
      */
     public function show($id)
     {
-        //
+        $data = AdminGroup::find($id);
+//        dd($data);
+
+        //查询权限列表id 和 权限名称
+        $list = AdminRole::select('id','role_name')->get();
+//        dump($list);
+
+        //将数据遍历
+        foreach ($list as $v){
+//            dump($v);
+
+            //组成数组
+            $arr[$v->id] = $v->role_name;
+
+        }
+
+        //查询所属组中的权限id字符串 分割并遍历为数组, 查询到权限信息
+        $string = explode(',', $data->role_list);
+//        dd($arr);
+
+        foreach ($string as $k => $v) {
+//            dump($v);
+            $group_id[$k] = DB::table('adminrole')->where('id', $v)->first();
+
+//            dd($group_id);
+            //将多个数组合并为一个
+            $array = array_merge((array)$group_id);
+
+//            dump($array);
+
+        }
+//        dd($array);
+
+        $status = $this->status;
+
+        return view('admin/groupManager/showGroup', compact('data', 'status', 'arr', 'array'));
     }
 
     /**
@@ -90,7 +124,30 @@ class GroupController extends Controller
      */
     public function edit($id)
     {
-        //
+        //查询出adminrole表里面的id与role_name  并组成一个对应的数组
+        $role = DB::table('adminrole')->select('role_name', 'id')->get();
+//        dd($role);
+
+        //查出对应的组的信息
+        $data = AdminGroup::find($id);
+//        dump($data);
+//        dump($data->role_list);
+
+        //去除role_list字段里的逗号
+        $role_list = explode(',', $data->role_list);
+//        dump($role_list);
+
+        //遍历 得到数字
+//        $array = array();
+        foreach ($role_list as $k=>$v) {
+//            dump($v);
+//            $array += $v;
+            //根据数字查找出权限的内容
+            $list[$k] = DB::table('adminrole')->where('id', $v)->first();
+        }
+//        dump($list);
+        $status = $this->status;
+        return view('admin/groupManager/editGroup', compact('data', 'role', 'list', 'status', 'role_list'));
     }
 
     /**
