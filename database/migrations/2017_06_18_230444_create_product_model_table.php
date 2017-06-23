@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateProductSpecTable extends Migration
+class CreateProductModelTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,12 +12,9 @@ class CreateProductSpecTable extends Migration
      */
     public function up()
     {
-        Schema::create('productSpec', function(Blueprint $table){
-            $table->increments('id')->comment('规格id');
-            $table->integer('mid')->comment('模型id');
-            $table->string('spec_name')->comment('规格名称');
-            $table->index('mid');
-            $table->index('spec_name');
+        Schema::create('product_model', function(Blueprint $table){
+            $table->increments('id')->comment('模型id');
+            $table->string('model_name')->unique()->comment('模型名称');
             $table->timestamps();
             $table->charset='utf8';
             $table->engine='InnoDB';
@@ -31,6 +28,6 @@ class CreateProductSpecTable extends Migration
      */
     public function down()
     {
-        Schema::drop('productSpec');
+        Schema::drop('product_model');
     }
 }

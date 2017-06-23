@@ -72,7 +72,7 @@
                     @foreach( $data as $user )
                         <tr>
                             <td>{{ $user->id }}</td>
-                            <td>{{ $user->gid }}</td>
+                            <td>{{ $user->group_id }}</td>
                             <td>{{ $user->username }}</td>
                             <td>{{ $user->password }}</td>
                             <td>{{ $status[$user->status] }}</td>

@@ -3,10 +3,9 @@
 namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
-use App\Entity\admin;
-use App\Entity\adminGroup;
-use App\Entity\adminRole;
-use App\Http\Requests;
+use App\Entity\Admin;
+use App\Entity\AdminGroup;
+use App\Entity\AdminRole;
 use App\Http\Controllers\Controller;
 use DB;
 

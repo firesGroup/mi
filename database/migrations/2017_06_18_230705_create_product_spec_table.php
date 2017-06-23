@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateSlideShowTable extends Migration
+class CreateProductSpecTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,10 +12,10 @@ class CreateSlideShowTable extends Migration
      */
     public function up()
     {
-        Schema::create('slideShow', function(Blueprint $table){
-            $table->increments('id')->comment('轮播图id');
-            $table->string('images')->comment('轮播图图片地址');
-            $table->string('url')->comment('轮播图网址');
+        Schema::create('product_spec', function(Blueprint $table){
+            $table->increments('id')->comment('规格id');
+            $table->integer('model_id')->index()->comment('模型id');
+            $table->string('spec_name')->unique()->comment('规格名称');
             $table->timestamps();
             $table->charset='utf8';
             $table->engine='InnoDB';
@@ -29,6 +29,6 @@ class CreateSlideShowTable extends Migration
      */
     public function down()
     {
-        Schema::drop('slideShow');
+        Schema::drop('product_spec');
     }
 }

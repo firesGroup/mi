@@ -85,8 +85,8 @@
                         <tr>
                             <td>{{ $product->id }}</td>
                             <td>{{ $product->p_name }}</td>
-                            <td>{{ $product->cid }}</td>
-                            <td>{{ $product->bid }}</td>
+                            <td>{{ $product->category_id }}</td>
+                            <td>{{ $product->brand_id }}</td>
                             <td>{{ $product->market_price }}元</td>
                             <td>{{ $product->price }}元</td>
                             <td>
@@ -170,15 +170,19 @@
                             , type: "POST"
                             , data: {'_method': 'DELETE', '_token': '{{ csrf_token() }}' }
                             ,success:function (data) {
-                                layer.close(l);
-                                if( data == 0 ){
-                                    layer.alert('删除成功', {icon: 1,time:2000,yes:function(){
-                                        location.href=location.href;
-                                    }});
-                                }else if ( data == 1 ){
-                                    layer.alert('数据不存在!', {icon: 2});
+                                if( data != '' ){
+                                    layer.close(l);
+                                    if( data == 0 ){
+                                        layer.alert('删除成功', {icon: 1,time:2000,yes:function(){
+                                            location.href=location.href;
+                                        }});
+                                    }else if ( data == 1 ){
+                                        layer.alert('数据不存在!', {icon: 2});
+                                    }else{
+                                        layer.alert('id错误!', {icon: 2});
+                                    }
                                 }else{
-                                    layer.alert('id错误!', {icon: 2});
+                                    layer.alert('服务器错误!', {icon: 2});
                                 }
                             }
                         });

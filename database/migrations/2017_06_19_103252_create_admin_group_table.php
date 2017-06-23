@@ -12,7 +12,7 @@ class CreateAdminGroupTable extends Migration
      */
     public function up()
     {
-        Schema::create('adminGroup', function(Blueprint $table){
+        Schema::create('admin_group', function(Blueprint $table){
             $table->increments('id')->comment('用户组id');
             $table->string('group_name')->index()->comment('用户组名称');
             $table->string('group_desc')->comment('用户组简介');
@@ -31,6 +31,6 @@ class CreateAdminGroupTable extends Migration
      */
     public function down()
     {
-        Schema::drop('adminGroup');
+        Schema::drop('admin_group');
     }
 }

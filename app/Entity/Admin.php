@@ -4,9 +4,9 @@ namespace App\Entity;
 
 use Illuminate\Database\Eloquent\Model;
 
-class admin extends Model
+class Admin extends Model
 {
     protected $table = 'admin';
 
-    public $fillable = ['gid', 'username', 'password', 'status'];
+    public $fillable = ['group_id', 'username', 'password', 'status'];
 }

@@ -53,15 +53,14 @@
                 , success: function (res) {
                     if (res.status == 0) {
                         layer.close(l);
-                        layer.msg('上传成功', {time: 1000}, function(){
-                            $.ajax({
-                                url: '{{ url($url) }}',
-                                type: 'post',
-                                data: {'src': res.src, 'id': id, '_token': token }
-                            });
-                            var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
-                            parent.layer.close(index);
+                        layer.msg('上传成功', {'time': 1000});
+                        $.ajax({
+                            url: '{{ url($url) }}',
+                            type: 'post',
+                            data: {'src': res.src, 'id': id, '_token': token}
                         });
+                        var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+                        parent.layer.close(index);
                     }
                 }
             });

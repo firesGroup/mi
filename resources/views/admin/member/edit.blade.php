@@ -47,7 +47,7 @@
                                     <div class="layui-form-item">
                                         <label class="layui-form-label">会员呢称</label>
                                         <div class="layui-input-block">
-                                            <input type="text" name="p_name" lay-verify="required" autocomplete="off" class="layui-input" value="{{$data->nick_name}}">
+                                            <input type="text" name="nick_name" lay-verify="required" autocomplete="off" class="layui-input" value="{{$data->nick_name}}">
                                         </div>
                                     </div>
                                     <div class="layui-form-item">
@@ -65,7 +65,7 @@
                                     <div class="layui-form-item">
                                         <label class="layui-form-label">会员电话</label>
                                         <div class="layui-input-block">
-                                            <input type="text" name="p_index_image" class="layui-input" value="{{$data->phone}}">
+                                            <input type="text" name="phone" class="layui-input" value="{{$data->phone}}">
                                         </div>
                                     </div>
                                     <div class="layui-form-item" pane>
@@ -86,13 +86,13 @@
                                     <div class="layui-form-item">
                                         <label class="layui-form-label">会员生日</label>
                                         <div class="layui-input-block">
-                                            <input type="date" name="p_index_image" class="layui-input" value="{{$user_detail->birthday}}">
+                                            <input type="date" name="birthday" class="layui-input" value="{{$user_detail->birthday}}">
                                         </div>
                                     </div>
                                     <div class="layui-form-item">
                                         <label class="layui-form-label">会员头像</label>
                                         <div class="layui-input-block">
-                                            <input type="file" name="p_index_image" class="layui-upload-file" lay-title="上传会员头像">
+                                            <input type="file" name="avator" class="layui-upload-file" lay-title="上传会员头像">
                                         </div>
                                         <div class="layui-input-block">
                                             <img src="{{$user_detail->avator}}">

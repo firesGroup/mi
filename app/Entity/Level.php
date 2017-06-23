@@ -8,5 +8,5 @@ class Level extends Model
 {
     protected $table = 'level';
 
-    public $fillable = ['level_name', 'consumption', 'discount', 'level_deta'];
+    public $fillable = ['level_name', 'consumption', 'discount', 'level_detail'];
 }

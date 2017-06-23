@@ -74,7 +74,7 @@ class ProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(ProductRequest $request,$id)
+    public function edit($id)
     {
         $info = Product::find($id);
         $detail = $info->detail;
@@ -94,8 +94,8 @@ class ProductController extends Controller
     public function update(ProductRequest $request, $id)
     {
         $product = [
-            'cid'          => '3',
-            'bid'          => $request->input('bid'),
+            'category_id'          => '3',
+            'brand_id'          => $request->input('brand_id'),
             'price'        => $request->input('price'),
             'market_price' => $request->input('market_price'),
             'p_name'       => $request->input('p_name'),
@@ -111,7 +111,7 @@ class ProductController extends Controller
             'unit'         => $request->input('unit')
         ];
         $bool1 = DB::table('product')->where('id',$id)->update($product);
-        $bool2 = DB::table('productDetail')->where('pid',$id)->update($detail);
+        $bool2 = DB::table('product_detail')->where('p_id',$id)->update($detail);
         if( $bool1 == 0 && $bool2 == 1 ){
             return 0;
         }elseif( $bool1 == 1 && $bool2 == 0  ){
@@ -130,7 +130,7 @@ class ProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(ProductRequest $request,$id)
+    public function destroy($id)
     {
         //查询该商品的所有图片信息
         $product = Product::find($id);
@@ -169,9 +169,9 @@ class ProductController extends Controller
     }
 
 
-    public function getIndexImage(ProductRequest $request, $id)
+    public function getIndexImage($img_id)
     {
-        $path = DB::table('productDetail')->where('pid',$id)->value('p_index_image');
+        $path = DB::table('product_detail')->where('p_id',$img_id)->value('p_index_image');
         return $path;
     }
 
@@ -181,7 +181,7 @@ class ProductController extends Controller
         if( $request->isMethod('post') ) {
             $id = $request->input('id');
             $src = $request->input('src');
-            $id = DB::table('productDetail')->where('pid', $id)->update(['p_index_image' => $src]);
+            $id = DB::table('product_detail')->where('p_id', $id)->update(['p_index_image' => $src]);
             if( $id ){
                 return 0;
             }
@@ -196,9 +196,9 @@ class ProductController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    public function getImages(ProductRequest $request,$id)
+    public function getImages($img_id)
     {
-        $list = ProductImages::where('pid',$id)->get();
+        $list = ProductImages::where('p_id',$img_id)->get();
         return $list;
     }
 
@@ -217,9 +217,9 @@ class ProductController extends Controller
 
 //            dd($id.$src);
             //获取当前商品已上传的数量
-            $count = ProductImages::where('pid',$id)->count();
+            $count = ProductImages::where('p_id',$id)->count();
             if( $count < 6 ){
-                $id = DB::table('productImages')->insertGetId(['pid'=>$id, 'path' => $src]);
+                $id = DB::table('product_images')->insertGetId(['pid'=>$id, 'path' => $src]);
                 if( $id ){
                     return '{"id":'.$id.', "status":0}';
                 }
@@ -248,7 +248,7 @@ class ProductController extends Controller
         //从磁盘删除图片
         $bool1 = Storage::disk('uploads')->delete($path);
         //从数据库删除对应id的图片数据
-        $bool2 = DB::table('productImages')->delete($id);
+        $bool2 = DB::table('product_images')->delete($id);
         if( $bool1 && $bool2 ){
             return 0;
         }elseif ( !$bool1 ) {

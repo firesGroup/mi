@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use App\Entity\Member;
 use App\Entity\MemberDetail;
-use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use DB;
 

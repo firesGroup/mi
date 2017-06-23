@@ -12,7 +12,7 @@ class CreateAdminRoleTable extends Migration
      */
     public function up()
     {
-        Schema::create('adminRole', function(Blueprint $table){
+        Schema::create('admin_role', function(Blueprint $table){
             $table->increments('id')->comment('权限id');
             $table->tinyInteger('group_id')->index()->comment('所属用户组');
             $table->string('role_name')->index()->comment('权限名称');
@@ -32,6 +32,6 @@ class CreateAdminRoleTable extends Migration
      */
     public function down()
     {
-        Schema::drop('adminRole');
+        Schema::drop('admin_role');
     }
 }

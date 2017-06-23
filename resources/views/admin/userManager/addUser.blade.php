@@ -83,7 +83,7 @@
                                     <div class="layui-form-item">
                                         <label class="layui-form-label">所属于的权限组</label>
                                         <div class="layui-input-block">
-                                            <select name="gid" lay-verify="required">
+                                            <select name="group_id" lay-verify="required">
                                                 <option value=""></option>
                                                 @foreach($data as $v)
                                                     {{--{{dump($v)}}--}}

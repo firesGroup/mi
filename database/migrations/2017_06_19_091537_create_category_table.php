@@ -14,9 +14,9 @@ class CreateCategoryTable extends Migration
     {
         Schema::create('category', function(Blueprint $table){
             $table->increments('id')->comment('分类id');
-            $table->string('name')->comment('分类名称');
-            $table->integer('pid')->comment('父类id');
-            $table->string('path')->comment('家族图谱');
+            $table->string('category_name')->comment('分类名称');
+            $table->integer('parent_id')->comment('父类id');
+            $table->string('parent_path')->comment('家族图谱');
             $table->tinyInteger('sort')->comment('排序');
             $table->timestamps();
             $table->charset='utf8';

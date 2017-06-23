@@ -28,7 +28,7 @@
             <ul style="text-align: left;">
                 <li>订单ID: <span id="did">{{$data->id}}</span></li>
                 <br>
-                <li>用户ID: {{$data->mid}}</li>
+                <li>用户ID: {{$data->member_id}}</li>
                 <br>
             </ul>
             <div style="float: left;">
@@ -69,9 +69,9 @@
 
             <div style="text-align: center;width: 500px;height: 180px;float: left;margin-left: 40px;">
                 <ul style="text-align: left; font-size: 20px;">
-                    <li>收货人: {{$data->user}}</li>
+                    <li>收货人: {{$data->buy_user}}</li>
                     <br>
-                    <li>收货人手机号: {{$data->phone}}</li>
+                    <li>收货人手机号: {{$data->buy_phone}}</li>
                     <br>
                     <li>详细地址: {{$data->address}}</li>
                 </ul>
@@ -102,7 +102,7 @@
             @foreach($odetail as $v)
                 <tr>
                     {{--{{dd($v)}}--}}
-                    <td>{{$v->pid}}</td>
+                    <td>{{$v->p_id}}</td>
                     <td>{{$v->p_name}}</td>
                     <td>{{$v->p_price}}</td>
                     <td>{{$v->p_num}}</td>

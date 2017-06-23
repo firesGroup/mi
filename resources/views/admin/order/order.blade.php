@@ -62,9 +62,9 @@
                     <tr>
                         <td>{{$v->id}}</td>
                         <td>{{$v->order_sn}}</td>
-                        <td>{{$v->mid}}</td>
-                        <td>{{$v->user}}</td>
-                        <td>{{$v->phone}}</td>
+                        <td>{{$v->member_id}}</td>
+                        <td>{{$v->buy_user}}</td>
+                        <td>{{$v->buy_phone}}</td>
                         {{--<td>{{$v->address}}</td>--}}
                         <td>{{$v->total}}</td>
                         <td>{{$v->add_time}}</td>

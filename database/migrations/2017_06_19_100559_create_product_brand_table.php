@@ -12,9 +12,9 @@ class CreateProductBrandTable extends Migration
      */
     public function up()
     {
-        Schema::create('productBrand', function(Blueprint $table){
+        Schema::create('product_brand', function(Blueprint $table){
             $table->increments('id')->comment('商品品牌id');
-            $table->integer('mid')->index()->comment('所属模型');
+            $table->integer('model_id')->index()->comment('所属模型');
             $table->string('brand_name')->index()->comment('品牌名称');
             $table->string('brand_logo')->comment('品牌logo路径');
             $table->string('brand_url')->comment('品牌网址');
@@ -34,6 +34,6 @@ class CreateProductBrandTable extends Migration
      */
     public function down()
     {
-        Schema::drop('productBrand');
+        Schema::drop('product_brand');
     }
 }
