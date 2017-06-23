@@ -58,17 +58,17 @@ class OrderController extends Controller
      */
     public function show($id)
     {
-        //查询order表所有数据
+        //查询order表$id的数据
         $data = order::find($id);
 
         //查询订单详情表数据
-        $odetail = DB::table('orderdetail')->where('order_id', $id)->get();
+        $orderdetail = DB::table('order_detail')->where('order_id', $id)->get();
 
         //定义订单状态
-        $status = [0 => '未支付', 1 => '已支付', 2 => '未发货', 3 => '已发货', 4 => '已收货', 5 => '退款中', 6 => '已完成',7=>'已作废',8=>'已取消'];
+        $status = [0 => '未支付', 1 => '已支付', 2 => '未发货', 3 => '已发货', 4 => '已收货', 5 => '退款中', 6 => '已完成',7=>'已作废'];
 
         //返回视图,传参
-        return view('admin/order/showOrder', compact('data', 'odetail', 'status'));
+        return view('admin/order/showOrder', compact('data', 'orderdetail', 'status'));
     }
 
     /**

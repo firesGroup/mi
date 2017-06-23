@@ -68,29 +68,24 @@
 
 //===================================
 //潘珺使用:
-// $factory->define(App\order::class, function (Faker\Generator $faker) {
+// $factory->define(App\Entity\Order::class, function (Faker\Generator $faker) {
+//     $id = \App\Entity\Member::lists('id')->toArray();
+//
 //     return [
 //          'order_sn' => str_random(10),
-//          'mid' => str_random(1),
-//          'user' => $faker->name,
-//          'phone' => str_random(11),
-//          'address' => $faker->paragraph,
+//          'member_id' => $faker->randomElement($id),
+//          'buy_user' => $faker->name,
+//          'buy_phone' => str_random(11),
+//          'address' => str_random(15),
 //          'total' => str_random(3),
 //         'order_status' => str_random(1),
-//         'pay_status' => str_random(1),
-//         'shipments_status' => str_random(1),
-
-//          'cid'=> $faker->randomDigitNotNull,
-//         'bid'=> $faker->randomDigitNotNull,
-//         'p_name'=> $faker->sentence,
-//         'price' => $faker->randomFloat(),
-//         'market_price' => $faker->randomFloat(),
 //     ];
 // });
 //潘珺使用comment:
-//$factory->define(App\comment::class, function (Faker\Generator $faker) {
+//$factory->define(App\Entity\comment::class, function (Faker\Generator $faker) {
+//    $id = \App\Entity\Member::lists('id')->toArray();
 //    return [
-//        'mid' => $faker->randomDigitNotNull,
+//        'member_id' => $faker->randomElement($id),
 //        'pid' => $faker->sentence,
 //        'images' => $faker->imageUrl(),
 //        'content' => str_random(15),
@@ -99,6 +94,7 @@
 //        'type' => str_random(1),
 //    ];
 //});
+//==================================================
 // $factory->define(App\order::class, function (Faker\Generator $faker) {
 //     return [
 //        'name' => $faker->name,
