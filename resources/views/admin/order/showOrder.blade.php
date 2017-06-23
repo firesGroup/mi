@@ -32,14 +32,14 @@
                 </div>
                 <ul>
                     <li>商品评价管理</li>
-                    <li>点击<i class="layui-icon">&#xe63a;</i> 查看内容详情</li>
+                    <li>点击<i class="layui-icon">&#xe639;</i> 修改订单状态</li>
                 </ul>
                 <i class="larry-icon larry-guanbi close" id="closeInfo"></i>
             </blockquote>
         </div>
 
-        <div class="layui-main"
-             style="background-color: #FFFADD;border: 1px solid #1ca794;font-size: 20px;height: 900px;">
+        <div class=""
+             style="background-color:#c2c2c2;border: 1px solid #1ca794;font-size: 20px;height: 900px;">
 
             <legend>基本信息<i class="layui-icon" style="font-size: 30px; color: #FF5722;">&#xe60c;</i>  </legend>
 
@@ -72,7 +72,7 @@
                         <li id="li"> 订单状态: <span id="p">{{$status[$data->order_status]}}</span>
                             @if(!($status[$data->order_status]== '已完成') && !($status[$data->order_status] == '已取消') && !($status[$data->order_status] == '已作废'))
 
-                                <i class="layui-icon" style="font-size: 30px;">&#xe642;</i>
+                                <i class="layui-icon" style="font-size: 30px;">&#xe639;</i>
                             @endif
                         </li>
 
@@ -86,7 +86,7 @@
 
             <div>
 
-                <legend>收货信息</legend>
+                <legend>收货信息<i class="layui-icon" style="font-size: 30px; color: #01AAED;">&#xe609;</i></legend>
 
                 <div style="text-align: center;width: 500px;height: 250px;float: left;margin-left: 40px;">
                     <ul style="text-align: left; font-size: 20px;">
@@ -109,9 +109,9 @@
             </div>
 
             <hr>
-            <legend>商品信息</legend>
+            <legend>商品信息<i class="layui-icon" style="font-size: 30px; color: #F7B824;">&#xe62e;</i></legend>
 
-            <table class="layui-table" lay-skin="line" style="width:1100px;height:100px;">
+            <table class="layui-table" lay-skin="line" style="width:1100px;height:100px;background-color: #c2c2c2;">
 
                 <tr>
                     <th>商品ID</th>

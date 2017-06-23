@@ -78,7 +78,7 @@ class CommentController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        dd(111);
     }
 
     /**
@@ -89,6 +89,6 @@ class CommentController extends Controller
      */
     public function destroy($id)
     {
-        //
+        return DB::table('comment')->delete($id);
     }
 }
