@@ -25,7 +25,7 @@ class GroupController extends Controller
      */
     public function index()
     {
-        $data = DB::table('admingroup')->orderby('id')->paginate(5);
+        $data = DB::table('admin_group')->orderby('id')->paginate(5);
 //        dump($data);
 
         //查询权限列表id 和 权限名称
@@ -100,7 +100,7 @@ class GroupController extends Controller
 
         foreach ($string as $k => $v) {
 //            dump($v);
-            $group_id[$k] = DB::table('adminrole')->where('id', $v)->first();
+            $group_id[$k] = DB::table('admin_role')->where('id', $v)->first();
 
 //            dd($group_id);
             //将多个数组合并为一个
@@ -124,8 +124,8 @@ class GroupController extends Controller
      */
     public function edit($id)
     {
-        //查询出adminrole表里面的id与role_name  并组成一个对应的数组
-        $role = DB::table('adminrole')->select('role_name', 'id')->get();
+        //查询出admin_role表里面的id与role_name  并组成一个对应的数组
+        $role = DB::table('admin_role')->select('role_name', 'id')->get();
 //        dd($role);
 
         //查出对应的组的信息
@@ -135,7 +135,7 @@ class GroupController extends Controller
 
         //去除role_list字段里的逗号
         $role_list = explode(',', $data->role_list);
-//        dump($role_list);
+        dump($role_list);
 
         //遍历 得到数字
 //        $array = array();
@@ -143,7 +143,7 @@ class GroupController extends Controller
 //            dump($v);
 //            $array += $v;
             //根据数字查找出权限的内容
-            $list[$k] = DB::table('adminrole')->where('id', $v)->first();
+            $list[$k] = DB::table('admin_role')->where('id', $v)->first();
         }
 //        dump($list);
         $status = $this->status;

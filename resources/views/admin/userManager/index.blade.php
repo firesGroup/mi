@@ -77,6 +77,7 @@
                     <tbody>
                     {{--{{dd($data)}}--}}
                     @foreach( $data as $user )
+                        {{--{{dump($user)}}--}}
                         <tr>
                             <td>{{ $user->id }}</td>
                             <td>{{ $group_name[$user->group_id] }}</td>

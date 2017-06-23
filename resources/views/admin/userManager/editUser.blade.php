@@ -76,30 +76,34 @@
                                             <input type="password" name="newPassword" lay-verify="required"
                                                    autocomplete="off" class="layui-input" value="">
                                         </div>
-                                   </div>
-                                <div class="layui-form-item">
-                                    <label class="layui-form-label">所属于的权限组</label>
-                                    <div class="layui-input-block">
-                                        <select name="group_id" lay-verify="required">
-                                            {{--<option value="{{$str->id}}">{{$str->group_name}}</option>--}}
-                                            @foreach($arr as $v)
-                                                {{--{{dump($v)}}--}}
-                                                <option value="{{$v->id}}">{{$v->group_name}}</option>
+                                    </div>
+                                    <div class="layui-form-item">
+                                        <label class="layui-form-label">所属于的权限组</label>
+                                        <div class="layui-input-block">
+                                            <select name="group_id" lay-verify="required">
+                                                {{--<option value="{{$str->id}}">{{$str->group_name}}</option>--}}
+                                                @foreach($arr as $v)
+                                                    {{--{{dump($v)}}--}}
+                                                    <option value="{{$v->id}}">{{$v->group_name}}</option>
 
-                                            @endforeach
-                                        </select>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
                                     <div class="layui-form-item">
                                         <label class="layui-form-label">状态</label>
                                         <div class="layui-input-block" pane>
                                             <input type="radio" name="status" value="0"
-                                                   {{$data->status==0?'checked':''}} title="启用" lay-skin="primary">
+                                                   {{$data->status==0?'checked':''}} title="启用"
+                                                   lay-skin="primary">
                                             <input type="radio" name="status" lay-skin="primary" value="1"
                                                    {{$data->status==1?'checked':''}} title="锁定">
                                         </div>
                                     </div>
                                     <div class="layui-form-item">
                                         <div class="layui-input-block">
-                                            <button class="layui-btn" lay-submit="" lay-filter="demo1">立即提交</button>
+                                            <button class="layui-btn" lay-submit="" lay-filter="demo1">立即提交
+                                            </button>
                                             <button type="reset" class="layui-btn layui-btn-primary">重置</button>
                                         </div>
                                     </div>
@@ -109,6 +113,7 @@
                     </div>
                 </div>
             </div>
+        </div>
         </div>
     </section>
 @endsection
