@@ -235,7 +235,7 @@ class UserController extends Controller
 //            dd($request->status);
 
                 if (admin::where('id', '=', $id)->update(['username' => $request->username, 'password' => bcrypt($request->newPassword), 'gid' => $request->gid, 'status' => $request->status])) {
-//            dd(111);
+//
                     return redirect('/admin/user');
                 } else {
                     return back();
