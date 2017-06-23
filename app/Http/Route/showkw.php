@@ -11,6 +11,9 @@
 
 Route::group(['namespace'=>'Admin','prefix'=>'admin'], function(){
     Route::get('/', 'AdminController@index');
+    Route::get('/welcome', function(){
+        return view('welcome');
+    });
     Route::resource('product', 'ProductController');
     Route::get('product/{id}/images', 'ProductController@getImages');
     Route::post('product/{id}/images', 'ProductController@postImages');

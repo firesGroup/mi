@@ -9,4 +9,6 @@ class MemberDetail extends Model
     protected $table = 'memberdetail';
 
     protected $primaryKey = 'mid';
+
+    public $fillable = ['sex', 'birthday', 'avator'];
 }
