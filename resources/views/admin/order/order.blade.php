@@ -142,6 +142,7 @@
                     var l = layer.msg('正在加载请稍后...', {
                         icon: 6
                     });
+
                     $.ajax({
                         url: '{{ url('/admin/order') }}' + '/' + id
                         , type: "POST"
