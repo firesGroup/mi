@@ -85,29 +85,35 @@ class MemberController extends Controller
     {
         //验证操作
         $data = DB::table('member')->lists('nick_name');
+        $nick_name = $request->get('nick_name');
         $m_name = Member::find($id)->nick_name;
-        if(in_array($m_name, $data)) {
-            return 1;
-        }else{
-            return 0;
+        if(in_array($m_name, $data) && $m_name != $nick_name) {
+            return back()->with(['success' => '用户名已存在']);
+        }else {
+            $nick_name = $request->get('nick_name');
+            $email = $request->get('email');
+            $phone = $request->get('phone');
+            $status = $request->get('status');
+            $lastIp = $request->get('last_ip');
+            $sex = $request->get('sex');
+            $birthday = $request->get('birthday');
+
+//            dd($birthday);
+            DB::beginTransaction();
+            if (Member::where('id', '=', $id)->update(['nick_name' => $nick_name, 'email' => $email, 'phone' => $phone, 'status' => $status, 'last_ip' => $lastIp])) {
+                if (MemberDetail::where('mid', '=', $id)->update(['sex' => $sex, 'birthday' => $birthday])) {
+                    DB::commit();
+                    return redirect('admin/member');
+                } else {
+                    DB::rollBack();
+                    return back();
+                }
+            }
         }
 
 
         //添加数据库操作
-        $nick_name = $request->get('nick_name');
-        $email = $request->get('email');
-        $phone= $request->get('phone');
-        $status = $request->get('status');
-        $lastIp = $request->get('last_ip');
-        $sex = $request->get('sex');
-        $birthday = $request->get('birthday');
-        if(Member::where('id', '=' , $id)->update(['nick_name' => $nick_name, 'email' => $email, 'phone' => $phone, 'status'=> $status, 'last_ip' => $lastIp])){
-            if (MemberDetail::where('mid', '=', $id)->update(['sex' => $sex, 'birthday' => $birthday])) {
-                return redirect('admin/member');
-            }else {
-                return back();
-            }
-        }
+
 
 
     }
