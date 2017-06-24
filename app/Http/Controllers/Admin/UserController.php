@@ -202,6 +202,7 @@ class UserController extends Controller
         //获取用户提交的旧密码
         $oldpassword = $request->oldPassword;
 
+        //获取用户输入的用户名
         $username = $request->username;
 
 //        dump($username);
@@ -231,7 +232,7 @@ class UserController extends Controller
             if (Hash::check($oldpassword, $pass)) {
 //            dd($request->status);
 
-                if (admin::where('id', '=', $id)->update(['username' => $request->username, 'password' => bcrypt($request->newPassword), 'group_id' => $request->group_id, 'status' => $request->status])) {
+                if (Admin::where('id', '=', $id)->update(['username' => $request->username, 'password' => bcrypt($request->newPassword), 'group_id' => $request->group_id, 'status' => $request->status])) {
 //
                     return redirect('/admin/user');
                 } else {

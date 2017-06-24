@@ -25,4 +25,6 @@ Route::group( ['namespace' => 'Admin', 'prefix' => 'admin' ], function () {
 
     Route::resource('group', 'GroupController');
 
+    Route::get('groupAjax', 'GroupController@groupAjax');
+
 } );
