@@ -110,18 +110,17 @@ class ProductController extends Controller
             'store'         => $request->input('store'),
             'unit'         => $request->input('unit')
         ];
-        $bool1 = DB::table('product')->where('id',$id)->update($product);
-        $bool2 = DB::table('product_detail')->where('p_id',$id)->update($detail);
-        if( $bool1 == 0 && $bool2 == 1 ){
-            return 0;
-        }elseif( $bool1 == 1 && $bool2 == 0  ){
-            return 0;
-        }elseif( $bool1 == 1 && $bool2 == 1 ){
+        //开启事务处理
+        $res = DB::transaction(function() use($id, $product, $detail){
+            DB::table('product')->where('id',$id)->update($product);
+            DB::table('product_detail')->where('p_id',$id)->update($detail);
+            return true;
+        });
+        if( $res ){
             return 0;
         }else{
             return 1;
         }
-
     }
 
     /**
