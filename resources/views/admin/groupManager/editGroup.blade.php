@@ -44,7 +44,7 @@
                     <i class="larry-icon larry-guanbi close" id="closeInfo"></i>
                 </blockquote>
             </div>
-            {{--{{dd($data)}}--}}
+{{--            {{dd($data)}}--}}
             <div class="larry-personal-body clearfix">
                 <div class="layui-tab">
                     <ul class="layui-tab-title">
@@ -53,7 +53,7 @@
                     <div class="layui-tab-content">
                         <div class="layui-tab-item layui-show" style="padding-top:20px">
                             <div class="form-body">
-                                <form class="layui-form" action="" method="post">
+                                <form class="layui-form" action="{{url('admin/group/'.$data->id)}}" method="post">
                                     <input type="hidden" name="_token" value="{{csrf_token()}}">
                                     <input type="hidden" name="_method" value="PUT">
                                     <div class="layui-form-item">
@@ -68,8 +68,11 @@
                                         <label class="layui-form-label">要添加的权限内容</label>
                                         <div class="layui-input-block">
 
+
                                             @foreach($role as $row)
-                                                <input type="checkbox" name="role_list" title="{{$row->role_name}}" value="{{$row->id}}" lay-filter="check">
+                                                {{--{{dump($row->id)}}--}}
+                                                <input type="checkbox" name="role_list[]" title="{{$row->role_name}}" value="{{$row->id}}" lay-filter="check" {{in_array($row->id, $role_list)?'checked':''}} >
+
                                             @endforeach
 
                                         </div>
@@ -78,7 +81,7 @@
                                         <label class="layui-form-label">权限描述</label>
                                         <div class="layui-input-block">
                                             <textarea name="group_desc" placeholder="{{$data->group_desc}}"
-                                                      class="layui-textarea"></textarea>
+                                                      class="layui-textarea" value="{{$data->group_desc}}">{{$data->group_desc}}</textarea>
                                         </div>
                                     </div>
                                     <div class="layui-form-item">
@@ -103,29 +106,75 @@
                 </div>
             </div>
         </div>
-        {{dump($role_list)}}
-        {{dump($role)}}
+        {{--{{dump($role_list)}}--}}
+        {{--@if(in_array(3, $role_list))--}}
+            {{--{{dump(1)}}--}}
+            {{--@else--}}
+            {{--{{dump(2)}}--}}
+        {{--@endif--}}
+
     </section>
 @endsection
 
 @section('js')
     @parent
     <script>
-
         layui.use(['form', 'jquery', 'layer'], function () {
             var $ = layui.jquery;
             var layer = layui.layer;
-            var form = layui.form();
+
+            $('input[name=group_name]').blur(function () {
+
+//                alert(1);
+                //获取到用户输入的用户名
+                var groupName = $(this).val();
+
+                var name = "{{$data->group_name}}";
 
 
-//            var id = $('input[name=role_list]:checkbox').val();
-//            alert(id);
-            {{--var id = "{{$row->id}}";--}}
-            {{--var arr = "{{$role_list}}";--}}
-            {{--$.inArray(id, arr);--}}
-//            if () {
-//
-//            }
+//                console.log(groupName);
+                if (groupName !== name) {
+
+//                    console.log(1);
+
+                    var that = $(this);
+                    //console.log(that);
+
+                    var url = "{{url('admin/groupAjax')}}";
+
+                    //获取到之前保存的用户名
+                    var origin = that.data('u');
+
+                    if (origin != groupName) {
+
+                        $.ajax({
+                            url: url,
+
+                            type: 'get',
+
+                            data: {'_token': '{{csrf_token()}}', 'groupName': groupName},
+
+                            success: function (data) {
+
+                                //先把用户名存放起来
+                                that.data('u', groupName);
+//                                console.log(data);
+                                if (data == 1) {
+                                    that.css({'border': '1px solid #ff5722'});
+                                    layer.msg('权限组已存在');
+                                } else {
+                                    that.css({'border': '1px solid #f2f2f2'});
+                                }
+
+                            },
+
+                            dataType: 'json'
+                        });
+
+                    }
+                }
+            });
+
 
         });
 
