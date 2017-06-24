@@ -105,16 +105,15 @@
                             <td>
                                 <div class="layui-btn-group">
                                     <a href="{{ url('admin/product').'/'.$product->id }}"
-                                       class="layui-btn  layui-btn-small" data-alt="查看">
-                                        <i class="larry-icon larry-chaxun"></i>
+                                       class="layui-btn  layui-btn-small">
+                                        <i class="larry-icon larry-chaxun"></i>查看
                                     </a>
                                     <a href="{{ url('admin/product').'/'.$product->id."/edit" }}"
-                                       class="layui-btn  layui-btn-small" data-alt="修改">
-                                        <i class="larry-icon larry-xiugai1"></i>
+                                       class="layui-btn  layui-btn-small">
+                                        <i class="larry-icon larry-xiugai1"></i>修改
                                     </a>
-                                    <a id="delete" data-id="{{ $product->id }}" class="layui-btn  layui-btn-small"
-                                       data-alt="删除">
-                                        <i class="larry-icon larry-huishouzhan"></i>
+                                    <a id="delete" data-id="{{ $product->id }}" class="layui-btn  layui-btn-small">
+                                        <i class="larry-icon larry-huishouzhan"></i>删除
                                     </a>
                                 </div>
                             </td>
@@ -133,70 +132,13 @@
 @section('js')
     @parent
     <script>
-        layui.use(['jquery','layer'], function () {
+        layui.use(['jquery','layer','global'], function () {
             var $ = layui.jquery,
+                global = layui.global,
                 layer = layui.layer;
-            var index;
-            $('a.layui-btn').on('mouseover', function(){
-                var alt = $(this).attr('data-alt');
-                index = layer.tips(alt, $(this),{tips: [1, '#0FA6D8']});
-            });
-            $('a.layui-btn').on('mouseout',function(){
-                layer.close(index);
-            });
-            $('a.layui-btn').on('click',function(){
-                var l = layer.msg('正在加载!请稍后...', {
-                    icon: 16
-                });
-            });
-            $('a#delete').on('click', function(){
-                var th = $(this),
-                    t = th.parent().parent().parent('tr');
-                layer.confirm('确定要删除吗?', {
-                    btn: ['确定','取消'] //按钮
-                    ,btnAlign: 'c'
-                    ,shade: 0.8
-                    ,id: 'MI_delTips' //设定一个id，防止重复弹出
-                    ,moveType: 1 //拖拽模式，0或者1
-                    ,resize: false
-                    ,title: '友情提醒'
-                }, function(){
-                    var id =  th.data('id');
-                    var l = layer.msg('正在删除!请稍后...', {
-                        icon: 16
-                    });
-                        $.ajax({
-                            url:  '{{ url('/admin/product') }}' + '/' + id
-                            , type: "POST"
-                            , data: {'_method': 'DELETE', '_token': '{{ csrf_token() }}' }
-                            ,success:function (data) {
-                                if( data != '' ){
-                                    layer.close(l);
-                                    if( data == 0 ){
-                                        layer.alert('删除成功', {icon: 1,time:2000,yes:function(){
-                                            location.href=location.href;
-                                        }});
-                                    }else if ( data == 1 ){
-                                        layer.alert('数据不存在!', {icon: 2});
-                                    }else{
-                                        layer.alert('id错误!', {icon: 2});
-                                    }
-                                }else{
-                                    layer.alert('服务器错误!', {icon: 2});
-                                }
-                        }
-                    });
-
-                }, function(Index){
-                    layer.close(Index);
-                });
-            });
-            $('button#refresh').on('click', function(){
-                layer.msg('正在加载请稍后...', {
-                    icon: 16
-                });
-                location.href=location.href;
-            });
+            var id = $('a#delete').data('id'),
+                url = '{{ url('/admin/product') }}' + '/' + id;
+            global.aDelete('a#delete','友情提醒','确定要删除吗','{{ csrf_token() }}',url);
         });
 
     </script>

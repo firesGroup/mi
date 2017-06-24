@@ -61,6 +61,7 @@
                             <div class="layui-input-block">
                                 <button class="layui-btn" type="submit" lay-submit="" lay-filter="editModel">修改</button>
                                 <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                                <a class="layui-btn layui-btn-primary" href="{{ url('/admin/product/model') }}">返回</a>
                             </div>
                         </div>
                     </form>

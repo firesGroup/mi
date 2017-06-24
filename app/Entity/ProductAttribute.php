@@ -1,7 +1,7 @@
 <?php
 /**
- * File Name: ProductSpec.php
- * Description: 商品规格表
+ * File Name: ProductAttibute.php
+ * Description: 商品属性表
  * Created by PhpStorm.
  * Group: FiresGroup
  * Auth: Showkw
@@ -12,7 +12,7 @@ namespace App\Entity;
 
 use Illuminate\Database\Eloquent\Model;
 
-class ProductSpec extends Model
+class ProductAttribute extends Model
 {
     //指定关联数据库表名
     protected $table = 'product_attribute';
@@ -20,6 +20,16 @@ class ProductSpec extends Model
     protected $primaryKey = 'id';
 
     protected $fillable = [
-        'attr_name'
+        'attr_name','model_id','attr_input_type','attr_values'
     ];
+
+    /*
+     * 关联所属模型信息
+     *
+     */
+    public function model()
+    {
+        return $this->belongsTo('App\Entity\ProductModel','model_id','id');
+    }
+
 }

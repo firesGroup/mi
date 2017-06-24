@@ -23,13 +23,14 @@ class ProductSpec extends Model
         'spec_name','model_id','spec_item'
     ];
 
+
     /*
      * 关联所属模型信息
      *
      */
     public function model()
     {
-        $this->belongsTo('App\Entity\ProductModel','model_id');
+        return $this->belongsTo('App\Entity\ProductModel','model_id');
     }
 
     /*
@@ -38,6 +39,7 @@ class ProductSpec extends Model
      */
     public function item()
     {
-        return $this->hasMany('App\Entity\ProductSpecItem','spec_id');
+        return $this->hasMany('App\Entity\ProductSpecItem', 'spec_id');
     }
+
 }

@@ -5,15 +5,17 @@ layui.config({
 	larry:'larry',
 	navtab:'navtab',
 	elemnts:'elements',
-	common: 'common'
+	common: 'common',
+	global: 'global'
 });
-layui.use(['elements','jquery','layer','larry','navtab','form','common'],function(){
+layui.use(['elements','jquery','layer','larry','navtab','form','common','global'],function(){
 	var $ = layui.jquery,
 	    layer = layui.layer,
 	    device = layui.device(),
 	    elements = layui.elements(),
 	    larry = layui.larry(),
 	    form = layui.form(),
+        global=layui.global,
 	    common = layui.common;
       navtab = layui.navtab({
            elem: '#larry-tab'

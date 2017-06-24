@@ -81,11 +81,11 @@
                             <td>{{ $model->model_name }}</td>
                             <td>
                                 <div class="layui-btn-group">
-                                    <a href="{{ url('admin/product').'/'.$model->id }}"
+                                    <a href="{{ url('admin/product/attr').'?search=true&modelId='.$model->id }}"
                                        class="layui-btn  layui-btn-small" data-alt="查看属性">
                                         <i class="larry-icon larry-chaxun1"></i>属性列表
                                     </a>
-                                    <a href="{{ url('admin/product').'/'.$model->id }}"
+                                    <a href="{{ url('admin/product/spec').'?search=true&modelId='.$model->id }}"
                                        class="layui-btn  layui-btn-small" data-alt="查看规格">
                                         <i class="larry-icon larry-chaxun1"></i>规格列表
                                     </a>
@@ -157,9 +157,9 @@
                                         location.href=location.href;
                                     }});
                                 }else if ( data == 1 ){
-                                    layer.alert('数据不存在!', {icon: 2});
-                                }else{
-                                    layer.alert('id错误!', {icon: 2});
+                                    layer.alert('删除失败!', {icon: 2, title:'提醒'});
+                                }else if( data == 2 ){
+                                    layer.alert('删除失败!模型下存在规格和属性!', {icon: 2, title:'提醒' });
                                 }
                             }else{
                                 layer.alert('服务器错误!', {icon: 2});

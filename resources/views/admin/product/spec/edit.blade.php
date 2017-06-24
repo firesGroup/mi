@@ -1,17 +1,17 @@
 <?php
 /**
- * File Name: create.blade.php
- * Description: 商品规格添加页面模版
+ * File Name: edit.blade.php
+ * Description: 规格详情修改页
  * Created by PhpStorm.
  * Group: FiresGroup
  * Auth: Showkw
- * Date: 2017/6/23
- * Time: 23:34
+ * Date: 2017/6/24
+ * Time: 19:02
  */
 ?>
 @extends('layouts.iframe')
 
-@section('title','商品规格管理-添加')
+@section('title','商品规格管理-修改')
 
 @section('css')
     @parent
@@ -21,7 +21,7 @@
     <section class="larry-grid">
         <div class="larry-personal">
             <header class="larry-personal-tit">
-                <span>商品规格管理-添加规格</span>
+                <span>商品规格管理-修改规格</span>
             </header>
             <div class="row" id="infoSwitch">
                 <blockquote class="layui-elem-quote col-md-12 head-con">
@@ -42,16 +42,20 @@
                         <div class="layui-form-item">
                             <label class="layui-form-label">规格名称</label>
                             <div class="layui-input-block">
-                                <input type="text" name="spec_name" lay-verify="required" placeholder="请输入规格名称" autocomplete="off" class="layui-input" value="{{old('spec_name')}}">
+                                <input type="text" name="spec_name" lay-verify="required" placeholder="请输入规格名称" autocomplete="off" class="layui-input" value="{{$info->spec_name}}">
                             </div>
                         </div>
                         <div class="layui-form-item">
-                            <label class="layui-form-label">所属</label>
+                            <label class="layui-form-label">所属模型</label>
                             <div class="layui-input-block">
                                 <select name="model_id" lay-verify="required">
                                     <option value="">请选择模型</option>
                                     @foreach( $modelList as $m )
-                                        <option value="{{ $m->id }}">{{ $m->model_name }}</option>
+                                        @if( $m->id == $info->model_id )
+                                            <option value="{{ $m->id }}" selected>{{ $m->model_name }}</option>
+                                        @else
+                                            <option value="{{ $m->id }}">{{ $m->model_name }}</option>
+                                        @endif
                                     @endforeach
                                 </select>
                             </div>
@@ -59,13 +63,13 @@
                         <div class="layui-form-item layui-form-text">
                             <label class="layui-form-label">规格项</label>
                             <div class="layui-input-block">
-                                <textarea name="spec_item" placeholder="请输入规格项" class="layui-textarea" lay-verify="required">{{old('spec_item')}}</textarea>
+                                <textarea name="spec_item" placeholder="请输入规格项" class="layui-textarea" lay-verify="required">{{ $info->spec_item }}</textarea>
                                 <span class="textarea-tips">注:多个规格项请用","逗号分隔</span>
                             </div>
                         </div>
                         <div class="layui-form-item">
                             <div class="layui-input-block">
-                                <button class="layui-btn" lay-submit="" lay-filter="addspec">添加</button>
+                                <button class="layui-btn" lay-submit="" lay-filter="editSpec">修改</button>
                                 <button type="reset" class="layui-btn layui-btn-primary">重置</button>
                                 <a class="layui-btn layui-btn-primary" href="{{ url('/admin/product/spec') }}">返回</a>
                             </div>
@@ -84,43 +88,38 @@
                 layer = layui.layer,
                 form = layui.form();
 
-            form.on('submit(addspec)',function(data){
-                var index = layer.msg('正在加载!请稍后...', {
-                    icon: 16
-                });
-                $.ajax({
-                    url:'{{ url('admin/product/spec') }}',
-                    type: 'POST',
-                    data: data.field,
-                    success:function(res){
-                        layer.close(index);
-                        if( res == 0 ){
-                            layer.msg('添加成功', {icon:6, time:1000, end:function(){
-                                location.href= '{{ url('/admin/product/spec') }}';
-                            }});
-                        }else if( res == 1){
-                            layer.msg('添加失败!', {icon:2, time:2000, end:function(){
-                            }});
-                        }else if(res == 2){
-                            layer.msg('请输入规格项!', {icon:2, time:2000, end:function(){
-                            }});
-                        }else{
-                            layer.msg('添加失败', {icon:2, time:2000, end:function(){
-                            }});
+            //序列化表单值 用于判断是否被修改过
+            var loadFormData = $('form#spec').serialize();
+            //表单提交监听
+            form.on('submit(editSpec)', function(data){
+                var submitFormData = $('form#spec').serialize();
+                if( submitFormData == loadFormData ){
+                    layer.msg('您什么都没修改呀!', {'icon':3, 'time':2000,anim: Math.ceil(Math.random() * 6)});
+                }else{
+                    var index = layer.msg('正在修改信息!请稍后...', {
+                        icon: 16
+                    });
+                    $.ajax({
+                        url:'{{ url('/admin/product/spec').'/'.$info->id }}',
+                        type: 'put',
+                        data: data.field,
+                        success: function(res){
+                            if( res == 0 ){
+                                layer.msg('修改成功!', {'icon':6, 'time':1000,end:function(){
+                                    layer.close(index);
+                                    location.href ='{{ url('/admin/product/spec')}}';
+                                }});
+                            }else if( res == 1 ){
+                                layer.msg('修改失败!', {'icon':2, 'time':3000, end:function(){
+                                    layer.close(index);
+                                }});
+                            }
                         }
-                    },
-                    error:function (XMLHttpRequest) {
-                        var msgObj = XMLHttpRequest.responseJSON;
-                        var msg = '';
-                        for(var name in msgObj){//遍历对象属性名
-                            msg += msgObj[name] + "<br>";
-                        }
-                        layer.msg(msg,{icon:2,time:3000});
-                    },
-                });
+                    });
+                }
                 return false;
             });
-
         } );
     </script>
 @endsection
+
