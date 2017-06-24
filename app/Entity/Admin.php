@@ -8,5 +8,5 @@ class Admin extends Model
 {
     protected $table = 'admin';
 
-    public $fillable = ['group_id', 'username', 'password', 'status'];
+    public $fillable = ['group_id', 'username', 'password', 'status', 'add_time', 'last_time', 'last_ip'];
 }

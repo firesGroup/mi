@@ -92,6 +92,7 @@ return [
         'phone'   => '手机号',
         'password' => '密码',
         'content'  => '内容',
+        'email' => '邮箱',
         'p_name'   => '商品名称',
         'model_name' => '模型名称',
         'spec_name' => '规格名称',

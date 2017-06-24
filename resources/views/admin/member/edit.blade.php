@@ -41,7 +41,7 @@
                     <div class="layui-tab-content">
                         <div class="layui-tab-item layui-show" style="padding-top:20px">
                             <div class="form-body">
-                                <form class="layui-form" action="{{url('admin/member/'.$data->id)}}" method="post" enctype="multipart/form-data">
+                                <form class="layui-form" action="{{url('admin/member/'.$data->id)}}" method="post" >
                                     {{csrf_field()}}
                                     <input type="hidden" name="_method" value="PUT">
                                     <div class="layui-form-item">
@@ -53,19 +53,13 @@
                                     <div class="layui-form-item">
                                         <label class="layui-form-label">会员邮箱</label>
                                         <div class="layui-input-block">
-                                            <input type="text" name="price" lay-verify="required"  autocomplete="off" class="layui-input" value="{{$data->email}}">
+                                            <input type="text" name="email" lay-verify="required|email"  autocomplete="off" class="layui-input" value="{{$data->email}}">
                                         </div>
                                     </div>
-                                    {{--<div class="layui-form-item">--}}
-                                        {{--<label class="layui-form-label">会员密码</label>--}}
-                                        {{--<div class="layui-input-block">--}}
-                                            {{--<input type="text" name="market_price" lay-verify="required" autocomplete="off" class="layui-input" value="{{$data->password}}">--}}
-                                        {{--</div>--}}
-                                    {{--</div>--}}
                                     <div class="layui-form-item">
                                         <label class="layui-form-label">会员电话</label>
                                         <div class="layui-input-block">
-                                            <input type="text" name="phone" class="layui-input" value="{{$data->phone}}">
+                                            <input type="text" name="phone" class="layui-input" value="{{$data->phone}}" lay-verify="required|phone">
                                         </div>
                                     </div>
                                     <div class="layui-form-item" pane>
@@ -86,39 +80,19 @@
                                     <div class="layui-form-item">
                                         <label class="layui-form-label">会员生日</label>
                                         <div class="layui-input-block">
-                                            <input type="date" name="birthday" class="layui-input" value="{{$user_detail->birthday}}">
+                                            <input class="layui-input" name="birthday" placeholder="自定义日期格式" id="date" onclick="layui.laydate({elem: this, festival: true} )" value="{{$user_detail->birthday}}" lay-verify="required">
                                         </div>
                                     </div>
-                                    <div class="layui-form-item">
-                                        <label class="layui-form-label">会员头像</label>
-                                        <div class="layui-input-block">
-                                            <input type="file" name="avator" class="layui-upload-file" lay-title="上传会员头像">
-                                        </div>
-                                        <div class="layui-input-block">
-                                            <img src="{{$user_detail->avator}}">
-                                        </div>
-                                    </div>
+                                    <input type="hidden" name="last_ip" value="{{$data->last_ip}}">
                                     <div class="layui-form-item">
                                         <div class="layui-input-block">
-                                            <button class="layui-btn" lay-submit="" lay-filter="demo1">立即提交</button>
+                                            <button id="submit" class="layui-btn" lay-submit=""  lay-filter="go">立即提交</button>
                                             <button type="reset" class="layui-btn layui-btn-primary">重置</button>
                                         </div>
                                     </div>
                                 </form>
                             </div>
                         </div>
-                        {{--<div class="layui-tab-item">--}}
-                            {{--<div class="form-body">--}}
-                                {{--<form class="layui-form">--}}
-                                    {{--<div class="layui-form-item">--}}
-                                        {{--<div class="layui-input-block">--}}
-                                            {{--<input type="file" name="p_index_image" class="layui-upload-file">--}}
-                                        {{--</div>--}}
-                                    {{--</div>--}}
-                                {{--</form>--}}
-                            {{--</div>--}}
-                        {{--</div>--}}
-                        {{--<div class="layui-tab-item">内容3</div>--}}
                     </div>
                 </div>
             </div>
@@ -129,24 +103,92 @@
 @section('js')
     @parent
     <script>
-        layui.use(['jquery','layer','form', 'upload','layedit', 'element'], function () {
-            var form = layui.form()
-                ,$ = layui.jquery
-                ,layedit = layui.layedit
-                ,element = layui.element()
-            layer = layui.layer;
 
-            //上传封面图片
-            layui.upload({
-                url: '' //上传接口
-                ,success: function(res){ //上传成功后的回调
-                    console.log(res)
+        layui.use(['form', 'jquery', 'layer', 'laydate'], function () {
+            var $ = layui.jquery,
+                form = layui.form(),
+                layer = layui.layer;
+            var laydate = layui.laydate;
+
+//            laydate({elem:'#date', event:'click', format: 'YYYY-MM-DD'});
+            $("input[name=nick_name]").blur( function () {
+               var m_name =  $(this).val();
+                var that = $(this);
+                var origin = that.data('u');
+                if (origin != m_name) {
+                    $.ajax({
+                        url:"{{url('admin/member_check_name/'.$data->id)}}",
+                        type:"post",
+                        data:{"_token":"{{csrf_token()}}","m_name":m_name},
+                        success:function (data) {
+                            if (data == 1) {
+                                that.data('u', m_name);
+                                that.css({'border': '1px solid #FF5722'});
+                                layer.msg('会员名已存在', {time: 1000});
+//
+                            } else {
+                                that.css({'border': '1px solid #f2f2f2'});
+                                layer.msg('会员名可用');
+                            }
+                        }
+                    })
                 }
+
             });
 
-            //构建一个默认的编辑器
-            var index = layedit.build('editor');
-        });
+            $("input[name=phone]").blur( function () {
+                var m_phone =  $(this).val();
+                var that = $(this);
+                var origin = that.data('u');
+                if (origin != m_phone) {
+                    $.ajax({
+                        url:"{{url('admin/member_ajax_phone/'.$data->id)}}",
+                        type:"post",
+                        data:{"_token":"{{csrf_token()}}","m_phone":m_phone},
+                        success:function (data) {
+                            if (data == 1) {
+                                that.data('u', m_phone);
+                                that.css({'border': '1px solid #FF5722'});
+                                layer.msg('电话已存在', {time: 1000});
+                                return false;
+                            } else {
+                                that.css({'border': '1px solid #f2f2f2'});
+                                layer.msg('号码可用');
+                            }
+                        }
+                    })
+                }
 
+            });
+
+            $("input[name=email]").blur( function () {
+                var m_email =  $(this).val();
+                var that = $(this);
+                var origin = that.data('u');
+                if (origin != m_email) {
+                    $.ajax({
+                        url:"{{url('admin/member_ajax_email/'.$data->id)}}",
+                        type:"post",
+                        data:{"_token":"{{csrf_token()}}","m_email":m_email},
+                        success:function (data) {
+                            if (data == 1) {
+                                that.data('u', m_email);
+                                that.css({'border': '1px solid #FF5722'});
+                                layer.msg('邮箱已存在', {time: 1000});
+                                return false;
+                            } else {
+                                that.css({'border': '1px solid #f2f2f2'});
+                                layer.msg('邮箱可用');
+                            }
+                        }
+                    })
+                }
+
+            });
+
+
+
+
+        });
     </script>
 @endsection

@@ -12,32 +12,35 @@
 */
 //===================
 //王明使用::
-// $factory->define(App\adminGroup::class, function (Faker\Generator $faker) {
+// $factory->define(App\Entity\AdminGroup::class, function (Faker\Generator $faker) {
+//     $roleIds = \App\Entity\AdminRole::lists('id')->toArray();
 //     return [
 //         'group_name' => $faker->name,
 //         'group_desc' => $faker->paragraph,
-//         'role_list' => str_random(1),
-//         'status' => str_random(1),
-//     ];
-// });
-// $factory->define(App\adminRole::class, function (Faker\Generator $faker) {
-//     $gid = \App\adminGroup::lists('id')->toArray();
-//     return [
-//         'group_id' => $faker->randomElement($gid),
-//         'role_name' => $faker->name,
-//         'role_desc' => $faker->paragraph,
-//         'role' => str_random(1),
-//         'status' => str_random(1),
+//         'role_list' => $faker->randomElement($roleIds).','.$faker->randomElement($roleIds),
+//         'status' => rand(0,1),
 //     ];
 // });
 
-// $factory->define(App\admin::class, function (Faker\Generator $faker) {
-//     $userIds = \App\adminGroup::lists('id')->toArray();
+// $factory->define(App\Entity\AdminRole::class, function (Faker\Generator $faker) {
 //     return [
-//         'gid' => $faker->randomElement($userIds),
+//         'role_name' => $faker->name,
+//         'role_desc' => $faker->paragraph,
+//         'role' => 'controller@'.str_random(5),
+//         'status' => rand(0,1),
+//     ];
+// });
+
+// $factory->define(App\Entity\Admin::class, function (Faker\Generator $faker) {
+//     $userIds = \App\Entity\AdminGroup::lists('id')->toArray();
+//     return [
+//         'group_id' => $faker->randomElement($userIds),
 //         'username' => $faker->name,
 //         'password' => bcrypt(str_random(10)),
-//         'status' => str_random(1),
+//         'status' => rand(0,1),
+//         'add_time' => $faker->dateTime(),
+//         'last_ip' => $faker->ipv4,
+//         'last_time' => $faker->dateTime(),
 //     ];
 // });
 
@@ -59,8 +62,8 @@
 //$factory->define(App\Entity\MemberDetail::class, function (Faker\Generator $faker) {
 //     $userIds = \App\Entity\Member::lists('id')->toArray();
 //     return [
-//         'mid' => $faker->randomElement($userIds),
-//         'sex' =>$faker->internetExplorer,
+//         'member_id' => $faker->randomElement($userIds),
+//         'sex' =>rand(0, 1),
 //         'birthday' => $faker->dateTime,
 //         'avator' => $faker->imageUrl(),
 //     ];
@@ -68,23 +71,33 @@
 
 //===================================
 //潘珺使用:
-// $factory->define(App\order::class, function (Faker\Generator $faker) {
+// $factory->define(App\Entity\Order::class, function (Faker\Generator $faker) {
+//     $id = \App\Entity\Member::lists('id')->toArray();
+//
 //     return [
-// //         'order_sn' => str_random(10),
-// //         'mid' => str_random(1),
-// //         'user' => $faker->name,
-// //         'phone' => str_random(11),
-// //         'address' => $faker->paragraph,
-// //         'total' => str_random(3),
-// //         'order_status' => str_random(1),
-      
-//          'cid'=> $faker->randomDigitNotNull,
-//         'bid'=> $faker->randomDigitNotNull,
-//         'p_name'=> $faker->sentence,
-//         'price' => $faker->randomFloat(),
-//         'market_price' => $faker->randomFloat(),
+//          'order_sn' => str_random(10),
+//          'member_id' => $faker->randomElement($id),
+//          'buy_user' => $faker->name,
+//          'buy_phone' => str_random(11),
+//          'address' => str_random(15),
+//          'total' => str_random(3),
+//         'order_status' => str_random(1),
 //     ];
 // });
+//潘珺使用comment:
+//$factory->define(App\Entity\comment::class, function (Faker\Generator $faker) {
+//    $id = \App\Entity\Member::lists('id')->toArray();
+//    return [
+//        'member_id' => $faker->randomElement($id),
+//        'pid' => $faker->sentence,
+//        'images' => $faker->imageUrl(),
+//        'content' => str_random(15),
+//        'star' => str_random(1),
+//        'is_hide' => str_random(1),
+//        'type' => str_random(1),
+//    ];
+//});
+//==================================================
 // $factory->define(App\order::class, function (Faker\Generator $faker) {
 //     return [
 //        'name' => $faker->name,
@@ -102,20 +115,20 @@
 //         'order_status' => str_random(1),
 //     ];
 // }); 
- 
+
 //===============================
   //肖开文使用::
- $factory->define(App\Entity\Product::class, function (Faker\Generator $faker) {
-     return [
-        'category_id' => rand(1,100),
-         'brand_id' => rand(1,349),
-         'price' => $faker->randomFloat(7,1,10000),
-         'market_price' => $faker->randomFloat(7,1,10000),
-         'p_name' => $faker->name,
-         'status' => rand(0,4),
-         'recommend' => rand(0,1),
-     ];
- });
+//  $factory->define(App\Entity\Product::class, function (Faker\Generator $faker) {
+//      return [
+//         'category_id' => rand(1,100),
+//          'brand_id' => rand(1,349),
+//          'price' => $faker->randomFloat(7,1,10000),
+//          'market_price' => $faker->randomFloat(7,1,10000),
+//          'p_name' => $faker->name,
+//          'status' => rand(0,4),
+//          'recommend' => rand(0,1),
+//      ];
+//  });
 // $factory->define(App\Entity\ProductDetail::class, function (Faker\Generator $faker) {
 //     return [
 //        'p_id'=> rand(1,8),

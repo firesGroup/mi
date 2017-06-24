@@ -39,19 +39,7 @@ class LevelController extends Controller
      */
     public function store(Request $request)
     {
-            $this->vaildate($request, [
-                'level_name' => 'require|min:3|max:20',
-                'consumption' => 'require',
-                'discount' => 'require',
-                ], [
-                'required' => ':attribute 是必填字段',
-                'min' => ':attribute 必须不少于3个字符',
-                'max' => ':attribute 必须少于20个字符',
-                ], [
-                'level_name' => '文章标题',
-                'consumption' => '文章内容',
-                'discount' => '发布时间',
-            ]);
+
             $arr = $request->all();
             $arr['discount'] = $arr['discount'].'%';
             if (Level::create($arr)) {
@@ -82,7 +70,9 @@ class LevelController extends Controller
      */
     public function edit($id)
     {
-        //
+        $data = Level::find($id);
+
+        return view('/admin/level/level_edit', compact('data'));
     }
 
     /**
@@ -124,5 +114,10 @@ class LevelController extends Controller
         } else {
             return 2;
         };
+    }
+
+    public function edit_ajax()
+    {
+
     }
 }

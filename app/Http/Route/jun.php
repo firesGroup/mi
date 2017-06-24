@@ -18,6 +18,9 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function () {
     Route::get('/', 'AdminController@index');
 
     Route::resource('order', 'OrderController');
+    Route::resource('comment','CommentController');
     Route::get('orderStatus', 'OrderController@updateStatus');
+    Route::get('commentStatus', 'CommentController@updateStatus');
 
 });
+
