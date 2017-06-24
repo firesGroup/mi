@@ -12,32 +12,35 @@
 */
 //===================
 //王明使用::
-// $factory->define(App\adminGroup::class, function (Faker\Generator $faker) {
+// $factory->define(App\Entity\AdminGroup::class, function (Faker\Generator $faker) {
+//     $roleIds = \App\Entity\AdminRole::lists('id')->toArray();
 //     return [
 //         'group_name' => $faker->name,
 //         'group_desc' => $faker->paragraph,
-//         'role_list' => str_random(1),
-//         'status' => str_random(1),
-//     ];
-// });
-// $factory->define(App\adminRole::class, function (Faker\Generator $faker) {
-//     $gid = \App\adminGroup::lists('id')->toArray();
-//     return [
-//         'group_id' => $faker->randomElement($gid),
-//         'role_name' => $faker->name,
-//         'role_desc' => $faker->paragraph,
-//         'role' => str_random(1),
-//         'status' => str_random(1),
+//         'role_list' => $faker->randomElement($roleIds).','.$faker->randomElement($roleIds),
+//         'status' => rand(0,1),
 //     ];
 // });
 
-// $factory->define(App\admin::class, function (Faker\Generator $faker) {
-//     $userIds = \App\adminGroup::lists('id')->toArray();
+// $factory->define(App\Entity\AdminRole::class, function (Faker\Generator $faker) {
 //     return [
-//         'gid' => $faker->randomElement($userIds),
+//         'role_name' => $faker->name,
+//         'role_desc' => $faker->paragraph,
+//         'role' => 'controller@'.str_random(5),
+//         'status' => rand(0,1),
+//     ];
+// });
+
+// $factory->define(App\Entity\Admin::class, function (Faker\Generator $faker) {
+//     $userIds = \App\Entity\AdminGroup::lists('id')->toArray();
+//     return [
+//         'group_id' => $faker->randomElement($userIds),
 //         'username' => $faker->name,
 //         'password' => bcrypt(str_random(10)),
-//         'status' => str_random(1),
+//         'status' => rand(0,1),
+//         'add_time' => $faker->dateTime(),
+//         'last_ip' => $faker->ipv4,
+//         'last_time' => $faker->dateTime(),
 //     ];
 // });
 
@@ -59,8 +62,8 @@
 //$factory->define(App\Entity\MemberDetail::class, function (Faker\Generator $faker) {
 //     $userIds = \App\Entity\Member::lists('id')->toArray();
 //     return [
-//         'mid' => $faker->randomElement($userIds),
-//         'sex' =>$faker->internetExplorer,
+//         'member_id' => $faker->randomElement($userIds),
+//         'sex' =>rand(0, 1),
 //         'birthday' => $faker->dateTime,
 //         'avator' => $faker->imageUrl(),
 //     ];

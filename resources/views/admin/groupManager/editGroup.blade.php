@@ -67,10 +67,11 @@
                                     <div class="layui-form-item">
                                         <label class="layui-form-label">要添加的权限内容</label>
                                         <div class="layui-input-block">
+
                                             @foreach($role as $row)
-                                                {{--{{dump($row->id)}}--}}
                                                 <input type="checkbox" name="role_list" title="{{$row->role_name}}" value="{{$row->id}}" lay-filter="check">
                                             @endforeach
+
                                         </div>
                                     </div>
                                     <div class="layui-form-item layui-form-text">
@@ -103,6 +104,7 @@
             </div>
         </div>
         {{dump($role_list)}}
+        {{dump($role)}}
     </section>
 @endsection
 
@@ -115,12 +117,15 @@
             var layer = layui.layer;
             var form = layui.form();
 
-            var id = $('input[name=role_list]').val();
-//            alert(id);
-            $.inArray()
-            if () {
 
-            }
+//            var id = $('input[name=role_list]:checkbox').val();
+//            alert(id);
+            {{--var id = "{{$row->id}}";--}}
+            {{--var arr = "{{$role_list}}";--}}
+            {{--$.inArray(id, arr);--}}
+//            if () {
+//
+//            }
 
         });
 

@@ -81,41 +81,46 @@ class MemberController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update( Request $request, $id)
     {
         //验证操作
+
         $data = DB::table('member')->lists('nick_name');
-        $nick_name = $request->get('nick_name');
         $m_name = Member::find($id)->nick_name;
+        $nick_name = $request->get('nick_name');
+        $phone = $request->get('phone');
+
+        $m_phone = Member::find($id)->phone;
+
+        $arr = DB::table('member')->lists('phone');
+
+
         if(in_array($m_name, $data) && $m_name != $nick_name) {
             return back()->with(['success' => '用户名已存在']);
-        }else {
-            $nick_name = $request->get('nick_name');
-            $email = $request->get('email');
-            $phone = $request->get('phone');
-            $status = $request->get('status');
-            $lastIp = $request->get('last_ip');
-            $sex = $request->get('sex');
-            $birthday = $request->get('birthday');
+        } else {
+            if(in_array($phone, $arr  ) && $m_phone != $phone) {
+                return back()->with(['success' => '用户名已存在']);
+            }else{
+                $nick_name = $request->get('nick_name');
+                $email = $request->get('email');
+                $status = $request->get('status');
+                $lastIp = $request->get('last_ip');
+                $sex = $request->get('sex');
+                $birthday = $request->get('birthday');
 
 //            dd($birthday);
-            DB::beginTransaction();
-            if (Member::where('id', '=', $id)->update(['nick_name' => $nick_name, 'email' => $email, 'phone' => $phone, 'status' => $status, 'last_ip' => $lastIp])) {
-                if (MemberDetail::where('mid', '=', $id)->update(['sex' => $sex, 'birthday' => $birthday])) {
-                    DB::commit();
-                    return redirect('admin/member');
-                } else {
-                    DB::rollBack();
-                    return back();
+                DB::beginTransaction();
+                if (Member::where('id', '=', $id)->update(['nick_name' => $nick_name, 'email' => $email, 'phone' => $phone, 'status' => $status, 'last_ip' => $lastIp])) {
+                    if (MemberDetail::where('member_id', '=', $id)->update(['sex' => $sex, 'birthday' => $birthday])) {
+                        DB::commit();
+                        return redirect('admin/member');
+                    } else {
+                        DB::rollBack();
+                        return back();
+                    }
                 }
             }
         }
-
-
-        //添加数据库操作
-
-
-
     }
 
     /**
@@ -132,7 +137,7 @@ class MemberController extends Controller
        return DB::table('memberdetail')->where('mid', $data->id)->delete();
     }
 
-    public function changeavator(Request $request)
+    public function changeavator(MemberRequest $request)
     {
 
         $id = $_POST['id'];
@@ -185,4 +190,27 @@ class MemberController extends Controller
              return 1;
          }
      }
+
+    public function member_check_phone(Request $request, $id)
+    {
+
+        $data = DB::table('member')->lists('phone');
+        $s_phone = Member::find($id);
+        $m_phone = $request->get('m_phone');
+        if(in_array($m_phone, $data) && $m_phone != $s_phone->phone) {
+            return 1;
+        }
+    }
+
+    public function member_check_email(Request $request, $id)
+    {
+
+        $data = DB::table('member')->lists('email');
+        $s_email = Member::find($id);
+        $m_email = $request->get('email');
+        if(in_array($m_email, $data) && $m_email != $s_email->email) {
+            return 1;
+        }
+    }
+
 }
