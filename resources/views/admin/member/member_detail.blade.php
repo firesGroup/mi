@@ -57,6 +57,14 @@
                         </div>
                     </div>
                     <div class="layui-form-item">
+                        <div class="layui-form-label">会员等级</div>
+                        <div class="layui-input-inline" style="width:300px">
+                            <div class="layui-input">
+                                {{$array[$user_detail->level_id]}}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
                         <div class="layui-form-label">会员生日</div>
                         <div class="layui-input-inline" style="width:300px">
                             <div class="layui-input">

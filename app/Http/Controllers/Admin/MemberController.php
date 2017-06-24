@@ -5,8 +5,10 @@ namespace App\Http\Controllers\Admin;
 use App\Entity\Member;
 use App\Entity\MemberDetail;
 use App\Http\Controllers\Controller;
+use App\http\Level;
 use DB;
 use Illuminate\Http\Request;
+use App\Http\Requests\Admin\MemberRequest;
 use Image;
 
 class MemberController extends Controller
@@ -18,6 +20,7 @@ class MemberController extends Controller
      */
     public function index()
     {
+
         $data = Member::orderby('id')->paginate(5);
         $state = array('0'=>'普通', '1' => '锁定');
         return view('admin/member/member', compact('data', 'state'));
@@ -40,7 +43,7 @@ class MemberController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(MemberRequest $request)
     {
         //
     }
@@ -54,10 +57,11 @@ class MemberController extends Controller
     public function show($id)
     {
         $data = Member::find($id);
+        $array = DB::table('level')->lists('level_name', 'id');
         $user_detail = MemberDetail::find($data->id);
         $state = array('0'=>'普通', '1' => '锁定');
         $arr = array('0'=>'保密', '1'=>'男', '2'=>'女');
-        return view('admin/member/member_detail', compact('data', 'user_detail', 'state', 'arr'));
+        return view('admin/member/member_detail', compact('data', 'user_detail', 'state', 'arr', 'array'));
     }
 
     /**
@@ -68,10 +72,11 @@ class MemberController extends Controller
      */
     public function edit($id)
     {
+        $array = DB::table('level')->lists('level_name','id');
        $data = Member::find($id);
        $user_detail = MemberDetail::find($data->id);
        //dd($user_detail);
-       return view('admin/member/edit', compact('data', 'user_detail'));
+       return view('admin/member/edit', compact('data', 'user_detail', 'array'));
     }
 
     /**
@@ -81,45 +86,27 @@ class MemberController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update( Request $request, $id)
+    public function update( MemberRequest $request, $id)
     {
-        //验证操作
-
-        $data = DB::table('member')->lists('nick_name');
-        $m_name = Member::find($id)->nick_name;
-        $nick_name = $request->get('nick_name');
-        $phone = $request->get('phone');
-
-        $m_phone = Member::find($id)->phone;
-
-        $arr = DB::table('member')->lists('phone');
-
-
-        if(in_array($m_name, $data) && $m_name != $nick_name) {
-            return back()->with(['success' => '用户名已存在']);
-        } else {
-            if(in_array($phone, $arr  ) && $m_phone != $phone) {
-                return back()->with(['success' => '用户名已存在']);
-            }else{
+        
                 $nick_name = $request->get('nick_name');
                 $email = $request->get('email');
                 $status = $request->get('status');
                 $lastIp = $request->get('last_ip');
                 $sex = $request->get('sex');
                 $birthday = $request->get('birthday');
+                $phone = $request->get('phone');
+                $level_id = $request->get('level_id');
 
-//            dd($birthday);
                 DB::beginTransaction();
                 if (Member::where('id', '=', $id)->update(['nick_name' => $nick_name, 'email' => $email, 'phone' => $phone, 'status' => $status, 'last_ip' => $lastIp])) {
-                    if (MemberDetail::where('member_id', '=', $id)->update(['sex' => $sex, 'birthday' => $birthday])) {
+                    if (MemberDetail::where('member_id', '=', $id)->update(['sex' => $sex, 'birthday' => $birthday, 'level_id' => $level_id])) {
                         DB::commit();
                         return redirect('admin/member');
                     } else {
                         DB::rollBack();
                         return back();
                     }
-                }
-            }
         }
     }
 
@@ -129,7 +116,7 @@ class MemberController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Request $request, $id)
+    public function destroy(MemberRequest $request, $id)
     {
         //dd($id);
         $data = Member::find($id);
@@ -160,7 +147,7 @@ class MemberController extends Controller
      }
 
      //对视图传过来的图排尿进行裁剪
-     public function change(Request $request)
+     public function change(MemberRequest $request)
      {
          $photo = mb_substr($request->get('photo'),1);
          $w = $request->get('w');

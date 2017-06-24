@@ -48,30 +48,30 @@
                                         <div class="layui-input-block">
                                             <input type="text" name="level_name" lay-verify="required"
                                                    placeholder="请输入等级名称" autocomplete="off" class="layui-input"
-                                                   id="level_name">
+                                                   id="level_name" value="{{old('level_name')}}">
                                         </div>
                                     </div>
                                     <div class="layui-form-item">
                                         <label class="layui-form-label">消费金额</label>
                                         <div class="layui-input-block">
-                                            <input type="text" name="consumption" lay-verify="required|consumption"
-                                                   placeholder="请输入消费金额" autocomplete="off" class="layui-input">
+                                            <input type="text" name="consumption" lay-verify="required|consumption|number"
+                                                   placeholder="请输入消费金额" autocomplete="off" class="layui-input" value="{{old('consumption')}}">
                                         </div>
                                     </div>
 
                                     <div class="layui-form-item">
                                         <label class="layui-form-label">折扣率</label>
                                         <div class="layui-input-block">
-                                            <input type="text" name="discount" lay-verify="required|discount" placeholder="请输入折扣率" id="discount"
-                                                   autocomplete="off" class="layui-input">
+                                            <input type="text" name="discount" lay-verify="required|discount|number" placeholder="请输入折扣率" id="discount"
+                                                   autocomplete="off" class="layui-input" value="{{old('discount')}}">
                                         </div>
                                     </div>
                                     <div class="layui-form-item">
                                         <label class="layui-form-label">等级描述</label>
                                         <div class="layui-input-block">
-                                            <textarea type="text" name="level_deta" lay-verify="required"
+                                            <textarea type="text" name="level_desc" lay-verify="required"
                                                       placeholder="请输入等级描述" autocomplete="off"
-                                                      class="layui-input"></textarea>
+                                                      class="layui-input">{{old('level_desc')}}</textarea>
                                         </div>
                                     </div>
                                     <div class="layui-form-item">
@@ -122,15 +122,9 @@
                             if (data == 1) {
                                 that.css({'border': '1px solid #FF5722'});
                                 layer.msg('等级名已存在', {time:1000});
-                                form.on('submit(go)', function (data) {
-                                    return false;
-                                })
                             } else {
                                 that.css({'border': '1px solid #f2f2f2'});
                                 layer.msg('等级名可用');
-                                form.on('submit(go)', function (data) {
-
-                                })
                             }
 
                         },
