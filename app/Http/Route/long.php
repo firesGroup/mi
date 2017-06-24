@@ -10,11 +10,12 @@
 
 Route::group( ['namespace'=>'Admin', 'prefix'=>'admin'], function(){
     Route::get('/', 'AdminController@index');
-    Route::resource( 'member', 'MemberController' );
     Route::post('avator', 'MemberController@changeavator');
     Route::post('change', 'MemberController@change');
     Route::post('member_check_name/{id}', 'MemberController@member_check_name');
-
+    Route::post('member_ajax_phone/{id}', 'MemberController@member_check_phone');
+    Route::post('member_ajax_email/{id}', 'MemberController@member_check_email');
+    Route::resource('member', 'MemberController' );
     //等级路由
 
     Route::post('create_ajax', 'LevelController@ajax');

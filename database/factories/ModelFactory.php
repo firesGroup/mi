@@ -62,8 +62,8 @@
 //$factory->define(App\Entity\MemberDetail::class, function (Faker\Generator $faker) {
 //     $userIds = \App\Entity\Member::lists('id')->toArray();
 //     return [
-//         'mid' => $faker->randomElement($userIds),
-//         'sex' =>$faker->internetExplorer,
+//         'member_id' => $faker->randomElement($userIds),
+//         'sex' =>rand(0, 1),
 //         'birthday' => $faker->dateTime,
 //         'avator' => $faker->imageUrl(),
 //     ];
