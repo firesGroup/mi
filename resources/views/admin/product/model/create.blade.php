@@ -47,8 +47,9 @@
                         </div>
                         <div class="layui-form-item">
                             <div class="layui-input-block">
-                                <button class="layui-btn" lay-submit="" lay-filter="addModel">立即提交</button>
+                                <button class="layui-btn" lay-submit="" lay-filter="addModel">添加</button>
                                 <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                                <a class="layui-btn layui-btn-primary" href="{{ url('/admin/product/model') }}">返回</a>
                             </div>
                         </div>
                     </form>

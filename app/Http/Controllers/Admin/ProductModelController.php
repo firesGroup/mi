@@ -27,7 +27,6 @@ class ProductModelController extends Controller
      */
     public function index()
     {
-        $modelList = ProductModel::all();
         $modelList = ProductModel::paginate(10);
         return view('admin.product.model.index', compact('modelList'));
     }
@@ -57,18 +56,6 @@ class ProductModelController extends Controller
             return 1;
         }
     }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
     /**
      * Show the form for editing the specified resource.
      *
@@ -106,11 +93,20 @@ class ProductModelController extends Controller
      */
     public function destroy($model_id)
     {
-        //删除
-        if(ProductModel::destroy($model_id)){
-            return 0;
+        $model = ProductModel::find($model_id);
+        $specs = $model->spec->toArray();
+        $attrs = $model->attr->toArray();
+        if( !empty($specs) && !empty($attrs) ){
+            return 2;//模型下存在规格和属性
         }else{
-            return 1;
+            //模型下没有规格和属性才能删除
+            if(ProductModel::destroy($model_id)){
+                return 0;//删除成功
+            }else{
+                return 1;//删除失败
+            }
         }
+
     }
+
 }

@@ -32,7 +32,7 @@ class ProductModel extends Model
      */
     public function spec()
     {
-        return $this->hasMany('App\Entity\ProductSpec','model_id');
+        return $this->hasMany('App\Entity\ProductSpec','model_id','id');
     }
 
     /*
@@ -41,7 +41,7 @@ class ProductModel extends Model
      */
     public function attr()
     {
-        return $this->hasMany('App\Entity\ProductAttribute','model_id');
+        return $this->hasMany('App\Entity\ProductAttribute','model_id','id');
     }
 
 

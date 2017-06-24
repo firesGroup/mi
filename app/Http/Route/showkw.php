@@ -21,6 +21,7 @@ Route::group(['namespace'=>'Admin','prefix'=>'admin'], function(){
         'menu' => 'menu_id'
     ]]);
     Route::get('menu/index/welcome','MenuController@getWelcome');
+
     Route::resource('product/model', 'ProductModelController',['parameters' => [
         'model' => 'model_id'
     ]]);
@@ -29,7 +30,10 @@ Route::group(['namespace'=>'Admin','prefix'=>'admin'], function(){
     ]]);
     Route::resource('product/spec', 'ProductSpecController',['parameters' => [
         'spec' => 'spec_id'
-    ]]);
+    ]],['except'=>['show']]);
+    Route::resource('product/attr', 'ProductAttributeController',['parameters' => [
+        'attr' => 'attr_id'
+    ]],['except'=>['show']]);
     Route::resource('product', 'ProductController',['parameters' => [
         'product' => 'id'
     ]]);

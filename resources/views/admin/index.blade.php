@@ -83,15 +83,27 @@
                             </a>
                         </li>
                         <li class="layui-nav-item" data-pid="undefined">
-                            <a data-url="{{url('/admin/product/spec')}}">
+                            <a data-url="{{url('/admin/product')}}">
                                 <i class="larry-icon larry-houtaishouye" data-icon="larry-houtaishouye" aria-hidden="true"></i>
-                                <cite>规格管理</cite>
+                                <cite>商品管理</cite>
                             </a>
                         </li>
                         <li class="layui-nav-item" data-pid="undefined">
                             <a data-url="{{url('/admin/product/model')}}">
                                 <i class="larry-icon larry-houtaishouye" data-icon="larry-houtaishouye" aria-hidden="true"></i>
                                 <cite>模型管理</cite>
+                            </a>
+                        </li>
+                        <li class="layui-nav-item" data-pid="undefined">
+                            <a data-url="{{url('/admin/product/spec')}}">
+                                <i class="larry-icon larry-houtaishouye" data-icon="larry-houtaishouye" aria-hidden="true"></i>
+                                <cite>规格管理</cite>
+                            </a>
+                        </li>
+                        <li class="layui-nav-item" data-pid="undefined">
+                            <a data-url="{{url('/admin/product/attr')}}">
+                                <i class="larry-icon larry-houtaishouye" data-icon="larry-houtaishouye" aria-hidden="true"></i>
+                                <cite>属性管理</cite>
                             </a>
                         </li>
                         <li class="layui-nav-item" data-pid="undefined">
