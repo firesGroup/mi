@@ -39,7 +39,7 @@
         </div>
 
         <div class=""
-             style="background-color:#c2c2c2;border: 1px solid #1ca794;font-size: 20px;height: 900px;">
+             style="background-color:#f2f2f2;border: 1px solid #1ca794;font-size: 20px;height: 900px;">
 
             <legend>基本信息<i class="layui-icon" style="font-size: 30px; color: #FF5722;">&#xe60c;</i>  </legend>
 
@@ -47,7 +47,7 @@
                 <ul style="text-align: left;">
                     <li>订单ID: <span id="did">{{$data->id}}</span></li>
                     <br>
-                    <li>用户ID: {{$data->mid}}</li>
+                    <li>用户ID: {{$data->member_id}}</li>
                     <br>
                 </ul>
                 <div style="float: left;">
@@ -74,6 +74,7 @@
 
                                 <i class="layui-icon" style="font-size: 30px;">&#xe639;</i>
                             @endif
+                            <span id="newid" style="display: none;">{{$data->order_status}}</span>
                         </li>
 
                     </ul>
@@ -98,9 +99,9 @@
             </div>
                 <div style="text-align: center;width: 500px;height: 150px;float: left;">
                     <ul style="text-align: left;">
-                        <li>配送方式: {{$data->delivery}}</li>
-                        <br>
-                        <li>物流订单号: {{$data->delivery_orderid}}</li>
+                        {{--<li>配送方式: {{$data->delivery}}</li>--}}
+                        {{--<br>--}}
+                        {{--<li>物流订单号: {{$data->delivery_orderid}}</li>--}}
                         <br>
                     </ul>
                 </div>
@@ -116,13 +117,14 @@
                     <th>商品数量</th>
                     <th>总价</th>
                 </tr>
-                @foreach($odetail as $v)
+                {{--{{dd($orderdetail)}}--}}
+
+            @foreach($orderdetail as $v)
                     <tr>
-                    {{--{{dd($v)}}--}}
                     <td>{{$v->p_id}}</td>
                     <td>{{$v->p_name}}</td>
                     <td>{{$v->p_price}}</td>
-                    <td>{{$v->p_num}}</td>
+                    <td>{{$v->buy_num}}</td>
                     <td>{{$data->total}}</td>
                     </tr>
                 @endforeach
@@ -168,11 +170,15 @@
 
                 $('li').on('change', 'select#status', function () {
 
-                    //获取改变的默认值
+                    //当点击获取要改变的状态数值
                     var sid = $('option:checked').val();
 
-                    //
+//                    alert(sid);
+                    //获取用户id用做数据库查询条件
                     var id = $('li #did').text();
+
+                    //获取点击option的文本内容用于下方拼接 写入标签
+                    var text = $('option:checked').text();
 
                     //定义路由
                     var url = '{{ url('/admin/orderStatus') }}';
@@ -180,23 +186,17 @@
                     $.ajax({
                         url: url,
                         type: 'get',
-                        data: {'statusId': sid, 'id': id},//拼接发送要修改的状态ID和原来的状态ID
+                        data: {'statusId': sid, 'id': id},//拼接发送要修改的状态数值和用户ID
 
                         success: function (datas) {
 
-                            //获取点击option的文本内容
-                            var text = $('option:checked').html();
-
                             //拼接li标签 写入#li标签中
-                            $('li#li').html('订单状态: ' + text + '<i class="layui-icon" style="font-size: 30px;"></i>');
+                            $('li#li').html('订单状态: ' + text + '<i class="layui-icon" style="font-size: 30px;">&#xe639;</i>');
 
                         }
                     });
-
                 });
-
             });
-
         });
 
 

@@ -18,12 +18,12 @@ class CommentController extends Controller
      */
     public function index()
     {
+
         //查询评价表数据库所有数据
         $data = DB::table('comment')->get();
 
         //返回视图并传参
         return view('admin.comment.comment', compact('data'));
-
     }
 
     /**
@@ -77,6 +77,11 @@ class CommentController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
+    {
+        dd(111);
+    }
+
+    public function updateStatus(Request $request, $id)
     {
         dd(111);
     }

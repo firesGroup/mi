@@ -76,7 +76,6 @@
                     <th>商品</th>
                     <th>显示</th>
                     <th>评论时间</th>
-                    <th>ip地址</th>
                     <th>操作</th>
                 </tr>
                 </thead>
@@ -102,7 +101,7 @@
                         <td width="20%">
                             <div style="display: -webkit-box;-webkit-box-orient: vertical;-webkit-line-clamp: 2;overflow: hidden;">{{$v->content}}</div>
                         </td>
-                        <td>{{$v->pid}}</td>
+                        <td>{{$v->p_id}}</td>
 
                         <td class="td">
                             @if($v->is_hide == 0)
@@ -115,7 +114,6 @@
                         </td>
 
                         <td>{{$v->created_at}}</td>
-                        <td>{{$v->ip}}</td>
                         <td>
                             <div class="layui-btn-group">
 
@@ -222,14 +220,14 @@
                 var span1 = "<span  class='layui-icon' style='color:#5FB878;'>&#xe618;是</span>";
 //
 
-                if (hide == 0) {
-
-                    $('td.td').html(span0);
-
-                }else if(hide == 1) {
-
-                    $('td.td').html(span1);
-                }
+//                if (hide == 0) {
+//
+//                    $('td.td').html(span0);
+//
+//                }else if(hide == 1) {
+//
+//                    $('td.td').html(span1);
+//                }
                 $('td.td').on('click', function () {
 
                     //获取点击的数值用于数据库修改改变值
@@ -254,14 +252,14 @@
 
                     }
 
-                    var url = '{{ url('admin/commentStatus') }}';
+                    var url = '{{ url('admin/comment') }}' + '/' + id;
 
                     $.ajax({
                         url: url,
                         type: 'get',
                         data: {'cid': cid, 'id': id},//拼接发送要修改的显示的数值ID和评价表ID
 
-                        success: function (datas) {
+                        success: function (data) {
 
 
 
