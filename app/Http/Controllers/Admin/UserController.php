@@ -26,7 +26,7 @@ class UserController extends Controller
         $data = DB::table('admin')->orderby('id')->paginate(5);
 
         //查询出权限组信息
-        $group = DB::table('admingroup')->get();
+        $group = DB::table('admin_group')->get();
 //        dump($group);
 
         $group_name = array();
@@ -140,8 +140,8 @@ class UserController extends Controller
         $data = Admin::find($id);
 //        dd($data->gid);
 
-        //将管理员表中的gid给一个变量  为了查询所属组信息
-        $gid = $data->gid;
+        //将管理员表中的group_id给一个变量  为了查询所属组信息
+        $gid = $data->group_id;
         $str = AdminGroup::find($gid);
 //        dd($str->role_list);
 
@@ -151,7 +151,7 @@ class UserController extends Controller
 
         foreach ($arr as $k => $v) {
 //            dump($v);
-            $group_id[$k] = DB::table('adminrole')->where('id', $v)->first();
+            $group_id[$k] = DB::table('admin_role')->where('id', $v)->first();
 
 
             //将多个数组合并为一个
@@ -179,11 +179,11 @@ class UserController extends Controller
         //获取管理员和权限组的信息
         $arr = AdminGroup::get();
         $data = Admin::find($id);
-//        dd($data->gid);
+//        dd($data->group_id);
 
 
         //根据管理员对应的权限组 查询权限组的信息
-        $str = AdminGroup::find($data->gid);
+        $str = AdminGroup::find($data->group_id);
         $status = $this->status;
         return view('admin/userManager/editUser', compact('data', 'status', 'arr', 'str'));
     }
@@ -231,7 +231,7 @@ class UserController extends Controller
             if (Hash::check($oldpassword, $pass)) {
 //            dd($request->status);
 
-                if (admin::where('id', '=', $id)->update(['username' => $request->username, 'password' => bcrypt($request->newPassword), 'gid' => $request->gid, 'status' => $request->status])) {
+                if (admin::where('id', '=', $id)->update(['username' => $request->username, 'password' => bcrypt($request->newPassword), 'group_id' => $request->group_id, 'status' => $request->status])) {
 //
                     return redirect('/admin/user');
                 } else {

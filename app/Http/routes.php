@@ -23,6 +23,6 @@
 include('Route/jun.php');
 
 //这个不要动
-//Route::get('/admin/welcome', function(){
-//    return view('welcome');
-//});
+Route::get('/admin/welcome', function(){
+    return view('welcome');
+});
