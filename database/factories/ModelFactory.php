@@ -117,18 +117,21 @@
 // }); 
 
 //===============================
-//肖开文使用::
-// $factory->define(App\Entity\Product::class, function (Faker\Generator $faker) {
-// //    return [
-//        'name' => $faker->name,
-// //        'email' => $faker->safeEmail,
-// //        'password' => bcrypt(str_random(10)),
-// //        'remember_token' => str_random(10),
-//     ];
-// });
+  //肖开文使用::
+//  $factory->define(App\Entity\Product::class, function (Faker\Generator $faker) {
+//      return [
+//         'category_id' => rand(1,100),
+//          'brand_id' => rand(1,349),
+//          'price' => $faker->randomFloat(7,1,10000),
+//          'market_price' => $faker->randomFloat(7,1,10000),
+//          'p_name' => $faker->name,
+//          'status' => rand(0,4),
+//          'recommend' => rand(0,1),
+//      ];
+//  });
 // $factory->define(App\Entity\ProductDetail::class, function (Faker\Generator $faker) {
 //     return [
-//        'pid'=> rand(8,40),
+//        'p_id'=> rand(1,8),
 //        'p_index_image' => $faker->imageUrl(),
 //        'summary' => $faker->paragraph,
 //         'description' => $faker->sentence,

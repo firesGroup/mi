@@ -182,3 +182,15 @@ span.layui-btn{
     display:inline-block;
     border-radius: 0;
 }
+textarea{
+    font-size: 12px;
+}
+span.textarea-tips{
+    color: #AAA;
+    font-size: 12px;
+    display: inline-block;
+    margin-bottom: 10px;
+}
+span.textarea-tips:hover,textarea:hover+span.textarea-tips{
+    color: #2CBCA3;
+}

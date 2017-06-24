@@ -377,4 +377,12 @@ layui.use(['elements','jquery','layer','larry','navtab','form','common'],functio
 			}
 		});
 	});
+
+	//刷新按钮
+    $('button#refresh').on('click', function(){
+        layer.msg('正在加载!请稍后...', {
+            icon: 16
+        });
+        location.href=location.href;
+    });
 })

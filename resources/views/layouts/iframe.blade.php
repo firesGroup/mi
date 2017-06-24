@@ -32,6 +32,13 @@
         @show
 </head>
 <body>
+@if( count($errors) >0  )
+    <div id="errors_msg" style="display:none">
+    @foreach ($errors->all() as $key => $error)
+            <li>{{ $error }}</li>
+    @endforeach
+    </div>
+@endif
 @section('content')
     @show
 @section('js')

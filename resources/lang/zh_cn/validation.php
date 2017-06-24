@@ -86,14 +86,16 @@ return [
     |
     */
     'attributes'           => [
+        'nickname' => '昵称',
         'username' => '用户名',
-        'account'  => '账号',
         'captcha'  => '验证码',
-        'mobile'   => '手机号',
+        'phone'   => '手机号',
         'password' => '密码',
         'content'  => '内容',
-        'identity' => '手机号/用户名',
-        'model_name' => '模型名称',
         'email' => '邮箱',
+        'p_name'   => '商品名称',
+        'model_name' => '模型名称',
+        'spec_name' => '规格名称',
+        'attr_name' => '属性名称',
     ],
 ];
