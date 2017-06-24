@@ -64,7 +64,7 @@
                             <td>{{ $level->level_name }}</td>
                             <td>{{ $level->consumption}}</td>
                             <td>{{ $level->discount}}</td>
-                            <td>{{ $level-> level_deta}}</td>
+                            <td>{{ $level-> level_desc}}</td>
                             <td>
                                 <div class="layui-btn-group">
                                     <a href="{{ url('admin/level').'/'.$level->id."/edit" }}" class="layui-btn" data-alt="查看编辑">

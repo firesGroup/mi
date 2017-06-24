@@ -41,31 +41,31 @@
                     <div class="layui-tab-content">
                         <div class="layui-tab-item layui-show" style="padding-top:20px">
                             <div class="form-body">
-                                <form class="layui-form" action="{{url('admin/member/'.$data->id)}}" method="post" >
+                                <form class="layui-form" action="{{url('admin/level/'.$data->id)}}" method="post" >
                                     {{csrf_field()}}
                                     <input type="hidden" name="_method" value="PUT">
                                     <div class="layui-form-item">
                                         <label class="layui-form-label">等级名称</label>
                                         <div class="layui-input-block">
-                                            <input type="text" name="nick_name" lay-verify="required" autocomplete="off" class="layui-input" value="{{$data->level_name}}">
+                                            <input type="text" id="level_name" name="level_name" lay-verify="required" autocomplete="off" class="layui-input" value="{{$data->level_name}}">
                                         </div>
                                     </div>
                                     <div class="layui-form-item">
                                         <label class="layui-form-label">消费金额</label>
                                         <div class="layui-input-block">
-                                            <input type="text" name="email" lay-verify="required"  autocomplete="off" class="layui-input" value="{{$data->consumption}}">
+                                            <input type="text" name="consumption" lay-verify="required|consumption"  autocomplete="off" class="layui-input" value="{{$data->consumption}}">
                                         </div>
                                     </div>
                                     <div class="layui-form-item">
                                         <label class="layui-form-label">折扣率</label>
                                         <div class="layui-input-block">
-                                            <input type="text" name="phone" class="layui-input" value="{{$data->discount}}" lay-verify="required">
+                                            <input type="text" name="discount" class="layui-input" value="{{trim($data->discount, '%')}}" lay-verify="required|discount">
                                         </div>
                                     </div>
                                     <div class="layui-form-item" pane>
                                         <label class="layui-form-label">等级描述</label>
                                         <div class="layui-input-block">
-                                            <input type="text" name="phone" class="layui-input" value="{{$data->level_deta}}" lay-verify="required">
+                                            <input type="text" name="level_desc" class="layui-input" value="{{$data->level_desc}}" lay-verify="required">
                                         </div>
                                     </div>
                                     <div class="layui-form-item">
@@ -87,33 +87,44 @@
     @parent
 
     <script>
-        layui.use(['form', 'jquery', 'layer'], function () {
+        layui.use(['jquery', 'form', 'layer'], function () {
             var $ = layui.jquery,
+                layer = layui.layer,
                 form = layui.form(),
-                layer = layui.layer;
-
-            $("input[name=nick_name]").blur( function () {
-                var m_name =  $(this).val();
+                layedit = layui.layedit,
+                laydate = layui.laydate;
+            $('#level_name').focusout(function () {
+                var l_name = $(this).val();
                 var that = $(this);
                 var origin = that.data('u');
-                if (origin != m_name) {
+                if (origin != l_name) {
                     $.ajax({
-                        url:"{{url('admin/level_edit/'.$data->id)}}",
-                        type:"post",
-                        data:{"_token":"{{csrf_token()}}","m_name":m_name},
-                        success:function (data) {
-                            if (data == 1) {
-                                that.data('u', m_name);
+                        url: '{{url('admin/level_edit/'.$data->id)}}',
+                        type: 'post',
+                        data: {'_token': '{{ csrf_token() }}', 'level_name': l_name},
+                        success: function (data) {
+                            that.data('u', l_name);
+                            console.log(typeof(data));
+                            if (data === '1') {
                                 that.css({'border': '1px solid #FF5722'});
-                                layer.msg('会员名已存在', {time: 1000});
+                                layer.msg("等级名不可用", {time: 1000});
                             } else {
                                 that.css({'border': '1px solid #f2f2f2'});
-                                layer.msg('会员名可用');
+                                layer.msg('等级名可用');
                             }
                         }
-                    })
+                    });
                 }
+            });
+            form.verify({
+                discount:[/^\d{1,2}$/, '数字不能超过两个']
+            })
+            form.verify({
+                consumption:[/[1-9]\d*.\d*|0.\d*[1-9]\d*/, '数字不能超过八个']
+            })
 
-        })
+
+        });
+
     </script>
 @endsection

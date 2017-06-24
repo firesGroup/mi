@@ -97,5 +97,6 @@ return [
         'model_name' => '模型名称',
         'spec_name' => '规格名称',
         'attr_name' => '属性名称',
+        'nick_name' => '会员名字',
     ],
 ];

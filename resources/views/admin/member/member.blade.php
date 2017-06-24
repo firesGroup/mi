@@ -58,7 +58,6 @@
             </thead>
             <tbody>
             @foreach( $data as $v )
-
                 <tr>
                     <td>{{$v->id}}</td>
                     <td>{{$v->created_at}}</td>
@@ -67,6 +66,7 @@
                     <td>{{$v->phone}}</td>
                     <td>{{$state[$v->status]}}</td>
                     <td>{{$v->last_ip}}</td>
+
                     <td>
                         <div class="layui-btn-group">
                             <a href="{{ url('admin/member').'/'.$v->id }}" class="layui-btn"

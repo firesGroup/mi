@@ -4,7 +4,7 @@ namespace App\Http\Requests\Admin;
 
 use App\Http\Requests\Request;
 
-class MemberRequest extends Request
+class LevelRequest extends Request
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,12 +23,11 @@ class MemberRequest extends Request
      */
     public function rules()
     {
-
-        $id = $this->route('member'); //获取当前需要排除的id,这里的 member 是 路由 {} 中的参数
+        $id = $this->route('level');
         return [
-            'email' => "required|email|unique:member,email,".$id,
-            'phone' => "required|phone|unique:member,phone,".$id,
-            'nick_name' => "required|unique:member,nick_name,".$id
+            'level_name' => "unique:level,level_name,".$id,
+            'consumption' => "min:2|max:10",
+            'discount' => 'max:2',
         ];
     }
 }

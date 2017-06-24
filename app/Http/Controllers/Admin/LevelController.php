@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Entity\Level;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\LevelRequest;
 use DB;
 class LevelController extends Controller
 {
@@ -37,11 +38,12 @@ class LevelController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(LevelRequest $request)
     {
 
             $arr = $request->all();
             $arr['discount'] = $arr['discount'].'%';
+//            dd($arr);
             if (Level::create($arr)) {
                 return redirect('admin/level');
             } else {
@@ -71,7 +73,6 @@ class LevelController extends Controller
     public function edit($id)
     {
         $data = Level::find($id);
-
         return view('/admin/level/level_edit', compact('data'));
     }
 
@@ -82,9 +83,16 @@ class LevelController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(LevelRequest $request, $id)
     {
-        //
+        $data = $request->all();
+        $flight = Level::find($id)->update($data);
+        if($flight == true) {
+            return redirect('admin/level');
+        }else{
+            return back();
+        }
+
     }
 
     /**
@@ -116,8 +124,21 @@ class LevelController extends Controller
         };
     }
 
-    public function edit_ajax()
+    public function edit_ajax(Request $request, $id)
     {
+        //ajax传过来的l_name值
+        $name = $request->get('level_name');
+//        dump($name);
+        //从数据库查出来所有的等级名称
+        $all_name = DB::table('level')->lists('level_name');
 
+//        dump($all_name);
+        //从数据库查出来属于当前等级了名称
+        $l_name = Level::find($id)->level_name;
+
+//        dump($l_name);
+        if(in_array($name, $all_name) && $name != $l_name) {
+                return 1;
+        }
     }
 }

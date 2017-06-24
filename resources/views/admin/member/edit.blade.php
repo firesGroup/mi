@@ -41,52 +41,74 @@
                     <div class="layui-tab-content">
                         <div class="layui-tab-item layui-show" style="padding-top:20px">
                             <div class="form-body">
-                                <form class="layui-form" action="{{url('admin/member/'.$data->id)}}" method="post" >
+                                <form class="layui-form" action="{{url('admin/member/'.$data->id)}}" method="post">
                                     {{csrf_field()}}
                                     <input type="hidden" name="_method" value="PUT">
                                     <div class="layui-form-item">
                                         <label class="layui-form-label">会员呢称</label>
                                         <div class="layui-input-block">
-                                            <input type="text" name="nick_name" lay-verify="required" autocomplete="off" class="layui-input" value="{{$data->nick_name}}">
+                                            <input type="text" name="nick_name" lay-verify="required" autocomplete="off"
+                                                   class="layui-input" value="{{$data->nick_name}}">
                                         </div>
                                     </div>
                                     <div class="layui-form-item">
                                         <label class="layui-form-label">会员邮箱</label>
                                         <div class="layui-input-block">
-                                            <input type="text" name="email" lay-verify="required|email"  autocomplete="off" class="layui-input" value="{{$data->email}}">
+                                            <input type="text" name="email" lay-verify="required|email"
+                                                   autocomplete="off" class="layui-input" value="{{$data->email}}">
                                         </div>
                                     </div>
                                     <div class="layui-form-item">
                                         <label class="layui-form-label">会员电话</label>
                                         <div class="layui-input-block">
-                                            <input type="text" name="phone" class="layui-input" value="{{$data->phone}}" lay-verify="required|phone">
+                                            <input type="text" name="phone" class="layui-input" value="{{$data->phone}}"
+                                                   lay-verify="required|phone">
+                                        </div>
+                                    </div>
+                                    <div class="layui-form-item">
+                                        <label class="layui-form-label">会员等级</label>
+                                        <div class="layui-input-block">
+                                            <select name="level_id" lay-verify="">
+                                                @foreach($array as $k => $v)
+                                                    <option value="{{$k}}"
+                                                    {{($user_detail->level_id == $k)?'selected':'' }}>{{$v}}</option>
+                                                @endforeach
+                                            </select>
                                         </div>
                                     </div>
                                     <div class="layui-form-item" pane>
                                         <label class="layui-form-label">会员状态</label>
                                         <div class="layui-input-block">
-                                            <input type="radio" name="status" value=0 {{($data->status == '0')?'checked':''}} title="普通">
-                                            <input type="radio" name="status" value=1 {{($data->status == '1')?'checked':''}} title="锁定">
+                                            <input type="radio" name="status" value=0
+                                                   {{($data->status == '0')?'checked':''}} title="普通">
+                                            <input type="radio" name="status" value=1
+                                                   {{($data->status == '1')?'checked':''}} title="锁定">
                                         </div>
                                     </div>
                                     <div class="layui-form-item" pane>
                                         <label class="layui-form-label">会员性别</label>
                                         <div class="layui-input-block">
-                                            <input type="radio" name="sex" value=0 {{($user_detail->sex == '0')?'checked':''}} title="保密">
-                                            <input type="radio" name="sex" value=1 {{($user_detail->sex == '1')?'checked':''}}  title="男">
-                                            <input type="radio" name="sex" value=2 {{($user_detail->sex == '2')?'checked':''}}  title="女">
+                                            <input type="radio" name="sex" value=0
+                                                   {{($user_detail->sex == '0')?'checked':''}} title="保密">
+                                            <input type="radio" name="sex" value=1
+                                                   {{($user_detail->sex == '1')?'checked':''}}  title="男">
+                                            <input type="radio" name="sex" value=2
+                                                   {{($user_detail->sex == '2')?'checked':''}}  title="女">
                                         </div>
                                     </div>
                                     <div class="layui-form-item">
                                         <label class="layui-form-label">会员生日</label>
                                         <div class="layui-input-block">
-                                            <input class="layui-input" name="birthday" placeholder="自定义日期格式" id="date" onclick="layui.laydate({elem: this, festival: true} )" value="{{$user_detail->birthday}}" lay-verify="required">
+                                            <input class="layui-input" name="birthday" placeholder="自定义日期格式" id="date"
+                                                   onclick="layui.laydate({elem: this, festival: true} )"
+                                                   value="{{$user_detail->birthday}}" lay-verify="required">
                                         </div>
                                     </div>
                                     <input type="hidden" name="last_ip" value="{{$data->last_ip}}">
                                     <div class="layui-form-item">
                                         <div class="layui-input-block">
-                                            <button id="submit" class="layui-btn" lay-submit=""  lay-filter="go">立即提交</button>
+                                            <button id="submit" class="layui-btn" lay-submit="" lay-filter="go">立即提交
+                                            </button>
                                             <button type="reset" class="layui-btn layui-btn-primary">重置</button>
                                         </div>
                                     </div>
@@ -111,16 +133,16 @@
             var laydate = layui.laydate;
 
 //            laydate({elem:'#date', event:'click', format: 'YYYY-MM-DD'});
-            $("input[name=nick_name]").blur( function () {
-               var m_name =  $(this).val();
+            $("input[name=nick_name]").blur(function () {
+                var m_name = $(this).val();
                 var that = $(this);
                 var origin = that.data('u');
                 if (origin != m_name) {
                     $.ajax({
-                        url:"{{url('admin/member_check_name/'.$data->id)}}",
-                        type:"post",
-                        data:{"_token":"{{csrf_token()}}","m_name":m_name},
-                        success:function (data) {
+                        url: "{{url('admin/member_check_name/'.$data->id)}}",
+                        type: "post",
+                        data: {"_token": "{{csrf_token()}}", "m_name": m_name},
+                        success: function (data) {
                             if (data == 1) {
                                 that.data('u', m_name);
                                 that.css({'border': '1px solid #FF5722'});
@@ -136,16 +158,16 @@
 
             });
 
-            $("input[name=phone]").blur( function () {
-                var m_phone =  $(this).val();
+            $("input[name=phone]").blur(function () {
+                var m_phone = $(this).val();
                 var that = $(this);
                 var origin = that.data('u');
                 if (origin != m_phone) {
                     $.ajax({
-                        url:"{{url('admin/member_ajax_phone/'.$data->id)}}",
-                        type:"post",
-                        data:{"_token":"{{csrf_token()}}","m_phone":m_phone},
-                        success:function (data) {
+                        url: "{{url('admin/member_ajax_phone/'.$data->id)}}",
+                        type: "post",
+                        data: {"_token": "{{csrf_token()}}", "m_phone": m_phone},
+                        success: function (data) {
                             if (data == 1) {
                                 that.data('u', m_phone);
                                 that.css({'border': '1px solid #FF5722'});
@@ -161,16 +183,16 @@
 
             });
 
-            $("input[name=email]").blur( function () {
-                var m_email =  $(this).val();
+            $("input[name=email]").blur(function () {
+                var m_email = $(this).val();
                 var that = $(this);
                 var origin = that.data('u');
                 if (origin != m_email) {
                     $.ajax({
-                        url:"{{url('admin/member_ajax_email/'.$data->id)}}",
-                        type:"post",
-                        data:{"_token":"{{csrf_token()}}","m_email":m_email},
-                        success:function (data) {
+                        url: "{{url('admin/member_ajax_email/'.$data->id)}}",
+                        type: "post",
+                        data: {"_token": "{{csrf_token()}}", "m_email": m_email},
+                        success: function (data) {
                             if (data == 1) {
                                 that.data('u', m_email);
                                 that.css({'border': '1px solid #FF5722'});
@@ -185,10 +207,6 @@
                 }
 
             });
-
-
-
-
         });
     </script>
 @endsection

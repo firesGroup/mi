@@ -19,9 +19,14 @@ Route::group( ['namespace'=>'Admin', 'prefix'=>'admin'], function(){
     //等级路由
 
     Route::post('create_ajax', 'LevelController@ajax');
-    Route::post('level_edit', 'LevelController@edit_ajax');
+    Route::post('level_edit/{id}', 'LevelController@edit_ajax');
     Route::resource('level', 'LevelController');
+
+    //分类路由
+
+//    Route::resource('cate', 'CateGoryController');
 } );
+
 
 
 
