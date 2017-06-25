@@ -12,7 +12,7 @@
 ?>
 @extends('layouts.iframe')
 
-@section('title','会员管理首页')
+@section('title','商品评价')
 
 @section('css')
     @parent
@@ -71,7 +71,7 @@
                 <thead>
                 <tr>
                     <th>评价表ID</th>
-                    <th>几星评论</th>
+                    <th>评论优差</th>
                     <th>评价内容</th>
                     <th>商品</th>
                     <th>显示</th>
@@ -107,17 +107,20 @@
                             @if($v->is_hide == 0)
                                 <span id="span" class="layui-icon"
                                       style="color:#c2c2c2; font-size: 18px;">&#x1007;否</span>
+                                <span class='hide' style='display: none;width: 100px;'>0</span>
+
                             @elseif($v->is_hide ==1)
                                 <span id='span' class='layui-icon' style="color:#5FB878;">&#xe618;是</span>
+                                <span class='hide' style='display: none;width: 100px;'>1</span>
+
                             @endif
-                            <span class='hide' style='display: none;width: 100px;'>{{$v->is_hide}}</span>
                         </td>
 
                         <td>{{$v->created_at}}</td>
                         <td>
                             <div class="layui-btn-group">
 
-                                <a href="{{ url('admin/comment').'/'.$v->id }}" class="layui-btn  layui-btn-small"
+                                <a href="{{ url('admin/comment').'/'.$v->member_id }}" class="layui-btn  layui-btn-small"
                                    data-alt="回复">
                                     <i class="layui-icon">&#xe63a;</i>
                                 </a>
@@ -210,67 +213,44 @@
 
 //            $('td.td').
 
-            //当页面加载
-            $(document).ready(function () {
+            $('td.td').on('click', function () {
 
-                var hide = $('span.hide').text();
-//                alert(hide);
-
-                var span0 = "<span  class='layui-icon' style='color:#c2c2c2; font-size: 18px;'>&#x1007;否</span>";
-                var span1 = "<span  class='layui-icon' style='color:#5FB878;'>&#xe618;是</span>";
+                //获取点击的数值用于数据库修改改变值
+                var id = $(this).children('.hide').text();
 //
+                //获取评价表id用于数据库查询条件
+                var cid = $(this).parent().children('.cid').text();
 
-//                if (hide == 0) {
-//
-//                    $('td.td').html(span0);
-//
-//                }else if(hide == 1) {
-//
-//                    $('td.td').html(span1);
-//                }
-                $('td.td').on('click', function () {
+                var spanf = "<span class='layui-icon' style='color:#c2c2c2; font-size: 18px;'>&#x1007;否</span>                                          <span class='hide' style='display: none;'>0</span>";
 
-                    //获取点击的数值用于数据库修改改变值
-                    var id = $(this).children('.hide').text();
-//                    alert(id);
-                    //获取评价表id用于数据库查询条件
-                    var cid = $(this).parent().children('.cid').text();
-//    alert(cid);
-
-                    var spanf = "<span class='layui-icon' style='color:#c2c2c2; font-size: 18px;'>&#x1007;否</span>";
-
-                    var spany = "<span class='layui-icon' style='color:#5FB878;'>&#xe618;是</span>";
+                var spany = "<span class='layui-icon' style='color:#5FB878;'>&#xe618;是</span>                                                           <span class='hide' style='display: none;'>1</span>";
 
 
-                    if (id == 0) {
+                if (id == 0) {
 
-                        $(this).html(spany);
+                    $(this).html(spany);
+                    //用于修改数据库值
+                    nid = 1;
 
-                    } else if (id == 1) {
+                } else if (id == 1) {
 
-                        $(this).html(spanf);
-
-                    }
-
-                    var url = '{{ url('admin/comment') }}' + '/' + id;
-
-                    $.ajax({
-                        url: url,
-                        type: 'get',
-                        data: {'cid': cid, 'id': id},//拼接发送要修改的显示的数值ID和评价表ID
-
-                        success: function (data) {
+                    $(this).html(spanf);
+                    nid = 0;
+                }
 
 
+                var url = '{{ url('admin/commentStatus') }}';
 
-                        }
-
-                    });
+                $.ajax({
+                    url: url,
+                    type: 'get',
+                    data: {'cid': cid, 'id': nid},//拼接发送要修改的显示的数值ID和评价表ID
 
                 });
             });
 
         });
+
 
     </script>
 @endsection

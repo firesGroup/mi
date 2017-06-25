@@ -55,7 +55,15 @@ class CommentController extends Controller
      */
     public function show($id)
     {
-        //
+        $commentid = DB::table('comment')->where('member_id',$id)->get();
+
+        foreach ($commentid as $v){
+            $mid = $v->member_id;
+        }
+
+        $memberid = DB::table('member')->where('id',$mid)->get();
+        dump($commentid);
+        return view('admin/comment/showComment',compact('commentid','memberid'));
     }
 
     /**
@@ -66,7 +74,7 @@ class CommentController extends Controller
      */
     public function edit($id)
     {
-        //
+        dd(11);
     }
 
     /**
@@ -78,12 +86,15 @@ class CommentController extends Controller
      */
     public function update(Request $request, $id)
     {
-        dd(111);
+
     }
 
-    public function updateStatus(Request $request, $id)
+    public function updateStatus(Request $request)
     {
-        dd(111);
+        $cid = $request->input('cid');
+        $nid = $request->input('id');
+//        dd($id,$cid);
+        DB::table('comment')->where('id', $cid)->update(['is_hide'=>$nid]);
     }
 
     /**
