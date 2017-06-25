@@ -12,12 +12,11 @@ use App\Http\Controllers\Controller;
 use DB;
 
 
-
-
 class GroupController extends Controller
 {
 
     public $status = [0 => '启用', 1 => '锁定'];
+
     /**
      * Display a listing of the resource.
      *
@@ -25,15 +24,16 @@ class GroupController extends Controller
      */
     public function index()
     {
+//        dd(1);
         $data = DB::table('admin_group')->orderby('id')->paginate(5);
 //        dump($data);
 
         //查询权限列表id 和 权限名称
-        $list = AdminRole::select('id','role_name')->get();
+        $list = AdminRole::select('id', 'role_name')->get();
 //        dump($list);
 
         //将数据遍历
-        foreach ($list as $v){
+        foreach ($list as $v) {
 //            dump($v);
 
             //组成数组
@@ -56,24 +56,74 @@ class GroupController extends Controller
      */
     public function create()
     {
-        //
+        //查询出权限表的所有ID 和 权限名
+        $data = AdminRole::select('id', 'role_name')->orderby('id')->get();
+//        dd($data);
+
+        return view('admin/groupManager/addGroup', compact('data'));
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
-        //
+        //获取到用户提交的所有信息
+        $data = $request->all();
+//        dump($data);
+
+        //获取到输入的组名  为了查询组名是否存在
+        $name = $data['group_name'];
+
+        //获取到里面的role_list 字段  组成字符串 好存入数据库
+//        dump($data['role_list']);
+        $list = $data['role_list'];
+
+        //定义个空字符串  将值放入其中  并以逗号分隔
+        $str = '';
+        foreach ($list as $v) {
+            $str .= $v . ',';
+//            dump($str);
+        }
+
+        //去掉追后的逗号 并替换掉用户输入的role_list字段
+        $role_list = rtrim($str, ',');
+//        dump($role_list);
+        $data['role_list'] = $role_list;
+
+        //查出所有组名 核对用户输入的组名是否已经存在
+        $role = AdminGroup::select('group_name')->get();
+//        dump(json_decode($role));
+
+        //将得到的所有组名 变成数组
+        foreach ($role as $k => $v) {
+//            dump($v['group_name']);
+            $array[$k] = $v['group_name'];
+        }
+//        dump($array);
+
+//        dd($data);
+        if (in_array($name, $array)) {
+            return back()->with(['success' => '组名已存在, 添加失败！！！！！！！']);
+        } else {
+            //执行添加
+            if (AdminGroup::create($data)) {
+                return redirect('admin/group')->with(['success' => '添加成功！！！！！！！']);
+            } else {
+                return back()->withInput();
+            }
+
+        }
+
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -82,11 +132,11 @@ class GroupController extends Controller
 //        dd($data);
 
         //查询权限列表id 和 权限名称
-        $list = AdminRole::select('id','role_name')->get();
+        $list = AdminRole::select('id', 'role_name')->get();
 //        dump($list);
 
         //将数据遍历
-        foreach ($list as $v){
+        foreach ($list as $v) {
 //            dump($v);
 
             //组成数组
@@ -119,7 +169,7 @@ class GroupController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
@@ -144,8 +194,8 @@ class GroupController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \Illuminate\Http\Request $request
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
@@ -162,7 +212,7 @@ class GroupController extends Controller
 
         //定义一个空数组  将拿到的组名遍历 并将值组成一个数组
         $arrName = array();
-        foreach ($gName as $k=>$name){
+        foreach ($gName as $k => $name) {
 //            dump($name['role_name']);
             $arrName[$k] = $name['group_name'];
         }
@@ -178,16 +228,16 @@ class GroupController extends Controller
         $roleId = $data['role_list'];
 //        dump($roleId);
         $str = '';
-        foreach ($roleId as $v){
+        foreach ($roleId as $v) {
 //            dump($v);
-            $str .= $v.',';
+            $str .= $v . ',';
         }
 //        dump($str);
         $rList = rtrim($str, ', ');
 //        dump($rList);
 
         //判断用户输入的组名是否属于当前组名  并判断是否与已有的组名相同
-        if($groupName !== $GroupName && in_array($groupName, $arrName)) {
+        if ($groupName !== $GroupName && in_array($groupName, $arrName)) {
 
             //组名存在 不成功
             return back()->with(['success' => '组已存在, 修改失败！！！！！！！']);
@@ -208,12 +258,27 @@ class GroupController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
-        //
+        DB::beginTransaction(); //开启事务
+
+        $sql1 = DB::table('admin_group')->where('id', $id)->delete();
+        $sql2 = DB::table('admin')->where('group_id', $id)->update(['group_id'=>0]);
+
+
+        if ($sql1 && $sql2) {   //判断两条同时执行成功
+
+            DB::commit();  //提交
+            return 1;
+
+        } else {
+
+            DB::rollback();  //回滚
+            return 2;
+        }
     }
 
     public function groupAjax(Request $request)
@@ -228,7 +293,7 @@ class GroupController extends Controller
 //        dump($group_name);
 
         //遍历组名  变组成数组
-        foreach ($group_name as $k=>$v){
+        foreach ($group_name as $k => $v) {
             $list[$k] = $v->group_name;
         }
 

@@ -142,7 +142,7 @@
 
                     var url = "{{url('admin/groupAjax')}}";
 
-                    //获取到之前保存的用户名
+                    //获取到之前保存的组名
                     var origin = that.data('u');
 
                     if (origin != groupName) {
@@ -156,7 +156,7 @@
 
                             success: function (data) {
 
-                                //先把用户名存放起来
+                                //先把组名存放起来
                                 that.data('u', groupName);
 //                                console.log(data);
                                 if (data == 1) {

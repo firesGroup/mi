@@ -189,8 +189,8 @@
                         success: function (data) {
 
                             //先把用户名存放起来
-//                            that.data('u', username);
-                            console.log(data);
+                            that.data('u', username);
+//                            console.log(data);
                             if (data == 1) {
                                 that.css({'border':'1px solid #ff5722'});
                                 layer.msg('用户名已存在');

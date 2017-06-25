@@ -42,7 +42,7 @@
                 <div class="btn-group">
 
 
-                    <a href="{{url('admin/user/create')}}" style="color:white">
+                    <a href="{{url('admin/group/create')}}" style="color:white">
 
                         <button class="layui-btn layui-btn-small">
                             <i class="layui-icon">&#xe608;</i>
