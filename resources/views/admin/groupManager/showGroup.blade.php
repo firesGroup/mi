@@ -115,7 +115,7 @@
                 @foreach($array as $v)
                     <tr>
                         <td colspan="4">
-                            <div style="color:#01AAED">
+                            <div style="color:#01AAED;">
                                 {{$v->role_name.'  :  '.$v->role_desc}}
                             </div>
                         </td>
