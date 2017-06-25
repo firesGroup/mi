@@ -28,6 +28,14 @@ class Product extends Model
     }
 
     /**
+     * 获取商品品牌。
+     */
+    public function brand()
+    {
+        return $this->hasOne('App\Entity\ProductBrand', 'id', 'brand_id');
+    }
+
+    /**
      * 获取商品相册图片集合。
      */
     public function images()

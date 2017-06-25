@@ -14,7 +14,7 @@ class CreateProductBrandTable extends Migration
     {
         Schema::create('product_brand', function(Blueprint $table){
             $table->increments('id')->comment('商品品牌id');
-            $table->integer('model_id')->index()->comment('所属模型');
+            $table->integer('category_id')->index()->comment('所属分类');
             $table->string('brand_name')->index()->comment('品牌名称');
             $table->string('brand_logo')->comment('品牌logo路径');
             $table->string('brand_url')->comment('品牌网址');

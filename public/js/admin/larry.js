@@ -387,4 +387,5 @@ layui.use(['elements','jquery','layer','larry','navtab','form','common','global'
         });
         location.href=location.href;
     });
+
 })

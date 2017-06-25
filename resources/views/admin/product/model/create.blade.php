@@ -67,7 +67,7 @@
                 form = layui.form();
 
             form.on('submit(addModel)',function(data){
-                var index = layer.msg('正在加载!请稍后...', {
+                var index = layer.msg('正在添加!请稍后...', {
                     icon: 16
                 });
                 $.ajax({

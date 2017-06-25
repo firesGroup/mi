@@ -14,6 +14,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Entity\Product;
+use App\Entity\ProductBrand;
 use App\Entity\ProductImages;
 use App\Http\Requests\Admin\ProductRequest;
 use App\Http\Controllers\Controller;
@@ -196,13 +197,7 @@ class ProductController extends Controller
             $bool1 = Storage::disk('uploads')->delete($path);
             if( $bool1 ){
                 $id = DB::table('product_detail')->where('p_id', $id)->update(['p_index_image' => $src]);
-                if( $id != -1 ){
-                    //成功
-                    return 0;
-                }else{
-                    //失败
-                    return 1;
-                }
+                return $id != -1?0:1;
             }else{
                 //图片删除失败
                 return 2;

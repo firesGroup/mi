@@ -109,11 +109,7 @@ class ProductSpecController extends Controller
                     return true;
                 });
             }
-            if( $res ){
-                return 0;//成功
-            }else{
-                return 1;//失败
-            }
+            return $res?0:1;
         }else{
             return 2;//清除两边逗号后,没有如何字符!代表没有输入数据
         }
@@ -187,11 +183,7 @@ class ProductSpecController extends Controller
                     return true;
                 });
             }
-            if( $res ){
-                return 0;//成功
-            }else{
-                return 1;//失败
-            }
+            return $res?0:1;
         }else{
             return 2;//清除两边逗号后,没有如何字符!代表没有输入数据
         }
@@ -223,11 +215,7 @@ class ProductSpecController extends Controller
             return true;
         });
 
-        if( $res ){
-            return 0;
-        }else {
-            return 1;
-        }
+        return $res?0:1;
     }
 
 

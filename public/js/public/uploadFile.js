@@ -17,9 +17,6 @@
             <span class="layui-upload-icon"><i class="layui-icon"></i>上传商品封面图片</span>
     </div>
 *
-* <script>
-*   openUpload(path, func);  //传入相应参数调用,ok
-* </script>
 */
 
 //商品图片上传弹窗
@@ -40,7 +37,7 @@ function openUpload(id, pName, path, url , func)
             if( !func ){
                 ajaxGetImagesList(id, pName);
             }else{
-                func();
+                func(id);
             }
         }
     });

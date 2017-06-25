@@ -65,7 +65,7 @@ class UploadController extends Controller
 
                 if( $bool ){
                     $res['status'] = 0;
-                    $res['src'] = 'uploads/'.$newPath;
+                    $res['src'] = '/uploads/'.$newPath;
                 }else{
                     $res['status'] = 1;
                 }

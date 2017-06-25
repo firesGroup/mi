@@ -24,7 +24,12 @@ class ProductBrandRequest extends Request
     public function rules()
     {
         return [
-            //
+            'brand_name'=>[
+                'required'
+            ],
+            'brand_url'=>[
+                'active_url'
+            ],
         ];
     }
 }
