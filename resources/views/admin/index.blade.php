@@ -16,7 +16,7 @@
     <div class="layui-layout layui-layout-admin" id="layui_layout">
         <!-- 顶部区域 -->
         <div class="layui-header header-menu">
-            <div class="logo posb" id="log"><img src="{{ asset('/images/admin/logo.png')  }}"></div>
+            <div class="logo posb" id="log"><img src="{{ asset('/images/admin/logo.png')  }}" width="200px" height="65px"></div>
             <div class="layui-main posb">
                 <!-- 左侧导航收缩开关 -->
                 <div class="side-menu-switch posb" id="toggle"><span class="switch"  ara-hidden="true"></span></div>
@@ -86,6 +86,12 @@
                             <a data-url="{{url('/admin/product')}}">
                                 <i class="larry-icon larry-houtaishouye" data-icon="larry-houtaishouye" aria-hidden="true"></i>
                                 <cite>商品管理</cite>
+                            </a>
+                        </li>
+                        <li class="layui-nav-item" data-pid="undefined">
+                            <a data-url="{{url('/admin/product/brand')}}">
+                                <i class="larry-icon larry-houtaishouye" data-icon="larry-houtaishouye" aria-hidden="true"></i>
+                                <cite>品牌管理</cite>
                             </a>
                         </li>
                         <li class="layui-nav-item" data-pid="undefined">

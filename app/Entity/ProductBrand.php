@@ -20,4 +20,16 @@ class ProductBrand extends Model
     protected $table = 'product_brand';
     //指定关联数据库表主键
     protected $primaryKey = 'id';
+
+    protected $fillable = [
+        'brand_name','brand_url','brand_logo','brand_desc','category_id'
+    ];
+    /*
+     * 关联商品
+     *
+     */
+    public function product()
+    {
+        return $this->belongsTo('App\Entity\Product','brand_id');
+    }
 }

@@ -194,3 +194,13 @@ span.textarea-tips{
 span.textarea-tips:hover,textarea:hover+span.textarea-tips{
     color: #2CBCA3;
 }
+span.layui-upload-icon,span.layui-upload-icon i{
+    color:#fff!important;
+}
+.layui-upload-button{
+    background-color:#009688!important;
+    color: #fff!important;
+}
+.layui-upload-button:hover input:hover{
+    cursor: pointer;
+}

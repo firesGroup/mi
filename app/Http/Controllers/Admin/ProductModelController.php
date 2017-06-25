@@ -50,11 +50,8 @@ class ProductModelController extends Controller
     public function store(ProductModelRequest $request)
     {
         $model_name = $request->model_name;
-        if(ProductModel::create(['model_name'=>$model_name])){
-            return 0;
-        }else{
-            return 1;
-        }
+        $res = ProductModel::create(['model_name'=>$model_name])->id;
+        return $res?0:1;
     }
     /**
      * Show the form for editing the specified resource.
@@ -77,12 +74,8 @@ class ProductModelController extends Controller
      */
     public function update(ProductModelRequest $request, $model_id)
     {
-        $bool = ProductModel::where('id',$model_id)->update(['model_name'=>$request->model_name ]);
-        if( $bool != -1 ){
-            return 0;
-        }else{
-            return 1;
-        }
+        $res = ProductModel::where('id',$model_id)->update(['model_name'=>$request->model_name ]);
+        return $res != -1?0:1;
     }
 
     /**
@@ -100,11 +93,8 @@ class ProductModelController extends Controller
             return 2;//模型下存在规格和属性
         }else{
             //模型下没有规格和属性才能删除
-            if(ProductModel::destroy($model_id)){
-                return 0;//删除成功
-            }else{
-                return 1;//删除失败
-            }
+            $res = ProductModel::destroy($model_id);
+            return $res?0:1;
         }
 
     }

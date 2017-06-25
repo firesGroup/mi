@@ -86,7 +86,7 @@
                             <td>{{ $product->id }}</td>
                             <td>{{ $product->p_name }}</td>
                             <td>{{ $product->category_id }}</td>
-                            <td>{{ $product->brand_id }}</td>
+                            <td>{{ $product->brand->brand_name }}</td>
                             <td>{{ $product->market_price }}元</td>
                             <td>{{ $product->price }}元</td>
                             <td>
@@ -105,15 +105,15 @@
                             <td>
                                 <div class="layui-btn-group">
                                     <a href="{{ url('admin/product').'/'.$product->id }}"
-                                       class="layui-btn  layui-btn-small">
-                                        <i class="larry-icon larry-chaxun"></i>查看
+                                       class="layui-btn  layui-btn-small" alt="前台查看">
+                                        <i class="larry-icon larry-chaxun"></i>
                                     </a>
                                     <a href="{{ url('admin/product').'/'.$product->id."/edit" }}"
-                                       class="layui-btn  layui-btn-small">
-                                        <i class="larry-icon larry-xiugai1"></i>修改
+                                       class="layui-btn  layui-btn-small"  alt="修改商品">
+                                        <i class="larry-icon larry-xiugai1"></i>
                                     </a>
-                                    <a id="delete" data-id="{{ $product->id }}" class="layui-btn  layui-btn-small">
-                                        <i class="larry-icon larry-huishouzhan"></i>删除
+                                    <a id="delete" data-id="{{ $product->id }}" class="layui-btn  layui-btn-small" alt="删除商品" >
+                                        <i class="larry-icon larry-huishouzhan"></i>
                                     </a>
                                 </div>
                             </td>
@@ -138,6 +138,14 @@
                 layer = layui.layer;
             var id = $('a#delete').data('id'),
                 url = '{{ url('/admin/product') }}' + '/' + id;
+            $('div.layui-btn-group').on('mouseover', 'a.layui-btn', function(){
+                var alt = $(this).attr('alt'), t = this;
+                layer.tips(alt, t, {
+                    tips: [1, '#0FA6D8'] //还可配置颜色
+                });
+            }).on('mouseout','a.layui-btn',function(){
+                layer.closeAll();
+            } );
             global.aDelete('a#delete','友情提醒','确定要删除吗','{{ csrf_token() }}',url);
         });
 

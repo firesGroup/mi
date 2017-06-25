@@ -80,11 +80,7 @@ class ProductAttributeController extends Controller
             //创建写入
             $res = ProductAttribute::create($data)->id;
         }
-        if( $res ){
-            return 0;//成功
-        }else{
-            return 1;//失败
-        }
+        return $res?0:1;
     }
 
     /**
@@ -136,11 +132,7 @@ class ProductAttributeController extends Controller
             //更改数据库
             $res = ProductAttribute::where('id',$attr_id)->update($data);
         }
-        if( $res ){
-            return 0;//成功
-        }else{
-            return 1;//失败
-        }
+        return $res?0:1;
     }
 
     /**

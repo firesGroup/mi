@@ -22,12 +22,15 @@ Route::group(['namespace'=>'Admin','prefix'=>'admin'], function(){
     ]]);
     Route::get('menu/index/welcome','MenuController@getWelcome');
 
-    Route::resource('product/model', 'ProductModelController',['parameters' => [
-        'model' => 'model_id'
-    ]]);
+    Route::get('product/brand/getLogo/{brand_id}', 'ProductBrandController@getLogo');
+    Route::post('product/brand/changeLogo/{brand_id}', 'ProductBrandController@changeLogo');
+    Route::post('product/brand/createLogo', 'ProductBrandController@createLogo');
     Route::resource('product/brand', 'ProductBrandController',['parameters' => [
         'brand' => 'brand_id'
-    ]]);
+    ]],['except'=>['show']]);
+    Route::resource('product/model', 'ProductModelController',['parameters' => [
+        'model' => 'model_id'
+    ]],['except'=>['show']]);
     Route::resource('product/spec', 'ProductSpecController',['parameters' => [
         'spec' => 'spec_id'
     ]],['except'=>['show']]);
@@ -36,7 +39,7 @@ Route::group(['namespace'=>'Admin','prefix'=>'admin'], function(){
     ]],['except'=>['show']]);
     Route::resource('product', 'ProductController',['parameters' => [
         'product' => 'id'
-    ]]);
+    ]],['except'=>['show']]);
 });
 
 Route::get( '/upload/{path}/{id}/{url}', 'PublicC\UploadController@getUpload' );
