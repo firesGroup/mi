@@ -88,7 +88,7 @@ class MemberController extends Controller
      */
     public function update( MemberRequest $request, $id)
     {
-        
+
                 $nick_name = $request->get('nick_name');
                 $email = $request->get('email');
                 $status = $request->get('status');

@@ -23,8 +23,8 @@ Route::group( ['namespace'=>'Admin', 'prefix'=>'admin'], function(){
     Route::resource('level', 'LevelController');
 
     //分类路由
-
-//    Route::resource('cate', 'CateGoryController');
+    Route::post('category_cate', 'CateGoryController@cate');
+    Route::resource('category', 'CateGoryController');
 } );
 
 
