@@ -146,7 +146,7 @@ class MemberController extends Controller
 
      }
 
-     //对视图传过来的图排尿进行裁剪
+     //对视图传过来的图片进行裁剪
      public function change(MemberRequest $request)
      {
          $photo = mb_substr($request->get('photo'),1);

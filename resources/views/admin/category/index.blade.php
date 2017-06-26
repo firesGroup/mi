@@ -12,8 +12,8 @@
 @extends("layouts.iframe")
 
 @section('title', '分类首页')
-    @section('css')
-        @parent
+@section('css')
+    @parent
 @endsection
 
 @section('content')
@@ -33,13 +33,28 @@
                     </ul>
                     <i class="larry-icon larry-guanbi close" id="closeInfo"></i>
                 </blockquote>
+
             </div>
+
             <div class="larry-personal-body clearfix">
                 <div class="layui-tab">
                     <ul class="layui-tab-title">
                         <li class="layui-this">分类信息</li>
                     </ul>
-                 </div>
+                </div>
+            </div>
+            <div class="btn-group clearfix">
+        <span class="layui-btn layui-btn-small">
+            <i class="layui-icon">&#xe615;</i>搜索分类
+        </span>
+                <button class="layui-btn layui-btn-small">
+                    <i class="layui-icon">&#xe608;</i> 添加分类
+                </button>
+                <button class="layui-btn layui-btn-small" id="refresh">
+                    <i class="layui-icon">&#x1002;</i> 刷新本页
+                </button>
+                <input class="layui-input clearfix" placeholder="搜索关键词" name="search" value=""
+                       style="width:400px;margin-top:10px;">
             </div>
             <div>
                 <table class="layui-table" style="margin-top: 20px;">
@@ -65,6 +80,10 @@
                     </thead>
                     <tbody>
                     @foreach( $data as $v )
+                        <?php
+                        $m = substr_count($v->parent_path, ',') - 1;
+                        $nbsp = str_repeat("&nbsp;", $m * 10);
+                        ?>
                         <tr>
                             <td>
                                 <button class="layui-btn layui-btn-primary layui-btn-small" id="cate">
@@ -72,16 +91,12 @@
                                 </button>
                             </td>
                             <td>{{$v->id}}</td>
-                            <td>{{$v->category_name}}</td>
+                            <td><div align=left>{{$nbsp}}{{$v->category_name}}</div></td>
                             <td>{{$v->parent_id}}</td>
                             <td>{{$v->parent_path}}</td>
                             <td>{{$v->sort}}</td>
                             <td>
                                 <div class="layui-btn-group">
-                                    <a href="{{ url('admin/category').'/'.$v->id }}" class="layui-btn"
-                                       data-alt="查看">
-                                        <i class="layui-icon">&#xe60b;</i>
-                                    </a>
                                     <a href="{{ url('admin/category').'/'.$v->id."/edit" }}" class="layui-btn"
                                        data-alt="修改">
                                         <i class="layui-icon">&#xe642;</i>
@@ -108,21 +123,65 @@
     @parent
 
     <script>
-        layui.use(['jquery', 'layer'], function () {
+        layui.use(['jquery', 'layer', 'global'], function () {
             var $ = layui.jquery,
+                global = layui.global,
                 layer = layui.layer;
-            $('#cate').click( function () {
-                console.log(123);
-               $.ajax({
-                   url:'category_cate',
-                   type:'post',
-                   data:{'_token':"{{csrf_token()}}"},
-                   success: function (data)
-                   {alert(data);
 
-                   }
+            $('a.layui-btn').on('mouseover', function () {
+                var alt = $(this).attr('data-alt');
+                index = layer.tips(alt, $(this), {tips: [1, '#0FA6D8']});
+            });
+            $('a.layui-btn').on('mouseout', function () {
+                layer.close(index);
+            });
 
-               });
+            $('table').on('click','a#delete', function(){
+                var t = $(this);
+                layer.confirm('是否删除', {
+                    btn: ['确定','取消'] //按钮
+                    ,btnAlign: 'c'
+                    ,shade: 0.8
+                    ,id: 'MI_delTips' //设定一个id，防止重复弹出
+                    ,moveType: 1 //拖拽模式，0或者1
+                    ,resize: false
+                    ,title: '提示'
+                    ,anim: Math.ceil(Math.random() * 6)
+                }, function(){
+                    var l = layer.msg('正在删除!请稍后...', {
+                        icon: 16
+                    });
+                    var id = t.data('id');
+                    $.ajax({
+                        url: "{{url('/admin/category')}}/" + id
+                        , type: "POST"
+                        , data: {'_method': 'DELETE', '_token': "{{csrf_token()}}"}
+                        , success: function (data) {
+                            if (data != '') {
+                                layer.close(l);
+                                if (data == 0) {
+                                    layer.alert('删除成功', {
+                                        icon: 1, time: 2000, yes: function () {
+                                            location.href = location.href;
+                                        }
+                                    });
+                                } else if (data == 1) {
+                                    layer.alert('删除失败!', {icon: 2});
+                                } else if( data == 2 ){
+                                    layer.alert('删除错误!该分类下有子分类!不能删除', {icon: 2});
+                                }
+                            } else {
+                                layer.alert('服务器错误!', {icon: 2});
+                            }
+                        }
+                    });
+                }, function(Index){
+                    layer.close(Index);
+                });
+            });
+
+            $('').click(function () {
+
             });
         });
     </script>
