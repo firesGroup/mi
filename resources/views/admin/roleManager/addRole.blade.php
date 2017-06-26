@@ -1,18 +1,18 @@
 <?php
 /**
- * File Name: addGroup.blade.php
- * Description:  新增权限组
+ * File Name: addRole.blade.php
+ * Description: 添加权限页
  * Created by PhpStorm.
  * Group: FiresGroup
  * Auth: Wim
- * Date: 2017/6/25
- * Time: 14:58
+ * Date: 2017/6/26
+ * Time: 15:43
  */
 ?>
 
 @extends('layouts.iframe')
 
-@section('title','添加权限组')
+@section('title','添加权限')
 
 @section('css')
     @parent
@@ -30,7 +30,7 @@
     <section class="larry-grid">
         <div class="larry-personal">
             <header class="larry-personal-tit">
-                <span>添加权限组</span>
+                <span>添加权限</span>
             </header>
             <div class="row" id="infoSwitch">
                 <blockquote class="layui-elem-quote col-md-12 head-con">
@@ -39,8 +39,8 @@
                         <h4 title="提示相关设置操作时应注意的要点">操作提示</h4>
                     </div>
                     <ul>
-                        <li>请给组添加合适的权限</li>
-                        <li>请不要随意添加</li>
+                        <li>请不要添加相同的权限</li>
+                        <li>请按需求添加权限</li>
                     </ul>
                     <i class="larry-icon larry-guanbi close" id="closeInfo"></i>
                 </blockquote>
@@ -49,40 +49,35 @@
             <div class="larry-personal-body clearfix">
                 <div class="layui-tab">
                     <ul class="layui-tab-title">
-                        <li class="layui-this">权限组</li>
+                        <li class="layui-this">权限</li>
                     </ul>
                     <div class="layui-tab-content">
                         <div class="layui-tab-item layui-show" style="padding-top:20px">
                             <div class="form-body">
-                                <form class="layui-form" action="{{url('admin/group')}}" method="POST">
+                                <form class="layui-form" action="{{url('admin/role')}}" method="POST">
                                     <input type="hidden" name="_token" value="{{csrf_token()}}">
-                                    <input type="hidden" name="add_time" value="{{date('Y-m-d H:i:s', time())}}">
                                     <div class="layui-form-item">
-                                        <label class="layui-form-label">权限组名</label>
+                                        <label class="layui-form-label">权限名</label>
                                         <div class="layui-input-block">
-                                            <input type="text" name="group_name" required lay-verify="required"
+                                            <input type="text" name="role_name" required lay-verify="required"
                                                    placeholder="请输入名称" autocomplete="off"
-                                                   class="layui-input" value="">
+                                                   class="layui-input" value="{{old('role_name')}}">
                                         </div>
                                     </div>
                                     <div class="layui-form-item">
-                                        <label class="layui-form-label">要添加的权限</label>
+                                        <label class="layui-form-label">权限方法</label>
                                         <div class="layui-input-block">
 
-                                            @foreach($data as $v)
-
-                                                <input type="checkbox" name="role_list[]" title="{{$v->role_name}}"
-                                                       value="{{$v->id}}">
-
-                                            @endforeach
+                                            <input type="text" name="role" required lay-verify="required"
+                                                   placeholder="请输入方法" autocomplete="off" class="layui-input" value="{{old('role')}}">
 
                                         </div>
                                     </div>
                                     <div class="layui-form-item layui-form-text">
-                                        <label class="layui-form-label">权限组描述</label>
+                                        <label class="layui-form-label">权限描述</label>
                                         <div class="layui-input-block">
-                                            <textarea name="group_desc" placeholder="请输入内容"
-                                                      class="layui-textarea"></textarea>
+                                            <textarea name="role_desc" placeholder="请输入内容"
+                                                      class="layui-textarea" value="{{old('role_desc')}}"></textarea>
                                         </div>
                                     </div>
                                     <div class="layui-form-item">
@@ -131,38 +126,39 @@
             var $ = layui.jquery;
             var layer = layui.layer;
 
-            $('input[name=group_name]').blur(function () {
-//                console.log(1);
+            $('input[name=role_name]').blur(function () {
 
-                //获取到用户输入的组名
-                var groupName = $(this).val();
-//                console.log(username);
+
+                //获取到用户输入的权限名
+                var roleName = $(this).val();
+
+//                    console.log(1);
 
                 var that = $(this);
-//                console.log(that);
+                //console.log(that);
 
-                var url = "{{url('admin/groupAjax')}}";
+                var url = "{{url('admin/ajaxRoleName')}}";
 
-                //获取到之前保存的组名
-                var origin = that.data('g');
+                //获取到之前保存的权限名
+                var origin = that.data('r');
 
-                if (origin != groupName) {
+                if (origin != roleName) {
 
                     $.ajax({
                         url: url,
 
                         type: 'get',
 
-                        data: {'_token': '{{csrf_token()}}', 'groupName': groupName},
+                        data: {'_token': '{{csrf_token()}}', 'roleName': roleName},
 
                         success: function (data) {
 
-                            //先把组名存放起来
-                            that.data('g', groupName);
-                            console.log(data);
+                            //先把权限名存放起来
+                            that.data('r', roleName);
+//                                console.log(data);
                             if (data == 1) {
                                 that.css({'border': '1px solid #ff5722'});
-                                layer.msg('组名已存在');
+                                layer.msg('权限名已存在');
                             } else {
                                 that.css({'border': '1px solid #f2f2f2'});
                             }
@@ -173,7 +169,57 @@
                     });
 
                 }
+
             });
+
+            $('input[name=role]').blur(function () {
+//                alert(1);
+
+                //获取到用户输入的权限方法名
+                var role = $(this).val();
+
+//                console.log(name);
+
+//                    console.log(1);
+
+                var that = $(this);
+                //console.log(that);
+
+                var url = "{{url('admin/ajaxRole')}}";
+
+                //获取到之前保存的权限方法名
+                var origin = that.data('role');
+
+                if (origin != role) {
+
+                    $.ajax({
+                        url: url,
+
+                        type: 'get',
+
+                        data: {'_token': '{{csrf_token()}}', 'role': role},
+
+                        success: function (data) {
+
+                            //先把权限方法名存放起来
+                            that.data('role', role);
+//                                console.log(data);
+                            if (data == 1) {
+                                that.css({'border': '1px solid #ff5722'});
+                                layer.msg('权限方法已存在');
+                            } else {
+                                that.css({'border': '1px solid #f2f2f2'});
+                            }
+
+                        },
+
+                        dataType: 'json'
+                    });
+
+                }
+
+            });
+
         });
 
     </script>

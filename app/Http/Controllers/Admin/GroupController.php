@@ -107,13 +107,11 @@ class GroupController extends Controller
 
 //        dd($data);
         if (in_array($name, $array)) {
-            return back()->with(['success' => '组名已存在, 添加失败！！！！！！！']);
+            return back()->with(['success' => '组名已存在, 添加失败！！！！！！！'])->withInput();
         } else {
             //执行添加
             if (AdminGroup::create($data)) {
                 return redirect('admin/group')->with(['success' => '添加成功！！！！！！！']);
-            } else {
-                return back()->withInput();
             }
 
         }
