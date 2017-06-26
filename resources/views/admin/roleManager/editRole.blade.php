@@ -1,18 +1,19 @@
 <?php
 /**
- * File Name: editUser.blade.php
- * Description:管理员编辑页面
+ * File Name: edit.blade.php
+ * Description: 权限修改页面
  * Created by PhpStorm.
  * Group: FiresGroup
  * Auth: Wim
- * Date: 2017/6/19
- * Time: 23:48
+ * Date: 2017/6/26
+ * Time: 10:34
  */
 ?>
 
+
 @extends('layouts.iframe')
 
-@section('title','管理员修改页')
+@section('title','权限修改页')
 
 @section('css')
     @parent
@@ -29,7 +30,7 @@
     <section class="larry-grid">
         <div class="larry-personal">
             <header class="larry-personal-tit">
-                <span>管理员-修改信息</span>
+                <span>权限-修改信息</span>
             </header>
             <div class="row" id="infoSwitch">
                 <blockquote class="layui-elem-quote col-md-12 head-con">
@@ -38,7 +39,7 @@
                         <h4 title="提示相关设置操作时应注意的要点">操作提示</h4>
                     </div>
                     <ul>
-                        <li>修改后请务必牢记个人信息</li>
+                        <li>请根据需要修改权限</li>
                     </ul>
                     <i class="larry-icon larry-guanbi close" id="closeInfo"></i>
                 </blockquote>
@@ -47,47 +48,34 @@
             <div class="larry-personal-body clearfix">
                 <div class="layui-tab">
                     <ul class="layui-tab-title">
-                        <li class="layui-this">个人信息</li>
+                        <li class="layui-this">权限信息</li>
                     </ul>
                     <div class="layui-tab-content">
                         <div class="layui-tab-item layui-show" style="padding-top:20px">
                             <div class="form-body">
-                                <form class="layui-form" action="{{ url('admin/user/'.$data->id) }}" method="post">
+                                <form class="layui-form" action="{{ url('admin/role/'.$data->id) }}" method="post">
                                     <input type="hidden" name="_token" value="{{csrf_token()}}">
                                     <input type="hidden" name="_method" value="PUT">
                                     <div class="layui-form-item">
-                                        <label class="layui-form-label">管理员名</label>
+                                        <label class="layui-form-label">权限名</label>
                                         <div class="layui-input-block">
-                                            <input type="text" name="username" required lay-verify="required"
-                                                   placeholder="{{$data->username}}" autocomplete="off"
-                                                   class="layui-input" value="{{$data->username}}">
+                                            <input type="text" name="role_name" required lay-verify="required"
+                                                   placeholder="{{$data->role_name}}" autocomplete="off"
+                                                   class="layui-input" value="{{$data->role_name}}">
                                         </div>
                                     </div>
                                     <div class="layui-form-item">
-                                        <label class="layui-form-label">旧密码</label>
+                                        <label class="layui-form-label">权限方法</label>
                                         <div class="layui-input-block">
-                                            <input type="password" name="oldPassword" lay-verify="required"
-                                                   autocomplete="off" class="layui-input">
+                                            <input type="text" name="role" required lay-verify="required"
+                                                   placeholder="{{$data->role}}" autocomplete="off"
+                                                   class="layui-input" value="{{$data->role}}">
                                         </div>
                                     </div>
-                                    <div class="layui-form-item">
-                                        <label class="layui-form-label">新密码</label>
+                                    <div class="layui-form-item layui-form-text">
+                                        <label class="layui-form-label">权限描述</label>
                                         <div class="layui-input-block">
-                                            <input type="password" name="newPassword" lay-verify="required"
-                                                   autocomplete="off" class="layui-input" value="">
-                                        </div>
-                                    </div>
-                                    <div class="layui-form-item">
-                                        <label class="layui-form-label">所属于的权限组</label>
-                                        <div class="layui-input-block">
-                                            <select name="group_id" lay-verify="required">
-                                                {{--<option value="{{$str->id}}">{{$str->group_name}}</option>--}}
-                                                @foreach($arr as $v)
-                                                    {{--{{dump($v)}}--}}
-                                                    <option value="{{$v->id}}">{{$v->group_name}}</option>
-
-                                                @endforeach
-                                            </select>
+                                            <textarea name="role_desc" class="layui-textarea" value="">{{$data->role_desc}}</textarea>
                                         </div>
                                     </div>
                                     <div class="layui-form-item">
@@ -120,96 +108,101 @@
 
 @section('js')
     @parent
-
     <script>
 
         layui.use(['form', 'jquery', 'layer'], function () {
             var $ = layui.jquery;
             var layer = layui.layer;
 
-            $('input[name=oldPassword]').blur(function () {
-//                console.log(1);
-                var password = $(this).val();
-
-//                console.log(password);
-                var that = $(this);
-
-                //获取到之前保存的密码
-                var origin = that.data('p');
-
-                var url = "{{url('admin/ajaxPassword')}}";
-
-                var id = "{{$data->id}}";
-
-                if (origin != password) {
-
-                    $.ajax({
-                        url: url,
-
-                        type: 'post',
-
-                        data: {'_token': '{{csrf_token()}}', 'password': password, 'id': id},
-
-                        success: function (data) {
-
-                            //先把密码存放起来
-                            that.data('p', password);
-//                            console.log(data);
-                            if (data == 1) {
-                                that.css({'border': '1px solid #ff5722'});
-                                layer.msg('密码与原密码不匹配');
-                            } else {
-                                that.css({'border': '1px solid #f2f2f2'});
-                            }
-
-                        },
-
-                        dataType: 'json'
-                    });
-
-                }
-
-            });
+            $('input[name=role_name]').blur(function () {
 
 
-            $('input[name=username]').blur(function () {
+                //获取到用户输入的权限名
+                var roleName = $(this).val();
 
-
-                //获取到用户输入的用户名
-                var username = $(this).val();
-
-                var name = "{{$data->username}}";
+                var name = "{{$data->role_name}}";
 
 //                console.log(username);
-                if (username !== name) {
+                if (roleName !== name) {
 
 //                    console.log(1);
 
                     var that = $(this);
                     //console.log(that);
 
-                    var url = "{{url('admin/ajaxPassword')}}";
+                    var url = "{{url('admin/ajaxRoleName')}}";
 
-                    //获取到之前保存的用户名
-                    var origin = that.data('u');
+                    //获取到之前保存的权限名
+                    var origin = that.data('r');
 
-                    if (origin != username) {
+                    if (origin != roleName) {
 
                         $.ajax({
                             url: url,
 
-                            type: 'post',
+                            type: 'get',
 
-                            data: {'_token': '{{csrf_token()}}', 'username': username},
+                            data: {'_token': '{{csrf_token()}}', 'roleName': roleName},
 
                             success: function (data) {
 
-                                //先把用户名存放起来
-                                that.data('u', username);
+                                //先把权限名存放起来
+                                that.data('r', roleName);
 //                                console.log(data);
                                 if (data == 1) {
                                     that.css({'border': '1px solid #ff5722'});
-                                    layer.msg('用户名已存在');
+                                    layer.msg('权限名已存在');
+                                } else {
+                                    that.css({'border': '1px solid #f2f2f2'});
+                                }
+
+                            },
+
+                            dataType: 'json'
+                        });
+
+                    }
+                }
+            });
+
+            $('input[name=role]').blur(function () {
+//                alert(1);
+
+                //获取到用户输入的权限方法名
+                var role = $(this).val();
+
+                var name = "{{$data->role}}";
+
+//                console.log(name);
+                if (role !== name) {
+
+//                    console.log(1);
+
+                    var that = $(this);
+                    //console.log(that);
+
+                    var url = "{{url('admin/ajaxRole')}}";
+
+                    //获取到之前保存的权限方法名
+                    var origin = that.data('role');
+
+                    if (origin != role) {
+
+                        $.ajax({
+                            url: url,
+
+                            type: 'get',
+
+                            data: {'_token': '{{csrf_token()}}', 'role': role},
+
+                            success: function (data) {
+
+                                //先把权限方法名存放起来
+                                that.data('role', role);
+//                                console.log(data);
+                                if (data == 1) {
+                                    that.css({'border': '1px solid #ff5722'});
+                                    layer.msg('权限方法已存在');
                                 } else {
                                     that.css({'border': '1px solid #f2f2f2'});
                                 }
@@ -224,7 +217,7 @@
             });
 
         });
+
     </script>
+
 @endsection
-
-
