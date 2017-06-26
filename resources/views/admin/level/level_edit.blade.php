@@ -102,17 +102,17 @@
                         url: '{{url('admin/level_edit/'.$data->id)}}',
                         type: 'post',
                         data: {'_token': '{{ csrf_token() }}', 'level_name': l_name},
+                        dataType: "json",
                         success: function (data) {
                             that.data('u', l_name);
-                            console.log(typeof(data));
-                            if (data === '1') {
+                            if (data == '1') {
                                 that.css({'border': '1px solid #FF5722'});
                                 layer.msg("等级名不可用", {time: 1000});
                             } else {
                                 that.css({'border': '1px solid #f2f2f2'});
                                 layer.msg('等级名可用');
                             }
-                        }
+                        },
                     });
                 }
             });
