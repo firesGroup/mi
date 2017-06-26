@@ -43,108 +43,101 @@
 
         <br>
         {{--用户评论div--}}
-        <div style="width:auto; height: 800px; border: 1px solid #eeeeee;text-align: center;margin: 0 auto;background-color: white ;margin-left: 25px;margin-right: 25px;">
+        <div style="width:auto;height:auto!important;  height: 400px; border: 1px solid #eeeeee;text-align: center;margin: 0 auto;background-color: white ;margin-left: 25px;margin-right: 25px;">
             <div style="width: auto;height: 60px;background-color: white;border:1px solid #dddddd;border-radius:10px 10px 0px 0px;">
                 <h2 style="text-align: left;font-size: 20px;margin: 10px;">用户评论</h2>
             </div>
 
-            {{--信息框--}}
-            {{--<div style="width: auto;height: auto;background-color: red;border: 1px solid yellow;">--}}
-
-                {{--左边回复--}}
             <table style="width:1500px ;height: auto;">
                 <tbody>
 
-                {{--{{dump($commentid)}}--}}
-                @foreach($commentid as $v)
-                    @foreach($memberid as $m)
-
-                    <tr>
-                        <td>
-                            <div style="width: 100px;height: 100px;background-color: white;float: left;">
-
-                                <div style="text-align: left;padding-left: 20px;width: 100px;height: 60px;"><h2 style="padding-top: 20px;">{{$m->nick_name}}</h2> </div>
-
-                                <div style="width:150px;height:20px; text-align: right;padding-left: 400px;padding-top: 20px;white-space:nowrap;color:#d2d2d2;"><span>{{$v->created_at}}</span></div>
-
-                                <div style="width: 100px;height: 100px;background-color: blue;float: left;">头像
 
 
+                        @foreach($comment as $v)
 
-                                    <div style="width:0px;height:0px;font-size:0;border:solid 10px;border-color:#FFFFFF #F8C301 #FFFFFF #FFFFFF;padding-left:100px;"></div>
+                        <span style="display: none;" id="pid">{{($v->p_id)}}</span>
+                        @if($v->member_id = $id && $v->type != 2)
+
+                        <tr>
+                            <td style="height: 300px;">
+                                <div style="width:800px;height: auto;background-color: white;float: left;">
+
+                                    <div style="text-align: left;padding-left: 20px;width: 100px;height: 60px;"><h2
+                                                style="padding-top: 20px;">{{$member[0]->nick_name}}</h2></div>
+
+                                    <div style="width:150px;height:20px; text-align: right;padding-left: 400px;white-space:nowrap;color:#d2d2d2;">
+                                        <span>{{$v->created_at}}</span></div>
+
+                                    <div style="width: 100px;height: 100px;background-color: blue;float: left;">头像
 
 
-                                    <div style="width:1000px;height:auto;background:#F8C301;margin-left: 120px;margin-top: -21px;font-size: 18px;line-height: 30px;
-                    "><spa>{{$v->content}}aaaaaaaaaaaaaaaaaaaaaaaaaaaaa</spa></div>
+                                        <div style="width:0px;height:0px;font-size: 0;border:solid 10px;border-color:#FFFFFF #F8C301 #FFFFFF #FFFFFF;padding-left:100px;"></div>
+
+
+                                        <div style="width:1000px;height:auto;background:#F8C301;margin-left: 120px;margin-top: -35px;font-size: 18px;line-height: 40px;border-radius:5px;
+                        "><span>{{$v->content}}</span></div>
+                                    </div>
 
                                 </div>
+                            </td>
+                        </tr>
 
-                            </div>
-                        </td>
-                    </tr>
+                        @elseif($v->type ==2)
+                        <tr>
+                            <td>
+                                <div style="width: 1400px;height: 150px;background-color: white;margin-top: 10px;float: right;">
 
-                    @endforeach
-                    @endforeach
-            {{--右边--}}
-                    {{--<tr>--}}
-                        {{--<td>--}}
-                            {{--<div style="width: 1400px;height: 150px;background-color: white;margin-top: 10px;float: right;">--}}
+                                    <div style="text-align: right;height: 20px; ">
 
-                                {{--<div style="text-align: right;height: 20px; "><span></span>--}}
+                                        <span>管理员</span>
 
-                                {{--</div>--}}
-                                {{--<div style="width: 100px;height: 80px;background-color: blue;float: right;">头像--}}
+                                    </div>
+                                    <div style="width: 100px;height: 80px;background-color: blue;float: right;">头像
 
-                                    {{--<div style="width:0px;height:0px;font-size:0;border:solid 10px;border-color:#FFFFFF #FFFFFF #FFFFFF #F8C301 ;margin-top: 20px;padding-right: 50px;">--}}
+                                        <div style="width:0px;height:0px;font-size:0;border:solid 10px;border-color:#FFFFFF #FFFFFF #FFFFFF #F8C301 ;margin-top: 20px;padding-right: 50px;"></div>
 
-                                    {{--</div>--}}
+                                        <div style="width:auto;height:auto;background:#F8C301;border-radius:4px;margin-right: 100px;margin-top: -35px;float: right;white-space:nowrap;line-height: 40px;
+                ">{{$v->content}}
 
-                                {{--<div style="width:auto;height:auto;background:#F8C301;border-radius:4px;margin-right: 100px;margin-top: -20px;float: right;white-space:nowrap;--}}
-            {{--">aaaaaaaaaaaaaaaaaaaaaaaaa--}}
+                                        </div>
 
-                                    {{--</div>--}}
-                                    {{--时间--}}
-                                    {{--<div style="width:150px;height:20px; text-align: right;float:right;padding-right: 300px;padding-top:-140px;white-space:nowrap;color:#d2d2d2;">--}}
-                                        {{--<span></span>--}}
-                                    {{--</div>--}}
+                                        <div style="width:150px;height:20px; text-align: right;float:right;padding-right: 300px;padding-top:-140px;white-space:nowrap;color:#d2d2d2;">
+                                            <span>{{$v->created_at}}</span>
+                                        </div>
 
-                                {{--</div>--}}
+                                    </div>
 
-                            {{--</div>--}}
-                    {{--</td>--}}
+                                </div>
+                            </td>
 
-                    {{--</tr>--}}
+                        </tr>
 
-
-            {{--测试--}}
+                        @endif
+                        @endforeach
 
                 </tbody>
             </table>
 
 
-
-
-            {{--回复框--}}
-
         </div>
 
         <div style="background-color: white;text-align: left;width: auto;padding-left: 25px;padding-top: 100px;padding-right: 25px;">
-            <form action="">
 
-                <textarea id="demo" style="display: none;text-align: left;" style="text-indent: 20px;font-size: 20px;
-                line-height: 30px;margin-left: 30px; " placeholder="请输入回复内容"></textarea>
+            <form action="{{ url('admin/comment')}}" method="post">
+                {{csrf_field()}}
+                <textarea id="demo" style="text-indent: 20px;font-size: 20px;
+                line-height: 30px;margin-left: 30px; display: none;text-align: left;" name="text"></textarea>
                 <br><br>
 
                 <div style="width:100px;height: 100px;padding-top: -20px;text-align: right;">
 
-                    <butt class="layui-btn layui-btn-big layui-btn-normal"
-                          style="text-align: right;margin-right: 30px;">回复
-                    </butt>
+                    <button class="layui-btn layui-btn-big layui-btn-normal"
+                            style="text-align: right;margin-right: 30px;" id="button">回复
+                    </button>
 
                 </div>
             </form>
         </div>
-
 
 
     </div>
@@ -160,6 +153,27 @@
             layedit.build('id', {
                 height: 60 //设置编辑器高度
             });
+
         });
+
+        layui.use(['jquery', 'layer'], function () {
+            var $ = layui.jquery;
+
+
+            var pid = $('#pid').text();
+//alert(pid);
+            $.ajax({
+                url: '{{url('admin.comment')}}' + '/' + pid,
+                type: 'POST',
+                data: {'pid': pid, '_token': '{{ csrf_token() }}'},
+                success: function (data) {
+                    console.log({{ csrf_token()}});
+                }
+
+            });
+
+        });
+
+
     </script>
 @endsection
