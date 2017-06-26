@@ -318,7 +318,6 @@
     <!--上传文件插件-->
     <script type="text/javascript" src="{{ asset('/js/public/jquery-1.12.4.min.js') }}"></script>
     <script type="text/javascript" src="{{ asset('/js/public/uploadFile.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('/js/admin/specAjax.js') }}"></script>
     <!--富文本编辑器插件-->
     <script type="text/javascript" src="{!!asset('/plugin/ueditor/ueditor.config.js')!!}"></script>
     <script type="text/javascript" src="{!!asset('/plugin/ueditor/ueditor.all.min.js')!!}"></script>
