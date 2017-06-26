@@ -204,3 +204,11 @@ span.layui-upload-icon,span.layui-upload-icon i{
 .layui-upload-button:hover input:hover{
     cursor: pointer;
 }
+.spec-table-box{
+    width:60%;
+    float:left;
+}
+.attr-table-box{
+    width:40%;
+    float:right;
+}

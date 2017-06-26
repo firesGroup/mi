@@ -27,6 +27,16 @@ class Product extends Model
         return $this->hasOne('App\Entity\ProductDetail', 'p_id');
     }
 
+    /*
+     *
+     *  获取商品所属模型
+     *
+     */
+    public function model()
+    {
+        return $this->belongsTo('App\Entity\ProductModel','model_id');
+    }
+
     /**
      * 获取商品品牌。
      */
