@@ -8,5 +8,5 @@ class CateGory extends Model
 {
     protected $table = "category";
 
-    protected $fillable = ['id', 'category_name', 'parent_id', 'parent_path', 'sort'];
+    protected $fillable = [ 'category_name', 'parent_id', 'parent_path', 'sort'];
 }

@@ -133,11 +133,6 @@ class MemberController extends Controller
         $filename = $id.'-'.time()."-".$file->getClientOriginalName();
         $file->move($destinationpath, $filename);
         Image::make($destinationpath.$filename)->fit(500)->save();
-//        $avator = MemberDetail::find($id);
-//
-//        $avator->avator = '/'.$destinationpath.$filename;
-//
-//        $avator->save();
         $url = '/'.$destinationpath.$filename;
         $res["message"]= "图片上传成功！";
         $res["status"] = 1;

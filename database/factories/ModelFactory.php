@@ -22,6 +22,22 @@
 //     ];
 // });
 
+// $factory->define(App\Entity\Advert::class, function (Faker\Generator $faker) {
+//     return [
+//         'advert_image' => $faker->imageUrl(),
+//         'advert_url' => $faker->imageUrl(),
+//         'ad_location' => str_random(10),
+//         'status' => rand(0,1),
+//     ];
+// });
+
+//$factory->define(App\Entity\SlideShow::class, function (Faker\Generator $faker) {
+//    return [
+//        'images' => $faker->imageUrl(),
+//        'url' => str_random(10),
+//    ];
+//});
+
 // $factory->define(App\Entity\AdminRole::class, function (Faker\Generator $faker) {
 //     return [
 //         'role_name' => $faker->name,
@@ -57,6 +73,16 @@
 //         'remember_token' => str_random(10),
 //     ];
 // });
+
+//    $factory->define(App\Entity\Advert::class, function (Faker\Generator $faker){
+//        return [
+//            'advert_image' => $faker->imageUrl(),
+//            'advert_url' => $faker->url(),
+//            'ad_location' => rand(0,1),
+//            'ad_desc' => str_random(15),
+//
+//            ];
+//    });
 
 
 //$factory->define(App\Entity\MemberDetail::class, function (Faker\Generator $faker) {
@@ -97,6 +123,18 @@
 //        'type' => str_random(1),
 //    ];
 //});
+
+//友情链接
+//$factory->define(App\Entity\FriendLink::class, function (Faker\Generator $faker) {
+//
+//    return [
+//        'link_name' => str_random(10),
+//        'link_url' => $faker->imageUrl(),
+//        'link_logo' => $faker->imageUrl(),
+//
+//    ];
+//});
+
 //==================================================
 // $factory->define(App\order::class, function (Faker\Generator $faker) {
 //     return [

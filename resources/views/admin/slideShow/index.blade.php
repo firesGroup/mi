@@ -1,29 +1,28 @@
 <?php
 /**
  * File Name: index.blade.php
- * Description: 权限组首页
+ * Description: 轮播图信息展示
  * Created by PhpStorm.
  * Group: FiresGroup
  * Auth: Wim
- * Date: 2017/6/22
- * Time: 15:56
+ * Date: 2017/6/27
+ * Time: 11:25
  */
 ?>
-{{--{{dd($data)}}--}}
+
 @extends('layouts.iframe')
 
-@section('title','权限组首页')
+@section('title','轮播图首页')
 
 @section('css')
     @parent
 @endsection
 
 @section('content')
-
     <section class="larry-grid">
         <div class="larry-personal">
             <header class="larry-personal-tit">
-                <span>管理员-列表</span>
+                <span>轮播图-列表</span>
             </header>
             <div class="row" id="infoSwitch">
                 <blockquote class="layui-elem-quote col-md-12 head-con">
@@ -32,8 +31,8 @@
                         <h4 title="提示相关设置操作时应注意的要点">操作提示</h4>
                     </div>
                     <ul>
-                        <li>请不要随意更改权限组信息</li>
-                        <li>按需求给组添加权限</li>
+                        <li>请将需要的加入到轮播图</li>
+                        <li>主要填写正确的路径</li>
                     </ul>
                     <i class="larry-icon larry-guanbi close" id="closeInfo"></i>
                 </blockquote>
@@ -42,11 +41,11 @@
                 <div class="btn-group">
 
 
-                    <a href="{{url('admin/group/create')}}" style="color:white">
+                    <a href="{{url('admin/slideShow/create')}}" style="color:white">
 
                         <button class="layui-btn layui-btn-small">
                             <i class="layui-icon">&#xe608;</i>
-                            添加权限组
+                            新增轮播图
                         </button>
                     </a>
 
@@ -65,51 +64,29 @@
                     <thead>
                     <tr>
                         <th>ID</th>
-                        <th>所属组名称</th>
-                        <th>所属组状态</th>
-                        <th>所属组权限名</th>
-                        <th>所属组描述</th>
-                        <th style="width:270px">操作</th>
+                        <th>轮播图图片路径</th>
+                        <th>轮播图url</th>
+                        <th>状态</th>
+                        <th>操作</th>
                     </tr>
                     </thead>
                     <tbody>
                     {{--{{dd($data)}}--}}
-                    @foreach( $data as $group )
+                    @foreach( $data as $show )
+                        {{--{{dump($show->status)}}--}}
                         <tr>
-                            <td>{{ $group->id }}</td>
-                            <td style="color:#1E9FFF">{{ $group->group_name }}</td>
-                            <td>{{ $status[$group->status] }}</td>
-                            <td>
-
-                                {{--{{ explode(',', $group->role_list) }}--}}
-
-                                <?php
-
-                                    $rolename = "";
-
-                                    $id = explode(',', $group->role_list);
-//                                    dump($id);
-                                    foreach ($id as $v){
-//                                        dump($v);
-                                        $rolename .= $arr[$v] . ',';
-
-                                    }
-                                    echo rtrim($rolename, ',');
-                                ?>
-
-                            </td>
-                            <td style="width: 600px">{{ $group->group_desc }}</td>
-                            <td>
+                            <td id="id">{{ $show->id }}</td>
+                            <td style="color:#1E9FFF; width:28%"><img src="{{ $show->images }}" width="400"></td>
+                            <td style="width:28%">{{ $show->url }}</td>
+                            <td style="width:15%">
+                                <form class="layui-form"><input class="checkbox" type="checkbox" name="status" lay-skin="switch" lay-text="启用|禁用" {{$show->status === 0?'checked':''}}></form></td>
+                            <td style="width:23%">
                                 <div class="layui-btn-group">
-                                    <a href="{{ url('admin/group').'/'.$group->id }}" class="layui-btn  layui-btn-small"
-                                       data-alt="查看">
-                                        <i class="layui-icon">&#xe60b;</i>
-                                    </a>
-                                    <a href="{{ url('admin/group').'/'.$group->id."/edit" }}"
+                                    <a href="{{ url('admin/slideShow').'/'.$show->id."/edit" }}"
                                        class="layui-btn  layui-btn-small" data-alt="修改">
                                         <i class="layui-icon">&#xe642;</i>
                                     </a>
-                                    <a id="delete" data-id="{{ $group->id }}" class="layui-btn  layui-btn-small"
+                                    <a id="delete" data-id="{{ $show->id }}" class="layui-btn  layui-btn-small"
                                        data-alt="删除">
                                         <i class="layui-icon">&#xe640;</i>
                                     </a>
@@ -124,18 +101,17 @@
                     共计({{$sum}})条
                 </div>
             </div>
-
         </div>
     </section>
-
 @endsection
 
 @section('js')
     @parent
     <script>
-        layui.use(['jquery', 'layer'], function () {
+        layui.use(['jquery', 'layer', 'form'], function () {
             var $ = layui.jquery,
                 layer = layui.layer;
+            var form = layui.form();
             var index;
             $('a.layui-btn').on('mouseover', function () {
                 var alt = $(this).attr('data-alt');
@@ -160,7 +136,7 @@
                         icon: 6
                     });
                     $.ajax({
-                        url: '{{ url('/admin/group') }}' + '/' + id
+                        url: '{{ url('/admin/slideShow') }}' + '/' + id
                         , type: "POST"
                         , data: {'_method': 'DELETE', '_token': '{{ csrf_token() }}'}
                         , success: function (data) {
@@ -183,6 +159,35 @@
             });
             $('button#refresh').on('click', function () {
                 location.href = location.href;
+            });
+
+            form.on('switch', function(data){
+//                console.log(data.elem.checked);
+               var status = data.elem.checked;
+
+               if(status == true) {
+                   status = 0;
+               } else {
+                   status = 1;
+               }
+
+               var id = $(this).parent().parent().parent().children('#id').text();
+//               console.log(status);
+                $.ajax({
+                    url:"{{url('admin/showStatus')}}"
+                    ,type:'get'
+                    ,data:{'_token': '{{csrf_token()}}', 'Status':status, 'id': id}
+                    ,success:function(data){
+                    if (data == 0) {
+                        layer.msg('启用成功', {icon: 6});
+                    } else {
+                            layer.msg('禁用成功', {icon: 6});
+                    }
+                },
+                    dataType: 'json'
+                });
+
+
             });
         });
 

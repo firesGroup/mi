@@ -119,7 +119,7 @@
                         <td>{{$v->created_at}}</td>
                         <td>
                             <div class="layui-btn-group">
-
+                                {{csrf_token()}}
                                 <a href="{{ url('admin/comment').'/'.$v->member_id }}" class="layui-btn  layui-btn-small"
                                    data-alt="回复">
                                     <i class="layui-icon">&#xe63a;</i>
@@ -137,6 +137,9 @@
 
 
             </table>
+        </div>
+        <div class="larry-table-page">
+            {{ $data->render() }}
         </div>
     </section>
 
@@ -244,7 +247,7 @@
                 $.ajax({
                     url: url,
                     type: 'get',
-                    data: {'cid': cid, 'id': nid},//拼接发送要修改的显示的数值ID和评价表ID
+                    data: {'cid': cid, 'id': nid,'token':'{{csrf_token()}}'},//拼接发送要修改的显示的数值ID和评价表ID
 
                 });
             });
