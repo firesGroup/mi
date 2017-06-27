@@ -94,10 +94,6 @@
                                        class="layui-btn  layui-btn-small" data-alt="修改">
                                         <i class="layui-icon">&#xe642;</i>
                                     </a>
-                                    <a id="delete" data-id="{{ $role->id }}" class="layui-btn  layui-btn-small"
-                                       data-alt="删除">
-                                        <i class="layui-icon">&#xe640;</i>
-                                    </a>
                                 </div>
                             </td>
                         </tr>
@@ -126,43 +122,6 @@
             });
             $('a.layui-btn').on('mouseout', function () {
                 layer.close(index);
-            });
-            $('a#delete').on('click', function () {
-                var th = $(this),
-                    t = th.parent().parent().parent('tr');
-                layer.confirm('确定要删除吗?', {
-                    btn: ['确定', '取消'] //按钮
-                    , btnAlign: 'c'
-                    , shade: 0.8
-                    , id: 'MI_delTips' //设定一个id，防止重复弹出
-                    , moveType: 1 //拖拽模式，0或者1
-                    , resize: false
-                }, function () {
-                    var id = th.data('id');
-                    var l = layer.msg('正在加载请稍后...', {
-                        icon: 6
-                    });
-                    $.ajax({
-                        url: '{{ url('/admin/role') }}' + '/' + id
-                        , type: "POST"
-                        , data: {'_method': 'DELETE', '_token': '{{ csrf_token() }}'}
-                        , success: function (data) {
-//                            alert(data);
-                            layer.close(l);
-                            if (data == 1) {
-                                layer.alert('删除成功', {icon: 1});
-                                t.remove();
-                            } else if (data == 0) {
-                                layer.alert('数据不存在!', {icon: 2});
-                            } else {
-                                layer.alert('id错误!', {icon: 2});
-                            }
-                        }
-                    });
-
-                }, function (Index) {
-                    layer.close(Index);
-                });
             });
             $('button#refresh').on('click', function () {
                 location.href = location.href;
