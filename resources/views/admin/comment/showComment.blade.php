@@ -52,11 +52,9 @@
                 <tbody>
 
 
-
                         @foreach($comment as $v)
 
-                        <span style="display: none;" id="pid">{{($v->p_id)}}</span>
-                        @if($v->member_id = $id && $v->type != 2)
+                        @if($v->member_id == $id && $v->type != 2)
 
                         <tr>
                             <td style="height: 300px;">
@@ -118,13 +116,15 @@
                 </tbody>
             </table>
 
-
         </div>
 
         <div style="background-color: white;text-align: left;width: auto;padding-left: 25px;padding-top: 100px;padding-right: 25px;">
 
-            <form action="{{ url('admin/comment')}}" method="post">
+            <form action="{{url('admin/commentShow')}}" method="post">
                 {{csrf_field()}}
+                <input type="hidden" name="id" value="{{$v->p_id}}">
+                <input type="hidden" name="member_id" value="{{$id}}">
+
                 <textarea id="demo" style="text-indent: 20px;font-size: 20px;
                 line-height: 30px;margin-left: 30px; display: none;text-align: left;" name="text"></textarea>
                 <br><br>
@@ -138,7 +138,6 @@
                 </div>
             </form>
         </div>
-
 
     </div>
 </section>
@@ -159,19 +158,21 @@
         layui.use(['jquery', 'layer'], function () {
             var $ = layui.jquery;
 
+            $('#button').on('click',function () {
 
-            var pid = $('#pid').text();
-//alert(pid);
-            $.ajax({
-                url: '{{url('admin.comment')}}' + '/' + pid,
-                type: 'POST',
-                data: {'pid': pid, '_token': '{{ csrf_token() }}'},
-                success: function (data) {
-                    console.log({{ csrf_token()}});
-                }
+                pid = $('#pid').text();
+    //alert(pid);
+                {{--var url ='{{url('admin/commentShow')}}';--}}
+                {{--$.ajax({--}}
+                    {{--url: url,--}}
+                    {{--type: 'get',--}}
+                    {{--data: { 'pid': pid , '_token': '{{ csrf_token() }}'},--}}
+                    {{--success: function (data) {--}}
+                        {{--console.log({{ csrf_token()}});--}}
+                    {{--}--}}
 
+                {{--});--}}
             });
-
         });
 
 

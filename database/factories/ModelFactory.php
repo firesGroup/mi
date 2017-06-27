@@ -113,6 +113,18 @@
 //        'type' => str_random(1),
 //    ];
 //});
+
+//友情链接
+//$factory->define(App\Entity\FriendLink::class, function (Faker\Generator $faker) {
+//
+//    return [
+//        'link_name' => str_random(10),
+//        'link_url' => $faker->imageUrl(),
+//        'link_logo' => $faker->imageUrl(),
+//
+//    ];
+//});
+
 //==================================================
 // $factory->define(App\order::class, function (Faker\Generator $faker) {
 //     return [
