@@ -44,19 +44,42 @@ class CommentController extends Controller
      */
     public function store(Request $request)
     {
-//        dd(111);
-        $p_id = $request->input('pid');
-        $text = $request->text;
+//
 
-        $insert = DB::table('comment')->insert(
-          ['id']=>''
-        );
 //
 //        $pid = DB::table('comment')->where('p_id',$p_id)->get();
 
 //        return view('admin.comment.showComment',compact('pid'));
     }
 
+    public function insert (Request $request)
+    {
+
+        $text = $request->text;
+
+        if($text != null){
+        $bool= DB::table('comment')->insert([
+            'member_id'=> '4',
+            'p_id'=>$request->id,
+            'content' => $request->text,
+            'is_hide' => 1,
+            'type'=> 2,
+            'created_at'=> date('Y-m-d H:i:s')
+        ]);
+
+            if($bool) {
+                return redirect('admin/comment/'.$request->member_id);
+            } else {
+              echo "<script>alert('回复失败!')</script>";
+                return redirect('admin/comment/');
+            }
+        }else {
+
+            echo "<script>alert('回复不能为空!')</script>";
+            return redirect('admin/comment/'.$request->member_id);
+
+        }
+    }
     /**
      * Display the specified resource.
      *
@@ -66,11 +89,11 @@ class CommentController extends Controller
     public function show($id)
     {
         //拿到传来的会员信息
-        $memberid = DB::table('comment')->where('member_id',$id)->get();
+        $pid = DB::table('comment')->where('member_id',$id)->value('p_id');
 
 
         //取这个会员的商品ID
-        $pid = $memberid[0]->p_id;
+//        $pid = $memberid[0]->p_id;
 
         //拿到这个会员的所有这个商品的评论
         $comment = DB::table('comment')->where('p_id', $pid)->get();
@@ -99,11 +122,6 @@ class CommentController extends Controller
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
-    {
-
-    }
-
     public function updateStatus(Request $request)
     {
         $cid = $request->input('cid');
