@@ -29,7 +29,21 @@ class ProductRequest extends Request
             ],
             'img_id'=>[
                 'numeric',
-            ]
+            ],
+            'p_name'=>[
+                'unique:product',
+                'required'
+            ],
+            'model_id'=>[
+                'numeric'
+            ],
+            'brand_id'=>[
+                'numeric'
+            ],
+            'weight'=>[
+                'numeric'
+            ],
+            ''
         ];
     }
 }

@@ -38,29 +38,32 @@
             </div>
             <div class="larry-personal-body clearfix">
                 <div class="btn-group">
-                    <button class="layui-btn layui-btn-small">
+                    <button class="layui-btn layui-btn-small" id="addProduct">
                         <i class="layui-icon">&#xe608;</i> 添加商品
-                    </button>
-                    <button class="layui-btn layui-btn-small" id="refresh">
-                        <i class="layui-icon">&#x1002;</i> 刷新本页
                     </button>
                 </div>
                 <div class="order">
-                    <select name="category">
-                        <option value="0">所有分类</option>
-                    </select>
-                    <select name="brand">
-                        <option value="0">所有品牌</option>
-                    </select>
-                    <select name="sort_price">
-                        <option value="0">默认排序</option>
-                        <option value="1">按价格由高到低</option>
-                        <option value="2">按价格由低到高</option>
-                    </select>
-                    <input class="layui-input-inline" placeholder="搜索关键词" name="search" value="">
-                    <span class="layui-btn">
-                        <i class="layui-icon">&#xe615;</i>搜索
-                    </span>
+                        <select name="category">
+                            <option value="">选择分类</option>
+                            <option value="0">所有分类</option>
+                        </select>
+                        <select name="brand">
+                            <option value="">选择品牌</option>
+                            <option value="0">所有品牌</option>
+                            @foreach( $brandList as $brand )
+                                    <option value="{{ $brand->id }}" checked>{{ $brand->brand_name }}</option>
+                            @endforeach
+                        </select>
+                        <select name="sort_price">
+                            <option value="">选择价格排序</option>
+                            <option value="1">默认排序</option>
+                            <option value="2">按价格由高到低</option>
+                            <option value="3">按价格由低到高</option>
+                        </select>
+                        <input class="layui-input-inline" placeholder="搜索关键词" name="search" value="">
+                        <span class="layui-btn">
+                            <i class="layui-icon">&#xe615;</i>搜索
+                        </span>
                 </div>
                 <table class="layui-table larry-table-info">
                     <colgroup>
@@ -73,22 +76,22 @@
                         <th>ID</th>
                         <th>商品名称</th>
                         <th>所属分类</th>
-                        <th>品牌</th>
-                        <th>市场价</th>
+                        <th>品牌名称</th>
                         <th>商城价</th>
+                        <th>市场价</th>
                         <th>状态</th>
                         <th>操作</th>
                     </tr>
                     </thead>
                     <tbody>
-                    @foreach( $productList as $product )
+                    @forelse( $productList as $product )
                         <tr>
                             <td>{{ $product->id }}</td>
                             <td>{{ $product->p_name }}</td>
                             <td>{{ $product->category_id }}</td>
                             <td>{{ $product->brand->brand_name }}</td>
-                            <td>{{ $product->market_price }}元</td>
                             <td>{{ $product->price }}元</td>
+                            <td>{{ $product->market_price }}元</td>
                             <td>
                                 @if( $product->status == 0 )
                                     在售
@@ -118,7 +121,13 @@
                                 </div>
                             </td>
                         </tr>
-                    @endforeach
+                        @empty
+                        <tr>
+                            <td colspan="8" style="height:70px;font-size:15px">
+                                <i class="layui-icon" style="font-size: 30px; color: #FF5722;">&#xe60c;</i> 什么都没找到
+                            </td>
+                        </tr>
+                    @endforelse
                     </tbody>
                 </table>
                 <div class="larry-table-page">
@@ -136,17 +145,30 @@
             var $ = layui.jquery,
                 global = layui.global,
                 layer = layui.layer;
-            var id = $('a#delete').data('id'),
-                url = '{{ url('/admin/product') }}' + '/' + id;
-            $('div.layui-btn-group').on('mouseover', 'a.layui-btn', function(){
+                url = '{{ url('/admin/product') }}' + '/';
+
+            global.aAdd('button#addProduct','{{ url('/admin/product/create') }}');
+
+            global.aDelete('a#delete','友情提醒','确定要删除吗','{{ csrf_token() }}',url);
+            var tipIndex;
+
+            $('div.layui-btn-group').on('mouseover', 'a.layui-btn', function(e){
                 var alt = $(this).attr('alt'), t = this;
-                layer.tips(alt, t, {
+                tipIndex = layer.tips(alt, t, {
                     tips: [1, '#0FA6D8'] //还可配置颜色
                 });
-            }).on('mouseout','a.layui-btn',function(){
-                layer.closeAll();
+                layui.stope(e);
+            }).on('mouseout','a.layui-btn',function(e){
+                layer.close(tipIndex);
+                layui.stope(e);
             } );
-            global.aDelete('a#delete','友情提醒','确定要删除吗','{{ csrf_token() }}',url);
+
+            $('select[name=brand]').on('change', function(){
+                location.href='{{ url('/admin/product?search=oneSelect') }}'+'&brand_id='+ $(this).val();
+            });
+            $('select[name=sort_price]').on('change', function(){
+                location.href='{{ url('/admin/product?search=oneSelect') }}'+'&sort_price='+ $(this).val();
+            });
         });
 
     </script>

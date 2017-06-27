@@ -18,10 +18,13 @@ class CreateProductDetailTable extends Migration
             $table->string('summary')->comment('商品简介');
             $table->string('description')->comment('商品详情');
             $table->string('remind_title')->comment('商品简介前活动提醒');
-            $table->integer('store')->index()->default(0)->comment('商品库存');
+            $table->integer('store')->index()->default(0)->comment('商品总库存');
             $table->integer('sell_num')->index()->default(0)->comment('商品成交量');
             $table->integer('click_num')->index()->default(0)->commnet('商品点击量');
             $table->string('unit',10)->default('件')->comment('商品单位');
+            $table->double('weight', 12, 2)->default(0.00)->comment('商品重量(kg)');
+            $table->tinyInteger('is_free_shipping')->default(0)->comment('是否包邮,默认包邮');
+            $table->string('tags')->index()->default('')->comment('商品关键字');
             $table->timestamps();
             $table->primary('p_id');
             $table->charset='utf8';
