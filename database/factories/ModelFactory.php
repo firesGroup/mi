@@ -58,6 +58,16 @@
 //     ];
 // });
 
+//    $factory->define(App\Entity\Advert::class, function (Faker\Generator $faker){
+//        return [
+//            'advert_image' => $faker->imageUrl(),
+//            'advert_url' => $faker->url(),
+//            'ad_location' => rand(0,1),
+//            'ad_desc' => str_random(15),
+//
+//            ];
+//    });
+
 
 //$factory->define(App\Entity\MemberDetail::class, function (Faker\Generator $faker) {
 //     $userIds = \App\Entity\Member::lists('id')->toArray();

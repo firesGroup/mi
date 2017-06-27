@@ -24,8 +24,16 @@ Route::group( ['namespace'=>'Admin', 'prefix'=>'admin'], function(){
 
     //分类路由
     Route::post('category_edit', 'CateGoryController@category_edit');
+    Route::post('add_category', 'CateGoryController@add_category');
+    Route::get('create_category/{id}', 'CateGoryController@create_category');
     Route::resource('category', 'CateGoryController');
+
+    Route::get('showStatus', 'AdvertController@showStatus');
+    Route::resource('advert', 'AdvertController');
 } );
+
+Route::post( '/upload', 'PublicC\UploadController@postUpload' );
+
 
 
 

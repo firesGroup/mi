@@ -29,6 +29,7 @@
                         <h4 title="提示相关设置操作时应注意的要点">操作提示</h4>
                     </div>
                     <ul>
+
                         <li>分类信息</li>
                     </ul>
                     <i class="larry-icon larry-guanbi close" id="closeInfo"></i>
@@ -47,8 +48,9 @@
         <span class="layui-btn layui-btn-small">
             <i class="layui-icon">&#xe615;</i>搜索分类
         </span>
-                <button class="layui-btn layui-btn-small">
-                    <i class="layui-icon">&#xe608;</i> 添加分类
+                <button class="layui-btn layui-btn-small" id="add_category">
+                    <i class="layui-icon" style="color:white">&#xe608;</i> <a style="color:white"
+                                                                              href="{{url('admin/category/create')}}">添加一级分类</a>
                 </button>
                 <button class="layui-btn layui-btn-small" id="refresh">
                     <i class="layui-icon">&#x1002;</i> 刷新本页
@@ -91,7 +93,9 @@
                                 </button>
                             </td>
                             <td>{{$v->id}}</td>
-                            <td><div align=left>{{$nbsp}}{{$v->category_name}}</div></td>
+                            <td>
+                                <div align=left>{{$nbsp}}|--{{$v->category_name}}</div>
+                            </td>
                             <td>{{$v->parent_id}}</td>
                             <td>{{$v->parent_path}}</td>
                             <td>{{$v->sort}}</td>
@@ -100,6 +104,10 @@
                                     <a href="{{ url('admin/category').'/'.$v->id."/edit" }}" class="layui-btn"
                                        data-alt="修改">
                                         <i class="layui-icon">&#xe642;</i>
+                                    </a>
+                                    <a href="{{ url('admin/create_category'.'/'.$v->id)}}" class="layui-btn"
+                                       data-alt="添加子分类">
+                                        <i class="layui-icon">&#xe608;</i>
                                     </a>
                                     <a id="delete" data-id="{{ $v->id }}" class="layui-btn" data-alt="删除">
                                         <i class="layui-icon">&#xe640;</i>
@@ -136,18 +144,18 @@
                 layer.close(index);
             });
 
-            $('table').on('click','a#delete', function(){
+            $('table').on('click', 'a#delete', function () {
                 var t = $(this);
                 layer.confirm('是否删除', {
-                    btn: ['确定','取消'] //按钮
-                    ,btnAlign: 'c'
-                    ,shade: 0.8
-                    ,id: 'MI_delTips' //设定一个id，防止重复弹出
-                    ,moveType: 1 //拖拽模式，0或者1
-                    ,resize: false
-                    ,title: '提示'
-                    ,anim: Math.ceil(Math.random() * 6)
-                }, function(){
+                    btn: ['确定', '取消'] //按钮
+                    , btnAlign: 'c'
+                    , shade: 0.8
+                    , id: 'MI_delTips' //设定一个id，防止重复弹出
+                    , moveType: 1 //拖拽模式，0或者1
+                    , resize: false
+                    , title: '提示'
+                    , anim: Math.ceil(Math.random() * 6)
+                }, function () {
                     var l = layer.msg('正在删除!请稍后...', {
                         icon: 16
                     });
@@ -167,7 +175,7 @@
                                     });
                                 } else if (data == 1) {
                                     layer.alert('删除失败!', {icon: 2});
-                                } else if( data == 2 ){
+                                } else if (data == 2) {
                                     layer.alert('删除错误!该分类下有子分类!不能删除', {icon: 2});
                                 }
                             } else {
@@ -175,14 +183,12 @@
                             }
                         }
                     });
-                }, function(Index){
+                }, function (Index) {
                     layer.close(Index);
                 });
             });
 
-            $('').click(function () {
 
-            });
         });
     </script>
 @endsection

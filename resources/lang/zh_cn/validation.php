@@ -98,5 +98,6 @@ return [
         'spec_name' => '规格名称',
         'attr_name' => '属性名称',
         'nick_name' => '会员名字',
+        'category_name'=>'分类名字',
     ],
 ];
