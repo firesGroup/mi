@@ -11,7 +11,7 @@
 ?>
 @extends('layouts.iframe')
 
-@section('title','管理员首页')
+@section('title','管理员添加')
 
 @section('css')
     @parent
@@ -69,10 +69,11 @@
                                         <div class="layui-input-inline" style="margin-left: 40px">
                                             <input type="password" id="pwd" name="password" required
                                                    lay-verify="required"
-                                                   placeholder="请输入密码" autocomplete="off" class="layui-input" value="{{old('password')}}">
+                                                   placeholder="请输入密码" autocomplete="off" class="layui-input"
+                                                   value="{{old('password')}}">
                                         </div>
-                                        <div class="layui-form-mid layui-word-aux">只能输入6-20个字母、数字、下划线</div>
                                     </div>
+                                    <div class="layui-form-mid layui-word-aux">只能输入6-20个字母、数字、下划线</div>
                                     <div class="layui-form-item">
                                         <label class="layui-form-label">重复密码</label>
                                         <div class="layui-input-inline" style="margin-left: 40px">
@@ -92,18 +93,18 @@
                                                 @endforeach
                                             </select>
                                         </div>
-                                        <div class="layui-form-item">
-                                            <label class="layui-form-label">账户状态</label>
-                                            <div class="layui-input-block">
-                                                <input type="radio" name="status" value="0" title="正常" checked>
-                                                <input type="radio" name="status" value="1" title="锁定">
-                                            </div>
+                                    </div>
+                                    <div class="layui-form-item">
+                                        <label class="layui-form-label">账户状态</label>
+                                        <div class="layui-input-block">
+                                            <input type="radio" name="status" value="0" title="正常" checked>
+                                            <input type="radio" name="status" value="1" title="锁定">
                                         </div>
-                                        <div class="layui-form-item">
-                                            <div class="layui-input-block">
-                                                <button class="layui-btn" lay-submit lay-filter="formDemo">立即提交</button>
-                                                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
-                                            </div>
+                                    </div>
+                                    <div class="layui-form-item">
+                                        <div class="layui-input-block">
+                                            <button class="layui-btn" lay-submit lay-filter="formDemo">立即提交</button>
+                                            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
                                         </div>
                                     </div>
                                 </form>
@@ -192,10 +193,10 @@
                             that.data('u', username);
 //                            console.log(data);
                             if (data == 1) {
-                                that.css({'border':'1px solid #ff5722'});
+                                that.css({'border': '1px solid #ff5722'});
                                 layer.msg('用户名已存在');
                             } else {
-                                that.css({'border':'1px solid #f2f2f2'});
+                                that.css({'border': '1px solid #f2f2f2'});
                             }
 
                         },

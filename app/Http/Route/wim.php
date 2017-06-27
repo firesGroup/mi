@@ -12,6 +12,7 @@
 
 Route::group( ['namespace' => 'Admin', 'prefix' => 'admin' ], function () {
 
+    //管理员路由
     Route::get('/', 'AdminController@index');
 
     Route::resource('user', 'UserController');
@@ -22,17 +23,25 @@ Route::group( ['namespace' => 'Admin', 'prefix' => 'admin' ], function () {
 
 
 
-
+    //权限管理组路由
     Route::resource('group', 'GroupController');
 
     Route::get('groupAjax', 'GroupController@groupAjax');
 
 
-
+    //权限路由
     Route::resource('role', 'RoleController');
 
     Route::get('ajaxRoleName', 'RoleController@ajaxRoleName');
 
     Route::get('ajaxRole', 'RoleController@ajaxRole');
+
+
+    //轮播图路由
+    Route::resource('slideShow', 'SlideShowController');
+
+    Route::get('showStatus', 'SlideShowController@showStatus');
+
+    Route::get('slideImage', 'SlideShowController@slideImage');
 
 } );
