@@ -196,31 +196,6 @@ class RoleController extends Controller
     public function destroy($id)
     {
 
-//        dd(1);
-        //开启回滚
-        DB::beginTransaction();
-
-        //删除权限表的对应id权限
-        $sql1 = DB::table('admin_role')->where('id', $id)->delete();
-
-        //查出权限组role_list字段的所有信息
-        $str = DB::table('admin_group')->lists('role_list');
-//        dd($str);
-        $array = array_chunk($str, 1, true);
-        dump($array);
-
-        //遍历成单个数组
-        foreach($array as $k=>$v){
-//            dump($v[$k]);
-//            $arr = explode(',', $v[$k]);
-//            dump($arr);
-//            if (in_array($id, $arr)) {
-//                $array = array_merge(array_diff($arr, array($id)));
-//            }
-                dump($v);
-//            dump($array);
-        }
-//
     }
 
     public function ajaxRoleName(Request $request)
