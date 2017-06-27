@@ -80,7 +80,7 @@
                         {{--{{dump($user)}}--}}
                         <tr>
                             <td>{{ $user->id }}</td>
-                            <td>{{ $group_name[$user->group_id] }}</td>
+                            <td>{{ ($user->group_id > 0)?$group_name[$user->group_id]:'未分组' }}</td>
                             <td style="color:#1E9FFF">{{ $user->username }}</td>
                             <td>{{ $user->password }}</td>
                             <td>{{ $status[$user->status] }}</td>
@@ -111,8 +111,7 @@
                     {{ $data->render() }}
                     共计({{$sum}})条
                 </div>
-            </
-            >
+            </div>
         </div>
     </section>
 @endsection

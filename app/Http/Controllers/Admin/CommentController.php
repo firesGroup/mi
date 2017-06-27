@@ -44,7 +44,17 @@ class CommentController extends Controller
      */
     public function store(Request $request)
     {
-        //
+//        dd(111);
+        $p_id = $request->input('pid');
+        $text = $request->text;
+
+        $insert = DB::table('comment')->insert(
+          ['id']=>''
+        );
+//
+//        $pid = DB::table('comment')->where('p_id',$p_id)->get();
+
+//        return view('admin.comment.showComment',compact('pid'));
     }
 
     /**
@@ -55,7 +65,20 @@ class CommentController extends Controller
      */
     public function show($id)
     {
-        //
+        //拿到传来的会员信息
+        $memberid = DB::table('comment')->where('member_id',$id)->get();
+
+
+        //取这个会员的商品ID
+        $pid = $memberid[0]->p_id;
+
+        //拿到这个会员的所有这个商品的评论
+        $comment = DB::table('comment')->where('p_id', $pid)->get();
+
+        //查询会员表取会员ID
+        $member = DB::table('member')->where('id',$id)->get();
+
+        return view('admin/comment/showComment',compact('pid','id','comment','member'));
     }
 
     /**
@@ -66,7 +89,7 @@ class CommentController extends Controller
      */
     public function edit($id)
     {
-        //
+//
     }
 
     /**
@@ -78,12 +101,15 @@ class CommentController extends Controller
      */
     public function update(Request $request, $id)
     {
-        dd(111);
+
     }
 
-    public function updateStatus(Request $request, $id)
+    public function updateStatus(Request $request)
     {
-        dd(111);
+        $cid = $request->input('cid');
+        $nid = $request->input('id');
+//        dd($id,$cid);
+        DB::table('comment')->where('id', $cid)->update(['is_hide'=>$nid]);
     }
 
     /**

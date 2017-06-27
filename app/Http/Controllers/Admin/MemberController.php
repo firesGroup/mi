@@ -88,7 +88,7 @@ class MemberController extends Controller
      */
     public function update( MemberRequest $request, $id)
     {
-        
+
                 $nick_name = $request->get('nick_name');
                 $email = $request->get('email');
                 $status = $request->get('status');
@@ -146,7 +146,7 @@ class MemberController extends Controller
 
      }
 
-     //对视图传过来的图排尿进行裁剪
+     //对视图传过来的图片进行裁剪
      public function change(MemberRequest $request)
      {
          $photo = mb_substr($request->get('photo'),1);

@@ -1,29 +1,31 @@
 <?php
 /**
  * File Name: index.blade.php
- * Description: 权限组首页
+ * Description:  权限展示页面
  * Created by PhpStorm.
  * Group: FiresGroup
  * Auth: Wim
- * Date: 2017/6/22
- * Time: 15:56
+ * Date: 2017/6/26
+ * Time: 9:16
  */
 ?>
-{{--{{dd($data)}}--}}
+
+{{--{{dd(1)}}--}}
+
+
 @extends('layouts.iframe')
 
-@section('title','权限组首页')
+@section('title','权限首页')
 
 @section('css')
     @parent
 @endsection
 
 @section('content')
-
     <section class="larry-grid">
         <div class="larry-personal">
             <header class="larry-personal-tit">
-                <span>管理员-列表</span>
+                <span>权限-列表</span>
             </header>
             <div class="row" id="infoSwitch">
                 <blockquote class="layui-elem-quote col-md-12 head-con">
@@ -32,8 +34,8 @@
                         <h4 title="提示相关设置操作时应注意的要点">操作提示</h4>
                     </div>
                     <ul>
-                        <li>请不要随意更改权限组信息</li>
-                        <li>按需求给组添加权限</li>
+                        <li>请不要随意更改权限信息</li>
+                        <li>按要求对权限增, 删, 改</li>
                     </ul>
                     <i class="larry-icon larry-guanbi close" id="closeInfo"></i>
                 </blockquote>
@@ -42,11 +44,11 @@
                 <div class="btn-group">
 
 
-                    <a href="{{url('admin/group/create')}}" style="color:white">
+                    <a href="{{url('admin/role/create')}}" style="color:white">
 
                         <button class="layui-btn layui-btn-small">
                             <i class="layui-icon">&#xe608;</i>
-                            添加权限组
+                            添加权限
                         </button>
                     </a>
 
@@ -65,51 +67,34 @@
                     <thead>
                     <tr>
                         <th>ID</th>
-                        <th>所属组名称</th>
-                        <th>所属组状态</th>
-                        <th>所属组权限名</th>
-                        <th>所属组描述</th>
+                        <th>权限名</th>
+                        <th>权限拥有的控制器</th>
+                        <th>权限描述</th>
+                        <th>状态</th>
                         <th>操作</th>
                     </tr>
                     </thead>
                     <tbody>
                     {{--{{dd($data)}}--}}
-                    @foreach( $data as $group )
+                    @foreach( $data as $role )
+                        {{--{{dump($user)}}--}}
                         <tr>
-                            <td>{{ $group->id }}</td>
-                            <td style="color:#1E9FFF">{{ $group->group_name }}</td>
-                            <td>{{ $status[$group->status] }}</td>
-                            <td>
-
-                                {{--{{ explode(',', $group->role_list) }}--}}
-
-                                <?php
-
-                                    $rolename = "";
-
-                                    $id = explode(',', $group->role_list);
-//                                    dump($id);
-                                    foreach ($id as $v){
-//                                        dump($v);
-                                        $rolename .= $arr[$v] . ',';
-
-                                    }
-                                    echo rtrim($rolename, ',');
-                                ?>
-
-                            </td>
-                            <td style="width: 600px">{{ $group->group_desc }}</td>
+                            <td>{{ $role->id }}</td>
+                            <td style="color:#1E9FFF">{{ $role->role_name }}</td>
+                            <td>{{ $role->role }}</td>
+                            <td>{{ $role->role_desc }}</td>
+                            <td>{{ $status[$role->status] }}</td>
                             <td>
                                 <div class="layui-btn-group">
-                                    <a href="{{ url('admin/group').'/'.$group->id }}" class="layui-btn  layui-btn-small"
+                                    <a href="{{ url('admin/role').'/'.$role->id }}" class="layui-btn  layui-btn-small"
                                        data-alt="查看">
                                         <i class="layui-icon">&#xe60b;</i>
                                     </a>
-                                    <a href="{{ url('admin/group').'/'.$group->id."/edit" }}"
+                                    <a href="{{ url('admin/role').'/'.$role->id."/edit" }}"
                                        class="layui-btn  layui-btn-small" data-alt="修改">
                                         <i class="layui-icon">&#xe642;</i>
                                     </a>
-                                    <a id="delete" data-id="{{ $group->id }}" class="layui-btn  layui-btn-small"
+                                    <a id="delete" data-id="{{ $role->id }}" class="layui-btn  layui-btn-small"
                                        data-alt="删除">
                                         <i class="layui-icon">&#xe640;</i>
                                     </a>
@@ -124,10 +109,8 @@
                     共计({{$sum}})条
                 </div>
             </div>
-
         </div>
     </section>
-
 @endsection
 
 @section('js')
@@ -160,7 +143,7 @@
                         icon: 6
                     });
                     $.ajax({
-                        url: '{{ url('/admin/group') }}' + '/' + id
+                        url: '{{ url('/admin/role') }}' + '/' + id
                         , type: "POST"
                         , data: {'_method': 'DELETE', '_token': '{{ csrf_token() }}'}
                         , success: function (data) {

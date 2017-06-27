@@ -27,4 +27,12 @@ Route::group( ['namespace' => 'Admin', 'prefix' => 'admin' ], function () {
 
     Route::get('groupAjax', 'GroupController@groupAjax');
 
+
+
+    Route::resource('role', 'RoleController');
+
+    Route::get('ajaxRoleName', 'RoleController@ajaxRoleName');
+
+    Route::get('ajaxRole', 'RoleController@ajaxRole');
+
 } );
