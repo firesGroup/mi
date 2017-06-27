@@ -39,7 +39,7 @@ layui.define(['jquery','layer'],function(exports){
         aDelete: function(element,title,tipText,token, url,event){
             var th = $(element);
             var event = event||'click';
-            $('table').on(event,element, function(){
+            $('table').on(event, element, function(){
                 var t = $(this);
                 layer.confirm(tipText, {
                     btn: ['确定','取消'] //按钮

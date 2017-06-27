@@ -37,6 +37,11 @@ Route::group(['namespace'=>'Admin','prefix'=>'admin'], function(){
     Route::resource('product/attr', 'ProductAttributeController',['parameters' => [
         'attr' => 'attr_id'
     ]],['except'=>['show']]);
+    Route::get('product/ajaxGetSpecList/{modelId}','ProductController@ajaxGetSpecList');
+    Route::post('product/ajaxGetSpecInput/{id}','ProductController@ajaxGetSpecInput');
+    Route::get('product/ajaxGetAttrInput/{modelId}','ProductController@ajaxGetAttrInput');
+    Route::get('product/getSpecKeyExists/{id}','ProductController@getSpecKeyExists');
+    Route::post('product/editModelInfo/{id}','ProductController@editModelInfo');
     Route::resource('product', 'ProductController',['parameters' => [
         'product' => 'id'
     ]],['except'=>['show']]);

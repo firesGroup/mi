@@ -112,10 +112,12 @@
                 layer = layui.layer;
             //添加按钮点击
             global.aAdd('button#addspec','{{ url('/admin/product/spec/create') }}');
+
+
             //删除模型按钮
             var url = "{{ url('/admin/product/spec') }}/";
             global.aDelete(
-                'a#delete',
+                '#delete',
                 '警告',
                 '确定要删除这个规格项吗?删除这个规格项会同时删除规格下所有规格项',
                 '{{ csrf_token() }}',
