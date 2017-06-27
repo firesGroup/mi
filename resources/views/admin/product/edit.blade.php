@@ -76,7 +76,7 @@
                                 <div class="layui-form-item">
                                     <label class="layui-form-label">活动提醒</label>
                                     <div class="layui-input-block">
-                                        <textarea type="text" name="remind_title" lay-verify="required" placeholder="请输入商品前活动提醒" autocomplete="off" class="layui-input">{{ $detail->remind_title }}</textarea>
+                                        <textarea type="text" name="remind_title" lay-verify="required" placeholder="请输入位于商品简介前的活动提醒" autocomplete="off" class="layui-input">{{ $detail->remind_title }}</textarea>
                                     </div>
                                 </div>
                                 <div class="layui-form-item">
@@ -126,19 +126,19 @@
                                 <div class="layui-form-item">
                                     <label class="layui-form-label">商品价格</label>
                                     <div class="layui-input-block">
-                                        <input type="text" name="price" lay-verify="required" placeholder="请输入商品价格" autocomplete="off" class="layui-input" value="{{ $info->price }}">
+                                        <input type="text" name="price" lay-verify="required" placeholder="请输入商品价格" autocomplete="off" class="layui-input" value="{{ $info->price }}" onkeyup="this.value=this.value.replace(/[^\d.]/g,'')" onpaste="this.value=this.value.replace(/[^\d.]/g,'')">
                                     </div>
                                 </div>
                                 <div class="layui-form-item">
                                     <label class="layui-form-label">市场价格</label>
                                     <div class="layui-input-block">
-                                        <input type="text" name="market_price" lay-verify="required" placeholder="请输入市场价格" autocomplete="off" class="layui-input" value="{{ $info->market_price }}">
+                                        <input type="text" name="market_price" lay-verify="required" placeholder="请输入市场价格" autocomplete="off" class="layui-input" value="{{ $info->market_price }}" onkeyup="this.value=this.value.replace(/[^\d.]/g,'')" onpaste="this.value=this.value.replace(/[^\d.]/g,'')">
                                     </div>
                                 </div>
                                 <div class="layui-form-item">
-                                    <label class="layui-form-label">商品库存量</label>
+                                    <label class="layui-form-label">商品总库存</label>
                                     <div class="layui-input-block">
-                                        <input type="text" name="store" lay-verify="required" placeholder="请输入商品库存量" autocomplete="off" class="layui-input" value="{{ $detail->store }}">
+                                        <input type="text" name="store" lay-verify="required" placeholder="请输入商品总库存量" autocomplete="off" class="layui-input" value="{{ $detail->store }}" onkeyup="this.value=this.value.replace(/[^\d.]/g,'')" onpaste="this.value=this.value.replace(/[^\d.]/g,'')">
                                     </div>
                                 </div>
                                 <div class="layui-form-item">
@@ -160,6 +160,36 @@
                                     </div>
                                 </div>
                                 <div class="layui-form-item">
+                                    <label class="layui-form-label">商品重量</label>
+                                    <div class="layui-input-block">
+                                        <input type="text" name="weight" lay-verify="required" placeholder="请输入商品重量(单位:kg)" autocomplete="off" class="layui-input" value="{{ $detail->weight  }}" onkeyup="this.value=this.value.replace(/[^\d.]/g,'')" onpaste="this.value=this.value.replace(/[^\d.]/g,'')">
+                                    </div>
+                                </div>
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">是否包邮</label>
+                                    <div class="layui-input-block">
+                                        @if( $detail->is_free_shipping == 0 )
+                                            <input type="radio" name="is_free_shipping" value="0" checked title="包邮">
+                                            <input type="radio" name="is_free_shipping" value="1" title="不包邮">
+                                        @elseif( $detail->is_free_shipping == 1 )
+                                            <input type="radio" name="is_free_shipping" value="0" title="包邮">
+                                            <input type="radio" name="is_free_shipping" value="1" checked title="不包邮">
+                                        @endif
+                                    </div>
+                                </div>
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">是否推荐</label>
+                                    <div class="layui-input-block">
+                                        @if( $info->recommend == 0 )
+                                        <input type="radio" name="recommend" value="0" checked title="推荐">
+                                        <input type="radio" name="recommend" value="1" title="不推荐">
+                                        @elseif( $info->recommend == 1 )
+                                        <input type="radio" name="recommend" value="0" title="推荐">
+                                        <input type="radio" name="recommend" value="1" checked title="不推荐">
+                                        @endif
+                                    </div>
+                                </div>
+                                <div class="layui-form-item">
                                     <label class="layui-form-label">商品状态</label>
                                     <div class="layui-input-block">
                                         <select name="status">
@@ -174,15 +204,9 @@
                                     </div>
                                 </div>
                                 <div class="layui-form-item">
-                                    <label class="layui-form-label">是否推荐</label>
+                                    <label class="layui-form-label">商品关键字</label>
                                     <div class="layui-input-block">
-                                        @if( $info->recommend == 0 )
-                                        <input type="radio" name="recommend" value="0" checked title="推荐">
-                                        <input type="radio" name="recommend" value="1" title="不推荐">
-                                        @elseif( $info->recommend == 1 )
-                                        <input type="radio" name="recommend" value="0" title="推荐">
-                                        <input type="radio" name="recommend" value="1" checked title="不推荐">
-                                        @endif
+                                        <input type="text" name="tags" lay-verify="required" placeholder="请输入商品关键字" autocomplete="off" class="layui-input" value="{{ $detail->tags }}">
                                     </div>
                                 </div>
                                 <div class="layui-form-item">
@@ -220,7 +244,7 @@
                                     <div class="layui-form-item">
                                         <label class="layui-form-label">商品模型</label>
                                         <div class="layui-input-block">
-                                            <select name="model"  lay-filter="modelSelect">
+                                            <select name="model"  lay-filter="modelSelect" lay-verify="required">
                                                 <option value="">请选择商品模型</option>
                                                 @foreach( $modelList as $model )
                                                     @if( $info->model_id == $model->id )
@@ -245,6 +269,7 @@
                                             </tr>
                                             </thead>
                                             <tbody>
+                                            @if( $info->model )
                                                 @foreach( $info->model->spec as $key=>$spec )
                                                     <tr>
                                                         <td>{{ $spec->spec_name }}</td>
@@ -257,6 +282,8 @@
                                                         </td>
                                                     </tr>
                                                 @endforeach
+                                                @else
+                                                @endif
                                             </tbody>
                                         </table>
                                            <div id="spec_table">
@@ -276,6 +303,7 @@
                                             </tr>
                                             </thead>
                                             <tbody>
+                                            @if( $info->model )
                                             @foreach( $info->model->attr as $key=>$attr )
                                                 <tr>
                                                     <td>{{ $attr->attr_name }}</td>
@@ -296,6 +324,9 @@
                                                     </td>
                                                 </tr>
                                             @endforeach
+                                            @else
+
+                                            @endif
                                             </tbody>
                                         </table>
                                     </div>
@@ -426,6 +457,7 @@
             }
         } );
 
+        //封面图片修改
         $( '#uploadImage' ).on('click', function(){
             openUpload(id,'{{ $info->p_name }}', 'product',"@admin@product@indexImage@"+ id, function(){
                 $.ajax({
@@ -438,14 +470,16 @@
             });
         });
 
+        //相册图片上传
         $('div#upload-div-1').on('click', '#uploadFile',function(){
             if( $('div.images-list li').length < 5 ){
                 openUpload( id ,'{{ $info->p_name }}' ,'product', '@admin@product@images@' + id)
             }else{
                 layer.alert('最多上传5张图片!',{title:'提示',icon:2});
             }
-        } );
+        });
 
+        //相册图片删除
         $('div#upload-div-1').on( 'click', 'span.del', function(){
              var index = layer.load(),
                  img = $( this ).siblings('img'),
@@ -600,9 +634,10 @@
                 type: 'POST',
                 data: data.field,
                 success:function(res){
-                    if( $res == 0 ){
+                    if( res == 0 ){
                         layer.msg('修改成功!',{time:2000, icon:6});
-                    }else if( $res == 1 ){
+                        location.href="{{ url('/admin/product') }}";
+                    }else if( res == 1 ){
                         layer.msg('修改失败!',{time:3000, icon:2});
                     }else{
                         layer.msg('服务器错误!',{time:3000, icon:2});

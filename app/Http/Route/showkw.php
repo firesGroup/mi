@@ -38,7 +38,7 @@ Route::group(['namespace'=>'Admin','prefix'=>'admin'], function(){
         'attr' => 'attr_id'
     ]],['except'=>['show']]);
     Route::get('product/ajaxGetSpecList/{modelId}','ProductController@ajaxGetSpecList');
-    Route::post('product/ajaxGetSpecInput/{id}','ProductController@ajaxGetSpecInput');
+    Route::post('product/ajaxGetSpecInput/{id?}','ProductController@ajaxGetSpecInput');
     Route::get('product/ajaxGetAttrInput/{modelId}','ProductController@ajaxGetAttrInput');
     Route::get('product/getSpecKeyExists/{id}','ProductController@getSpecKeyExists');
     Route::post('product/editModelInfo/{id}','ProductController@editModelInfo');
@@ -46,6 +46,10 @@ Route::group(['namespace'=>'Admin','prefix'=>'admin'], function(){
         'product' => 'id'
     ]],['except'=>['show']]);
 });
-
 Route::get( '/upload/{path}/{id}/{url}', 'PublicC\UploadController@getUpload' );
 Route::post( '/upload', 'PublicC\UploadController@postUpload' );
+
+Route::group(['namespace'=>'Home','prefix'=>'home'], function(){
+    Route::get('product/info/{p_id}','HomeController@productInfo');
+});
+Route::get('/','Home\HomeController@index');

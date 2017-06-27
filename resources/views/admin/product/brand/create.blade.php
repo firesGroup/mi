@@ -76,7 +76,7 @@
                         </div>
                         <div class="layui-form-item">
                             <label class="layui-form-label">品牌logo</label>
-                            <div class="layui-input-block">
+                            <div class="layui-input-block" id="brand_logo">
                                 <input id="upload-input" type="text" class="layui-input layui-input-inline" name="brand_logo" value="{{ old('brand_logo') }}" style="width:520px;height:38px;margin:0px" placeholder="输入图片地址或点击上传">
                                 <input type="file" name="file" id="createUpload" class="layui-upload-file" accept="image/*"  lay-ext="jpg|png|gif|bmp" lay-title="点击或拖拽文传上传">
                             </div>

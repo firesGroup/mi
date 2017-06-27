@@ -1,0 +1,224 @@
+/*
+======================
+    公共css文件
+
+    by Showkw
+
+======================
+*/
+
+
+/*通用*/
+*{
+    outline:none!important;
+    -webkit-transition: all 0.2s;
+    transition: all 0.2s;
+}
+a{
+    color: #757575!important;
+    text-decoration: none!important;
+}
+a:hover{
+    color: #ff6700!important;
+    text-decoration: none!important;
+}
+a:visited{
+    text-decoration: none!important;
+}
+.layui-this{
+    color: #ff6700!important;
+}
+.layui-this:after{
+    border-bottom: 3px solid #ff6700!important;
+}
+.ct{
+    width:1226px;
+    margin:0 auto;
+}
+.ct:before{
+    content: " ";
+    display: table;
+}
+.ct:after{
+    clear:both;
+}
+/*公共头部*/
+
+/*公共底部*/
+#footer{
+    position:relative;
+    width:100%;
+}
+#footer div.f-tb{
+    width:100%;
+    margin-bottom:30px;
+}
+#footer div.f-tb li{
+    float:left;
+    width:19.8%;
+    height:25px;
+    border-right:1px solid #a0a0a0;
+    -moz-transform: none;
+    -webkit-transform: none;
+    -o-transform: none;
+    -ms-transform: none;
+    transform: none;
+
+}
+#footer div.f-tb li div{
+    width:165px;
+    height:25px;
+    font-size:17px;
+    line-height:25px;
+    margin:0 auto;
+}
+#footer div.f-tb li div span{
+    display:block;
+    float:left;
+    width:25px;
+    height:25px;
+    margin-left:10px;
+    margin-right:5px;
+}
+#footer div.f-tb li div:hover{
+    color:#ff6700;
+}
+#footer div.f-tb li div span.f-icon1{
+    background:url("../../images/home/foot-1-1.png") no-repeat;
+}
+#footer div.f-tb li div span.f-icon2{
+    background:url("../../images/home/foot-2-1.png") no-repeat;
+}#footer div.f-tb li div span.f-icon3{
+     background:url("../../images/home/foot-3-1.png") no-repeat;
+ }#footer div.f-tb li div span.f-icon4{
+      background:url("../../images/home/foot-4-1.png") no-repeat;
+  }#footer div.f-tb li div span.f-icon5{
+       background:url("../../images/home/foot-5-1.png") no-repeat;
+   }
+
+#footer div.f-tb li div:hover span.f-icon1{
+    background:url("../../images/home/foot-1-2.png") no-repeat;
+}
+#footer div.f-tb li div:hover span.f-icon2{
+    background:url("../../images/home/foot-2-2.png") no-repeat;
+}
+#footer div.f-tb li div:hover span.f-icon3{
+    background:url("../../images/home/foot-3-2.png") no-repeat;
+}
+#footer div.f-tb li div:hover span.f-icon4{
+    background:url("../../images/home/foot-4-2.png") no-repeat;
+}
+#footer div.f-tb li div:hover span.f-icon5{
+    background:url("../../images/home/foot-5-2.png") no-repeat;
+}
+
+#footer div.f-link{
+    border-top:1px solid #E0E0E0;
+    padding-top:40px;
+    margin-bottom:30px;
+}
+#footer div.f-link ul{
+    float:left;
+    font-size:16px;
+    text-align:center;
+}
+#footer div.f-link ul span{
+    display:inline-block;
+    margin-bottom:20px;
+}
+#footer div.f-link ul li{
+    width:160px;
+    height:20px;
+    font-size:12px;
+    text-align:center;
+    margin:5px 0px;
+}
+#footer div.f-link ul li a:hover{
+    color:#ff6700;
+}
+#footer div.f-link div.ph{
+    float:left;
+    width:221px;
+    height:130px;
+    margin-left:13px;
+    padding-left:18px;
+    border-left:1px solid #E0E0E0;
+    text-align:center;
+}
+#footer div.f-link div.ph p.num{
+    color:#ff6700;
+    font-size:23px;
+}
+#footer div.f-link div.ph p.f-t{
+    color:#616161;
+    font-size:13px;
+}
+#footer div.f-link div.ph div.kf{
+    width:120px;
+    height:30px;
+    border:1px solid #ff6700;
+    font-size:12px;
+    line-height:30px;
+    text-align:left;
+    color:#ff6700;
+    margin:20px auto 0px;
+
+}
+#footer div.f-link div.ph div.kf span{
+    float:left;
+    display:block;
+    width:18px;
+    height:30px;
+    margin-top:6px;
+    margin-left:7px;
+    background:url("../../images/home/foot-6-1.png") no-repeat;
+    background-size:16px 16px;
+}
+#footer div.f-link div.ph div.kf:hover{
+    color:#fff;
+    background-color:#F25807;
+}
+#footer div.f-link div.ph div.kf:hover span{
+    background:url("../../images/home/foot-6-2.png") no-repeat;
+    background-size:16px 16px;
+}
+
+#footer div.f-bq{
+    width:1261px;
+    height:160px;
+    background-color:#FAFAFA;
+}
+#footer div.f-bq .ct{
+    padding-top:30px;
+    height:120px;
+}
+#footer div.f-bq div.f-logo{
+    width:56px;
+    height:57px;
+    float:left;
+    margin-right:10px;
+}
+#footer div.f-bq div.f-info{
+    width:780px;
+    height:57px;
+    float:left;
+    font-size:12px;
+    color:#b0b0b0;
+    word-spacing:1px;
+}
+#footer div.f-bq div.f-info p.i2 a{
+    color:#b0b0b0;
+}
+#footer div.f-bq div.f-info p.i2 a:hover{color:#ff6700;}
+
+#footer div.f-bq div.i-logo img{
+    width:83px;
+    height:28px;
+    margin-left:7px;
+}
+#footer div.f-bq div.ts {
+    margin: 60px auto 0;
+    width: 267px;
+    height: 19px;
+    background: url("../../images/home/slogan2016.png") no-repeat center;
+}

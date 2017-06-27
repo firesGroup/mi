@@ -52,4 +52,20 @@ class Product extends Model
     {
         return $this->hasMany('App\Entity\ProductImages','p_id');
     }
+
+    /*
+     * 获取商品规格价格
+     */
+    public function specPrice()
+    {
+        return $this->hasMany('App\Entity\ProductSpecPrice', 'p_id');
+    }
+
+    /*
+     * 获取商品属性
+     */
+    public function attr()
+    {
+        return $this->hasMany('App\Entity\ProductAttributeValue', 'p_id');
+    }
 }

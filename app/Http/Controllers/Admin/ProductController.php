@@ -15,6 +15,9 @@ namespace App\Http\Controllers\Admin;
 
 use App\Entity\Product;
 use App\Entity\ProductAttribute;
+use App\Entity\ProductAttributeValue;
+use App\Entity\ProductBrand;
+use App\Entity\ProductDetail;
 use Illuminate\Http\Request;
 use App\Entity\ProductModel;
 use App\Entity\ProductSpec;
@@ -35,10 +38,39 @@ class ProductController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $productList = Product::paginate(10);
-        return view('admin.product.index',compact('productList'));
+        if( $request->has('search') ){
+            $search = $request->search;
+            $brand_id = $request->brand_id;
+            $cateGory_id = $request->cateGory;
+            $sort_price_type = $request->sort_price;
+            $word = $request->word;
+            if( $search == 'oneSelect' ){
+                if( $brand_id && $brand_id > 0 ){
+                    $productList = Product::where('brand_id',$brand_id)->paginate(10);
+                }elseif( $brand_id == 0 ){
+                    $productList = Product::paginate(10);
+                }
+                if( $cateGory_id ){
+                    $productList = Product::where('cateGory_id', $cateGory_id)->paginate(10);
+                }
+                if( $sort_price_type == 1 ){
+                    $productList = Product::orderBy('id', 'desc')->paginate(10);
+                }elseif( $sort_price_type == 2 ){
+                    $productList = Product::orderBy('price', 'desc')->paginate(10);
+                }elseif( $sort_price_type == 3 ){
+                    $productList = Product::orderBy('price','asc')->paginate(10);
+                }
+                if( $word ){
+                    $productList = Product::where('p_name','like',"%{$word}%")->paginate(10);
+                }
+            }
+        }else{
+            $productList = Product::orderBy('id', 'desc')->paginate(10);
+        }
+        $brandList = ProductBrand::all();
+        return view('admin.product.index',compact('productList', 'brandList'));
     }
 
     /**
@@ -48,18 +80,138 @@ class ProductController extends Controller
      */
     public function create()
     {
-        //
+        $brand = (new Brand())->getIdAndName();
+        $zhStatus = ['在售','下架','预购','缺货','新品上市'];
+        //查询所有模型
+        $modelList = ProductModel::all();
+        return view('admin.product.create', compact('brand','zhStatus', 'modelList'));
     }
 
     /**
      * Store a newly created resource in storage.
+     * 添加商品处理
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(ProductRequest $request)
     {
-        //
+        $productData = [
+            'category_id'  => '3',
+            'brand_id'     => $request->brand_id,
+            'price'        => $request->price,
+            'market_price' => $request->market_price,
+            'p_name'       => $request->p_name,
+            'status'       => $request->status,
+            'recommend'    => $request->recommend,
+        ];
+        $detailData = [
+            'p_index_image'    => $request->p_index_image,
+            'summary'          => $request->summary,
+            'description'      => $request->description,
+            'remind_title'     => $request->remind_title,
+            'store'            => $request->store,
+            'weight'           => $request->weight,
+            'unit'             => $request->unit,
+            'is_free_shipping' => $request->is_free_shipping,
+            'tags'             => $request->tags,
+        ];
+        //如果有model 字段
+        if( $request->model ){
+
+            $model_id = $request->model;
+            //把模型id写入商品表数据数组中
+            $productData['model_id'] = $model_id;
+            //获得规格数据数组
+            $specItem = $request->specItem;
+            //获得属性数据数组
+            $attrValue = $request->attrValue;
+            //重组specItem数组
+            if ($specItem) {
+                foreach ($specItem as $key => $value) {
+                    $specData[] = [
+                        'spec_key'      => $key,
+                        'spec_key_name' => $value['spec_key_name'],
+                        'price'         => $value['price'],
+                        'store'         => $value['store'],
+                        'sku'           => $value['sku'],
+                    ];
+                }
+            }
+            if ($attrValue) {
+                foreach ($attrValue as $key => $value) {
+                    $attrData[] = [
+                        'attr_id'    => $key,
+                        'attr_value' => $value,
+                    ];
+                }
+            }
+        }
+
+        //先写入商品表,获得商品id;
+        $id = Product::insertGetId($productData);
+
+        if ($id) {
+            //将商品id 放入将要写入的各个数组中
+            $detailData['p_id'] = $id;
+
+            //商品规格数据
+            if (isset($specData)) {
+                $specData['p_id'] = $id;
+            }else{
+                $specData = null;
+            }
+            //商品属性数据
+            if (isset($attrData)) {
+                $attrData['p_id'] = $id;
+            }else{
+                $attrData = null;
+            }
+
+            //商品相册数据
+            $imagesDataArr = $request->p_images;
+            if( isset($imagesDataArr) ){
+                foreach ($imagesDataArr as $img) {
+                    $imagesData[] = [
+                        'p_id' => $id,
+                        'path' => $img,
+                    ];
+                }
+            }else{
+                $imagesData = null;
+            }
+
+            //开启事务处理
+            $res = DB::transaction(function () use ($detailData, $imagesData, $specData, $attrData) {
+                //写入详情表
+                ProductDetail::insert($detailData);
+
+                //写入商品图片表
+                if( $imagesData ){
+                    ProductImages::insert($imagesData);
+                }
+                //写入规格价格
+                if ($specData) {
+                    ProductSpecPrice::insert($specData);
+                }
+                //写入属性
+                if ($attrData) {
+                    ProductAttributeValue::insert($attrData);
+                }
+
+                return true;
+            });
+            if($res){
+                return 0;
+            }else{
+                //如果事务失败,那么就删除之前商品表添加的商品
+                Product::destroy($id);
+                return 1;
+            }
+        }
+        else {
+            return 1;//失败
+        }
     }
 
     /**
@@ -116,7 +268,10 @@ class ProductController extends Controller
             'description'   => $request->input('description'),
             'remind_title'  => $request->input('remind_title'),
             'store'         => $request->input('store'),
-            'unit'         => $request->input('unit')
+            'weight'        => $request->input('weight'),
+            'unit'         => $request->input('unit'),
+            'is_free_shipping' => $request->input('is_free_shipping'),
+            'tags'         => $request->input('tags')
         ];
         //开启事务处理
         $res = DB::transaction(function() use($id, $product, $detail){
@@ -124,7 +279,7 @@ class ProductController extends Controller
             DB::table('product_detail')->where('p_id',$id)->update($detail);
             return true;
         });
-        return $res?0:1;
+        return $res != -1?0:1;
     }
 
     /**
@@ -210,6 +365,7 @@ class ProductController extends Controller
     }
 
 
+
     /**
      * 获取商品相册图片
      *
@@ -265,18 +421,24 @@ class ProductController extends Controller
         $id = $request->input('id');
         $path = $request->input('path');
         //分割路径
-        $path = substr( $path, 8 );
+        $path = substr( $path,  9);
         //从磁盘删除图片
         $bool1 = Storage::disk('uploads')->delete($path);
-        //从数据库删除对应id的图片数据
-        $bool2 = DB::table('product_images')->delete($id);
-        if( $bool1 && $bool2 ){
-            return 0;
-        }elseif ( !$bool1 ) {
-            return 1;
+        //如果不为0 则是编辑页面相册图片删除,若为0 则是添加商品页面相册图片删除
+        if( $id != 0 ){
+            //从数据库删除对应id的图片数据
+            $bool2 = DB::table('product_images')->delete($id);
+            if( $bool1 && $bool2 ){
+                return 0;
+            }elseif ( !$bool1 ) {
+                return 1;
+            }else{
+                return 2;
+            }
         }else{
-            return 2;
+            return $bool1?0:1;
         }
+
     }
 
     /*
@@ -313,10 +475,8 @@ class ProductController extends Controller
      * @param  int  $id 商品id
      *
      */
-    public function ajaxGetSpecInput(Request $request, $id)
+    public function ajaxGetSpecInput(Request $request, $id=0)
     {
-
-        $id = $id||0;
         $spec_arr = $request->spec_arr;
         //生成 笛卡尔积
         $str = $this->getSpecInput( $id, $spec_arr );
@@ -366,17 +526,22 @@ class ProductController extends Controller
             $specItem[$value['id']] = ['spec_id'=>$value['spec_id'], 'spec_item'=> $value['spec_item']];
             unset($specItem[$k]);
         }
-//        //获取已存在的规格的价格与键名
-//        $keySpecGoodsPrice = ProductSpecPrice::where('p_id',$id)->select('spec_key','spec_key_name','price','store','sku')->get()->toArray();//规格项
-//
-//        foreach( $keySpecGoodsPrice as $key=>$value ){
-//            $keySpecGoodsPrice[$value['spec_key']] = [
-//                'price' => $value['price'],
-//                'store' => $value['store'],
-//                'sku' => $value['sku'],
-//                'spec_key_name' => $value['spec_key_name'],
-//            ];
-//        }
+
+        //获取已存在的规格的价格与键名
+        $keySpecPrice = ProductSpecPrice::where('p_id',$id)->select('spec_key','spec_key_name','price','store','sku')->get()->toArray();//规格项
+
+
+        if( $keySpecPrice ){
+            foreach( $keySpecPrice as $key=>$value ){
+                $keySpecPrice[$value['spec_key']] = [
+                    'price' => $value['price'],
+                    'store' => $value['store'],
+                    'sku' => $value['sku'],
+                    'spec_key_name' => $value['spec_key_name'],
+                ];
+                unset($keySpecPrice[$key]);
+            }
+        }
 
         $str = "<table class='layui-table larry-table-info' id='spec_table_2'>";
         $str .="<tr>";
@@ -403,9 +568,14 @@ class ProductController extends Controller
             ksort($item_key_name);
             $item_key = implode('_', array_keys($item_key_name));
             $item_name = implode(' ', $item_key_name);
-            $str .="<td><input name='specItem[$item_key][price]' value='0' onkeyup='this.value=this.value.replace(/[^\d.]/g,\"\")' onpaste='this.value=this.value.replace(/[^\d.]/g,\"\")' /></td>";
-            $str .="<td><input name='specItem[$item_key][store]' value='0' onkeyup='this.value=this.value.replace(/[^\d.]/g,\"\")' onpaste='this.value=this.value.replace(/[^\d.]/g,\"\")'/></td>";
-            $str .="<td><input name='specItem[$item_key][sku]' value='' /><input type='hidden' name='specItem[$item_key][spec_key_name]' value='$item_name' /></td>";
+            if(!array_key_exists($item_key, $keySpecPrice)){
+                $keySpecPrice[$item_key]['price']=0;//价格默认为0
+                $keySpecPrice[$item_key]['store']=0;//库存默认为0
+                $keySpecPrice[$item_key]['sku'] = '';
+            }
+            $str .="<td><input name='specItem[$item_key][price]' value='".$keySpecPrice[$item_key]['price']."' onkeyup='this.value=this.value.replace(/[^\d.]/g,\"\")' onpaste='this.value=this.value.replace(/[^\d.]/g,\"\")' /></td>";
+            $str .="<td><input name='specItem[$item_key][store]' value='".$keySpecPrice[$item_key]['store']."' onkeyup='this.value=this.value.replace(/[^\d.]/g,\"\")' onpaste='this.value=this.value.replace(/[^\d.]/g,\"\")'/></td>";
+            $str .="<td><input name='specItem[$item_key][sku]' value='".$keySpecPrice[$item_key]['sku']."' /><input type='hidden' name='specItem[$item_key][spec_key_name]' value='$item_name' /></td>";
             $str .="</tr>";
         }
         $str .= "</table>";
@@ -420,8 +590,8 @@ class ProductController extends Controller
     public function ajaxGetSpecList(Request $request,$modelId)
     {
         $specList = ProductSpec::where('model_id',$modelId)->get();
-        $id = $request->id;
-        $token = csrf_token();
+//        $id = $request->id;
+//        $token = csrf_token();
         $str = '';
         foreach( $specList as $spec ){
             $str .='<tr><td>'.$spec->spec_name.'</td>';
@@ -504,9 +674,13 @@ class ProductController extends Controller
             }
         }
         //开启事务处理
-        $res = DB::transaction(function() use($specData, $attrData){
-            DB::table('product_spec_price')->insert($specData);
-            DB::table('product_attribute_value')->insert($attrData);
+        $res = DB::transaction(function() use($id,$specData, $attrData){
+            //在添加之前,先删除之前所有的
+            ProductSpecPrice::where('p_id', $id)->delete();
+            ProductAttributeValue::where('p_id', $id)->delete();
+            //在添加
+            ProductSpecPrice::insert($specData);
+            ProductAttributeValue::insert($attrData);
             return true;
         });
         return $res?0:1;
