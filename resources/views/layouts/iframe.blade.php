@@ -45,7 +45,6 @@
     <!-- 加载js文件-->
     <script type="text/javascript" src="{{ asset('/plugin/layui/layui.js') }}"></script>
     <script type="text/javascript" src="{{ asset('/js/admin/larry.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('/js/public/base.js') }}"></script>
 @show
 </body>
 </html>
