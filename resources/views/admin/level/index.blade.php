@@ -34,9 +34,11 @@
             </div>
             <div class="larry-personal-body clearfix">
                 <div class="btn-group">
-                    <button class="layui-btn layui-btn-small">
-                        <a style="color:white" href="{{url('admin/level/create')}}"><i class="layui-icon">&#xe608;</i> 添加等级</a>
-                    </button>
+
+                    <a style="color:white" href="{{url('admin/level/create')}}">
+                        <button class="layui-btn layui-btn-small"><i class="layui-icon">&#xe608;</i> 添加等级</button>
+                    </a>
+
                     <button class="layui-btn layui-btn-small" id="refresh">
                         <i class="layui-icon">&#x1002;</i> 刷新本页
                     </button>
@@ -51,7 +53,6 @@
                     <tr>
                         <th>ID</th>
                         <th>会员名字</th>
-                        <th>消费金额</th>
                         <th>折扣率</th>
                         <th>等级描述</th>
                         <th>操作</th>
@@ -62,12 +63,12 @@
                         <tr>
                             <td>{{ $level->id }}</td>
                             <td>{{ $level->level_name }}</td>
-                            <td>{{ $level->consumption}}</td>
                             <td>{{ $level->discount}}</td>
                             <td>{{ $level-> level_desc}}</td>
                             <td>
                                 <div class="layui-btn-group">
-                                    <a href="{{ url('admin/level').'/'.$level->id."/edit" }}" class="layui-btn" data-alt="查看编辑">
+                                    <a href="{{ url('admin/level').'/'.$level->id."/edit" }}" class="layui-btn"
+                                       data-alt="查看编辑">
                                         <i class="layui-icon">&#xe642;</i>
                                     </a>
                                     <a id="delete" data-id="{{ $level->id }}" class="layui-btn" data-alt="删除">
@@ -85,61 +86,61 @@
             </div>
         </div>
     </section>
-    @endsection
+@endsection
 
 @section('js')
     @parent
     <script>
-        layui.use(['jquery','layer'], function () {
+        layui.use(['jquery', 'layer'], function () {
             var $ = layui.jquery,
                 layer = layui.layer;
             var index;
-            $('a.layui-btn').on('mouseover', function(){
+            $('a.layui-btn').on('mouseover', function () {
                 var alt = $(this).attr('data-alt');
-                index = layer.tips(alt, $(this),{tips: [1, '#0FA6D8']});
+                index = layer.tips(alt, $(this), {tips: [1, '#0FA6D8']});
             });
-            $('a.layui-btn').on('mouseout',function(){
+            $('a.layui-btn').on('mouseout', function () {
                 layer.close(index);
             });
-            $('a#delete').on('click', function(){
+            $('a#delete').on('click', function () {
                 var th = $(this),
                     t = th.parent().parent().parent('tr');
                 layer.confirm('确定要删除吗?', {
-                    btn: ['确定','取消'] //按钮
-                    ,btnAlign: 'c'
-                    ,shade: 0.8
-                    ,id: 'MI_delTips' //设定一个id，防止重复弹出
-                    ,moveType: 1 //拖拽模式，0或者1
-                    ,resize: false
-                }, function(){
-                    var id =  th.data('id');
+                    btn: ['确定', '取消'] //按钮
+                    , btnAlign: 'c'
+                    , shade: 0.8
+                    , id: 'MI_delTips' //设定一个id，防止重复弹出
+                    , moveType: 1 //拖拽模式，0或者1
+                    , resize: false
+                }, function () {
+                    var id = th.data('id');
                     var l = layer.msg('正在加载请稍后...', {
                         icon: 6
                     });
                     $.ajax({
-                        url:  '{{ url('/admin/level') }}' + '/' + id
+                        url: '{{ url('/admin/level') }}' + '/' + id
                         , type: "POST"
-                        , data: {'_method': 'DELETE', '_token': '{{ csrf_token() }}' }
-                        ,success:function (data) {
+                        , data: {'_method': 'DELETE', '_token': '{{ csrf_token() }}'}
+                        , success: function (data) {
 //                            alert(data);
 //                            layer.close(l);
-                            if( data == 1 ){
+                            if (data == 1) {
                                 layer.alert('删除成功', {icon: 1});
                                 t.remove();
-                            }else if ( data == 0 ){
+                            } else if (data == 0) {
                                 layer.alert('数据不存在!', {icon: 2});
-                            }else{
+                            } else {
                                 layer.alert('id错误!', {icon: 2});
                             }
                         }
                     });
 
-                }, function(Index){
+                }, function (Index) {
                     layer.close(Index);
                 });
             });
-            $('button#refresh').on('click', function(){
-                location.href=location.href;
+            $('button#refresh').on('click', function () {
+                location.href = location.href;
             });
         });
 

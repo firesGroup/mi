@@ -10,11 +10,11 @@
 
 Route::group( ['namespace'=>'Admin', 'prefix'=>'admin'], function(){
     Route::get('/', 'AdminController@index');
-    Route::post('avator', 'MemberController@changeavator');
     Route::post('change', 'MemberController@change');
     Route::post('member_check_name/{id}', 'MemberController@member_check_name');
     Route::post('member_ajax_phone/{id}', 'MemberController@member_check_phone');
     Route::post('member_ajax_email/{id}', 'MemberController@member_check_email');
+    Route::post('avator', 'MemberController@changeavator');
     Route::resource('member', 'MemberController' );
     //等级路由
 
@@ -30,9 +30,20 @@ Route::group( ['namespace'=>'Admin', 'prefix'=>'admin'], function(){
 
     Route::get('showStatus', 'AdvertController@showStatus');
     Route::resource('advert', 'AdvertController');
+
+
 } );
 
 Route::post( '/upload', 'PublicC\UploadController@postUpload' );
+
+Route::group( ['namespace'=>'Home'], function(){
+
+   Route::get('reg', function () {
+       return view('home/reg_login/reg');
+
+   });
+
+});
 
 
 
