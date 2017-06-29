@@ -25,7 +25,7 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('/plugin/layui/css/layui.css') }}" media="all">
     <link rel="stylesheet" type="text/css" href="{{ asset('/css/admin/global.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('/css/admin/font.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('/css/admin/common.css') }}">
+    {{--<link rel="stylesheet" type="text/css" href="{{ asset('/css/admin/common.css') }}">--}}
     <link rel="stylesheet" type="text/css" href="{{ asset('/css/admin/personal.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('/css/admin/main.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('/css/admin/show.css') }}">
