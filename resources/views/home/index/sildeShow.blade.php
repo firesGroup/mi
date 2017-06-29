@@ -11,59 +11,33 @@
 ?>
         <!-- 轮播图 start -->
         <div class="home-hero-slider">
-            <div class="ui-wrapper" style="max-width: 100%;">
-                <div class="ui-viewport" style="width: 100%; overflow: hidden; position: relative; height: 460px;">
-                    <div id="J_homeSlider" class="xm-slider" data-stat-title="焦点图轮播">
+            <div id="J_homeSlider" class="xm-slider" data-stat-title="焦点图轮播">
                         <div class="slide loaded exposure">
                             <a href="" target="_blank">
                                 <img src="https://i3.mifile.cn/a4/xmad_1498577544104_VOIAC.jpg"/>
                             </a>
                         </div>
-                        <div class="slide exposure" style="float: none; list-style: none; position: absolute; width: 1226px; z-index: 0; display: none;">
+                        <div class="slide exposure">
                             <a href="" target="_blank">
                                 <img src="https://i3.mifile.cn/a4/xmad_14985676331715_bZRyN.jpg">
                             </a>
                         </div>
-                        <div class="slide exposure" style="float: none; list-style: none; position: absolute; width: 1226px; z-index: 0; display: none;">
+                        <div class="slide exposure">
                             <a href="" target="_blank">
                                 <img src="https://i3.mifile.cn/a4/xmad_14985334169431_YXbeD.jpg">
                             </a>
                         </div>
-                        <div class="slide exposure" style="float: none; list-style: none; position: absolute; width: 1226px; z-index: 0; display: none;">
+                        <div class="slide exposure">
                             <a href="" target="_blank">
                                 <img src="https://i3.mifile.cn/a4/xmad_14954204563199_hUckQ.jpg">
                             </a>
                         </div>
-                        <div class="slide exposure" style="float: none; list-style: none; position: absolute; width: 1226px; z-index: 0; display: none;">
+                        <div class="slide exposure">
                             <a href="" target="_blank">
                                 <img src="https://i3.mifile.cn/a4/xmad_14985333471899_VxOnf.jpg">
                             </a>
                         </div>
                     </div>
-                    <div class="ui-controls ui-has-pager ui-has-controls-direction"><div class="ui-pager ui-default-pager">
-                            <div class="ui-pager-item">
-                                <a href="" data-slide-index="0" class="ui-pager-link">1</a>
-                            </div>
-                            <div class="ui-pager-item">
-                                <a href="" data-slide-index="1" class="ui-pager-link active">2</a>
-                            </div>
-                            <div class="ui-pager-item">
-                                <a href="" data-slide-index="2" class="ui-pager-link">3</a>
-                            </div>
-                            <div class="ui-pager-item">
-                                <a href="" data-slide-index="3" class="ui-pager-link">4</a>
-                            </div>
-                            <div class="ui-pager-item">
-                                <a href="" data-slide-index="4" class="ui-pager-link">5</a>
-                            </div>
-                        </div>
-                        <div class="ui-controls-direction">
-                            <a class="ui-prev" href="javascript:;" onclick="">上一张</a>
-                            <a class="ui-next" href="javascript:;" onclick="">下一张</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
         </div>
         <div class="home-hero-sub row">
             <div class="span4">
