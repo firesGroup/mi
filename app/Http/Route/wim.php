@@ -45,3 +45,5 @@ Route::group( ['namespace' => 'Admin', 'prefix' => 'admin' ], function () {
     Route::get('slideImage', 'SlideShowController@slideImage');
 
 } );
+
+Route::post( '/upload', 'PublicC\UploadController@postUpload' );
