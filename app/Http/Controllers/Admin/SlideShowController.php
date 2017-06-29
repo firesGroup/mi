@@ -149,10 +149,4 @@ class SlideShowController extends Controller
 
     }
 
-
-    public function slideImage(Request $request)
-    {
-        dd(1);
-    }
-
 }
