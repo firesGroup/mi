@@ -118,7 +118,6 @@ class ProductController extends Controller
         ];
         //如果有model 字段
         if( $request->model ){
-
             $model_id = $request->model;
             //把模型id写入商品表数据数组中
             $productData['model_id'] = $model_id;
@@ -513,6 +512,7 @@ class ProductController extends Controller
 
         //获取所有规格的id与name值 转为数组
         $spec = ProductSpec::select('id','spec_name')->get()->toArray();
+
         //在转为 键名为规格id,值为规格name 的一维数组
         foreach( $spec as $k=>$value ){
             $spec[$value['id']] = $value['spec_name'];
