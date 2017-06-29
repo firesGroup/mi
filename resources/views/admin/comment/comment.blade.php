@@ -20,10 +20,9 @@
 
 @section('content')
 
-    {{--{{dump($data)}}--}}
     <section class="larry-grid">
         <header class="larry-personal-tit">
-            <span style="font-size: 20;">商品评价管理-评价列表</span>
+            <span style="font-size: 20PX;">商品评价管理-评价列表</span>
         </header>
         <div class="row" id="infoSwitch">
             <blockquote class="layui-elem-quote col-md-12 head-con">
@@ -80,7 +79,7 @@
                 </tr>
                 </thead>
                 <tbody>
-
+{{--{{dd($data )}}--}}
                 @foreach($data as $k=>$v)
                     <tr>
                         <td class="cid">{{$v->id}}</td>
@@ -138,10 +137,12 @@
 
             </table>
         </div>
-        <div class="larry-table-page">
+        <div class="larry-table-page" style="text-align: center;">
             {{ $data->render() }}
         </div>
     </section>
+
+    @endsection
 
 @section('js')
     @parent
