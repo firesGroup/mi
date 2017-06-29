@@ -29,7 +29,7 @@
     @parent
     <script>
         layui.use(['jquery','elements','layer'], function(){
-            var $ = layui.jquery,
+            var $ = layui.jquery;
 
         });
     </script>
