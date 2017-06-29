@@ -52,9 +52,8 @@
                                     <div class="layui-form-item">
                                         <label class="layui-form-label">轮播图图片路径</label>
                                         <div class="layui-input-block">
-                                            <input type="text" name="images" required lay-verify="required"
-                                                   placeholder="" autocomplete="off"
-                                                   class="layui-input" value="{{$data->images}}">
+                                            <input id="upload-input" type="text" class="layui-input layui-input-inline" name="images" value="{{$data->images}}" style="width:520px;height:38px;margin:0px" placeholder="输入图片地址或点击上传">
+                                            <input type="file" name="file" id="createUpload" class="layui-upload-file" accept="image/*"  lay-ext="jpg|png|gif|bmp" lay-title="点击或拖拽文传上传">
                                         </div>
                                     </div>
                                     <div class="layui-form-item">
@@ -93,6 +92,40 @@
     @parent
     <script>
 
+        layui.use( ['jquery','layer','form','upload'], function(){
+            var $ = layui.jquery,
+                layer = layui.layer,
+                form = layui.form();
+
+
+            //执行上传
+            layui.upload({
+                elem: '#createUpload', //文件input上传域 id
+                method: 'post', //文件上传传输方式
+                url: '{{ url('/upload') }}', //后台处理程序地址
+                before: function (input) {
+                    //上传前回调
+                    $('input#createUpload').parent().append('<input type="hidden" name="_token" value="{{ csrf_token() }}"><input type="hidden" name="path" value="slideShow">');
+                    l = layer.msg('正在上传 请稍后...', {icon: 6});
+                }
+                , success: function (res) {
+                    if (res.status == 0) {
+                        layer.close(l);
+                        layer.msg('上传成功',{
+                            icon: 6,
+                            time: 1000 //2秒关闭（如果不配置，默认是3秒）
+                        });
+                        $('input[name=images]').val(res.src);
+                    }else if( res == 1 ){
+                        layer.close(l);
+                        layer.msg('上传失败', {'time': 2000});
+                    }
+                }
+            });
+
+
+
+        } );
 
     </script>
 
