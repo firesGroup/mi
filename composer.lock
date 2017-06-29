@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "c57971d47d352ba2ac5f497e07e66f30",
+    "content-hash": "530c20dbf760218610fc7410eccd8be9",
     "packages": [
         {
             "name": "classpreloader/classpreloader",
@@ -159,6 +159,40 @@
                 "string"
             ],
             "time": "2015-11-06T14:35:42+00:00"
+        },
+        {
+            "name": "flc/alidayu",
+            "version": "v2.0.5",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/flc1125/alidayu.git",
+                "reference": "03a2b8258c55a8530f191af55b5e18554ef7113c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://files.phpcomposer.com/files/flc1125/alidayu/03a2b8258c55a8530f191af55b5e18554ef7113c.zip",
+                "reference": "03a2b8258c55a8530f191af55b5e18554ef7113c",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.4.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Flc\\Alidayu\\": "src/Alidayu/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "阿里大于(鱼)API-SDK；适用任何PHP项目，包括Laravel、Yii、Thinkphp等...",
+            "keywords": [
+                "alidayu",
+                "flc"
+            ],
+            "time": "2017-01-25T08:12:30+00:00"
         },
         {
             "name": "gregwar/captcha",
@@ -1068,6 +1102,56 @@
                 "random"
             ],
             "time": "2017-03-13T16:22:52+00:00"
+        },
+        {
+            "name": "predis/predis",
+            "version": "v1.0.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/nrk/predis.git",
+                "reference": "9ead747663bb1b1ae017dfa0d152aca87792b42f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://files.phpcomposer.com/files/nrk/predis/9ead747663bb1b1ae017dfa0d152aca87792b42f.zip",
+                "reference": "9ead747663bb1b1ae017dfa0d152aca87792b42f",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.2"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~4.8"
+            },
+            "suggest": {
+                "ext-curl": "Allows access to Webdis when paired with phpiredis",
+                "ext-phpiredis": "Allows faster serialization and deserialization of the Redis protocol"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Predis\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Daniele Alessandri",
+                    "email": "suppakilla@gmail.com",
+                    "homepage": "http://clorophilla.net"
+                }
+            ],
+            "description": "Flexible and feature-complete Redis client for PHP and HHVM",
+            "homepage": "http://github.com/nrk/predis",
+            "keywords": [
+                "nosql",
+                "predis",
+                "redis"
+            ],
+            "time": "2016-05-30T15:25:52+00:00"
         },
         {
             "name": "psr/http-message",

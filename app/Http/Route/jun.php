@@ -27,5 +27,7 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function () {
     Route::resource('friend','FriendController');
     Route::get('friendStatus','FriendController@updateStatus');
 
+//    Route::get('index','AdminController@index');
+
 });
 

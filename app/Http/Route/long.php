@@ -42,8 +42,12 @@ Route::group( ['namespace'=>'Home'], function(){
        return view('home/reg_login/reg');
 
    });
+   Route::post('sms', 'SmsController@sms');
+
 
 });
+
+Route::get('kit/captcha/{tmp}', 'Home\CodeController@captcha');
 
 
 

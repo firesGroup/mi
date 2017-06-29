@@ -18,6 +18,7 @@
     <meta http-equiv="Content-Language" content="zh-cn" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <meta http-equiv="Cache-Control" content="no-transform " />
     <meta http-equiv="pragram" content="no-cache">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=1226" />
@@ -25,7 +26,6 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <meta name="renderer" content="webkit">
-    <meta name="format-detection" content="telephone=no">
     <link rel="Shortcut Icon" href="/favicon.ico" />
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -34,7 +34,8 @@
     <![endif]-->
     <!-- loading css -->
     @section('css')
-    <link rel="stylesheet" type="text/css" href="{{ asset('/plugin/layui/css/layui.css') }}" media="all">
+        <link rel="stylesheet" type="text/css" href="{{ asset('/css/home/base.css') }}">
+        <link rel="stylesheet" type="text/css" href="{{ asset('/plugin/layui/css/layui.css') }}" media="all">
     @show
 </head>
 <body>
@@ -44,6 +45,7 @@
     <!-- loading JavaScript-->
     @section('js')
         <script type="text/javascript" src="{{ asset('/plugin/layui/layui.js') }}"></script>
-        @show
+        <script type="text/javascript" src="{{ asset('/js/home/base.js') }}"></script>
+    @show
 </body>
 </html>

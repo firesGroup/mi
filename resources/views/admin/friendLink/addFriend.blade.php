@@ -156,14 +156,6 @@
             });
         });
 
-        layui.use(['jquery', 'layer'], function () {
-            var $ = layui.jquery,
-                layer = layui.layer;
-//            $('#button').on('click',function () {
-//
-//                alert(1);
-//            });
-
 
         });
     </script>

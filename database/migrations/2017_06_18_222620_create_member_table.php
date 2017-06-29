@@ -16,7 +16,7 @@ class CreateMemberTable extends Migration
             $table->increments('id')->comment('用户id');
             $table->string('nick_name',20)->unique()->comment('用户昵称');
             $table->string('email')->unique()->comment('电子邮箱');
-            $table->string('password');
+            $table->string('password')->comment('用户密码');
             $table->unsignedInteger('phone')->unique()->comment('手机号码');
             $table->tinyInteger('status')->default('0')->comment('用户状态,0为正常,1为锁定');
             $table->ipAddress('last_ip')->comment('最后登陆ip');

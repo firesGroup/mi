@@ -10,6 +10,7 @@ use DB;
 use Illuminate\Http\Request;
 use App\Http\Requests\Admin\MemberRequest;
 use Image;
+use Hash;
 
 class MemberController extends Controller
 {
@@ -43,9 +44,17 @@ class MemberController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(MemberRequest $request)
+    public function store(Request $request)
     {
-        //
+        $data = $request->all();
+//
+        $data['password'] = bcrypt($data['password']);
+        $data['member_name'] = "米粉".rand(0, 1000000);
+        $data['status'] = '0';
+        $request->setTrustedProxies(array('10.32.0.1/16'));
+        $ip = $request->getClientIp();
+        $data['last_ip'] = $ip;
+        dd($data);
     }
 
     /**
