@@ -57,40 +57,82 @@ layui.use(['jquery','element','MI','layer'], function(){
     //焦点轮播图
     var slideObj = {
         id:2,
-      time:2500,//定义轮播图切换时间
-      init:function(){ //执行初始化
-          var th = $('#J_homeSlider'),p = t.parent();
-          var slideHtml = p.html();
-          $('#J_homeSlider div.slide').each(function(i){
-              if( i == 1){
-                  $(this).attr('style','z-index: 50; display: block;');
-              }else{
-                  $(this).attr('style','float: none; list-style: none; position: absolute; width: 1226px; z-index: 0; display: none;');
-              }
-          });
-          var num = this.imgNum(),str ='<div class="ui-controls ui-has-pager ui-has-controls-direction"><div class="ui-pager ui-default-pager">';
-          for( var i; i < num; i++ ){
-              str += '<div class="ui-pager-item"><a href="" data-slide-index="'+ i +'" class="ui-pager-link">'+ i +'</a></div>';
-          }
-          str +='<div class="ui-controls-direction"><a class="ui-prev" href="javascript:;" onclick="">上一张</a><a class="ui-next" href="javascript:;" onclick="">下一张</a></div></div>';
-          var lastStr = '<div class="ui-wrapper" style="max-width: 100%;"><div class="ui-viewport" style="width: 100%; overflow: hidden; position: relative; height: 460px;">'+ slideHtml + str + '</div></div>';
-          p.html(lastStr);
+        time:2500,//定义轮播图切换时间
+        show:'z-index: 50;display: block;',
+        hide:'float: none; list-style: none; position: absolute; width: 1226px; z-index: 0; display: none;',
+        timer:null,
+
+        init:function(){ //执行初始化
+            var th = $('#J_homeSlider'), p = th.parent(), t = this;
+            var slideHtml = p.html();
+            var num = this.imgNum(),
+                str = '<div class="ui-controls ui-has-pager ui-has-controls-direction"><div class="ui-controls-direction"><a class="ui-prev" href="javascript:;" onclick="">上一张</a><a class="ui-next" href="javascript:;" onclick="">下一张</a></div><div class="ui-pager ui-default-pager">';
+            for (var i = 0; i < num; i++) {
+                if (i == 0) {
+                    str += '<div class="ui-pager-item"><a href="" data-slide-index="' + i + '" class="ui-pager-link active">' + (i + 1) + '</a></div>';
+                } else {
+                    str += '<div class="ui-pager-item"><a href="" data-slide-index="' + i + '" class="ui-pager-link">' + (i + 1) + '</a></div>';
+                }
+            }
+            str += '</div>';
+            var lastStr = '<div class="ui-wrapper" style="max-width: 100%;"><div class="ui-viewport" style="width: 100%; overflow: hidden; position: relative; height: 460px;">' + slideHtml + str + '</div></div>';
+            p.html(lastStr);
+            $('#J_homeSlider div').each(function (i) {
+                if (i == 0) {
+                    $(this).attr('style', t.hide);
+                } else {
+                    $(this).attr('style', t.show);
+                }
+            });
           this.start();
-      },
-      start:function(){
+        },
+
+        start:function(){
+            var t = this;
+            var num = this.imgNum();
+            var time = this.time;
+            this.timer = setInterval(function () {
+                var index = t.check();
+                var th = $('#J_homeSlider div.slide').eq(index);
+                if (index == num - 1) {
+                    th.removeClass('loaded');
+                    $('#J_homeSlider div.slide').eq(0).addClass('loaded').attr('style', t.show);
+                    t.stop();
+                    t.start();
+                } else {
+                    th.attr('style',t.hide);
+                    th.next().attr('style', t.show).addClass('loaded').siblings().removeClass('loaded');
+                    t.page();
+                }
+            }, time);
+        },
+        check: function () {
+            var index = 0;
+            $('#J_homeSlider div').each(function (i) {
+                if ($(this).hasClass('loaded')) {
+                    index = i;
+                }
+            });
+            return index;
+        },
+        imgNum: function () {
+            return $('#J_homeSlider div').size();
+        },
+        page:function(){i
           var index = this.check();
-          var timer = setInterval(function(){
-
-          },this.time);
-      },
-      check:function(){
-          $('#J_homeSlider div.slide').each(function(i){
-
-          });
-      },
-      imgNum:function(){
-          return $('#J_homeSlider div.slide').length;
-      }
+          $('#J_homeSlider').next().find('div.ui-pager div.ui-pager-item').eq(index).children('a').addClass('active').siblings().removeClass('active');
+        },
+        stop: function () {
+            clearInterval(this.timer);
+        },
+        prev: function () {
+            clearInterval(this.timer);
+            var index = this.check(), th = $('#J_homeSlider div').eq(index);
+            th.removeClass('loaded').attr('style',this.hide);
+            th.prev().addClass('loaded').attr('style',this.show);
+        }
     };
+    //执行轮播图滚动
+    slideObj.init();
 
 });
