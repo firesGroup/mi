@@ -29,8 +29,8 @@
                         <h4 title="提示相关设置操作时应注意的要点">操作提示</h4>
                     </div>
                     <ul>
-                        <li>会员等级管理， 不同会员等级可设置不同折扣</li>
-
+                        <li>广告管理</li>
+                        <li>状态默认开启</li>
                     </ul>
                     <i class="larry-icon larry-guanbi close" id="closeInfo"></i>
                 </blockquote>
@@ -77,15 +77,15 @@
                                 <td>{{$v->ad_location}}</td>
                                 <td>
                                     <form class="layui-form" action="" text-align="center">
-                                        <input type="checkbox" checked="" name="open" lay-skin="switch"
+                                        <input type="checkbox" name="open" lay-skin="switch"
                                                lay-filter="switchTest" lay-text="开启|禁用"
-                                               value="0"{{$v->status=='0'?'checked':''}}>
+                                               {{$v->status===0?'checked':''}}>
                                     </form>
                                 </td>
                                 <td>{{$v->ad_desc}}</td>
                                 <td>
                                     <div class="layui-btn-group">
-                                        <a href="{{ url('admin/').'/'.$v->id."/edit" }}" class="layui-btn"
+                                        <a href="{{ url('admin/advert').'/'.$v->id."/edit" }}" class="layui-btn"
                                            data-alt="修改">
                                             <i class="layui-icon">&#xe642;</i>
                                         </a>
@@ -152,9 +152,9 @@
                 });
             });
 
-//            global.aDelete(function () {
-//
-//            })
+
+        global.aDelete('#delete', '删除', '确认删除', '{{csrf_token()}}', '{{url("admin/advert").'/'}}')
+
         });
     </script>
 @endsection
