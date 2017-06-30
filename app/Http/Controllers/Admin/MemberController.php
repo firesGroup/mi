@@ -10,6 +10,7 @@ use DB;
 use Illuminate\Http\Request;
 use App\Http\Requests\Admin\MemberRequest;
 use Image;
+use Hash;
 
 class MemberController extends Controller
 {
@@ -43,9 +44,17 @@ class MemberController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(MemberRequest $request)
+    public function store(Request $request)
     {
-        //
+        $data = $request->all();
+//
+        $data['password'] = bcrypt($data['password']);
+        $data['member_name'] = "米粉".rand(0, 1000000);
+        $data['status'] = '0';
+        $request->setTrustedProxies(array('10.32.0.1/16'));
+        $ip = $request->getClientIp();
+        $data['last_ip'] = $ip;
+        dd($data);
     }
 
     /**
@@ -116,7 +125,7 @@ class MemberController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(MemberRequest $request, $id)
+    public function destroy(Request $request, $id)
     {
         //dd($id);
         $data = Member::find($id);
@@ -124,7 +133,7 @@ class MemberController extends Controller
        return DB::table('memberdetail')->where('mid', $data->id)->delete();
     }
 
-    public function changeavator(MemberRequest $request)
+    public function changeavator(Request $request)
     {
 
         $id = $_POST['id'];
@@ -142,7 +151,7 @@ class MemberController extends Controller
      }
 
      //对视图传过来的图片进行裁剪
-     public function change(MemberRequest $request)
+     public function change(Request $request)
      {
          $photo = mb_substr($request->get('photo'),1);
          $w = $request->get('w');

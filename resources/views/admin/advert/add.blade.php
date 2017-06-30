@@ -19,7 +19,7 @@
     <section class="larry-grid">
         <div class="larry-personal">
             <header class="larry-personal-tit">
-                <span>等级管理-添加等级</span>
+                <span>广告管理-添加广告</span>
             </header>
             <div class="row" id="infoSwitch">
                 <blockquote class="layui-elem-quote col-md-12 head-con">
@@ -28,7 +28,7 @@
                         <h4 title="提示相关设置操作时应注意的要点">操作提示</h4>
                     </div>
                     <ul>
-                        <li>请务必正确填写等级信息</li>
+                        <li>请务必正确填写广告信息</li>
                     </ul>
                     <i class="larry-icon larry-guanbi close" id="closeInfo"></i>
                 </blockquote>
@@ -43,15 +43,6 @@
                             <div class="form-body">
                                 <form class="layui-form" method="post" action="{{url('admin/advert')}}">
                                     {{csrf_field()}}
-                                    <div class="layui-form-item">
-                                        <label class="layui-form-label">广告名称</label>
-                                        <div class="layui-input-block">
-                                            <input type="text" name="advert_name" lay-verify="required"
-                                                   placeholder="请输入广告名称" autocomplete="off" class="layui-input"
-                                                   id="level_name" value="{{old('level_name')}}">
-                                        </div>
-                                    </div>
-
                                     <div class="layui-form-item">
                                         <div class="layui-form-item">
                                             <label class="layui-form-label">广告链接</label>
@@ -71,11 +62,10 @@
                                                        value="{{old('ad_location_h')}}">
                                             </div>
                                         </div>
-
                                         <div class="layui-form-item">
                                             <label class="layui-form-label">广告描述</label>
                                             <div class="layui-input-block">
-                                            <textarea type="text" name="advert_desc" lay-verify="required"
+                                            <textarea type="text" name="ad_desc" lay-verify="required"
                                                       placeholder="请输入广告描述" autocomplete="off"
                                                       class="layui-input">{{old('avert_desc')}}</textarea>
                                             </div>

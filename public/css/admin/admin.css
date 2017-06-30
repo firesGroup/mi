@@ -1,5 +1,5 @@
 .div{
-    width: 281.5px;
+    width: 16.5%;
     height: 105px;
     float: left;
 
@@ -12,7 +12,7 @@
 }
 
 .price{
-    width:100px;
+    width:35%;
     height: 83px;
     float: left;
     text-align: center;
@@ -22,7 +22,7 @@
 }
 
 .content{
-    width:157px;
+    width:55%;
     height: 83px;
     float: left;
     text-align: center;

@@ -10,7 +10,10 @@
         "laravelcollective/html": "5.2.*",
         "intervention/image": "^2.3",
         "stevenyangecho/laravel-u-editor": "~1.4",
-        "predis/predis": "^1.1"
+        "iscms/alisms-for-laravel": "^0.0.3",
+        "gregwar/captcha": "1.*",
+        "predis/predis": "1.0.*",
+        "flc/alidayu": "^2.0"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "648248d2cf357840997b335057050c2c",
+    "content-hash": "530c20dbf760218610fc7410eccd8be9",
     "packages": [
         {
             "name": "classpreloader/classpreloader",
@@ -161,6 +161,88 @@
             "time": "2015-11-06T14:35:42+00:00"
         },
         {
+            "name": "flc/alidayu",
+            "version": "v2.0.5",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/flc1125/alidayu.git",
+                "reference": "03a2b8258c55a8530f191af55b5e18554ef7113c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://files.phpcomposer.com/files/flc1125/alidayu/03a2b8258c55a8530f191af55b5e18554ef7113c.zip",
+                "reference": "03a2b8258c55a8530f191af55b5e18554ef7113c",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.4.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Flc\\Alidayu\\": "src/Alidayu/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "阿里大于(鱼)API-SDK；适用任何PHP项目，包括Laravel、Yii、Thinkphp等...",
+            "keywords": [
+                "alidayu",
+                "flc"
+            ],
+            "time": "2017-01-25T08:12:30+00:00"
+        },
+        {
+            "name": "gregwar/captcha",
+            "version": "v1.1.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Gregwar/Captcha.git",
+                "reference": "2f704c8bc3f1bb5f58994af2729e77ac4e3172e6"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://files.phpcomposer.com/files/Gregwar/Captcha/2f704c8bc3f1bb5f58994af2729e77ac4e3172e6.zip",
+                "reference": "2f704c8bc3f1bb5f58994af2729e77ac4e3172e6",
+                "shasum": ""
+            },
+            "require": {
+                "ext-gd": "*",
+                "php": ">=5.3.0"
+            },
+            "type": "captcha",
+            "autoload": {
+                "psr-4": {
+                    "Gregwar\\Captcha\\": "/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Grégoire Passault",
+                    "email": "g.passault@gmail.com",
+                    "homepage": "http://www.gregwar.com/"
+                },
+                {
+                    "name": "Jeremy Livingston",
+                    "email": "jeremy.j.livingston@gmail.com"
+                }
+            ],
+            "description": "Captcha generator",
+            "homepage": "https://github.com/Gregwar/Captcha",
+            "keywords": [
+                "bot",
+                "captcha",
+                "spam"
+            ],
+            "time": "2017-04-19T08:10:55+00:00"
+        },
+        {
             "name": "guzzlehttp/psr7",
             "version": "1.4.2",
             "source": {
@@ -286,6 +368,54 @@
                 "watermark"
             ],
             "time": "2017-04-23T18:45:36+00:00"
+        },
+        {
+            "name": "iscms/alisms-for-laravel",
+            "version": "0.0.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ISCLOUDX/alisms.git",
+                "reference": "c713ea802993fb6dd5a0852e660cf7451ef98d39"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://files.phpcomposer.com/files/ISCLOUDX/alisms/c713ea802993fb6dd5a0852e660cf7451ef98d39.zip",
+                "reference": "c713ea802993fb6dd5a0852e660cf7451ef98d39",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.5.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "iscms\\Alisms\\": "src/",
+                    "iscms\\AlismsSdk\\": "src/vendor/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "秋綾",
+                    "email": "root@iscloudx.com"
+                }
+            ],
+            "description": "阿里大鱼laravel5封装包,提供简单明确的调用方法",
+            "homepage": "https://www.iscloudx.com",
+            "keywords": [
+                "alisms",
+                "bigfish",
+                "大鱼",
+                "短信接口",
+                "阿里云",
+                "阿里云大鱼短信",
+                "阿里云短信",
+                "阿里大鱼"
+            ],
+            "time": "2017-01-22T09:00:40+00:00"
         },
         {
             "name": "jakub-onderka/php-console-color",

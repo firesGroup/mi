@@ -15,7 +15,6 @@ class CreateLevelTable extends Migration
         Schema::create( 'level', function(Blueprint $table){
             $table->increments('id')->comment('等级id');
             $table->string('level_name')->comment('等级名称');
-            $table->decimal('consumption', 12,2)->comment('消费金额');
             $table->string('discount', 10)->comment('折扣率');
             $table->text('level_desc')->comment('等级描述');
             $table->timestamps();
