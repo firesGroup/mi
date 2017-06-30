@@ -108,10 +108,10 @@
                     <br> 违法和不良信息举报电话：185-0130-1238，本网站所列数据，除特殊说明，所有数据均出自我司实验室测试</p>
             </div>
             <div class="info-links">
-                <a  rel="nofollow" href="" target="_blank"><img  rel="nofollow" src="/images/home/truste.png" alt="TRUSTe Privacy Certification" /></a>
-                <a  rel="nofollow" href="" target="_blank"><img  rel="nofollow" src="/images/home/v-logo-2.png" alt="诚信网站" /></a>
-                <a  rel="nofollow" href="" target="_blank"><img  rel="nofollow" src="/images/home/v-logo-1.png" alt="可信网站" /></a>
-                <a  rel="nofollow" href="" target="_blank"><img  rel="nofollow" src="/images/home/v-logo-3.png" alt="网上交易保障中心" /></a>
+                <a  rel="nofollow" href="" target="_blank"><img  rel="nofollow" class="cacheload" src="/images/public/default.gif" data-url="/images/home/truste.png" alt="TRUSTe Privacy Certification" /></a>
+                <a  rel="nofollow" href="" target="_blank"><img  rel="nofollow" class="cacheload" src="/images/public/default.gif" data-url="/images/home/v-logo-2.png" alt="诚信网站" /></a>
+                <a  rel="nofollow" href="" target="_blank"><img  rel="nofollow" class="cacheload" src="/images/public/default.gif" data-url="/images/home/v-logo-1.png" alt="可信网站" /></a>
+                <a  rel="nofollow" href="" target="_blank"><img  rel="nofollow" class="cacheload" src="/images/public/default.gif" data-url="/images/home/v-logo-3.png" alt="网上交易保障中心" /></a>
             </div>
         </div>
         <div class="slogan ir">探索黑科技，小米为发烧而生</div>
