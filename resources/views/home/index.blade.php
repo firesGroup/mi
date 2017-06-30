@@ -25,9 +25,9 @@
     @include('home.public.header_nav')
     <div class="home-hero-container container">
         <div class="home-hero">
-        @include('home.index.sildeShow')
-        @include('home.public.hotRecommend')
-        @include('home.index.superStar')
+            @include('home.index.sildeShow')
+            @include('home.public.hotRecommend')
+            @include('home.index.superStar')
         </div>
     </div>
     <!-- 主要内容 start -->
