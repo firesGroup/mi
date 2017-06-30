@@ -52,14 +52,6 @@
                                         </div>
                                     </div>
                                     <div class="layui-form-item">
-                                        <label class="layui-form-label">消费金额</label>
-                                        <div class="layui-input-block">
-                                            <input type="text" name="consumption" lay-verify="required|consumption|number"
-                                                   placeholder="请输入消费金额" autocomplete="off" class="layui-input" value="{{old('consumption')}}">
-                                        </div>
-                                    </div>
-
-                                    <div class="layui-form-item">
                                         <label class="layui-form-label">折扣率</label>
                                         <div class="layui-input-block">
                                             <input type="text" name="discount" lay-verify="required|discount|number" placeholder="请输入折扣率" id="discount"

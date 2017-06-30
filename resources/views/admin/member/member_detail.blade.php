@@ -128,8 +128,7 @@
                 <div class="modal-body">
                     <div class="content">
                         <div class="crop-image-wrapper">
-                            <img
-                                    src="/images/default-avatar.png"
+                            <img src="/images/default-avatar.png"
                                     class="ui centered image" id="cropbox" >
                             <input type="hidden" name="id" value="{{$data->id}}">
                             <input type="hidden" id="photo" name="photo" />
@@ -177,11 +176,11 @@
                 ,title : '上传头像'
                 ,success: function(res){
                 //上传成功后的回调
-//                $("#upload").attr("src", res.src);
+                $("#upload").attr("src", res.src);
                     var cropBox = $("#cropbox");
                     cropBox.attr('src', res.src);
                     $('#photo').val(res.src);
-//                    $('#upload-avatar').html('更换新头像');
+                    $('#upload-avatar').html('更换新头像');
                     $('#exampleModal').modal('show');
                     cropBox.Jcrop({
                         aspectRatio: 1,

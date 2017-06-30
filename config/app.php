@@ -150,6 +150,10 @@ return [
         Intervention\Image\ImageServiceProvider::class,
         Collective\Html\HtmlServiceProvider::class,
         Stevenyangecho\UEditor\UEditorServiceProvider::class,
+        iscms\Alisms\AlidayuServiceProvider::class,
+        iscms\Alisms\AlidayuServiceProvider::class,
+
+
 
 
         /*
@@ -160,6 +164,7 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         App\Providers\NewPageServiceProvider::class,
+
 
     ],
 
