@@ -51,12 +51,6 @@
                                         </div>
                                     </div>
                                     <div class="layui-form-item">
-                                        <label class="layui-form-label">消费金额</label>
-                                        <div class="layui-input-block">
-                                            <input type="text" name="consumption" lay-verify="required|consumption"  autocomplete="off" class="layui-input" value="{{$data->consumption}}">
-                                        </div>
-                                    </div>
-                                    <div class="layui-form-item">
                                         <label class="layui-form-label">折扣率</label>
                                         <div class="layui-input-block">
                                             <input type="text" name="discount" class="layui-input" value="{{trim($data->discount, '%')}}" lay-verify="required|discount">
