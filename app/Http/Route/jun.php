@@ -31,3 +31,11 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function () {
 
 });
 
+Route::group(['namespace' => 'Home'], function () {
+
+    Route::resource('comment','CommentController');
+    Route::get('comment','CommentController@index');
+
+});
+
+//Route::get('comment', 'CommentController@index');
