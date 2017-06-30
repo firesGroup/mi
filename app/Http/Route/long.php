@@ -15,6 +15,7 @@ Route::group( ['namespace'=>'Admin', 'prefix'=>'admin'], function(){
     Route::post('member_ajax_phone/{id}', 'MemberController@member_check_phone');
     Route::post('member_ajax_email/{id}', 'MemberController@member_check_email');
     Route::post('avator', 'MemberController@changeavator');
+    Route::post('mail_code', 'MemberController@mail_code');
     Route::resource('member', 'MemberController' );
     //等级路由
 
@@ -43,11 +44,11 @@ Route::group( ['namespace'=>'Home'], function(){
 
    });
    Route::post('sms', 'SmsController@sms');
-
-
+   Route::get('mailBox/{uid}/{code}/{u}', 'SmsController@smsCode');
 });
 
 Route::get('kit/captcha/{tmp}', 'Home\CodeController@captcha');
+Route::get('kit/capt/{tmp}', 'Home\CodeController@captcha');
 
 
 
