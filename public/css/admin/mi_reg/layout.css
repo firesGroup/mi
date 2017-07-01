@@ -115,7 +115,7 @@ a{text-decoration:none;color:#333;}
     height:40px;
     opacity:0.7;
     outline:none;
-    margin-top:15px;
+    margin-top:25px;
     padding:10px;
     font-size:12px;
 }
@@ -223,5 +223,10 @@ a{text-decoration:none;color:#333;}
 
 .layui-input{
     width:320px;
+}
+
+.code{
+     color:red;
+    font-size:10px;
 }
 
