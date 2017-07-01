@@ -68,7 +68,6 @@
 
 @section('js')
     @parent
-    <script type="text/javascript" src="{{ asset('/plugin/load.js') }}"></script>
     <script type="text/javascript" src="{{ asset('/js/home/index.js') }}?ver=<?php echo time();  ?>"></script>
     <script>
         $(function() {

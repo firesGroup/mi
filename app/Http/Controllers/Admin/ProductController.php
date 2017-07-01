@@ -17,12 +17,9 @@ use App\Entity\Product;
 use App\Entity\ProductAttribute;
 use App\Entity\ProductAttributeValue;
 use App\Entity\ProductBrand;
+use App\Entity\ProductColor;
 use App\Entity\ProductDetail;
 use Illuminate\Http\Request;
-use App\Entity\ProductModel;
-use App\Entity\ProductSpec;
-use App\Entity\ProductSpecItem;
-use App\Entity\ProductSpecPrice;
 use App\Entity\ProductImages;
 use App\Http\Requests\Admin\ProductRequest;
 use App\Http\Controllers\Controller;
@@ -80,11 +77,9 @@ class ProductController extends Controller
      */
     public function create()
     {
-        $brand = (new Brand())->getIdAndName();
         $zhStatus = ['在售','下架','预购','缺货','新品上市'];
-        //查询所有模型
-        $modelList = ProductModel::all();
-        return view('admin.product.create', compact('brand','zhStatus', 'modelList'));
+        $colorList = ProductColor::all();
+        return view('admin.product.create', compact('zhStatus','colorList'));
     }
 
     /**
@@ -98,11 +93,10 @@ class ProductController extends Controller
     {
         $productData = [
             'category_id'  => '3',
-            'brand_id'     => $request->brand_id,
             'price'        => $request->price,
-            'market_price' => $request->market_price,
             'p_name'       => $request->p_name,
             'status'       => $request->status,
+            'store'        => $request->store,
             'recommend'    => $request->recommend,
         ];
         $detailData = [
@@ -110,43 +104,16 @@ class ProductController extends Controller
             'summary'          => $request->summary,
             'description'      => $request->description,
             'remind_title'     => $request->remind_title,
-            'store'            => $request->store,
-            'weight'           => $request->weight,
-            'unit'             => $request->unit,
             'is_free_shipping' => $request->is_free_shipping,
             'tags'             => $request->tags,
         ];
-        //如果有model 字段
-        if( $request->model ){
-            $model_id = $request->model;
-            //把模型id写入商品表数据数组中
-            $productData['model_id'] = $model_id;
-            //获得规格数据数组
-            $specItem = $request->specItem;
-            //获得属性数据数组
-            $attrValue = $request->attrValue;
-            //重组specItem数组
-            if ($specItem) {
-                foreach ($specItem as $key => $value) {
-                    $specData[] = [
-                        'spec_key'      => $key,
-                        'spec_key_name' => $value['spec_key_name'],
-                        'price'         => $value['price'],
-                        'store'         => $value['store'],
-                        'sku'           => $value['sku'],
-                    ];
-                }
-            }
-            if ($attrValue) {
-                foreach ($attrValue as $key => $value) {
-                    $attrData[] = [
-                        'attr_id'    => $key,
-                        'attr_value' => $value,
-                    ];
-                }
-            }
-        }
 
+        //生成商品货号
+        if( !($request->p_num) ){
+            $productData['p_num'] = "mi".date('YmdH',time()).mt_rand(000,999);
+        }else{
+            $productData['p_num'] = $request->p_num;
+        }
         //先写入商品表,获得商品id;
         $id = Product::insertGetId($productData);
 
@@ -154,74 +121,55 @@ class ProductController extends Controller
             //将商品id 放入将要写入的各个数组中
             $detailData['p_id'] = $id;
 
-            //商品规格数据
-            if (isset($specData)) {
-                $specData['p_id'] = $id;
-            }else{
-                $specData = null;
-            }
-            //商品属性数据
-            if (isset($attrData)) {
-                $attrData['p_id'] = $id;
-            }else{
-                $attrData = null;
-            }
-
-            //商品相册数据
-            $imagesDataArr = $request->p_images;
-            if( isset($imagesDataArr) ){
-                foreach ($imagesDataArr as $img) {
-                    $imagesData[] = [
-                        'p_id' => $id,
-                        'path' => $img,
-                    ];
-                }
-            }else{
-                $imagesData = null;
-            }
+//            //商品相册数据
+//            $imagesDataArr = $request->p_images;
+//            if( isset($imagesDataArr) ){
+//                foreach ($imagesDataArr as $img) {
+//                    $imagesData[] = [
+//                        'p_id' => $id,
+//                        'path' => $img,
+//                    ];
+//                }
+//            }else{
+//                $imagesData = null;
+//            }
 
             //开启事务处理
-            $res = DB::transaction(function () use ($detailData, $imagesData, $specData, $attrData) {
+            $res = DB::transaction(function () use ($detailData) {
                 //写入详情表
                 ProductDetail::insert($detailData);
 
-                //写入商品图片表
-                if( $imagesData ){
-                    ProductImages::insert($imagesData);
-                }
-                //写入规格价格
-                if ($specData) {
-                    ProductSpecPrice::insert($specData);
-                }
-                //写入属性
-                if ($attrData) {
-                    ProductAttributeValue::insert($attrData);
-                }
+//                //写入商品图片表
+//                if( $imagesData ){
+//                    ProductImages::insert($imagesData);
+//                }
+//                //写入规格价格
+//                if ($specData) {
+//                    ProductSpecPrice::insert($specData);
+//                }
+//                //写入属性
+//                if ($attrData) {
+//                    ProductAttributeValue::insert($attrData);
+//                }
 
                 return true;
             });
             if($res){
-                return 0;
+                $return['colors'] = Product::find($id)->p_colors;
+                $return['status'] = 0;
+                $return['id'] = $id;;
+                return response()->json($return);
             }else{
                 //如果事务失败,那么就删除之前商品表添加的商品
                 Product::destroy($id);
-                return 1;
+                $return['status'] = 1;
+                return response()->json($return);
             }
         }
         else {
-            return 1;//失败
+            $return['status'] = 1;
+            return response()->json($return);
         }
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show(ProductRequest $request,$id)
-    {
-        //
     }
 
     /**
@@ -237,10 +185,7 @@ class ProductController extends Controller
         $description = new HtmlString($detail->description);
         $zhStatus = ['在售','下架','预购','缺货','新品上市'];
         $brand = (new Brand())->getIdAndName();
-
-        //查询所有模型
-        $modelList = ProductModel::all();
-        return view('admin.product.edit',compact('info', 'detail','brand', 'description','zhStatus', 'modelList'));
+        return view('admin.product.edit',compact('info', 'detail','brand', 'description','zhStatus'));
     }
 
     /**
@@ -254,23 +199,20 @@ class ProductController extends Controller
     {
         $product = [
             'category_id'          => '3',
-            'brand_id'          => $request->input('brand_id'),
-            'price'        => $request->input('price'),
-            'market_price' => $request->input('market_price'),
-            'p_name'       => $request->input('p_name'),
-            'status'       => $request->input('status'),
-            'recommend'    => $request->input('recommend'),
+            'price'        => $request->price,
+            'p_name'       => $request->p_name,
+            'p_num'        => $request->p_num,
+            'status'       => $request->status,
+            'store'         => $request->store,
+            'recommend'    => $request->recommend,
         ];
         $detail = [
-            'p_index_image' => $request->input('p_index_image'),
-            'summary'       => $request->input('summary'),
-            'description'   => $request->input('description'),
-            'remind_title'  => $request->input('remind_title'),
-            'store'         => $request->input('store'),
-            'weight'        => $request->input('weight'),
-            'unit'         => $request->input('unit'),
-            'is_free_shipping' => $request->input('is_free_shipping'),
-            'tags'         => $request->input('tags')
+            'p_index_image' => $request->p_index_image,
+            'summary'       => $request->summary,
+            'description'   => $request->description,
+            'remind_title'  => $request->remind_title,
+            'is_free_shipping' => $request->is_free_shipping,
+            'tags'         => $request->tags
         ];
         //开启事务处理
         $res = DB::transaction(function() use($id, $product, $detail){
@@ -278,7 +220,7 @@ class ProductController extends Controller
             DB::table('product_detail')->where('p_id',$id)->update($detail);
             return true;
         });
-        return $res != -1?0:1;
+        return $res?0:1;
     }
 
     /**
@@ -293,7 +235,9 @@ class ProductController extends Controller
         $product = Product::find($id);
         $detail = $product->detail;
         $images = $product->images();
-
+        $version = $product->versions();
+        $colors = $product->color();
+        //商品详情
         if( $detail ){
             //获取封面图片地址
             $p_index_image = $detail->p_index_image;
@@ -302,8 +246,6 @@ class ProductController extends Controller
                 //在磁盘删除封面图片
                 Storage::delete($p_index_image);
             }
-            //删除商品详情表中的当前商品数据
-            $detail->delete();
         }
 
         //获取商品相册所有图片
@@ -313,12 +255,27 @@ class ProductController extends Controller
                 //从磁盘删除封面图片
                 Storage::delete($img->path);
             }
-            //从数据库删除
-            $images->delete();
         }
 
+        $res = DB::transaction(function() use($id, $product, $version, $colors , $images, $detail){
+            $product->delete();
+            //删除版本
+            if( $version ) {
+                $version->delete();
+            }
+            if( $colors ){
+                $colors->delete();
+            }
+            if( $images ){
+                $images->delete();
+            }
+            if( $detail ){
+                $detail->delete();
+            }
+            return true;
+        });
         //删除商品详情
-        if($product->delete()){
+        if($res){
             return 0;
         }else{
             return 1;
@@ -414,7 +371,7 @@ class ProductController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function deleteImages(ProductRequest $request)
+    public function deleteImages(Request $request)
     {
         //接收表单传递的id与path
         $id = $request->input('id');

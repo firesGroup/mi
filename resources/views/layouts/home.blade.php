@@ -47,6 +47,7 @@
         <script type="text/javascript" src="{{ asset('/js/public/jquery-1.12.4.min.js') }}"></script>
         <script type="text/javascript" src="{{ asset('/plugin/layui/layui.js') }}"></script>
         <script type="text/javascript" src="{{ asset('/js/home/base.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('/plugin/load.js') }}"></script>
     @show
 </body>
 </html>

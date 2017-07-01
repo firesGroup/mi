@@ -117,4 +117,10 @@
         <div class="slogan ir">探索黑科技，小米为发烧而生</div>
     </div>
 <!-- 页脚结束 -->
+<div id="scrollTop" style="display:none;position: fixed; bottom: 15px; right: 15px; opacity: 1; cursor: pointer;z-index:1000000">
+    <div class="gotop">
+        <a href="#"><i class="layui-icon">&#xe604;</i></a>
+    </div>
+</div>
+
 

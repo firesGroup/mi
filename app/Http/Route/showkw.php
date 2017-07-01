@@ -21,27 +21,19 @@ Route::group(['namespace'=>'Admin','prefix'=>'admin'], function(){
         'menu' => 'menu_id'
     ]]);
     Route::get('menu/index/welcome','MenuController@getWelcome');
-
-    Route::get('product/brand/getLogo/{brand_id}', 'ProductBrandController@getLogo');
-    Route::post('product/brand/changeLogo/{brand_id}', 'ProductBrandController@changeLogo');
-    Route::post('product/brand/createLogo', 'ProductBrandController@createLogo');
-    Route::resource('product/brand', 'ProductBrandController',['parameters' => [
-        'brand' => 'brand_id'
-    ]],['except'=>['show']]);
-    Route::resource('product/model', 'ProductModelController',['parameters' => [
-        'model' => 'model_id'
-    ]],['except'=>['show']]);
-    Route::resource('product/spec', 'ProductSpecController',['parameters' => [
-        'spec' => 'spec_id'
+    Route::get('product/versions/getColorList', 'ProductVersionsController@getColorList');
+    Route::get('product/versions/create/{id}','productVersionsController@create');
+    Route::get('product/versions/{id}/edit','productVersionsController@edit');
+    Route::get('product/versions/{id}','productVersionsController@index');
+    Route::post('product/versions/','productVersionsController@store');
+    Route::put('product/versions/{id}','productVersionsController@update');
+    Route::delete('product/versions/{id}','productVersionsController@destroy');
+    Route::resource('product/color', 'ProductColorController',['parameters' => [
+        'color' => 'color_id'
     ]],['except'=>['show']]);
     Route::resource('product/attr', 'ProductAttributeController',['parameters' => [
         'attr' => 'attr_id'
     ]],['except'=>['show']]);
-    Route::get('product/ajaxGetSpecList/{modelId}','ProductController@ajaxGetSpecList');
-    Route::post('product/ajaxGetSpecInput/{id?}','ProductController@ajaxGetSpecInput');
-    Route::get('product/ajaxGetAttrInput/{modelId}','ProductController@ajaxGetAttrInput');
-    Route::get('product/getSpecKeyExists/{id}','ProductController@getSpecKeyExists');
-    Route::post('product/editModelInfo/{id}','ProductController@editModelInfo');
     Route::resource('product', 'ProductController',['parameters' => [
         'product' => 'id'
     ]],['except'=>['show']]);
@@ -49,7 +41,8 @@ Route::group(['namespace'=>'Admin','prefix'=>'admin'], function(){
 Route::get( '/upload/{path}/{id}/{url}', 'PublicC\UploadController@getUpload' );
 Route::post( '/upload', 'PublicC\UploadController@postUpload' );
 
-Route::group(['namespace'=>'Home','prefix'=>'home'], function(){
+Route::group(['namespace'=>'Home',], function(){
     Route::get('product/info/{p_id}','HomeController@productInfo');
+    Route::post('/product/ajaxGetSpec/{p_id}', 'HomeController@ajaxGetSpecToInfo');
+    Route::get('/','HomeController@index');
 });
-Route::get('/','Home\HomeController@index');
