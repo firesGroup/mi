@@ -4,7 +4,7 @@ namespace App\Http\Requests\Admin;
 
 use App\Http\Requests\Request;
 
-class ProductRequest extends Request
+class ProductVersionsRequest extends Request
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,25 +24,23 @@ class ProductRequest extends Request
     public function rules()
     {
         return [
-            'id'=>[
-                'numeric',
-            ],
-            'img_id'=>[
-                'numeric',
-            ],
-            'p_name'=>[
+            'ver_name'=>[
                 'required'
             ],
-            'model_id'=>[
+            'ver_spec'=>[
+                'required'
+            ],
+            'ver_desc'=>[
+                'required'
+            ],
+            'price'=>[
+                'required',
                 'numeric'
             ],
-            'brand_id'=>[
+            'store'=>[
+                'required',
                 'numeric'
-            ],
-            'weight'=>[
-                'numeric'
-            ],
-            ''
+            ]
         ];
     }
 }

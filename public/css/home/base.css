@@ -3112,3 +3112,15 @@ body.lt-IE8 {
     animation-fill-mode: both;
     display: inline-block;
 }
+/*返回顶部按钮*/
+.gotop{
+    width: 50px;
+    line-height: 35px;
+    background-color: #ff6700;
+    text-align: center;
+    padding-top: 5px;
+}
+.gotop a i{
+    color:#fff;
+    font-size:30px;
+}

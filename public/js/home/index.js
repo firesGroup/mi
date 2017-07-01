@@ -1,53 +1,6 @@
 /**
  * Created by Administrator on 2017/6/28.
  */
-    //顶部购物车
-    $('a#J_miniCartBtn').on('mouseenter',function(e){
-        $('#J_miniCartTrigger').addClass('topbar-cart-active');
-        $('#J_miniCartMenu').css('display','block');
-        //请求后台购物车数据
-        //$.ajax();
-    });
-    $('#J_miniCartTrigger').on('mouseleave', function(e){
-        $('#J_miniCartTrigger').removeClass('topbar-cart-active');
-        $('#J_miniCartMenu').css('display','none');
-        layui.stope(e);
-    });
-
-    //头部导航
-    $('ul.J_navMainList').find('li.nav-item').on('mouseover', function(){
-        var item = $(this).children('div.item-children').html();
-        if( item ){
-            $('div#J_navMenu').attr('style','block').html(item);
-            $('div#J_navMenu ul li img').each(function(){
-                var src = $(this).attr('data-url');
-                $(this).attr('src', src);
-            });
-        }else{
-            $('div#J_navMenu').css('display','none');
-        }
-        $(this).addClass('nav-item-active').siblings().removeClass('nav-item-active');
-    });
-    $('div#J_navMenu').on('mouseleave', function(){
-        $('div#J_navMenu').css('display','none');
-    });
-    $('div.site-header').on('mouseleave', function(){
-        $('div#J_navMenu').css('display','none');
-        $('ul.J_navMainList li.nav-item').each(function(){
-            $(this).removeClass('nav-item-active');
-        })
-    });
-
-    //头部搜索
-    $('form#J_searchForm').on('focusin', function(){
-        $(this).addClass('search-form-focus');
-        $(this).children('div.search-hot-words').hide();
-        $('div#J_keywordList').removeClass('hide');
-    }).on('focusout', function(){
-        $(this).removeClass('search-form-focus');
-        $(this).children('div.search-hot-words').show();
-        $('div#J_keywordList').addClass('hide');
-    });
 
     //焦点轮播图
     var slideObj = {
