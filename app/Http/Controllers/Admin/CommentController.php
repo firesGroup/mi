@@ -64,7 +64,7 @@ class CommentController extends Controller
             'content' => $request->text,
             'is_hide' => 1,
             'type'=> 2,
-            'created_at'=> date('Y-m-d H:i:s')
+            'created_at'=> date('Y-m-d H:i')
         ]);
 
             if($bool) {

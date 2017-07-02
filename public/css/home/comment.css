@@ -1,7 +1,10 @@
+body{
+    background-color: #eeeeee;
+}
 .head{
     width: 100%;
     margin-top: 0;
-    height: 7.5%;
+    height: 8%;
     background-color: white;
     border-top: 1px solid #cfcecc;
     float: right;
@@ -9,11 +12,16 @@
     -moz-box-shadow:-2px 10px 11px #333333;
     -webkit-box-shadow:-2px 10px 11px #333333;
     box-shadow:-2px 10px 11px #e4e4e4;
+    /*position: fixed;*/
+    /*top: 0;*/
+    /*left: 0;*/
+    z-index: 9999;
+    /*position: absolute;*/
 
 }
 
 .name{
-    width:7%;
+    width:auto;
     padding-top: 14px;
     font-size: 18px;
 }
@@ -43,11 +51,12 @@
     border-color: #ff6700;
     color: white;
 }
-.container{
-    width: 63.5%;
-    margin: 0 auto;
-    height: 100%;
-}
+/*.container{*/
+    /*width: 63.5%;*/
+    /*margin: 0 auto;*/
+    /*height: 100%;*/
+    /*background-color: white;*/
+/*}*/
 
 .span{
     color: #d7d6d4;
@@ -63,18 +72,17 @@ h2 {
 .comt{
     width: auto;
     height: auto;
-    background-color: #b0b0b0;
-    margin-top: 85px;
-    text-align: center;
+    background-color: #eeeeee;
+    margin-top: 160px;
+    /*text-align: center;*/
 }
 
 .comment-nav{
     width: 64%;
     padding: 10px;
     margin-left: 17.5%;
-    background: #2eff15;
-    height: auto;
-
+    background: #eeeeee;
+    height:auto;
     position: relative;
 
 }
@@ -93,6 +101,7 @@ h2 {
 .nav-box{
     margin-top: -24px;
     font-size: 0;
+    padding-left: 41px;
 }
 
 .a{
@@ -119,16 +128,226 @@ h2 {
     height: auto;
 }
 
+.h2a{
+    width: 80%;
+}
 .show{
     text-align: right;
+    font-size: 18px;
+    padding-left: 67%;
+    width:90px;
+    height: 30px;
 }
 
 .remen{
-
+    /*text-align: left;*/
+    font-size: 25px;
+    margin-top: 40px;
+    height: 20px;
+    width: 100px;
 }
 
 .pinlun{
     width: 80%;
-    height: 400px;
+    height: auto;
+    margin-top: 10px;
     background-color: white;
+    float: left;
+}
+
+.img{
+    padding-left: 40px;
+    padding-top: 60px;
+    width: 60px;
+    height: 60px;
+}
+
+.username{
+    width:80%;
+    height: 70px;
+    margin-top: -65px;
+    padding-left: 120px;
+}
+.time{
+    width:auto;
+    height: 30px;
+    padding-top: 10px;
+}
+
+.commentcontent{
+    width:80%;
+    height: auto;
+    line-height:21px;
+    padding-left: 120px;
+}
+.price{
+    padding-top: 30px;
+    width:80%;
+    height: 338px;
+    margin-left:120px;
+
+}
+
+.commentimg{
+    width: 60%;
+    height: 338px;
+}
+
+.zan{
+    width: 60%;
+    height: 30px;
+    margin-left:120px;
+    padding-top: 10px;
+}
+
+.input{
+    width: 80%;
+    height: 45px;
+    border: 1px solid #585858;
+    margin-left: 120px;
+}
+
+.huifu{
+    width: 520px;
+    padding: 10px 0 10px 20px;
+    height: 23px;
+    line-height: 23px;
+    font-size: 14px;
+    outline: none;
+    border: 1px solid #e0e0e0;
+    /*color: black;*/
+}
+.hf{
+    padding-left: 20px;
+    margin: 10px;
+}
+.answer-img{
+    width: 32px;
+    height: 32px;
+}
+.official{
+    margin-top: 30px;
+    width: 80%;
+    height:88px;
+    margin-left: 120px;
+}
+
+.ti{
+    width:94%;
+    height: 50px;
+    margin-top: -40px;
+    padding-left: 45px;
+}
+
+.h3f{
+    color: #d25e16;
+}
+
+.li{
+    margin-bottom: 80px;
+}
+
+.newp{
+    padding-top: 50px;
+    width: 100px;
+    height:50px;
+    margin-bottom: 0px;
+    font-size: 22px;
+}
+
+.rightt{
+    width:33.5%;
+    height: auto;
+    /*float: right;*/
+    padding-left: 66%;
+    top: 265px;
+    position: absolute;
+    /*padding: 0px 10px;*/
+}
+.num{
+    width: 100%;
+    margin-top: 8px;
+    height: 184px;
+    background-color: white;
+    clear:both;
+
+}
+
+.rightone{
+    clear:both;
+    width:70%;
+    height: 100px;
+    padding-top: 20px;
+    padding-left: 30px;
+}
+
+.renshu{
+    width: 200px;
+    font-size: 65px;
+    color: #e36316;
+}
+
+.status{
+    width: 100px;
+    color: #b5b5b5;
+}
+
+.plan{
+    width: 90%;
+    height: 20px;
+    padding-left: 30px;
+    text-align: center;
+}
+
+.tiao{
+    border: 1px solid #3fba36;
+    width: 90%;
+    height: 20px;
+    background-color: #3fba36;
+}
+
+.planman{
+    color: whitesmoke;
+}
+
+
+.newcomment{
+    padding-top: -20px;
+    width: 100%;
+    height: auto;
+    background-color: white;
+}
+
+
+
+.commentall{
+    padding-top: 40px;
+    padding-left: 30px;
+    width: 90%;
+    height: 135px;
+}
+
+.huitime{
+    width: 100%;
+    height: 21px;
+}
+.ncomment{
+    padding-top: 5px;
+    width: 100%;
+    height: auto;
+}
+
+.muzhi{
+    padding-top: 5px;
+    width: 100%;
+    height: 20px;
+}
+.huise{
+    color: #bcbcbc;
+}
+
+.hr{
+    color: #b5b5b5;
+    width: 100%;
+    height: 0;
 }
