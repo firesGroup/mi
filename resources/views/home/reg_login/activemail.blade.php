@@ -18,7 +18,7 @@
 尊敬的 {{ $name }} 用户，
 <br>
 <a href="{{ url('mailBox/'.$uid.'/'.$code)}}">
-
+        点击激活邮箱
 </a>
 </body>
 </html>

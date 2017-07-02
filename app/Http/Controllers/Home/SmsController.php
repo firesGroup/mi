@@ -10,6 +10,7 @@ use Flc\Alidayu\Client;
 use Flc\Alidayu\App;
 use Flc\Alidayu\Requests\AlibabaAliqinFcSmsNumSend;
 use Session;
+use App\Entity\Member;
 class SmsController extends Controller
 {
 
@@ -34,22 +35,26 @@ class SmsController extends Controller
 
         $request->session()->put('sms_code',$rand);
 
-
+        //执行发送短信
         if($client->execute($req)){
             return json_encode(['ResultData' => '0', 'info' => "发送成功"]);
-            session();
         }else{
             return json_encode(['ResultData' => '1', 'info' => '重复发送']);
         }
     }
 
-    public function smsCode(Request $request, $uid, $code, $dd)
+    public function smsCode(Request $request, $uid, $code)
     {
-        $req = $uid.'123456';
-        if(Hash::check($req, ($uid.$dd))){
-            return 1;
+//        dump($uid);
+        $str = $uid.'123456';
+//        dd(md5($str));
+////        dd($code);
+        if($code == md5($str)){
+           Member::find($uid)->update(['status'=>0]);
+
+           return redirect('/');
         };
-//        dd($uid);
+
 
     }
 
