@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Home;
 
+use App\Entity\Comment;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -40,8 +41,14 @@ class CommentController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        dd(111);
     }
+
+    public function insert(Request $request)
+    {
+        dd($request->all());
+    }
+
 
     /**
      * Display the specified resource.
@@ -51,22 +58,23 @@ class CommentController extends Controller
      */
     public function show($id)
     {
-        $data = DB::table('comment')->where('p_id',$id)->get();
+        //根据商品ID 查询所有评论
+        $data = Comment::where('p_id',$id)->get();
 
-//        foreach ($data as $k=>$v ){
-//            $member[] = $v->member_id;
-//        }
-//        dd($member[]);
         //根据商品id 拿到商品信息
         $shop = DB::table('product')->where('id',$id)->get();
-//        dd($shop);
+
+        //统计评论总数
         $num = DB::table('comment')->count('id');
 //        dd($num);
 
-        $lim = DB::table('comment')->where('p_id',$id)->paginate(8);
+        //拿到所有回复
+        $answer = Comment::where('p_id',$id)->where('type',2)->get();
 
-//dump($limit);
-        return view('home.comment.comment',compact('data','shop','lim','num'));
+        //查询最新的评论
+        $lim = Comment::where('p_id',$id)->paginate(8);
+
+        return view('home.comment.comment',compact('data','shop','lim','num','answer'));
     }
 
     /**

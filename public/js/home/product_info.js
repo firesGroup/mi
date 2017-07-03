@@ -16,7 +16,7 @@ $(window).scroll(function(){
         $('div#J_fixNarBar').addClass('nav_fix');
     }else{
         $('div#J_fixNarBar').removeClass('nav_fix');
-        $('div#J_img').removeClass('fix');
+        $('div#J_img').removeClass('fix').removeAttr('style');
     }
     if( srollTop >=500 ){
         $('div#J_img').addClass('fix').attr('style','left: 19.5px; margin-top: 0px;');
@@ -54,8 +54,8 @@ $('div#version ul').on('click', 'li', function(){
     //获取商品名称
     var proName = $('h1.J_proName').text();
 
-    // 获取版本的颜色
     //自执行请求数据
+    // 获取版本的颜色
     $.ajax({
         url:'/product/ajaxGetVersionColor/'+verId,
         type: 'get',
@@ -72,23 +72,61 @@ $('div#version ul').on('click', 'li', function(){
         }
     });
 
-    //获取版本信息 再次比对
+    var status;
+    //获取版本信息 状态 再次比对
     $.ajax({
-        url:'url:'/product/ajaxGetVersion/'+verId,',
+        url:'/product/ajaxGetVersion/'+verId,
         type:'get',
         success:function(data){
+            //版本价格
+           var ajaxPrice = parseFloat(data[0].price);
+           var dataPrice = parseFloat(price);
+           if( ajaxPrice != dataPrice ){
+               price = ajaxPrice;
+           }
+           //版本状态
+           status = data[0].status;
+            var str = '';
+           if( status == 0 ){
+               str += '<a href="javascript:void(0);" class="btn btn-primary btn-biglarge J_proBuyBtn" data-type="0">加入购物车</a>';
+           }else if( status == 1 ){
+               str += '<a class="btn btn-gray  btn-biglarge btn-line-gray J_setRemind" href="javascript:void(0);" data-type="1" disabled>已下架</a>';
+           }else if( status == 2 ){
+               str += '<a class="btn btn-line-primary btn-biglarge btn- J_setRemind" href="javascript:void(0);" data-type="2">新品预售</a>';
+           }else if( status == 3 ){
+               str += '<a class="btn btn-red btn-biglarge btn-line-red J_setRemind" href="javascript:void(0);" data-type="3" disabled>缺货中</a>';
+           }else if( status == 4 ){
+               str += '<a class="btn btn-line-primary btn-biglarge btn- J_setRemind" href="javascript:void(0);" data-type="4">新品上市</a>';
+           }
+           $('ul#J_buyBtnBox li').html(str);
 
+           //版本图片
+            var imgJson = data[0].ver_img;
+            if( imgJson != null ){
+                var imgArr = eval(''+ imgJson +'');
+                var str = '';
+                for( var i=0; i< imgArr.length; i++ ){
+                    if( i == 0 ){
+                        str +='<img class="loaded slider done" src="'+ imgArr[i] +'">';
+                    }else{
+                        str +='<img class="slider done" src="'+ imgArr[i] +'">';
+                    }
+                }
+                $('div#J_sliderView').html(str);
+            }
         }
 
     });
 
+
+
     // 改变价格
-    $('span.J_proPrice').html(price);
+    $('span.J_proPrice').html(price +'元');
     //改变简介
     $('div#version div.step-title span').html(desc);
     //改变总价
-    $('div#J_proList li.totleName').html( proName +' '+name + ' ' + colorName + '<span>'+ price +'</span>');
-    $('div#J_proList li.totlePrice').html('总计  ：'+ price);
+    $('div#J_proList li.totleName').html( proName +' '+name + ' ' + colorName + '<span>'+ price +'元</span>');
+    $('div#J_proList li.totlePrice').html('总计  ：'+ price +'元');
     $(this).addClass('active').siblings().removeClass('active');
 });
 
@@ -105,8 +143,8 @@ $('div#color ul').on('click','li', function(){
     //获取商品名称
     var proName = $('h1.J_proName').text();
 
-    $('div#J_proList li.totleName').html(proName +' '+name + ' ' + colorName + '<span>'+ price +'</span>');
-    $('div#J_proList li.totlePrice').html('总计  ：'+ price);
+    $('div#J_proList li.totleName').html(proName +' '+name + ' ' + colorName + '<span>'+ price +'元</span>');
+    $('div#J_proList li.totlePrice').html('总计  ：'+ price + '元');
     $(this).addClass('active').siblings().removeClass('active');
 });
 
@@ -150,17 +188,22 @@ var slideObj = {
         this.timer = setInterval(function () {
             var index = t.check();
             var th = $('#J_sliderView img').eq(index);
-            if (index == num -1) {
-                th.removeClass('loaded').attr('style',t.hide);
-                $('#J_sliderView img').eq(0).addClass('loaded').attr('style', t.show);
-                t.page(0);
-                t.stop();
-                t.start();
-            } else {
-                th.attr('style',t.hide);
-                th.next().attr('style', t.show).addClass('loaded').siblings().removeClass('loaded');
-                t.page();
+            if( num == 1 ){
+               t.stop();
+            }else{
+                if (index == num -1) {
+                    th.removeClass('loaded').attr('style',t.hide);
+                    $('#J_sliderView img').eq(0).addClass('loaded').attr('style', t.show);
+                    t.page(0);
+                    t.stop();
+                    t.start();
+                } else {
+                    th.attr('style',t.hide);
+                    th.next().attr('style', t.show).addClass('loaded').siblings().removeClass('loaded');
+                    t.page();
+                }
             }
+
         }, time);
     },
     //检查当前显示图片 返回索引
