@@ -12,7 +12,7 @@
 @section('title', '注册')
 @section('css')
     @parent
-    <link rel="stylesheet" type="text/css" href="{{ asset('/css/admin/mi_reg/layout.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('/css/home/mi_reg/layout.css') }}">
 @endsection
 @section('content')
     <div class="zhuti">
@@ -234,8 +234,9 @@
                                 type: 'post',
                                 data: {'_token': "{{csrf_token()}}", 'email': email},
                                 success: function (data) {
-                                    var $data = JSON.parse(data);
-                                    if ($data['ResultData'] == '0') {
+//                                    alert(data);
+                                    if (data == 1) {
+                                        layer.msg('邮件已发送, 请登录邮箱查看');
                                         var n = 60;
                                         $btn.attr('disabled', 'true');
                                         $btn.addClass('layui-btn-disabled').removeClass('bg-color');
@@ -249,7 +250,7 @@
                                             n--;
                                         }, 1000);
                                     } else {
-                                        alert('短信发送失败, 请等会在尝试');
+                                        alert('邮箱发送失败, 请等会在尝试');
                                     }
                                 }
                             })
