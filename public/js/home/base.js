@@ -81,3 +81,20 @@ $(document).ready(function() {
         }
     })
 });
+
+//顶部用户登陆成功后的下拉菜单
+$('#J_userInfo').on('mouseenter', '#user', function(){
+    // $('#user').css({"z-index":'50'});
+    $('#J_userInfo').css({"z-index":'50'});
+    $('#hidden').css({"display":"block"});
+    $('span.user').addClass('user-active');
+
+});
+
+$('#J_userInfo').mouseleave( function () {
+    // alert(123);
+    $('#hidden').css({"display":"none"});
+    $('span.user').removeClass('user-active');
+
+});
+
