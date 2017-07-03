@@ -29,7 +29,7 @@
             <div class="topbar-info" id="J_userInfo">
             <span class="user">
                 <a rel="nofollow" class="user-name" href="" target="_blank">
-                    <span class="name">1178705369</span>
+                    <span class="name">{{$UserArr->nick_name}}</span>
                     <i class="iconfont"></i>
                 </a>
                 <ul class="user-menu" style="display: none;">
@@ -61,14 +61,13 @@
                             <dl>
                                 <dt>
                                     <span class="tag"></span>
-                                    <em class="uname">潘珺</em>
+                                    <em class="uname">{{$UserAdd->buy_user}}</em>
                                 </dt>
                                 <dd class="utel">
-                                    135****5920
+                                    {{$UserAdd->buy_phone}}
                                 </dd>
                                 <dd class="uaddress">
-                                    广东 珠海市 香洲区 前山街道<br>
-                                    夏湾河畔豪庭346号德晋商贸
+                                    {{$UserAdd->address}}
                                 </dd>
                             </dl>
                             <div class="actions">
@@ -484,7 +483,7 @@
                 $('div.select-first').addClass('active').text(address).next('.select-item').removeClass('hide').text('选择城市/地区');
 
                 $.ajax({
-                    url: "{{url('home/chooseAddress')}}",
+                    url: "{{url('chooseAddress')}}",
                     type: 'get',
                     data: {'_token': '{{csrf_token()}}', 'id': id},
                     success: function (data) {
@@ -507,7 +506,7 @@
                             $('div.select-first').next().text(cities).next().removeClass('hide').text('选择区县');
 
                             $.ajax({
-                                url: "{{url('home/cities')}}",
+                                url: "{{url('cities')}}",
                                 type: 'get',
                                 data: {'_token': '{{csrf_token()}}', 'id': citiesId},
                                 success: function (data) {
@@ -565,7 +564,7 @@
                 $('div #J_modalEditAddress').css({"display": "none"}).attr('aria-hidden', 'true');
 
                 $.ajax({
-                    url: "{{url('home/addAddress')}}",
+                    url: "{{url('addAddress')}}",
                     type: 'get',
                     data: {'_token': '{{csrf_token()}}', 'arr': arr},
                     success: function (data) {

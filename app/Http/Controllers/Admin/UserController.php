@@ -9,6 +9,7 @@ use App\Entity\AdminRole;
 use App\Http\Controllers\Controller;
 use DB;
 use Hash;
+use Session;
 
 class UserController extends Controller
 {
@@ -357,12 +358,36 @@ class UserController extends Controller
         } else {
             $passwd = $data['password'];
             if (Hash::check($passwd, $password)) {
-                return redirect('admin');
+                $request->session()->put('username', $name);
+                return redirect('admin/index ');
+
             } else {
                 return back()->with(['wrong'=>'密码错误']);
             }
         }
 
+
     }
+
+    public function ajaxName(Request $request)
+    {
+        $name = $request->input('username');
+
+        //查出管理员表中的用户名
+        $username = DB::table('admin')->lists('username');
+//        dd($username);
+
+        //判断用户名是否相同
+        if (in_array($name, $username)) {
+
+            //相同 存在用户名
+            return 1;
+        } else {
+
+            //不相同 用户名不存在
+            return 2;
+        }
+    }
+
 
 }

@@ -17,10 +17,25 @@ class AddressController extends Controller
     public function index()
     {
 
+        $userArr = DB::table('member')->where('id', '=', 1)->get();
+//        dd($userArr);
+        foreach($userArr as $v){
+//            dump($v);
+            $UserArr = $v;
+        }
+//        dd($UArr->id);
+
+        $userAdd = DB::table('address')->where('member_id', '=', 1)->get();
+//        dd($userAdd);
+
+        foreach ($userAdd as $k) {
+            $UserAdd = $k;
+        }
+
         $data = DB::table('district')->where('id', '<=', 36)->get();
 //        dd($data);
 
-        return view('home/address/index', compact('data'));
+        return view('home/address/index', compact('data', 'UserArr', 'UserAdd'));
     }
 
     /**
@@ -122,7 +137,10 @@ class AddressController extends Controller
     public function AddAddress(Request $request)
     {
         $data = $request->all();
-        dd($data);
+//        dd($data);
+
+
+
     }
 
 }
