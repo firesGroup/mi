@@ -13,7 +13,7 @@
 Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function () {
 
     //管理员路由
-    Route::get('/', 'AdminController@index');
+    Route::get('index', 'AdminController@index');
 
     Route::resource('user', 'UserController');
 
@@ -22,6 +22,8 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function () {
     Route::post('ajaxPassword', 'UserController@ajaxPassword');
 
     Route::post('login', 'UserController@login');
+
+    Route::get('ajaxName', 'UserController@ajaxName');
 
 
     //权限管理组路由
@@ -50,7 +52,7 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function () {
 Route::post('/upload', 'PublicC\UploadController@postUpload');
 
 
-Route::group(['namespace' => 'Home', 'prefix' => 'home'], function () {
+Route::group(['namespace' => 'Home'], function () {
 
     Route::get('cart', 'CartController@index');
 

@@ -77,7 +77,7 @@ class MemberController extends Controller
         $ip = $request->getClientIp();
         $data['last_ip'] = $ip;
         if(Member::create($data)){
-            return redirect('www.mi.cn');
+            return redirect('/');
         }else{
             return back();
         }
