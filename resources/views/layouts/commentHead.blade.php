@@ -10,25 +10,10 @@
  * Time: 19:06
  */
 ?>
+        @extends('layouts.home')
 @section('comment')
         @show
-        <!doctype html>
-<html lang="zh-CN" xml:lang="zh-CN">
-<head>
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge"/>
-    <meta charset="UTF-8"/>
-    <title>【小米5s Plus怎么样,好不好】用户评价-小米商城</title>
-    <meta name="viewport" content="width=1226"/>
-    <meta name="description" content="米粉购买用户对小米5s Plus购买心得，在这里您可以知道小米5s Plus购买用户评价，了解小米5s Plus好不好、小米5s Plus怎么样。"/>
-    <meta name="keywords" content="小米5s Plus,小米商城"/>
-    <link rel="shortcut icon" href="//s01.mifile.cn/favicon.ico" type="image/x-icon"/>
-    <link rel="icon" href="//s01.mifile.cn/favicon.ico" type="image/x-icon"/>
-    <link rel="stylesheet" href="//s01.mifile.cn/css/base.min.css?v2017a23"/>
-    <link rel="stylesheet" type="text/css" href="//s01.mifile.cn/css/comment/index.min.css?_v=2017032201"/>
 
-    <script type="text/javascript">var _head_over_time = (new Date()).getTime();</script>
-</head>
-<body style="background-color:#eeeeee;">
 {{--黑色头--}}
 <div class="site-topbar">
     <div class="container">
@@ -584,5 +569,13 @@
 
 
 @yield('content')
+
+
+
+
+@section('js')
+@parent
+
+    @endsection
 
 

@@ -22,6 +22,8 @@ class CommentController extends Controller
         //查询评价表数据库所有数据
         $data = DB::table('comment')->paginate(6);
 
+
+
         //返回视图并传参
         return view('admin.comment.comment', compact('data'));
     }

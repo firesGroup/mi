@@ -11,17 +11,19 @@
  */
 ?>
 
-@extends('layouts.commentHead')
+@extends('layouts.home')
 
 @section('title','')
 
 @section('css')
     @parent
+
+    <link rel="stylesheet" type="text/css" href="{{ asset('/css/home/comment.css') }}">
+
 @endsection
 
 @section('content')
 
-    <link rel="stylesheet" type="text/css" href="{{ asset('/css/home/comment.css') }}">
 
     <div id="J_proHeader">
         <div class="xm-product-box">
@@ -100,13 +102,19 @@
                             @foreach($data as $v)
                                 @if($v->member_id != 4)
                                 <li class="com-item J_resetImgCon J_canZoomBox" data-id="144906250">
+                                    <input type="hidden" value="{{$v->id}}" id="commentid">
                                     <a class="user-img" href="/comment/user?user_id=679923323">
+                                        {{--头像--}}
                                         <img src="https://s1.mi-img.com/mfsv2/avatar/s010/p01YK9vgR0Lj/2knbWH5I3lXsA1_90.jpg">
                                     </a>
-                                    <div class="comment-info"><a class="user-name"
-                                                                 href="/comment/user?user_id=679923323">不爱请远离.</a>
-                                        <p class="time">{{$v->created_at}}</p></div>
+
+                                    <div class="comment-info">
+                                        <a class="user-name" href="/comment/user?user_id=679923323">{{ $v->member->nick_name }}</a>
+                                        <p class="time">{{$v->created_at}}</p>
+                                    </div>
+
                                     <div class="comment-eval"><i class="iconfont"></i> 超爱</div>
+
                                     <div class="comment-txt">
                                         <a href="/comment/detail?comment_id=144906250" target="_blank">
                                             {{$v->content}}
@@ -142,41 +150,43 @@
                                         </a>
                                     </div>
                                     <div class="comment-input">
-                                        <input type="text" placeholder="回复楼主" class="J_commentAnswerInput">
-                                        <a href="javascript:void(0);" class="btn  answer-btn J_commentAnswerBtn"
-                                           data-commentid="144906250">回复</a>
+                                        <input type="text" placeholder="回复楼主" class="J_commentAnswerInput replyinput">
+                                        <a href="Javascript:;" class="btn  answer-btn J_commentAnswerBtn "
+                                           data-commentid="144906250" id="reply">回复</a>
                                     </div>
                                     @endif
 
-                                    @if($v->member_id == 4 && $v->type == 2)
                                     <div class="comment-answer">
-                                        <div class="answer-item">
-                                            <img class="answer-img" src="//s01.mifile.cn/i/logo.png">
-                                            <div class="answer-content">
-                                                <h3 class="official-name">官方回复</h3>
-                                                <p> {{$v->content}}
-                                                    <a href="javascript:void(0);" class="J_csLike "
-                                                       data-commentid="144906250"> <i class="iconfont"></i>&nbsp;<span
-                                                                class="amount">  158 </span>
-                                                    </a>
-                                                </p>
+                                    @foreach( $data as $value )
+                                        @if($v->id == $value->comment_id && $value->type == 2 )
+
+                                            <div class="answer-item">
+                                                <img class="answer-img" src="//s01.mifile.cn/i/logo.png">
+                                                <div class="answer-content">
+                                                    <h3 class="official-name">{{ $value->member->nick_name }}</h3>
+                                                    <p> {{$value->content}}
+                                                        <a href="javascript:void(0);" class="J_csLike "
+                                                           data-commentid="144906250"> <i class="iconfont"></i>&nbsp;<span
+                                                                    class="amount">  158 </span>
+                                                        </a>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                            @endif
+                                        @endforeach
+                                    </div>
+                                        <div class="J_canZoomData">
+                                            <div class="h-userInfo" data-username="不爱请远离." data-showtime="星期四"
+                                                 data-txt="客服妹子嫁给我吧，我会踩着七色云彩迎娶你的"
+                                                 data-avatar="https://s1.mi-img.com/mfsv2/avatar/s010/p01YK9vgR0Lj/2knbWH5I3lXsA1_90.jpg"
+                                                 data-upnum="89" data-commentid="144906250"></div>
+                                            <div class="h-answerInfo">
+                                                <div class="answer-item" data-name="官方回复"
+                                                     data-txt="我的意中人是个盖世英雄，有一天 他会五杀摧搭MVP，带我从青铜到荣耀王者~~(✿◡‿◡)感谢您对小米的支持。"
+                                                     data-upnum="158" data-office="true"></div>
                                             </div>
                                         </div>
-                                    </div>
-
-                                    <div class="J_canZoomData">
-                                        <div class="h-userInfo" data-username="不爱请远离." data-showtime="星期四"
-                                             data-txt="客服妹子嫁给我吧，我会踩着七色云彩迎娶你的"
-                                             data-avatar="https://s1.mi-img.com/mfsv2/avatar/s010/p01YK9vgR0Lj/2knbWH5I3lXsA1_90.jpg"
-                                             data-upnum="89" data-commentid="144906250"></div>
-                                        <div class="h-answerInfo">
-                                            <div class="answer-item" data-name="官方回复"
-                                                 data-txt="我的意中人是个盖世英雄，有一天 他会五杀摧搭MVP，带我从青铜到荣耀王者~~(✿◡‿◡)感谢您对小米的支持。"
-                                                 data-upnum="158" data-office="true"></div>
-                                        </div>
-                                    </div>
-                                </li>
-                                @endif
+                                    </li>
                             @endforeach
                         </ul>
                         <div class="comment-more">
@@ -192,17 +202,29 @@
                     </div>
                     <h2 class="m-tit">最新评价</h2>
                     <ul class="m-spe-list J_speList">
+
                         @foreach($lim as $v)
-                            @if($v->member_id != 4)
+                            @if($v->type != 2 && $v->elite == 0 )
                         <li class="" data-id="144940948">
-                            <div class="spe-top"><span class="time">3分钟前</span> <a class=""
-                                                                                   href="/comment/user?user_id=137816676">-
-                                    137816676</a></div>
-                            <div class="txt"><a href="/comment/detail?comment_id=144940948" target="_blank">
-                                    {{$v->content}} </a></div>
-                            <div class="comment-handler"><a href="javascript:void(0);" data-commentid="144940948"
-                                                            class="J_hasHelp "> <i class="iconfont"></i>&nbsp; <span
-                                            class="amount hide">  0 </span> </a></div>
+                            <div class="spe-top">
+                                <span class="time">
+                                    {{$time = $v->created_at}}
+
+                                </span>.
+                                <a class="" href="/comment/user?user_id=137816676">{{$v->member->nick_name}} </a>
+                            </div>
+
+                            <div class="txt">
+                                <a href="/comment/detail?comment_id=144940948" target="_blank">
+                                    {{$v->content}} </a>
+                            </div>
+
+                            <div class="comment-handler">
+                                <a href="javascript:void(0);" data-commentid="144940948" class="J_hasHelp ">
+                                    <i class="iconfont"></i>&nbsp;<span class="amount hide">  0 </span>
+                                </a>
+                            </div>
+
                             <div class="comment-eval"><i class="iconfont"></i> 超爱</div>
                         </li>
                             @endif
@@ -284,4 +306,44 @@
     </div>
 @endsection
 
+@section('js')
+@parent
 
+    <script>
+
+    layui.use(['jquery', 'layer'], function () {
+        var $ = layui.jquery,
+            layer = layui.layer;
+        var index;
+
+        $('#reply').on('click',function () {
+
+            //拿到回复内容
+            var val = $('.replyinput').val();
+
+            //拿到评价ID
+            var cid = $('#commentid').val();
+
+//            alert(cid);
+
+            var url = '{{url('insert')}}';
+//alert(1);
+            $.ajax({
+                url: url,
+               type: 'get',
+               data: {'val': val, 'cid' : cid},
+                success: function (data){
+
+                }
+
+            });
+
+
+        });
+
+    });
+
+
+</script>
+
+@endsection
