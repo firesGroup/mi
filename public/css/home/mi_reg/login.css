@@ -1,0 +1,160 @@
+
+body{
+    padding:0px;
+    margin:0px;
+    font-size:14px;
+    overflow-x:hidden;
+    color:#757575;
+    font-family:arial,"Hiragino Sans GB","Microsoft YaHei","寰蒋姝ｉ粦浣�","鍎烽粦 Pro",sans-serif;
+}
+input,button,select,textarea{
+    outline:none;
+    -webkit-apperance:normal;
+}
+.ct{
+    width:1130px;
+    margin:0 auto;
+}
+li{
+    list-style:none;
+}
+div.wrap{
+    height:686px;
+    overflow:hidden;
+}
+div.login-logo{
+    width:100%;
+    margin:18px -16px;
+    height:61.5px;
+}
+div.login-bg{
+    background:url("../../../images/home/login-bg.jpg") no-repeat top center;
+    width:100%;
+    height:588px;
+    left:0;
+    position:absolute;
+    background-color:#14212A;
+}
+div.login-box{
+    width:400px;
+    height:524px;
+    background-color:#fff;
+    position:relative;
+    float:right;
+    margin-top:30px;
+}
+div.login-box div.cter{
+    width:90%;
+    margin:0 auto;
+}
+#login-tab{
+    width:100%;
+    margin:0 auto;
+}
+#login-tab li{
+    width:50%;
+}
+#login-tab li+span{
+    display:none;
+}
+div.layui-tab-item{
+    padding-top:30px;
+}
+input{
+    width:100%;
+    height:48px;
+    margin-bottom: 30px!important;
+    text-indent:1em;
+    font-size:14px;
+    border:1px solid #e0e0e0;
+}
+input:focus{
+    border-color:#ff6700;
+}
+input.submit{
+    background-color:#ff6700;
+    font-size:15px;
+    color:#fff;
+    text-indent:0;
+}
+div.alink{
+    width:100%;
+    height:30px;
+    line-height:30px;
+    text-align: center;
+}
+div.alink a{
+    text-decoration:none;
+    font-size:14px;
+    color:#b0b0b0;
+}
+div.alink a:hover{
+    color:#ff6700;
+}
+div.QRcode{
+    width:100%;
+    text-align: center;
+}
+div.other{
+    height:70px;
+    margin:0 auto;
+    position: absolute;
+    bottom:40px;
+}
+div.other fieldset{
+    width:100%;
+    border:0px;
+    border-top:1px solid #e0e0e0;
+    color:#b0b0b0;
+}
+div.other div.icon{
+    width:290px;
+    text-align:center;
+    padding-left:34px;
+}
+div.other div.icon i{
+    display:block;
+    width:30px;
+    height:30px;
+    -webkit-border-radius:50%;
+    -moz-border-radius:50%;
+    -o-border-radius:50%;
+    border-radius:50%;
+    float:left;
+    margin:0 19px;
+    background-color:#888888;
+}
+
+div.other div.icon i.qq{
+    background:url("../../../images/home/login-icon1.png") no-repeat -1px -1px;
+}
+div.other div.icon i.wb{
+    background:url("../../../images/home/login-icon1.png") no-repeat -69px -1px;
+}
+div.other div.icon i.zfb{
+    background:url("../../../images/home/login-icon1.png") no-repeat -137px -1px;
+}
+div.other div.icon i.wx{
+    background:url("../../../images/home/login-icon1.png") no-repeat -205px -1px;
+}
+div.other div.icon i.qq:hover{
+    background:url("../../../images/home/login-icon2.png") no-repeat -1px -1px;
+}
+div.other div.icon i.wb:hover{
+    background:url("../../../images/home/login-icon2.png") no-repeat -69px -1px;
+}
+div.other div.icon i.zfb:hover{
+    background:url("../../../images/home/login-icon2.png") no-repeat -137px -1px;
+}
+div.other div.icon i.wx:hover{
+    background:url("../../../images/home/login-icon2.png") no-repeat -205px -1px;
+}
+div.foot{
+    line-height:35px;
+    color:#757575;
+    text-align:center;
+    height:90px;
+    padding-top:60px;
+    word-spacing:9px;
+    font-size:12px;
+}

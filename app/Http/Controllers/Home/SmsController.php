@@ -52,12 +52,11 @@ class SmsController extends Controller
 
         $to = $data['email'];
 
-       Mail::raw('你好, 本次的验证码为'.$rand, function ($message) use ($to) {
+       $arr = Mail::raw('你好, 本次的验证码为'.$rand, function ($message) use ($to) {
             $dump = $message ->to($to)->subject('纯文本信息邮件验证码');
 
         });
-        
-
+        return 1;
     }
 
 }

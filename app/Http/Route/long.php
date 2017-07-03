@@ -45,6 +45,10 @@ Route::group( ['namespace'=>'Home'], function(){
    });
    Route::post('sms', 'SmsController@sms');
    Route::post('mailBox', 'SmsController@smsCode');
+   Route::get('login', function () {
+      return view('home/reg_login/login');
+   });
+   Route::post('login', 'LoginController@login');
 });
 
 Route::get('kit/captcha/{tmp}', 'Home\CodeController@captcha');
