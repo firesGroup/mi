@@ -59,11 +59,11 @@ class CommentController extends Controller
 //        dd($member[]);
         //根据商品id 拿到商品信息
         $shop = DB::table('product')->where('id',$id)->get();
-
+//        dd($shop);
         $num = DB::table('comment')->count('id');
 //        dd($num);
 
-        $lim = DB::table('comment')->where('p_id',$id)->paginate(1);
+        $lim = DB::table('comment')->where('p_id',$id)->paginate(8);
 
 //dump($limit);
         return view('home.comment.comment',compact('data','shop','lim','num'));

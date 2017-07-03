@@ -56,7 +56,8 @@ class CommentController extends Controller
     {
 
         $text = $request->text;
-
+//        $a = $request->id;
+//dd($a);
         if($text != null){
         $bool= DB::table('comment')->insert([
             'member_id'=> '4',
@@ -64,7 +65,7 @@ class CommentController extends Controller
             'content' => $request->text,
             'is_hide' => 1,
             'type'=> 2,
-            'created_at'=> date('Y-m-d H:i')
+            'created_at'=> date('Y-m-d H:i:s')
         ]);
 
             if($bool) {
@@ -91,17 +92,22 @@ class CommentController extends Controller
         //拿到传来的会员信息
         $pid = DB::table('comment')->where('member_id',$id)->value('p_id');
 
+        $cid = DB::table('comment')->where('member_id',$id)->value('id');
+//dd($cid);
+        $reply = DB::table('reply_comment')->where('comment_id',$cid)->get();
 
+//        dd($reply);
         //取这个会员的商品ID
 //        $pid = $memberid[0]->p_id;
-
         //拿到这个会员的所有这个商品的评论
         $comment = DB::table('comment')->where('p_id', $pid)->get();
 
+//        $a = array_merge($reply,$comment);
+//dd($a);
         //查询会员表取会员ID
         $member = DB::table('member')->where('id',$id)->get();
 
-        return view('admin/comment/showComment',compact('pid','id','comment','member'));
+        return view('admin/comment/showComment',compact('pid','id','comment','member','reply'));
     }
 
     /**

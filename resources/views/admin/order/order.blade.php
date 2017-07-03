@@ -83,7 +83,6 @@
                         <td>{{$v->member_id}}</td>
                         <td>{{$v->buy_user}}</td>
                         <td>{{$v->buy_phone}}</td>
-                        {{--<td>{{$v->address}}</td>--}}
                         <td>{{$v->total}}</td>
                         <td>{{$v->add_time}}</td>
                         <td>{{$status[$v->order_status]}}</td>
