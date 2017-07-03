@@ -75,10 +75,10 @@
                     <tr>
                         <th>ID</th>
                         <th>商品名称</th>
+                        <th>商品货号</th>
                         <th>所属分类</th>
-                        <th>品牌名称</th>
-                        <th>商城价</th>
-                        <th>市场价</th>
+                        <th>销售量</th>
+                        <th>总库存</th>
                         <th>状态</th>
                         <th>操作</th>
                     </tr>
@@ -88,10 +88,10 @@
                         <tr>
                             <td>{{ $product->id }}</td>
                             <td>{{ $product->p_name }}</td>
+                            <td>{{ $product->p_num }}</td>
                             <td>{{ $product->category_id }}</td>
-                            <td>{{ $product->brand->brand_name }}</td>
-                            <td>{{ $product->price }}元</td>
-                            <td>{{ $product->market_price }}元</td>
+                            <td>{{ $product->sell_num }}</td>
+                            <td>{{ $product->store }}</td>
                             <td>
                                 @if( $product->status == 0 )
                                     在售
@@ -107,9 +107,18 @@
                             </td>
                             <td>
                                 <div class="layui-btn-group">
-                                    <a href="{{ url('admin/product').'/'.$product->id }}"
-                                       class="layui-btn  layui-btn-small" alt="前台查看">
+                                    <a href="{{ url('/product/info').'/'.$product->id }}" target="_top"
+                                       class="layui-btn  layui-btn-small" alt="查看商品">
+                                        <i class="larry-icon">&#xe638;</i>
+                                    </a>
+                                    <a href="{{ url('/admin/product/versions').'/'.$product->id }}"
+                                       class="layui-btn  layui-btn-small" alt="查看版本">
                                         <i class="larry-icon larry-chaxun"></i>
+                                    </a>
+                                    <a href="{{ url('admin/product/versions/create').'/'.$product->id }}"
+                                       class="layui-btn  layui-btn-small" alt="添加版本">
+
+                                        <i class="layui-icon">&#xe654;</i>
                                     </a>
                                     <a href="{{ url('admin/product').'/'.$product->id."/edit" }}"
                                        class="layui-btn  layui-btn-small"  alt="修改商品">

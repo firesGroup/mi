@@ -80,11 +80,13 @@ class CateGoryController extends Controller
         $m = substr_count($data->parent_path, ',') - 1;
 //        dd($data);
 
-        $res = CateGory::where('sort', '<', $data->sort)->get();
+//        $res = CateGory::where('sort', '<', $data->sort)->get();
 
+        //第一次查询出所有的 顶级分类
+        $res = CateGory::where('parent_id',0)->get();
 
 //        CateGory::where()
-        return view('admin/category/edit', compact('data', 'res'));
+        return view('admin/category/edit', compact('id','data', 'res'));
     }
 
     /**
@@ -98,9 +100,9 @@ class CateGoryController extends Controller
     {
         $data = $request->all();
 //       dump($data);
-        if ($data['parent_id'] == 0) {
-            return back();
-        }
+//        if ($data['parent_id'] == 0) {
+//            return back();
+//        }
         if (empty($data['cate_id'])) {
             $id = $data['parent_id'];
             $data['parent_path'] = '0,' . $data['parent_id'] . ',';
@@ -112,33 +114,17 @@ class CateGoryController extends Controller
             $path = $arr->parent_path;
 
             $data['parent_path'] = $path . $data['cate_id'];
-//            dd($data['parent_path']);
-//            dump($data);
-//            $array = CateGory::where('parent_path', 'like', '%'.$data['id'] .'%')->get();
-//            dd($array);
-
-
-//                ;
-//            dd($data);
-            }
-//        if ($data['parent_id'] == 0) {
-//            return redirect('admin/category')->with(['success'=>'一级分类不允许修改']);
-//        }
-//          else {
-////            if ($data['cate_id'] == '') {
-//                $id = $data['parent_id'];
-//                $data['parent_path'] = '0,' . $data['parent_id'] ? $data['parent_id'] : '' . ',';
-//            } else {
 
 
             $m = substr_count($data['parent_path'], ',');
-        if(CateGory::where('parent_path', 'like', '%' . $id . '%')->get()){
-            return back()->with('error', '该分类不可修改底下有子分类');
-        }
+            if (CateGory::where('parent_path', 'like', '%' . $id . '%')->get()) {
+                return back()->with('error', '该分类不可修改底下有子分类');
+            }
             $data['sort'] = $m;
             if (CateGory::where('category_name', '=', $data['category_name'])->update(['category_name' => $data['category_name'], 'parent_id' => $id, 'parent_path' => $data['parent_path'], 'sort' => $m])) {
                 return redirect('admin/category');
             };
+        }
 
     }
 
@@ -164,20 +150,24 @@ class CateGoryController extends Controller
 
     public function category_edit(CateGoryRequest $request)
     {
-        $data = $request->all();
-        if ($data['c_id'] == 0) {
+        $id = $request->id;
+        $c_id = $request->c_id;
+        if ($c_id == 0) {
             return 2;
-        }
-        $all = DB::table('category')->where('parent_id', $data['c_id'])->get();
+        }else{
+            $all =CateGory::where('parent_id', $c_id)->get()->toArray();
 //        dd($all[0]->id);
 
 //       $res = DB::table('category')->where('parent_id', $data['id'])->lists('id');
 //       $all = array_merge($all,$res);
-        if ($all == []) {
-            return 1;
-        } else {
-            return $all;
+//            dd($all);
+            if ($all) {
+                return response()->json($all);
+            } else {
+                return 1;
+            }
         }
+
 
 
     }

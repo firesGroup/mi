@@ -42,7 +42,7 @@ class AdvertController extends Controller
     {
       $data = $request->all();
 
-
+//        dd($data);
       if(Advert::create($data)){
           return redirect('admin/advert');
       }else{
@@ -70,7 +70,8 @@ class AdvertController extends Controller
      */
     public function edit($id)
     {
-        //
+        $data = Advert::find($id);
+        return view('admin/advert/edit', compact('data'));
     }
 
     /**
@@ -82,7 +83,10 @@ class AdvertController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $data = $request->all();
+        if(Advert::find($id)->update($data)){
+            return redirect('admin/advert');
+        }
     }
 
     /**
@@ -93,7 +97,9 @@ class AdvertController extends Controller
      */
     public function destroy($id)
     {
-        //
+      if (DB::table('advert')->delete($id)){
+          return 0;
+      }
     }
 
     public function showStatus(Request $request)

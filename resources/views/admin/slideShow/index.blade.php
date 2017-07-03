@@ -107,6 +107,7 @@
 
 @section('js')
     @parent
+    <script type="text/javascript" src="{{ asset('/js/admin/base.js') }}"></script>
     <script>
         layui.use(['jquery', 'layer', 'form'], function () {
             var $ = layui.jquery,

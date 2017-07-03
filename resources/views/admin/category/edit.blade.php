@@ -59,18 +59,18 @@
                                     <input type="hidden" name="cate_id" value="">
                                     <div class="layui-form-item" id="item">
                                         <label class="layui-form-label">上级分类</label>
-                                        <div class="layui-input-block">
-                                            <select name="parent_id" lay-verify="" id="select" style="width:200px">
-                                                <option value="">请选择一个上级分类</option>
+                                        <div class="layui-input-inline">
+                                            <select name="parent_id" lay-verify="" id="select1" data-id='1' lay-filter="select1" style="width:200px">
+                                                <option value="">请选择分类</option>
                                                 <option value="0" {{$data->parent_id ==0?" selected":""}}>顶级分类</option>
                                                 @foreach($res as $category)
-                                                    <option value="{{$category->id}} " {{$data->parent_id ==$category->id?"selected":""}}>{{$category->category_name}}</option>
+                                                    <option value="{{$category->id}} " {{$data->parent_id ==$category->id?"selected":""}} {{ $id == $category->id?" disabled":"" }}>{{$category->category_name}}</option>
                                                 @endforeach
                                             </select>
                                         </div>
                                     </div>
                                     <div class="layui-form-item">
-                                        <label class="layui-form-label">等级名称</label>
+                                        <label class="layui-form-label">分类名称</label>
                                         <div class="layui-input-block">
                                             <input type="text" id="category_name" name="category_name"
                                                    lay-verify="required"
@@ -104,40 +104,64 @@
                 form = layui.form(),
                 layer = layui.layer;
 
-            form.on('select', function (data) {
-                var that = $(this);
-                that.parent().parent().parent().parent().nextAll('#item').remove();
-                $.ajax({
-                    url: "{{url('admin/category_edit')}}"
-                    , type: 'post'
-                    , data: {"_token": "{{csrf_token()}}", "c_id": data.value, "id": '{{$data->id}}'}
-                    , success: function (data) {
-                        if (data == 1) {
-                            return false;
-                        } else if(data == 2){
-                            layer.msg('顶级分类不能修改');
-                            return false;
-                        }
-                        $str = Math.ceil(Math.random()*10)+ 'parent_id';
-                        var str = "<div class='layui-form-item' id='item'><label class='layui-form-label'>上级分类</label><div class='layui-input-block'><select name='cate_id' id='select'  lay-verify='required'><option value=''>请选择一个上级分类</option>";
-                        console.log(data);
-                        for (var i = 0; i < data.length; i++) {
-                            if (data[i].id == "{{$data->id}}") {
+            setInterval(function(){
+                addSelect();
+            },1000);
+
+            function addSelect()
+            {
+                var num = $('div.layui-input-inline').length;
+                for( var i=1;i <= num; i++ ){
+                    formOn(i);
+                }
+            }
+
+            function formOn(n)
+            {
+                form.on('select(select' + n + ')', function (data) {
+                    if( n == 1 ){
+                        $('select#select1').parent().siblings('div').remove();
+                        $('select#select1').data('id',1)
+                    }
+                    $.ajax({
+                        url: "{{url('admin/category_edit')}}"
+                        , type: 'post'
+                        , data: {"_token": "{{csrf_token()}}", "c_id": data.value, "id": '{{$data->id}}'}
+                        , success: function (data) {
+                            if (data == 1) {
+                                return false;
+                            } else if(data == 2){
+                                //说明选择的是顶级分类
+                                //那么如果存在之前选择的子分类,就应该删掉元素
+                                    $('select#select1').parent().next('div').remove();
 
                                 return false;
+                            }else if( data == null ){
+                                return false;
+                            }else{
+                                var did = $('select#select1').data('id');
+                                var newDid = did+1;
+                                var str = "<div class='layui-input-inline'><select name='cate_id' id='select"+newDid+"'  lay-filter='select"+newDid+"' lay-verify='required'><option value=''>请选择分类</option>";
+                                for (var i = 0; i < data.length; i++) {
+                                    if (data[i].id == {{$data->id}}) {
+                                        return false;
+                                    }
+                                    str += "<option value='" + data[i].id +"'>" + data[i].category_name + "</option>";
+                                }
+                                str += "</select></div>";
+                                $('select#select'+n).parent().next('div').remove();
+                                $('select#select'+n).parent().parent().append(str);
+                                $('select#select1').data('id',n);
+                                form.render();
                             }
-                            str += "<option value='" + data[i].id + ",'>" + data[i].category_name + "</option>";
-                        }
-                        str += "</select></div></div>";
-                        that.parent().parent().parent().parent().after(str);
-                        form.render();
+                        },
+                        typeOf: 'json'
+                    })
 
-                    },
-                    typeOf: 'json'
-                })
+                });
+            }
 
-            });
-        })
+        });
     </script>
 @endsection
 

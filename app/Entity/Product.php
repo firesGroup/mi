@@ -29,14 +29,19 @@ class Product extends Model
 
     /*
      *
-     *  获取商品所属模型
+     *  获取商品版本
      *
      */
-    public function model()
+    public function versions()
     {
-        return $this->belongsTo('App\Entity\ProductModel','model_id');
+        return $this->hasMany('App\Entity\ProductVersions','p_id');
     }
 
+
+    public function color()
+    {
+        return $this->hasMany('App\Entity\ProductVersionsColors','p_id');
+    }
     /**
      * 获取商品品牌。
      */
@@ -52,15 +57,6 @@ class Product extends Model
     {
         return $this->hasMany('App\Entity\ProductImages','p_id');
     }
-
-    /*
-     * 获取商品规格价格
-     */
-    public function specPrice()
-    {
-        return $this->hasMany('App\Entity\ProductSpecPrice', 'p_id');
-    }
-
     /*
      * 获取商品属性
      */
