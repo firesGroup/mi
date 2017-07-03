@@ -125,6 +125,7 @@
                                         @endforeach
                                 </ul>
                             </div>
+                            @if( isset($colorArr) )
                             <div class="pro-choose pro-choose-col2 J_step" data-index="1" id="color">
                                 <div class="step-title">  选择颜色   </div>
                                 <ul class="step-list clearfix">
@@ -139,16 +140,27 @@
                                     @endforeach
                                 </ul>
                             </div>
+                            @endif
                         <!-- 已选择的产品 -->
                         <div class="pro-list" id="J_proList">
                             <ul>
-                                <li class="totleName">{{$info->p_name}} {{ $versions[0]['ver_name'] }} {{ $versions[0]['ver_spec'] }} {{ $colorArr[0]['color_name'] }}   <span>{{ $versions[0]['price'] }}元</span>  </li>
+                                <li class="totleName">{{ $info->p_name }} {{ $versions[0]['ver_name'] }} {{ $versions[0]['ver_spec'] }} {{ $colorArr[0]['color_name'] }}   <span>{{ $versions[0]['price'] }}元</span>  </li>
                                 <li class="totlePrice">  总计  ：{{ $versions[0]['price'] }}元</li>
                             </ul>
                         </div>
                         <ul class="btn-wrap clearfix" id="J_buyBtnBox">
                             <li>
-                                <a href="javascript:void(0);" class="btn btn-primary btn-biglarge J_proBuyBtn" data-type="common">加入购物车</a>
+                                @if( $versions[0]['status'] == 0  )
+                                    <a href="javascript:void(0);" class="btn btn-primary btn-biglarge J_proBuyBtn" data-type="common">加入购物车</a>
+                                @elseif( $versions[0]['status'] == 1  )
+                                    <a data-tip="" class="btn btn-gray  btn-biglarge btn-line-gray J_setRemind" href="javascript:void(0);" disabled>已下架</a>
+                                @elseif( $versions[0]['status'] == 2  )
+                                    <a data-tip="" class="btn btn-line-primary btn-biglarge btn- J_setRemind" href="javascript:void(0);">新品预售</a>
+                                @elseif( $versions[0]['status'] == 3  )
+                                    <a data-tip="" class="btn btn-red btn-biglarge btn-line-red J_setRemind" href="javascript:void(0);" disabled>缺货中</a>
+                                @elseif( $versions[0]['status'] == 4  )
+                                    <a data-tip="" class="btn btn-line-primary btn-biglarge btn- J_setRemind" href="javascript:void(0);">新品上市</a>
+                                @endif
                             </li>
                         </ul>
                         <div class="pro-policy" id="J_policy">
@@ -159,7 +171,7 @@
                     </div>
                     <div class="error hide J_error">
                         <h3>有点小问题，请点击按钮刷新重试</h3>
-                        <a href="javascript:void(0)" class="btn btn-primary J_reload" data-stat-id="4cd574c9694dd9c9" onclick="_msq.push(['trackEvent', '87eadeffe976b568-4cd574c9694dd9c9', 'javascript:void(0)', 'pcpid', '']);">刷新</a>
+                        <a href="javascript:void(0)" class="btn btn-primary J_reload" data-stat-id="4cd574c9694dd9c9" >刷新</a>
                     </div>
                 </div>
             </div>
@@ -169,9 +181,6 @@
     <!-- 商品信息 end -->
     <!-- 商品详情 start -->
     <div class="pro-infomation" id="J_proInfo">
-        <div class="section is-visible preload">
-            {{ $info->description }}
-        </div>
         <div class="section  is-visible preload">
             <img data-url="//cdn.cnbj0.fds.api.mi-img.com/b2c-mimall-media/beb93b2f8a369c4acc1f084e3a347108.jpg" class="slider done" src="/images/public/default.gif">
         </div>

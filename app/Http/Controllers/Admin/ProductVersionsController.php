@@ -8,6 +8,7 @@ use App\Entity\ProductColor;
 use App\Entity\ProductVersionsColors;
 use Illuminate\Http\Request;
 use DB;
+use Storage;
 use Illuminate\Support\HtmlString;
 use App\Http\Requests\Admin\ProductVersionsRequest;
 use App\Http\Controllers\Controller;
@@ -90,7 +91,7 @@ class ProductVersionsController extends Controller
             if( $colorData ){
                 foreach($colorData as $k=>$color){
                     $color['ver_id'] = $id;
-                    ProductVersionsColors::create($colorData);
+                    ProductVersionsColors::insert($color);
                 }
             }
             return true;
@@ -218,6 +219,7 @@ class ProductVersionsController extends Controller
         $res = DB::transaction( function() use( $version,$id ) {
             $version->delete();
             ProductVersionsColors::where('ver_id',$id)->delete();
+            return true;
         } );
 
         return $res?0:1;

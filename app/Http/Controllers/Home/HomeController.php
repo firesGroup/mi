@@ -34,6 +34,7 @@ class HomeController extends Controller
         //拿到数组第一个版本的id
         $firstVersionId = $versions[0]['id'];
         $allColor = $info->color->toArray();
+//        dd($allColor);
         //将所有颜色按颜色id为键 重组数组
         foreach( $allColor as $color ){
             if( $color['ver_id'] == $firstVersionId ){

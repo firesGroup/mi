@@ -29,12 +29,12 @@ Route::group(['namespace'=>'Admin','prefix'=>'admin'], function(){
     ]]);
     Route::get('menu/index/welcome','MenuController@getWelcome');
     Route::get('product/versions/getColorList', 'ProductVersionsController@getColorList');
-    Route::get('product/versions/create/{id}','productVersionsController@create');
-    Route::get('product/versions/{id}/edit','productVersionsController@edit');
-    Route::get('product/versions/{id}','productVersionsController@index');
-    Route::post('product/versions/','productVersionsController@store');
-    Route::put('product/versions/{id}','productVersionsController@update');
-    Route::delete('product/versions/{id}','productVersionsController@destroy');
+    Route::get('product/versions/create/{id}','ProductVersionsController@create');
+    Route::get('product/versions/{id}/edit','ProductVersionsController@edit');
+    Route::get('product/versions/{id}','ProductVersionsController@index');
+    Route::post('product/versions/','ProductVersionsController@store');
+    Route::put('product/versions/{id}','ProductVersionsController@update');
+    Route::delete('product/versions/{id}','ProductVersionsController@destroy');
     Route::resource('product/color', 'ProductColorController',['parameters' => [
         'color' => 'color_id'
     ]],['except'=>['show']]);
