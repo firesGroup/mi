@@ -230,163 +230,6 @@
                 </div>
 
                 <div class="section section-count clearfix">
-                    <div class="count-actions">
-                        <!-- 优惠券 -->
-                        <div class="coupon-trigger" id="J_useCoupon"><i class="iconfont icon-plus"></i>使用优惠券</div>
-                        <div class="coupon-result hide" id="J_couponResult">
-                            <i class="iconfont icon-selected"></i>
-                            正在使用：<span class="coupon-title" id="J_couponTitle"></span>
-                            <a href="javascript:void(0)" id="J_changeConpon">［修改］</a>
-                        </div>
-                        <div class="coupon-box hide" id="J_couponBox">
-                            <ul class="clearfix tab-switch J_tabSwitch">
-                                <li>选择优惠券</li>
-                                <li>输入优惠券码</li>
-                            </ul>
-                            <div class="tab-container">
-                                <div class="tab-content list-content">
-                                    <p class="coupon-empty">您暂时没有可用的优惠券</p>
-                                </div>
-                                <div class="tab-content code-content hide">
-                                    <div class="form-section">
-                                        <label class="input-label" for="coupon_code">请输入优惠券码</label>
-                                        <input class="input-text" id="coupon_code" name="coupon_code" type="text">
-                                    </div>
-                                    <div class="coupon-confirm">
-                                        <a href="javascript:void(0);" class="btn btn-primary"
-                                           id="J_useCouponCode">立即使用</a>
-                                        <a href="javascript:void(0);" class="btn btn-gray J_couponCancel">不使用优惠券</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- 购物卡 -->
-                        <div class="ecard-trigger" id="J_useEcard" data-type="normal"><i
-                                    class="iconfont icon-plus"></i>使用小米礼品卡
-                        </div>
-                        <div class="ecard-result hide" id="J_ecardResult">
-                            <i class="iconfont icon-selected"></i> 已使用礼品卡 <span id="J_ecardVal"></span>
-                            <a href="javascript:void(0);" id="J_ecardModify">［修改］</a>
-                        </div>
-                        <!-- 现金券 -->
-                        <div class="ecard-trigger hide" id="J_useRecycle" data-type="recycle"><i
-                                    class="iconfont icon-plus"></i>使用现金券
-                        </div>
-                        <div class="ecard-result hide" id="J_recycleResult">
-                            <i class="iconfont icon-selected"></i> 已使用现金券 <span id="J_recycleVal"></span>
-                            <a href="javascript:void(0);" id="J_recycleModify">［修改］</a>
-                        </div>
-
-                        <div class="ecard-box hide" id="J_ecardBox">
-                            <ul class="clearfix tab-switch J_tabSwitch">
-                                <li>已绑定的礼品卡</li>
-                                <li>输入礼品卡以绑定</li>
-                            </ul>
-                            <div class="tab-container">
-                                <!-- 选卡 -->
-                                <div class="tab-content ecard-list">
-                                    <div class="empty hide" id="J_ecardEmpty">
-                                        <p>没有发现可用的礼品卡！</p>
-                                        <a href="javascript:void(0);" class="btn btn-gray J_ecardCancel">取消</a>
-                                    </div>
-                                    <div class="hide">
-                                        <div id="J_ecardList">
-                                        </div>
-                                        <div class="ecard-info" id="J_ecardInfo"></div>
-                                        <div class="btns">
-                                            <a href="javascript:void(0);" class="btn btn-primary" id="J_useSelEcard">确认以上选择</a>
-                                            <a href="javascript:void(0);" class="btn btn-gray J_ecardCancel">取消
-                                                不使用礼品卡</a>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <!-- 绑卡 -->
-                                <div class="tab-content ecard-input hide">
-                                    <div class="form-section">
-                                        <span class="input-title">密码：</span>
-                                        <!-- <label class="input-label" for="ecard_password">请输入礼品卡密码</label> -->
-                                        <input class="input-text input-card" id="ecard_password" name="ecard_password"
-                                               placeholder="请输入礼品卡密码" type="text">
-                                    </div>
-                                    <div class="form-section clearfix">
-                                        <span class="input-title">验证码：</span>
-                                        <!-- <label class="input-label" for="ecard_captcha">请输入验证码</label> -->
-                                        <input class="input-text input-captcha" id="ecard_captcha" placeholder="请输入验证码"
-                                               name="ecard_captcha"
-                                               data-authurl="//captcha.hd.mi.com/captcha/auth?answer={answer}&amp;service=order.mi.com&amp;_ov=0"
-                                               type="text">
-                                        <div class="captcha-img">
-                                            <img alt="验证码" title="点击更换验证码" id="J_ecardCaptchaImg">
-                                        </div>
-                                    </div>
-                                    <div class="form-section form-btns">
-                                        <button class="btn btn-primary" id="J_bindEcard">绑定礼品卡</button>
-                                        <button class="btn btn-gray J_ecardCancel">取消</button>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="recycle-box hide" id="J_recycleBox">
-                                <div class="ecard-list recycle-list">
-                                    <div id="J_recycleList">
-                                        <div class="table-wrapper">
-                                            <ul class="clearfix">
-                                                <li class="col-1">选择</li>
-                                                <li class="col-2">券号</li>
-                                                <li class="col-3">本次使用（元）</li>
-                                                <li class="col-4">余额（元）</li>
-                                            </ul>
-                                            <div>
-                                                <table>
-                                                    <tbody></tbody>
-                                                </table>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="ecard-info" id="J_recycleInfo"></div>
-                                    <div class="btns">
-                                        <a href="javascript:void(0);" class="btn btn-primary" id="J_useSelRecycle">确认以上选择</a>
-                                        <a href="javascript:void(0);" class="btn btn-gray J_recycleCancel">取消不使用现金券</a>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="sms-box hide" id="J_ecardSmsBox">
-                                <div class="title">已向您绑定的手机<span id="J_ecardMobile">（135****6910）</span>发送验证码 <i
-                                            class="icon-qa" id="J_ecardQa">?</i></div>
-                                <div class="form-section clearfix">
-                                    <label class="input-label" for="ecard_sms">请输入验证码</label>
-                                    <input class="input-text input-ecard" id="ecard_sms" name="ecard_sms" type="text">
-                                    <span id="J_smsCountdown" class="countdown hide"><i></i>秒后重新发送</span>
-                                    <a href="javascript:void(0);" class="repeat hide" id="J_repeatSms">重新发送</a>
-                                </div>
-                                <div class="form-section form-btns">
-                                    <button class="btn btn-primary" id="J_checkEcardSms">确定</button>
-                                    <button class="btn btn-gray" id="J_cancelEcardSms">取消</button>
-                                </div>
-                                <div class="qa-detail hide" id="J_ecardQaDetail">
-                                    为保证您的资金安全，消费时需通过绑定手机的认证。若您绑定的手机号已变更，可前往小米账号中心修改绑定的手机号，如果原来的手机号已无法使用，可通过申诉的方式更换手机号。<a
-                                            href="https://account.xiaomi.com/pass/auth/security/home" target="_blank"
-                                    >前往小米账号中心&gt;</a>
-                                </div>
-                            </div>
-
-                            <div class="loading hide">
-                                <div class="loader"></div>
-                            </div>
-                        </div>
-
-                        <!-- 加价购 -->
-                        <div class="raise-buy-box">
-                            <ul id="J_raiseBuyList">
-
-                                <!--S 保障计划 产品选择弹框 -->
-                                <!--E 保障计划 产品选择弹框 -->
-                            </ul>
-                        </div>
-                    </div>
 
                     <div class="money-box" id="J_moneyBox">
                         <ul>
@@ -434,7 +277,9 @@
                      aria-hidden="true">
                     <div class="modal-header">
                         <span class="title">添加收货地址</span>
-                        <a class="close" data-dismiss="modal" href="javascript: void(0);"><i class="iconfont" id="closeAddAddress"></i></a>
+                        <a class="close" data-dismiss="modal" href="javascript: void(0);">
+                            <i class="iconfont" id="closeAddAddress"></i>
+                        </a>
                     </div>
                     <div class="modal-body">
                         <div class="form-box clearfix">
@@ -449,13 +294,15 @@
                                        placeholder="11位手机号" type="text">
                             </div>
                             <div class="form-section form-four-address form-section-active">
-                                <input id="J_selectAddressTrigger" class="input-text J_addressInput four_address" name="four_address" readonly="readonly" value="选择省 / 市 / 区 / 街道" placeholder="选择省 / 市 / 区 / 街道" type="text">
+                                <input id="J_selectAddressTrigger" class="input-text J_addressInput four_address"
+                                       name="four_address" readonly="readonly" value="选择省 / 市 / 区 / 街道"
+                                       placeholder="选择省 / 市 / 区 / 街道" type="text">
                                 <i class="iconfont" id="chooseAddress"></i>
                             </div>
                             <div class="form-section form-address-detail">
                                 <label class="input-label" for="user_adress">详细地址</label>
                                 <textarea class="input-text J_addressInput" type="text" id="J_addressDetailInput"
-                                          name="user_adress" placeholder="详细地址，路名或街道名称，门牌号"></textarea>
+                                          name="user_address" placeholder="详细地址，路名或街道名称，门牌号"></textarea>
                             </div>
                             <div class="form-section form-zipcode">
                                 <label class="input-label" for="user_zipcode">邮政编码</label>
@@ -519,37 +366,9 @@
                                     </div>
                                     <div class="options-box">
                                         <ul class="options-list J_optionsWrapper clearfix">
-                                            <li class="option J_option" data-value="2" data-txt="北京">北京</li>
-                                            <li class="option J_option" data-value="3" data-txt="天津">天津</li>
-                                            <li class="option J_option" data-value="4" data-txt="河北">河北</li>
-                                            <li class="option J_option" data-value="5" data-txt="山西">山西</li>
-                                            <li class="option J_option" data-value="6" data-txt="内蒙古">内蒙古</li>
-                                            <li class="option J_option" data-value="7" data-txt="辽宁">辽宁</li>
-                                            <li class="option J_option" data-value="8" data-txt="吉林">吉林</li>
-                                            <li class="option J_option" data-value="9" data-txt="黑龙江">黑龙江</li>
-                                            <li class="option J_option" data-value="10" data-txt="上海">上海</li>
-                                            <li class="option J_option" data-value="11" data-txt="江苏">江苏</li>
-                                            <li class="option J_option" data-value="12" data-txt="浙江">浙江</li>
-                                            <li class="option J_option" data-value="13" data-txt="安徽">安徽</li>
-                                            <li class="option J_option" data-value="14" data-txt="福建">福建</li>
-                                            <li class="option J_option" data-value="15" data-txt="江西">江西</li>
-                                            <li class="option J_option" data-value="16" data-txt="山东">山东</li>
-                                            <li class="option J_option" data-value="17" data-txt="河南">河南</li>
-                                            <li class="option J_option" data-value="18" data-txt="湖北">湖北</li>
-                                            <li class="option J_option" data-value="19" data-txt="湖南">湖南</li>
-                                            <li class="option J_option" data-value="20" data-txt="广东">广东</li>
-                                            <li class="option J_option" data-value="21" data-txt="广西">广西</li>
-                                            <li class="option J_option" data-value="22" data-txt="海南">海南</li>
-                                            <li class="option J_option" data-value="23" data-txt="重庆">重庆</li>
-                                            <li class="option J_option" data-value="24" data-txt="四川">四川</li>
-                                            <li class="option J_option" data-value="25" data-txt="贵州">贵州</li>
-                                            <li class="option J_option" data-value="26" data-txt="云南">云南</li>
-                                            <li class="option J_option" data-value="27" data-txt="西藏">西藏</li>
-                                            <li class="option J_option" data-value="28" data-txt="陕西">陕西</li>
-                                            <li class="option J_option" data-value="29" data-txt="甘肃">甘肃</li>
-                                            <li class="option J_option" data-value="30" data-txt="青海">青海</li>
-                                            <li class="option J_option" data-value="31" data-txt="宁夏">宁夏</li>
-                                            <li class="option J_option" data-value="32" data-txt="新疆">新疆</li>
+                                            @foreach($data as $v)
+                                                <li class="option J_option" value="{{$v->id}}">{{$v->name}}</li>
+                                            @endforeach
                                         </ul>
                                         <ul class="options-list J_optionsWrapper clearfix hide"></ul>
                                         <ul class="options-list J_optionsWrapper clearfix hide"></ul>
@@ -557,16 +376,14 @@
                                     </div>
                                 </div>
                                 <div class="switch-type">
-                                    <a href="javascript:void(0);" class="J_switchTypeTrigger" data-type="search"
-                                       data-stat-id="beb429d92950ef7b"
-                                       onclick="_msq.push(['trackEvent', '17a1f380b9d4cd2e-beb429d92950ef7b', 'javascript:void(0);', 'pcpid', '']);">
+                                    <a href="javascript:void(0);" class="J_switchTypeTrigger" data-type="search">
                                         搜索地址快速定位&gt;</a>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <a href="javascript:void(0);" class="btn btn-primary" id="J_editAddressSave">保存</a>
+                        <a href="javascript:;" class="btn btn-primary" id="J_editAddressSave">保存</a>
                         <a href="#J_modalEditAddress" class="btn btn-gray" data-toggle="modal">取消</a>
                     </div>
                 </div>
@@ -615,17 +432,20 @@
             $('#J_newAddress').on('click', function () {
 //                console.log($(this));
 //                console.log($('#J_modalEditAddress'));
+                if ($('input.input-text')) {
+                    $('div.form-section').addClass('form-section-valid form-section-active');
+                }
                 $('div #J_modalEditAddress').css({"display": "block"}).attr('aria-hidden', 'false');
             });
 
-            $('#closeAddAddress').on('click', function() {
+            $('#closeAddAddress').on('click', function () {
                 $('div #J_modalEditAddress').css({"display": "none"}).attr('aria-hidden', 'true');
             });
 
             $('div.form-section').on('click', function () {
                 $(this).addClass('form-section-valid form-section-focus form-section-active');
 //                console.log($(this).children('.four_address').length);
-                if($(this).children('.four_address').length){
+                if ($(this).children('.four_address').length) {
                     $('#J_selectAddressWrapper').removeClass('hide');
                 }
 
@@ -652,6 +472,109 @@
 
                 $('div.four-address-wrapper').removeClass('hide');
                 $('div.search-address-wrapper').addClass('hide');
+            });
+
+            $('ul li.option').on('click', function () {
+//                console.log($(this).val());
+
+                var id = $(this).val();
+                var address = $(this).text();
+//                console.log(address);
+//                console.log($('div.select-first'));
+                $('div.select-first').addClass('active').text(address).next('.select-item').removeClass('hide').text('选择城市/地区');
+
+                $.ajax({
+                    url: "{{url('home/chooseAddress')}}",
+                    type: 'get',
+                    data: {'_token': '{{csrf_token()}}', 'id': id},
+                    success: function (data) {
+//                        console.log(data);
+//                        console.log($('ul li.option').parent());
+                        for (var i = 0; i < data.length; i++) {
+//                            console.log(data);
+                            var arr = data[i];
+                            $('ul li.option').parent().addClass('hide').next('.options-list').removeClass('hide').append("<li class='J_option cities' value='" + arr.id + "'>" + arr.name + "</li>");
+                        }
+
+//                         console.log($('ul li.cities'));
+                        $('ul li.cities').on('click', function () {
+//                             alert(1);
+//                             console.log($(this).val());
+
+                            var citiesId = $(this).val();
+                            var cities = $(this).text();
+
+                            $('div.select-first').next().text(cities).next().removeClass('hide').text('选择区县');
+
+                            $.ajax({
+                                url: "{{url('home/cities')}}",
+                                type: 'get',
+                                data: {'_token': '{{csrf_token()}}', 'id': citiesId},
+                                success: function (data) {
+                                    for (var i = 0; i < data.length; i++) {
+                                        var arr = data[i];
+
+                                        $('ul li.option').parent().next().addClass('hide').next().removeClass('hide').append("<li class='J_option area' value='" + arr.id + "'>" + arr.name + "</li>");
+                                    }
+
+                                    $('ul li.area').on('click', function () {
+                                        var prov = $('div.select-first').text();
+                                        var city = $('div.select-first').next().text();
+                                        var area = $(this).text();
+
+                                        var addr = prov + city + area;
+//                                        console.log(addr);
+                                        $('#J_selectAddressWrapper').addClass('hide');
+                                        $('#J_selectAddressTrigger').attr('value', addr);
+                                    });
+
+                                },
+                                dataType: 'json'
+                            });
+
+                        });
+                    },
+                    dataType: 'json'
+                });
+
+
+            });
+
+            $('div.select-first').on('click', function () {
+//                alert(1);
+                $('ul li.option').parent().removeClass('hide').nextAll('.options-list').addClass('hide').children().remove();
+                $(this).text('选择省份/自治区').nextAll().addClass('hide');
+            });
+
+            $('a.btn-gray').on('click', function () {
+
+                $('div #J_modalEditAddress').css({"display": "none"}).attr('aria-hidden', 'true');
+            });
+
+            $('#J_editAddressSave').on('click', function () {
+                var arr = new Array();
+//                console.log($('input.J_addressInput'));
+                var input = $('.J_addressInput');
+//                console.log(input);
+                for (var i = 0; i < input.length; i++) {
+                    arr.push(input[i].value);
+//                    console.log(input[i]);
+                }
+//                console.log(arr);
+
+                $('div #J_modalEditAddress').css({"display": "none"}).attr('aria-hidden', 'true');
+
+                $.ajax({
+                    url: "{{url('home/addAddress')}}",
+                    type: 'get',
+                    data: {'_token': '{{csrf_token()}}', 'arr': arr},
+                    success: function (data) {
+
+                    },
+                    dataType: 'json'
+                });
+
+
             });
 
         });

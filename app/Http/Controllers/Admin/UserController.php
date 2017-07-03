@@ -336,8 +336,32 @@ class UserController extends Controller
 
 //        dd($pass);
 
+    }
+
+    public function login(Request $request)
+    {
+//        dd(1);
+
+        $data = $request->all();
+//        dd($data['name']);
+
+        $name = $data['name'];
 
 
+        $arr = DB::table('admin')->where('username', '=', $name)->select('password')->get();
+//        dd(($arr[0])->password);
+        $password = $arr[0]->password;
+
+        if (empty($arr)) {
+            return back()->with(['error'=>'用户名错误'])->withInput();
+        } else {
+            $passwd = $data['password'];
+            if (Hash::check($passwd, $password)) {
+                return redirect('admin');
+            } else {
+                return back()->with(['wrong'=>'密码错误']);
+            }
+        }
 
     }
 
