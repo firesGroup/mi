@@ -49,6 +49,9 @@ Route::group( ['namespace'=>'Home'], function(){
       return view('home/reg_login/login');
    });
    Route::post('login', 'LoginController@login');
+   Route::get('login/exit', 'LoginController@loginout');
+
+   Route::get('user_detail', 'UserDetailController@user_detail');
 });
 
 Route::get('kit/captcha/{tmp}', 'Home\CodeController@captcha');

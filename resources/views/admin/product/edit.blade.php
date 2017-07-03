@@ -33,315 +33,176 @@
 {{--    {{var_dump($detail)}}--}}
     <section class="larry-grid">
         <div class="larry-personal">
-        <header class="larry-personal-tit">
-            <span>商品管理-修改信息</span>
-        </header>
-        <div class="row" id="infoSwitch">
-            <blockquote class="layui-elem-quote col-md-12 head-con">
-                <div class="title">
-                    <i class="larry-icon larry-caozuo"></i>
-                    <h4 title="提示相关设置操作时应注意的要点">操作提示</h4>
-                </div>
-                <ul>
-                    <li>请务必正确填写商品信息</li>
-                </ul>
-                <i class="larry-icon larry-guanbi close" id="closeInfo"></i>
-            </blockquote>
-        </div>
-        <div class="larry-personal-body clearfix">
-            <div class="layui-tab"  lay-filter="tab">
-                <ul class="layui-tab-title">
-                    <li class="layui-this">商品信息</li>
-                    <li  id="p-images">商品相册</li>
-                    <li>商品模型</li>
-                </ul>
-                <div class="layui-tab-content">
-                    <div class="layui-tab-item layui-show" style="padding-top:20px">
-                        <div class="form-body">
-                            <form class="layui-form" method="post" id="productDetail">
-                                {{ csrf_field() }}
-                                <input type="hidden" name="_method" value="PUT">
-                                <div class="layui-form-item">
-                                    <label class="layui-form-label">商品名称</label>
-                                    <div class="layui-input-block">
-                                        <input type="text" name="p_name" lay-verify="required" placeholder="请输入商品名称" autocomplete="off" class="layui-input" value="{{ $info->p_name }}">
-                                    </div>
+            <header class="larry-personal-tit">
+                <span>商品管理-修改信息</span>
+            </header>
+            <div class="row" id="infoSwitch">
+                <blockquote class="layui-elem-quote col-md-12 head-con">
+                    <div class="title">
+                        <i class="larry-icon larry-caozuo"></i>
+                        <h4 title="提示相关设置操作时应注意的要点">操作提示</h4>
+                    </div>
+                    <ul>
+                        <li>请务必正确填写商品信息</li>
+                    </ul>
+                    <i class="larry-icon larry-guanbi close" id="closeInfo"></i>
+                </blockquote>
+            </div>
+            <div class="larry-personal-body clearfix">
+                <div class="layui-tab-item layui-show" style="padding-top:20px">
+                    <div class="form-body">
+                        <form class="layui-form" method="post" id="productDetail">
+                            {{ csrf_field() }}
+                            <input type="hidden" name="_method" value="PUT">
+                            <input type="hidden" name="p_id" value="{{ $info->p_id }}">
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">商品名称</label>
+                                <div class="layui-input-block">
+                                    <input type="text" name="p_name" lay-verify="required" placeholder="请输入商品名称" autocomplete="off" class="layui-input" value="{{ $info->p_name }}">
                                 </div>
-                                <div class="layui-form-item">
-                                    <label class="layui-form-label">商品简介</label>
-                                    <div class="layui-input-block">
-                                        <textarea type="text" name="summary" lay-verify="required" placeholder="请输入商品简介" autocomplete="off" class="layui-input">{{ $detail->summary }}</textarea>
-                                    </div>
+                            </div>
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">商品简介</label>
+                                <div class="layui-input-block">
+                                    <textarea type="text" name="summary" lay-verify="required" placeholder="请输入商品简介" autocomplete="off" class="layui-input">{{ $detail->summary }}</textarea>
                                 </div>
-                                <div class="layui-form-item">
-                                    <label class="layui-form-label">活动提醒</label>
-                                    <div class="layui-input-block">
-                                        <textarea type="text" name="remind_title" lay-verify="required" placeholder="请输入位于商品简介前的活动提醒" autocomplete="off" class="layui-input">{{ $detail->remind_title }}</textarea>
-                                    </div>
+                            </div>
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">活动提醒</label>
+                                <div class="layui-input-block">
+                                    <textarea type="text" name="remind_title" lay-verify="required" placeholder="请输入位于商品简介前的活动提醒" autocomplete="off" class="layui-input">{{ $detail->remind_title }}</textarea>
                                 </div>
-                                <div class="layui-form-item">
-                                    <label class="layui-form-label">商品分类</label>
-                                    <div class="layui-input-block">
-                                        <div class="layui-input-inline">
-                                            <select >
-                                                <option value="">请选择商品分类</option>
-                                                <option value="你的工号">江西省</option>
-                                                <option value="你最喜欢的老师">福建省</option>
-                                            </select>
-                                        </div>
-                                        <div class="layui-input-inline">
-                                            <select >
-                                                <option value="">请选择商品分类</option>
-                                                <option value="杭州">杭州</option>
-                                                <option value="宁波" disabled="">宁波</option>
-                                                <option value="温州">温州</option>
-                                                <option value="温州">台州</option>
-                                                <option value="温州">绍兴</option>
-                                            </select>
-                                        </div>
-                                        <div class="layui-input-inline">
-                                            <select >
-                                                <option value="">请选择商品分类</option>
-                                                <option value="西湖区">西湖区</option>
-                                                <option value="余杭区">余杭区</option>
-                                                <option value="拱墅区">临安市</option>
-                                            </select>
-                                        </div>
+                            </div>
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">商品分类</label>
+                                <div class="layui-input-block">
+                                    <div class="layui-input-inline">
+                                        <select >
+                                            <option value="">请选择商品分类</option>
+                                            <option value="你的工号">江西省</option>
+                                            <option value="你最喜欢的老师">福建省</option>
+                                        </select>
                                     </div>
-                                </div>
-                                <div class="layui-form-item">
-                                    <label class="layui-form-label">商品品牌</label>
-                                    <div class="layui-input-block">
-                                        <select name="brand_id">
-                                            @foreach( $brand as $b )
-                                                @if( $info->brand_id == $b->id )
-                                                    <option value="{{ $b->id  }}" selected >{{ $b->brand_name }}</option>
-                                                @else
-                                                    <option value="{{ $b->id  }}">{{ $b->brand_name }}</option>
-                                                @endif
-                                            @endforeach
+                                    <div class="layui-input-inline">
+                                        <select >
+                                            <option value="">请选择商品分类</option>
+                                            <option value="杭州">杭州</option>
+                                            <option value="宁波" disabled="">宁波</option>
+                                            <option value="温州">温州</option>
+                                            <option value="温州">台州</option>
+                                            <option value="温州">绍兴</option>
+                                        </select>
+                                    </div>
+                                    <div class="layui-input-inline">
+                                        <select >
+                                            <option value="">请选择商品分类</option>
+                                            <option value="西湖区">西湖区</option>
+                                            <option value="余杭区">余杭区</option>
+                                            <option value="拱墅区">临安市</option>
                                         </select>
                                     </div>
                                 </div>
-                                <div class="layui-form-item">
-                                    <label class="layui-form-label">商品价格</label>
-                                    <div class="layui-input-block">
-                                        <input type="text" name="price" lay-verify="required" placeholder="请输入商品价格" autocomplete="off" class="layui-input" value="{{ $info->price }}" onkeyup="this.value=this.value.replace(/[^\d.]/g,'')" onpaste="this.value=this.value.replace(/[^\d.]/g,'')">
-                                    </div>
+                            </div>
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">商品价格</label>
+                                <div class="layui-input-block">
+                                    <input type="text" name="price" lay-verify="required" placeholder="请输入商品价格" autocomplete="off" class="layui-input" value="{{ $info->price }}" onkeyup="this.value=this.value.replace(/[^\d.]/g,'')" onpaste="this.value=this.value.replace(/[^\d.]/g,'')">
                                 </div>
-                                <div class="layui-form-item">
-                                    <label class="layui-form-label">市场价格</label>
-                                    <div class="layui-input-block">
-                                        <input type="text" name="market_price" lay-verify="required" placeholder="请输入市场价格" autocomplete="off" class="layui-input" value="{{ $info->market_price }}" onkeyup="this.value=this.value.replace(/[^\d.]/g,'')" onpaste="this.value=this.value.replace(/[^\d.]/g,'')">
-                                    </div>
+                            </div>
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">商品货号</label>
+                                <div class="layui-input-block">
+                                    <input type="text" name="p_num"  placeholder="为空将自动生成" autocomplete="off" class="layui-input" value="{{ $info->p_num }}">
                                 </div>
-                                <div class="layui-form-item">
-                                    <label class="layui-form-label">商品总库存</label>
-                                    <div class="layui-input-block">
-                                        <input type="text" name="store" lay-verify="required" placeholder="请输入商品总库存量" autocomplete="off" class="layui-input" value="{{ $detail->store }}" onkeyup="this.value=this.value.replace(/[^\d.]/g,'')" onpaste="this.value=this.value.replace(/[^\d.]/g,'')">
-                                    </div>
+                            </div>
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">商品总库存</label>
+                                <div class="layui-input-block">
+                                    <input type="text" name="store" lay-verify="required" placeholder="请输入商品总库存量" autocomplete="off" class="layui-input" value="{{ $info->store }}" onkeyup="this.value=this.value.replace(/[^\d.]/g,'')" onpaste="this.value=this.value.replace(/[^\d.]/g,'')">
                                 </div>
-                                <div class="layui-form-item">
-                                    <label class="layui-form-label">商品单位</label>
-                                    <div class="layui-input-block">
-                                        <input type="text" name="unit" lay-verify="required" placeholder="请输入商品单位" autocomplete="off" class="layui-input" value="{{ $detail->unit }}">
-                                    </div>
+                            </div>
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">商品成交量</label>
+                                <div class="layui-input-block">
+                                    <div class="layui-input">{{ $info->sell_num }}<font style="color:#e2e2e2">(无法修改)</font></div>
                                 </div>
-                                <div class="layui-form-item">
-                                    <label class="layui-form-label">商品成交量</label>
-                                    <div class="layui-input-block">
-                                        <div class="layui-input">{{ $detail->sell_num }}<font style="color:#e2e2e2">(无法修改)</font></div>
-                                    </div>
+                            </div>
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">商品点击量</label>
+                                <div class="layui-input-block">
+                                    <div class="layui-input">{{ $info->click_num }}<font style="color:#e2e2e2">(无法修改)</font></div>
                                 </div>
-                                <div class="layui-form-item">
-                                    <label class="layui-form-label">商品点击量</label>
-                                    <div class="layui-input-block">
-                                        <div class="layui-input">{{ $detail->click_num }}<font style="color:#e2e2e2">(无法修改)</font></div>
-                                    </div>
+                            </div>
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">是否包邮</label>
+                                <div class="layui-input-block">
+                                    @if( $detail->is_free_shipping == 0 )
+                                        <input type="radio" name="is_free_shipping" value="0" checked title="包邮">
+                                        <input type="radio" name="is_free_shipping" value="1" title="不包邮">
+                                    @elseif( $detail->is_free_shipping == 1 )
+                                        <input type="radio" name="is_free_shipping" value="0" title="包邮">
+                                        <input type="radio" name="is_free_shipping" value="1" checked title="不包邮">
+                                    @endif
                                 </div>
-                                <div class="layui-form-item">
-                                    <label class="layui-form-label">商品重量</label>
-                                    <div class="layui-input-block">
-                                        <input type="text" name="weight" lay-verify="required" placeholder="请输入商品重量(单位:kg)" autocomplete="off" class="layui-input" value="{{ $detail->weight  }}" onkeyup="this.value=this.value.replace(/[^\d.]/g,'')" onpaste="this.value=this.value.replace(/[^\d.]/g,'')">
-                                    </div>
+                            </div>
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">是否推荐</label>
+                                <div class="layui-input-block">
+                                    @if( $info->recommend == 0 )
+                                    <input type="radio" name="recommend" value="0" checked title="推荐">
+                                    <input type="radio" name="recommend" value="1" title="不推荐">
+                                    @elseif( $info->recommend == 1 )
+                                    <input type="radio" name="recommend" value="0" title="推荐">
+                                    <input type="radio" name="recommend" value="1" checked title="不推荐">
+                                    @endif
                                 </div>
-                                <div class="layui-form-item">
-                                    <label class="layui-form-label">是否包邮</label>
-                                    <div class="layui-input-block">
-                                        @if( $detail->is_free_shipping == 0 )
-                                            <input type="radio" name="is_free_shipping" value="0" checked title="包邮">
-                                            <input type="radio" name="is_free_shipping" value="1" title="不包邮">
-                                        @elseif( $detail->is_free_shipping == 1 )
-                                            <input type="radio" name="is_free_shipping" value="0" title="包邮">
-                                            <input type="radio" name="is_free_shipping" value="1" checked title="不包邮">
-                                        @endif
-                                    </div>
-                                </div>
-                                <div class="layui-form-item">
-                                    <label class="layui-form-label">是否推荐</label>
-                                    <div class="layui-input-block">
-                                        @if( $info->recommend == 0 )
-                                        <input type="radio" name="recommend" value="0" checked title="推荐">
-                                        <input type="radio" name="recommend" value="1" title="不推荐">
-                                        @elseif( $info->recommend == 1 )
-                                        <input type="radio" name="recommend" value="0" title="推荐">
-                                        <input type="radio" name="recommend" value="1" checked title="不推荐">
-                                        @endif
-                                    </div>
-                                </div>
-                                <div class="layui-form-item">
-                                    <label class="layui-form-label">商品状态</label>
-                                    <div class="layui-input-block">
-                                        <select name="status">
-                                            @for( $i=0;$i<5;$i++ )
-                                                @if( $i == $info->status  )
-                                                    <option value="{{$info->status}}" selected>{{ $zhStatus[$i]}}</option>
-                                                @else
-                                                    <option value="{{$i}}">{{ $zhStatus[$i]}}</option>
-                                                @endif
-                                            @endfor
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="layui-form-item">
-                                    <label class="layui-form-label">商品关键字</label>
-                                    <div class="layui-input-block">
-                                        <input type="text" name="tags" lay-verify="required" placeholder="请输入商品关键字" autocomplete="off" class="layui-input" value="{{ $detail->tags }}">
-                                    </div>
-                                </div>
-                                <div class="layui-form-item">
-                                    <label class="layui-form-label">商品封面</label>
-                                    <div class="layui-input-block">
-                                            <input id="upload-input" type="text" class="layui-input layui-input-inline" name="p_index_image" value="{{ $detail->p_index_image }}" style="width:520px;height:38px;margin:0px" placeholder="输入图片地址或点击上传">
-                                            <span class="layui-btn" id="uploadImage"><i class="layui-icon"></i>上传商品封面图片</span>
-                                    </div>
-                                </div>
-                                <div class="layui-form-item">
-                                    <label class="layui-form-label">商品详情</label>
-                                    <div class="layui-input-block">
-                                        <!-- 加载uefitor编辑器的容器 -->
-                                        <script id="ueditor" name="description" type="text/plain">{{ $description }}</script>
-                                    </div>
-                                </div>
-                                <div class="layui-form-item">
-                                    <div class="layui-input-block">
-                                        <button class="layui-btn" lay-submit="" lay-filter="editInfo">立即提交</button>
-                                        <button type="reset" class="layui-btn layui-btn-primary">重置</button>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                    <div class="layui-tab-item">
-                        <div class="p-images-list-box clearfix" id="upload-div-1">
-                        </div>
-                    </div>
-                    <div class="layui-tab-item">
-                        <div class="form-body">
-                            <form>
-                                <div class="layui-form">
-                                    {{ csrf_field() }}
-                                    <div class="layui-form-item">
-                                        <label class="layui-form-label">商品模型</label>
-                                        <div class="layui-input-block">
-                                            <select name="model"  lay-filter="modelSelect" lay-verify="required">
-                                                <option value="">请选择商品模型</option>
-                                                @foreach( $modelList as $model )
-                                                    @if( $info->model_id == $model->id )
-                                                        <option value="{{ $model->id  }}" selected >{{ $model->model_name }}</option>
-                                                    @else
-                                                        <option value="{{ $model->id  }}">{{ $model->model_name }}</option>
-                                                    @endif
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                </div>
-                                        <div class="layui-form-item">
-                                            <table class="layui-table larry-table-info" id="spec_table_1">
-                                            <colgroup>
-                                                <col width="100">
-                                                <col>
-                                            </colgroup>
-                                            <thead>
-                                            <tr>
-                                                <th>规格名称</th>
-                                                <th>规格项</th>
-                                            </tr>
-                                            </thead>
-                                            <tbody>
-                                            @if( $info->model )
-                                                @foreach( $info->model->spec as $key=>$spec )
-                                                    <tr>
-                                                        <td>{{ $spec->spec_name }}</td>
-                                                        <td style="text-align:left!important;padding-top:15px;">
-                                                            <div class="layui-form-item">
-                                                                @foreach( $spec->item as $k=>$item )
-                                                                        <input type="checkbox" data-spec_id="{{$spec->id}}" data-item_id="{{$item->id}}"  title="{{ $item->spec_item }}">
-                                                                @endforeach
-                                                            </div>
-                                                        </td>
-                                                    </tr>
-                                                @endforeach
-                                                @else
-                                                @endif
-                                            </tbody>
-                                        </table>
-                                           <div id="spec_table">
-
-                                           </div>
-                                        </div>
-                                        <div class="layui-form-item" >
-                                        <table class="layui-table larry-table-info" id="attr_table">
-                                            <colgroup>
-                                                <col width="200">
-                                                <col>
-                                            </colgroup>
-                                            <thead>
-                                            <tr>
-                                                <th>属性名称</th>
-                                                <th>属性值</th>
-                                            </tr>
-                                            </thead>
-                                            <tbody>
-                                            @if( $info->model )
-                                            @foreach( $info->model->attr as $key=>$attr )
-                                                <tr>
-                                                    <td>{{ $attr->attr_name }}</td>
-                                                    <td style="text-align:left!important;padding-top:15px;">
-                                                        <div class="layui-form-item">
-                                                            @if( $attr->attr_input_type == 0 )
-                                                                <input type="text" class="layui-input" name="attrValue[{{ $attr->id }}]" data-attr_name="{{ $attr->attr_name }}"  value="">
-                                                            @elseif( $attr->attr_input_type == 1 )
-                                                                <select name="attrValue[{{ $attr->id }}]" data-attr_name="{{ $attr->attr_name }}">
-                                                                    <option value="">请选择</option>
-                                                                    @for( $i = 0;$i< substr_count($attr->attr_values, ','); $i++ )
-                                                                        <?php $arr = explode(',', $attr->attr_values) ?>
-                                                                        <option value="{{ $i }}">{{ $arr[$i] }}</option>
-                                                                    @endfor
-                                                                </select>
-                                                            @endif
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                            @endforeach
+                            </div>
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">商品状态</label>
+                                <div class="layui-input-block">
+                                    <select name="status">
+                                        @for( $i=0;$i<5;$i++ )
+                                            @if( $i == $info->status  )
+                                                <option value="{{$info->status}}" selected>{{ $zhStatus[$i]}}</option>
                                             @else
-
+                                                <option value="{{$i}}">{{ $zhStatus[$i]}}</option>
                                             @endif
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                        <div class="layui-form-item">
-                                            <button class="layui-btn" lay-submit="" lay-filter="editSpecInfo">立即提交</button>
-                                    </div>
+                                        @endfor
+                                    </select>
                                 </div>
-                            </form>
-                        </div>
+                            </div>
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">商品关键字</label>
+                                <div class="layui-input-block">
+                                    <input type="text" name="tags" lay-verify="required" placeholder="请输入商品关键字" autocomplete="off" class="layui-input" value="{{ $detail->tags }}">
+                                </div>
+                            </div>
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">商品封面</label>
+                                <div class="layui-input-block">
+                                        <input id="upload-input" type="text" class="layui-input layui-input-inline" name="p_index_image" value="{{ $detail->p_index_image }}" style="width:520px;height:38px;margin:0px" placeholder="输入图片地址或点击上传">
+                                        <span class="layui-btn" id="uploadImage"><i class="layui-icon"></i>上传商品封面图片</span>
+                                </div>
+                            </div>
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">商品详情</label>
+                                <div class="layui-input-block">
+                                    <!-- 加载uefitor编辑器的容器 -->
+                                    <script id="ueditor" name="description" type="text/plain">{{ $description }}</script>
+                                </div>
+                            </div>
+                            <div class="layui-form-item">
+                                <div class="layui-input-block">
+                                    <button class="layui-btn" lay-submit="" lay-filter="editInfo">立即提交</button>
+                                    <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                                </div>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-</section>
+    </section>
 @endsection
 
 @section('js')
@@ -376,13 +237,6 @@
         $('div#edui1').css('width','auto').css('z-index','2');
         $('div#edui1_iframeholder').css('width','auto');
 
-        $('select[name=bid]').siblings('div.layui-unselect').children('dl dd').each(function(){
-            console.log( $(this)[0] );
-            if( $(this).attr('lay-value') == {{ $info->brand_id }}){
-                $(this).addclass('layui-this');
-                $( 'select[name=bid] option[value={{ $info->brand_id }}]').attr('selected','true');
-            }
-        });
         $('select[name=status] option').each(function(){
             if( $(this).val() == {{ $info->status }} ){
                 $(this).attr('selected','true');
@@ -506,41 +360,6 @@
 
         });
 
-        //用户选择模型  根据选择不同模型id,返回不同的表格
-        form.on('select(modelSelect)', function(data){
-            var modelId = data.value;
-            if( modelId ){
-                $("div#spec_table").html('');
-            }
-            //返回规格项
-            $.ajax({
-                url: '{{ url('/admin/product/ajaxGetSpecList') }}/' + modelId,
-                type: 'get',
-                data: {'id': '{{ $info->id }}' },
-                success: function(data){
-                    $('#spec_table_1 tbody').html('');
-                    $('#spec_table_1 tbody').append(data);
-
-                    loadAjaxSpecItem();
-                    form.render();
-                }
-            });
-            //返回属性项
-            $.ajax({
-                url: '{{ url('/admin/product/ajaxGetAttrInput') }}/' + modelId,
-                type: 'get',
-                success: function(data){
-                    if( data == '' ){
-                        var str = '<tr><td colspan="2" style="font-size:14px;">该模型还没有属性项!&nbsp;<a href="{{ url('/admin/product/attr/create') }}" class="layui-btn layui-btn-small" >立即添加</a></td></tr>';
-                        $('table#attr_table tbody').html(str);
-                    }else{
-                        $('table#attr_table tbody').html('');
-                        $('table#attr_table tbody').append(data);
-                    }
-                    form.render();//刷新渲染
-                }
-            });
-        });
 
         $('#spec_table_1').on('click', 'div.layui-unselect', function(){
             if( $(this).hasClass('layui-form-checked') ){

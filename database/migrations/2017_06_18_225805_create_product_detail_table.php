@@ -13,16 +13,11 @@ class CreateProductDetailTable extends Migration
     public function up()
     {
         Schema::create('product_detail', function(Blueprint $table){
-            $table->integer('p_id')->unique()->comment('商品id');
+            $table->integer('p_id')->comment('商品id');
             $table->string('p_index_image')->comment('商品封面图片');
             $table->string('summary')->comment('商品简介');
-            $table->string('description')->comment('商品详情');
             $table->string('remind_title')->comment('商品简介前活动提醒');
-            $table->integer('store')->index()->default(0)->comment('商品总库存');
-            $table->integer('sell_num')->index()->default(0)->comment('商品成交量');
-            $table->integer('click_num')->index()->default(0)->commnet('商品点击量');
-            $table->string('unit',10)->default('件')->comment('商品单位');
-            $table->double('weight', 12, 2)->default(0.00)->comment('商品重量(kg)');
+            $table->text('description')->comment('商品详情');
             $table->tinyInteger('is_free_shipping')->default(0)->comment('是否包邮,默认包邮');
             $table->string('tags')->index()->default('')->comment('商品关键字');
             $table->timestamps();

@@ -21,6 +21,8 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function () {
 
     Route::post('ajaxPassword', 'UserController@ajaxPassword');
 
+    Route::post('login', 'UserController@login');
+
 
     //权限管理组路由
     Route::resource('group', 'GroupController');
@@ -53,5 +55,11 @@ Route::group(['namespace' => 'Home', 'prefix' => 'home'], function () {
     Route::get('cart', 'CartController@index');
 
     Route::resource('address', 'AddressController');
+
+    Route::get('chooseAddress', 'AddressController@Provices');
+
+    Route::get('cities', 'AddressController@Cities');
+
+    Route::get('addAddress', 'AddressController@AddAddress');
 
 });

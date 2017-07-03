@@ -81,7 +81,9 @@
                 <tbody>
 {{--{{dd($data )}}--}}
                 @foreach($data as $k=>$v)
-                    <tr>
+                    @if($v->member_id != 2)
+
+                        <tr>
                         <td class="cid">{{$v->id}}</td>
                         <td>
                             @if($v->star == 5)
@@ -98,7 +100,9 @@
                             @endif
                         </td>
                         <td width="20%">
+
                             <div style="display: -webkit-box;-webkit-box-orient: vertical;-webkit-line-clamp: 2;overflow: hidden;">{{$v->content}}</div>
+
                         </td>
                         <td>{{$v->p_id}}</td>
 
@@ -131,6 +135,8 @@
                             </div>
                         </td>
                     </tr>
+                    @endif
+
                 @endforeach
                 </tbody>
 

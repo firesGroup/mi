@@ -28,7 +28,7 @@
 
     <script type="text/javascript">var _head_over_time = (new Date()).getTime();</script>
 </head>
-<body>
+<body style="background-color:#eeeeee;">
 {{--黑色头--}}
 <div class="site-topbar">
     <div class="container">

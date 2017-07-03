@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use DB;
 
 class CommentController extends Controller
 {
@@ -16,8 +17,9 @@ class CommentController extends Controller
      */
     public function index()
     {
-//        dd(11);
-        return view('home.comment.comment');
+
+
+
     }
 
     /**
@@ -49,7 +51,22 @@ class CommentController extends Controller
      */
     public function show($id)
     {
-        //
+        $data = DB::table('comment')->where('p_id',$id)->get();
+
+//        foreach ($data as $k=>$v ){
+//            $member[] = $v->member_id;
+//        }
+//        dd($member[]);
+        //根据商品id 拿到商品信息
+        $shop = DB::table('product')->where('id',$id)->get();
+//        dd($shop);
+        $num = DB::table('comment')->count('id');
+//        dd($num);
+
+        $lim = DB::table('comment')->where('p_id',$id)->paginate(8);
+
+//dump($limit);
+        return view('home.comment.comment',compact('data','shop','lim','num'));
     }
 
     /**

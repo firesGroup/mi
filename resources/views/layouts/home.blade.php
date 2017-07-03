@@ -34,8 +34,8 @@
     <![endif]-->
     <!-- loading css -->
     @section('css')
+        <link rel="stylesheet" type="text/css" href="{{ asset('/plugin/layui/css/layui.css') }}">
         <link rel="stylesheet" type="text/css" href="{{ asset('/css/home/base.css') }}">
-        <link rel="stylesheet" type="text/css" href="{{ asset('/plugin/layui/css/layui.css') }}" media="all">
     @show
 </head>
 <body>
@@ -47,6 +47,7 @@
         <script type="text/javascript" src="{{ asset('/js/public/jquery-1.12.4.min.js') }}"></script>
         <script type="text/javascript" src="{{ asset('/plugin/layui/layui.js') }}"></script>
         <script type="text/javascript" src="{{ asset('/js/home/base.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('/plugin/load.js') }}"></script>
     @show
 </body>
 </html>

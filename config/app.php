@@ -150,7 +150,7 @@ return [
         Intervention\Image\ImageServiceProvider::class,
         Collective\Html\HtmlServiceProvider::class,
         Stevenyangecho\UEditor\UEditorServiceProvider::class,
-        iscms\Alisms\AlidayuServiceProvider::class,
+//        iscms\Alisms\AlidayuServiceProvider::class,
 
 
 

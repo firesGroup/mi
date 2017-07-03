@@ -372,7 +372,7 @@ layui.use(['elements','jquery','layer','larry','navtab','form','common','global'
 
 
 	//禁止全局回车键提交表单功能
-	$('form').each(function(){
+	$('form').each(function(event){
 		$(this).on('keydown',function(){
 			if( event.keyCode == 13 ){
 				return false;

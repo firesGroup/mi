@@ -64,7 +64,7 @@ layui.define(['jquery','layer'],function(exports){
                                 if (data != '') {
                                     layer.close(l);
                                     if (data == 0) {
-                                        layer.alert('删除成功', {
+                                        layer.msg('删除成功', {
                                             icon: 1, time: 2000, yes: function () {
                                                 location.href = location.href;
                                             }

@@ -31,7 +31,6 @@ class ProductRequest extends Request
                 'numeric',
             ],
             'p_name'=>[
-                'unique:product',
                 'required'
             ],
             'model_id'=>[
