@@ -81,27 +81,9 @@
                     <div class="J_imgload imgload hide">
                     </div>
                     <div id="J_img" class="img-con" style="left: 19.5px; margin-top: 0px;">
-                        <div class="ui-wrapper" style="max-width: 100%;">
-                            <div class="ui-viewport" style="width: 100%; overflow: hidden; position: relative; height: 560px;">
-                                <div id="J_sliderView" class="sliderWrap" style="width: auto; position: relative;">
-                                    <img data-url="//i8.mifile.cn/a1/pms_1495692033.10494295!560x560.jpg" class="slider done" src="/images/public/default.gif" style="float: none; list-style: none; position: absolute; width: 560px; z-index: 0; display: none;">
-                                    <img data-url="//i8.mifile.cn/a1/pms_1495692036.1252953!560x560.jpg" class="slider done" src="/images/public/default.gif" style="float: none; list-style: none; position: absolute; width: 560px; z-index: 50; display: block;">
-                                </div>
-                            </div>
-                            <div class="ui-controls ui-has-pager ui-has-controls-direction">
-                                <div class="ui-pager ui-default-pager">
-                                    <div class="ui-pager-item">
-                                        <a href="" data-slide-index="0" class="ui-pager-link">1</a>
-                                    </div>
-                                    <div class="ui-pager-item">
-                                        <a href="" data-slide-index="1" class="ui-pager-link active">2</a>
-                                    </div>
-                                </div>
-                                <div class="ui-controls-direction">
-                                    <a class="ui-prev" href="">上一张</a>
-                                    <a class="ui-next" href="">下一张</a>
-                                </div>
-                            </div>
+                        <div id="J_sliderView" class="sliderWrap" style="width: auto; position: relative;">
+                            <img data-url="//i8.mifile.cn/a1/pms_1495692033.10494295!560x560.jpg" class="loaded slider done" src="/images/public/placeholder-220.png">
+                            <img data-url="//i8.mifile.cn/a1/pms_1495692036.1252953!560x560.jpg" class="slider done" src="/images/public/placeholder-220.png">
                         </div>
                     </div>
                 </div>
@@ -110,7 +92,7 @@
                     <!-- 提示 -->
                     <p class="sale-desc" id="J_desc"><font color="#ff4a00">【{{ $info->detail->remind_title }}】</font>{{$info->detail->summary}}</p>
                     <!-- 选择第一级别 -->
-                    <span class="pro-price J_proPrice">{{ $info->price }}元 <br><br>市场价:<del>{{ $info->market_price }}</del>元</span>
+                    <span class="pro-price J_proPrice">{{ $info->price }}元</span>
                     {{--<div class="loading J_load">--}}
                         {{--<div class="loader"></div>--}}
                     {{--</div>--}}
@@ -120,34 +102,48 @@
                     {{--@endforelse--}}
                     <div class="J_main">
                         <div class="list-wrap" id="J_list">
-                            <div class="pro-choose pro-choose-col2 J_step" data-index="0">
-                                <div class="step-title">  选择版本   </div>
+                            <div class="pro-choose pro-choose-col2 J_step" data-index="0" id="version">
+                                <div class="step-title">
+                                    选择版本
+                                    <span>{{ $info->versions[0]['ver_desc'] }}</span>
+                                </div>
                                 <ul class="step-list step-one clearfix">
-                                    <li class="btn btn-biglarge" data-name="全网通版 4GB+128GB" data-price="1999元  " data-index="0" data-value="全网通版 4GB+128GB"> <a href="javascript:void(0);">
-                                            <span class="name">全网通版 4GB+128GB </span>
-                                            <span class="price"> 1999元 </span>
-                                        </a>
-                                    </li>
-                                    <li class="btn btn-biglarge active" data-name="全网通版 4GB+64GB" data-price="1699元  " data-index="1" data-value="全网通版 4GB+64GB"> <a href="javascript:void(0);">
-                                            <span class="name">全网通版 4GB+64GB </span>
-                                            <span class="price"> 1699元 </span>
-                                        </a>
-                                    </li>
+                                    @foreach( $versions as $k=>$ver )
+                                        @if( $k == 0 )
+                                            <li class="btn btn-biglarge active" data-name="{{ $ver['ver_name'] }} {{$ver['ver_spec']}}" data-price="{{ $ver['price'] }}元  " data-index="{{ $k }}" data-ver_id="{{ $ver['id'] }}" data-desc="{{ $ver['ver_desc'] }}"> <a href="javascript:void(0);">
+                                                    <span class="name">{{ $ver['ver_name'] }} {{$ver['ver_spec']}} </span>
+                                                    <span class="price"> {{ $ver['price'] }}元 </span>
+                                                </a>
+                                            </li>
+                                        @else
+                                            <li class="btn btn-biglarge" data-name="{{ $ver['ver_name'] }} {{$ver['ver_spec']}}" data-price="{{ $ver['price'] }}元  " data-index="{{ $k }}" data-ver_id="{{ $ver['id'] }}" data-desc="{{ $ver['ver_desc'] }}"> <a href="javascript:void(0);">
+                                                    <span class="name">{{ $ver['ver_name'] }} {{$ver['ver_spec']}} </span>
+                                                    <span class="price"> {{ $ver['price'] }}元 </span>
+                                                </a>
+                                            </li>
+                                        @endif
+                                        @endforeach
                                 </ul>
                             </div>
-                            <div class="pro-choose pro-choose-col2 J_step" data-index="1">
+                            <div class="pro-choose pro-choose-col2 J_step" data-index="1" id="color">
                                 <div class="step-title">  选择颜色   </div>
                                 <ul class="step-list clearfix">
-                                    <li class="btn btn-biglarge active" data-id="2171800014" data-cid="1171800018" data-name="小米Max 2 4GB+64GB 金色" data-price="1699元" data-value="金色" data-index="0"> <a href="javascript:void(0);">
-                                            <img src="https://i8.mifile.cn/b2c-mimall-media/1c84f395fb5da4bfbb1c01f860440a77.png" data-src="//i8.mifile.cn/b2c-mimall-media/1c84f395fb5da4bfbb1c01f860440a77.png" alt="金色" class="done">   金色 </a>
-                                    </li>
+                                    @foreach( $colorArr as $k=>$color )
+                                        @if( $k == 0 )
+                                            <li class="btn btn-biglarge active" data-ver_id="{{ $color['ver_id'] }}" data-color_id="{{$color['color_id']}}" data-value="{{ $color['color_name'] }}" data-index="{{ $k }}"><a href="javascript:void(0);"><img class="cacheload" src="{{ $color['color_img'] }}" data-src="{{ $color['color_img'] }}" alt="{{ $color['color_name'] }}">{{ $color['color_name'] }}</a>
+                                            </li>
+                                        @else
+                                            <li class="btn btn-biglarge" data-ver_id="{{ $color['ver_id'] }}" data-color_id="{{$color['color_id']}}" data-value="{{ $color['color_name'] }}" data-index="{{ $k }}"><a href="javascript:void(0);"><img class="cacheload" src="{{ $color['color_img'] }}" data-src="{{ $color['color_img'] }}" alt="{{ $color['color_name'] }}">{{ $color['color_name'] }}</a>
+                                            </li>
+                                        @endif
+                                    @endforeach
                                 </ul>
                             </div>
                         <!-- 已选择的产品 -->
                         <div class="pro-list" id="J_proList">
                             <ul>
-                                <li>小米Max 2 4GB+64GB 金色   <span>1699元</span>  </li>
-                                <li class="totlePrice">  总计  ：1699元</li>
+                                <li class="totleName">{{$info->p_name}} {{ $versions[0]['ver_name'] }} {{ $versions[0]['ver_spec'] }} {{ $colorArr[0]['color_name'] }}   <span>{{ $versions[0]['price'] }}元</span>  </li>
+                                <li class="totlePrice">  总计  ：{{ $versions[0]['price'] }}元</li>
                             </ul>
                         </div>
                         <ul class="btn-wrap clearfix" id="J_buyBtnBox">
@@ -171,36 +167,24 @@
     </div>
     </div>
     <!-- 商品信息 end -->
+    <!-- 商品详情 start -->
+    <div class="pro-infomation" id="J_proInfo">
+        <div class="section is-visible preload">
+            {{ $info->description }}
+        </div>
+        <div class="section  is-visible preload">
+            <img data-url="//cdn.cnbj0.fds.api.mi-img.com/b2c-mimall-media/beb93b2f8a369c4acc1f084e3a347108.jpg" class="slider done" src="/images/public/default.gif">
+        </div>
+        <div class="section  is-visible preload">
+            <img data-url="//cdn.cnbj0.fds.api.mi-img.com/b2c-mimall-media/dc1b76ea7388c7cb4dc47840125f7ec1.jpg" class="slider done" src="/images/public/default.gif">
+        </div>
+    </div>
+    <!--商品详情 end-->
     <!-- 主要内容 end -->
     @include('home.public.footer')
 @endsection
 @section('js')
     @parent
-    <script>
-        $(function() {
-            $(".cacheload").scrollLoading();
-            //自执行滚动 到 商品信息导航条
-            $("html,body").animate({scrollTop:$("#J_proHeader").offset().top},1000);
+    <script type="text/javascript" src="{{ asset('/js/home/product_info.js') }}"></script>
 
-            //自执行请求数据
-            $.ajax({
-                url:'/product/ajaxGetSpec/{{ $p_id }}',
-                type: 'post',
-                data:{_token:'{{ csrf_token()  }}'},
-                success:function(data){
-                }
-            });
-        });
-        //商品信息导航条 跟随
-        $(window).scroll(function(){
-            var srollTop = $(document).scrollTop();
-            if( srollTop >= 200 ){
-                $('div#J_fixNarBar').addClass('nav_fix');
-            }else{
-                $('div#J_fixNarBar').removeClass('nav_fix');
-            }
-        })
-
-
-    </script>
 @endsection

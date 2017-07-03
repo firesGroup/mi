@@ -76,11 +76,13 @@
                                 var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
                                 parent.layer.close(index);
                                 location.href= '{{ url('/admin/product/color') }}';
+//                                layer.alert(res,{title:1});
                             }});
                         }else{
                             layer.msg('添加失败', {icon:2, time:2000, end:function(){
                                 var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
                                 parent.layer.close(index);
+//                                layer.alert(res,{title:1});
                                 location.href= '{{ url('/admin/product/color/create') }}';
                             }});
                         }

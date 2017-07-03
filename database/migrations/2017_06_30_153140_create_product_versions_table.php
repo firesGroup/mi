@@ -22,7 +22,6 @@ class CreateProductVersionsTable extends Migration
             $table->decimal('price',12,2)->default(0.00)->comment('版本价格');
             $table->string('contact_p_num',15)->default()->comment('搭配商品货号');
             $table->integer('store')->index()->default(0)->comment('版本库存');
-            $table->string('color_id',500)->index()->comment('版本颜色id');
             $table->string('ver_img',1500)->comment('商品版本图片地址');
             $table->tinyInteger('status')->default(0)->comment('版本状态,0为在售,1为下架,2为预购,3为缺货,4为新品上市');
             $table->timestamps();

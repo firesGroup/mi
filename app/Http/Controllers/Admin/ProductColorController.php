@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Admin;
 
 use App\Entity\ProductColor;
 use Illuminate\Http\Request;
-
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
@@ -41,6 +40,12 @@ class ProductColorController extends Controller
     {
         $data['color_name'] = $request->color_name;
         $data['color_img']= $request->color_img;
+//        //匹配是否是远程地址图片
+//        $res = preg_match('/^(https?)(:\/\/)?([a-zA-Z0-9]+\.[\w]+\.[\w]{2,})/i',$color_img);
+//        if( $res !== 0 ){
+//            //不为0 则是远程图片
+//            //那么下载到本地
+//        }
         $res = ProductColor::create($data);
         return $res?0:1;
     }

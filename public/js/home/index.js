@@ -43,7 +43,7 @@
                 var index = t.check();
                 var th = $('#J_homeSlider div.slide').eq(index);
                 if (index == num - 1) {
-                    th.removeClass('loaded');
+                    th.removeClass('loaded').attr('style',t.hide);
                     $('#J_homeSlider div.slide').eq(0).addClass('loaded').attr('style', t.show);
                     t.page(0);
                     t.stop();

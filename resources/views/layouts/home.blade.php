@@ -34,8 +34,8 @@
     <![endif]-->
     <!-- loading css -->
     @section('css')
+        <link rel="stylesheet" type="text/css" href="{{ asset('/plugin/layui/css/layui.css') }}">
         <link rel="stylesheet" type="text/css" href="{{ asset('/css/home/base.css') }}">
-        <link rel="stylesheet" type="text/css" href="{{ asset('/plugin/layui/css/layui.css') }}" media="all">
     @show
 </head>
 <body>

@@ -71,7 +71,7 @@
                     <tbody>
                     @foreach( $verList as $ver )
                         <tr>
-                            <td>{{ $ver->ver_id }}</td>
+                            <td>{{ $ver->id }}</td>
                             <td>{{ $ver->ver_name }}</td>
                             <td>{{ $ver->ver_spec}}</td>
                             <td>{{ $ver->price }} 元</td>

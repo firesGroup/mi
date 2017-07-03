@@ -45,6 +45,7 @@
                 <div class="form-body">
                     <form class="layui-form" method="post" id="ver">
                         {{ csrf_field() }}
+                        <input type="hidden" name="p_id" value="{{ $info->p_id }}">
                         <div class="layui-form-item">
                             <label class="layui-form-label">版本名称</label>
                             <div class="layui-input-block">
