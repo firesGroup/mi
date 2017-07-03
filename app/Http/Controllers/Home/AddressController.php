@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Home;
 
 use Illuminate\Http\Request;
-
+use DB;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
@@ -16,7 +16,11 @@ class AddressController extends Controller
      */
     public function index()
     {
-        return view('home/address/index');
+
+        $data = DB::table('district')->where('id', '<=', 36)->get();
+//        dd($data);
+
+        return view('home/address/index', compact('data'));
     }
 
     /**
@@ -84,4 +88,41 @@ class AddressController extends Controller
     {
         //
     }
+
+    public function Provices(Request $request)
+    {
+        $arr = $request->all();
+//        dd($data);
+
+        $id = $arr['id'];
+//        dd($id);
+
+        $data = DB::table('district')->where('upid', $id)->get();
+//        dd($data);
+
+        return $data;
+
+    }
+
+    public function Cities(Request $request)
+    {
+        $arr = $request->all();
+//        dd($data);
+
+        $id = $arr['id'];
+//        dd($id);
+
+        $data = DB::table('district')->where('upid', $id)->get();
+//        dd($data);
+
+        return $data;
+
+    }
+
+    public function AddAddress(Request $request)
+    {
+        $data = $request->all();
+        dd($data);
+    }
+
 }
