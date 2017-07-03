@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers\Home;
 
+use App\Entity\ProductColor;
 use App\Entity\ProductSpecItem;
+use App\Entity\ProductVersionsColors;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -24,26 +26,38 @@ class HomeController extends Controller
     public function productInfo($p_id)
     {
         $info = Product::find($p_id);
-        $info->detail;
-        $info->detail;
-        $info->images;
-        $info->specPrice;
-        return view('home.product.info', compact('p_id','info'));
+        if( !$info ){
+            return redirect('/');
+        }
+        $detail= $info->detail;
+        $versions = $info->versions->toArray();
+        //拿到数组第一个版本的id
+        $firstVersionId = $versions[0]['id'];
+        $allColor = $info->color->toArray();
+        //将所有颜色按颜色id为键 重组数组
+        foreach( $allColor as $color ){
+            if( $color['ver_id'] == $firstVersionId ){
+                $colorArr[]=[
+                    'ver_id'=> $color['ver_id'],
+                    'color_id'=>$color['color_id'],
+                    'color_name'=> $color['color_name'],
+                    'color_img'=>$color['color_img']
+                ];
+            }
+        }
+
+        return view('home.product.info', compact('p_id','info','versions','colorArr'));
     }
 
     /*
-     * ajax商品信息详情
+     * ajax 获取商品版本的颜色
      * @param $id int 商品id
      *
      */
-    public function ajaxGetInfo($p_id)
+    public function ajaxGetVersionColor($ver_id)
     {
-        $info = Product::find($p_id);
-        $info->detail;
-        $info->images;
-        $info->specPrice;
-        $info = $info->tojson();
-        dd($info);
+        $color = ProductVersionsColors::where('ver_id', $ver_id)->get();
+       return response()->json($color);
     }
 
     /*

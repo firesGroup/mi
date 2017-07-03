@@ -12,12 +12,8 @@ class ProductVersions extends Model
 
     public $fillable = ['p_id', 'ver_id', 'ver_name', 'ver_spec', 'ver_desc', 'price', 'store','color_id','ver_img','status','contact_p_num'];
 
-    public function getColorIdAttribute($value)
+    public function color()
     {
-        return ucfirst($value);
-    }
-    public function getVerImgAttribute($value)
-    {
-        return ucfirst($value);
+        return $this->hasMany('App\Entity\ProductVersionsColors','ver_id');
     }
 }

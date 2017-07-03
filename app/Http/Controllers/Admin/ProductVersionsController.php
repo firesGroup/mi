@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Entity\Product;
 use App\Entity\ProductVersions;
 use App\Entity\ProductColor;
+use App\Entity\ProductVersionsColors;
 use Illuminate\Http\Request;
 use DB;
 use Illuminate\Support\HtmlString;
@@ -57,7 +58,6 @@ class ProductVersionsController extends Controller
     public function store(ProductVersionsRequest $request)
     {
         $data['p_id'] = $request->p_id;
-        $data['ver_id'] = (time()/100).rand(00,99);
         $data['ver_name'] = $request->ver_name;
         $data['ver_spec'] = $request->ver_spec;
         $data['ver_desc'] = $request->ver_desc;
@@ -71,13 +71,30 @@ class ProductVersionsController extends Controller
             $data['ver_img'] = NULL;
         }
 
-        if( $request->color ){
-            $color = array_keys($request->color);
-            $data['color_id'] = json_encode($color);
-        }else{
-            $data['color_id'] = NULL;
+        $colors = $request->color;
+        //获取所有颜色id;
+        $colors = array_keys($colors);
+        foreach($colors as $k=>$color){
+            $colorData[$k]= [
+                'p_id' => $data['p_id'],
+                'color_id'=> $color,
+                'color_name'=> ProductColor::find($color)->color_name,
+                'color_img' => ProductColor::find($color)->color_img,
+            ];
         }
-        $res = ProductVersions::create($data);
+        //开启事务处理
+        $res = DB::transaction(function() use($data, $colorData){
+            //写入版本表 并获取id
+            $id = ProductVersions::create($data)->id;
+            //若有颜色
+            if( $colorData ){
+                foreach($colorData as $k=>$color){
+                    $color['ver_id'] = $id;
+                    ProductVersionsColors::create($colorData);
+                }
+            }
+            return true;
+        });
 
         if( $res ){
             $return['status'] = 0;
@@ -108,10 +125,13 @@ class ProductVersionsController extends Controller
     public function edit($id)
     {
         $info = ProductVersions::find($id);
-        $color = $info->color_id;
+        $color = $info->color->toArray();
+        foreach( $color as $k=>$c ){
+            $color[] = $c['color_id'];
+            unset($color[$k]);
+        }
         $imgs = $info->ver_img;
         $imgs = json_decode($imgs,true);
-        $color = json_decode($color,true);
         //获取imgs 数量
         $imgsNum = count($imgs);
         $zhStatus = ['在售','下架','预购','缺货','新品上市'];
@@ -128,6 +148,7 @@ class ProductVersionsController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $p_id = $request->p_id;
         $data['ver_name'] = $request->ver_name;
         $data['ver_spec'] = $request->ver_spec;
         $data['ver_desc'] = $request->ver_desc;
@@ -142,14 +163,31 @@ class ProductVersionsController extends Controller
             $data['ver_img'] = NULL;
         }
 
-        if( $request->color ){
-            $color = array_keys($request->color);
-            $data['color_id'] = json_encode($color);
-        }else{
-            $data['color_id'] = NULL;
+        $colors = $request->color;
+        //获取所有颜色id;
+        $colors = array_keys($colors);
+        foreach($colors as $k=>$color){
+            $colorData[$k]= [
+                'p_id' => $p_id,
+                'ver_id'=> $id,
+                'color_id'=> $color,
+                'color_name'=> ProductColor::find($color)->color_name,
+                'color_img' => ProductColor::find($color)->color_img,
+            ];
         }
-
-        $res = ProductVersions::find($id)->update($data);
+        //开启事务处理
+        $res = DB::transaction(function() use($id, $p_id, $data, $colorData){
+            ProductVersions::find($id)->update($data);
+            //若有颜色
+            if( $colorData ){
+                //先删除所有的
+                ProductVersionsColors::where('ver_id',$id)->delete();
+                foreach($colorData as $color){
+                    ProductVersionsColors::create($color);
+                }
+            }
+            return true;
+        });
         return $res?0:1;
     }
 
@@ -174,7 +212,14 @@ class ProductVersionsController extends Controller
                 Storage::delete($path);
             }
         }
-        $res = $version->delete();
+
+
+        //同时删除版本颜色
+        $res = DB::transaction( function() use( $version,$id ) {
+            $version->delete();
+            ProductVersionsColors::where('ver_id',$id)->delete();
+        } );
+
         return $res?0:1;
 
     }

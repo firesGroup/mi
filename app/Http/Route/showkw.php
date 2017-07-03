@@ -11,6 +11,13 @@
 
 Route::group(['namespace'=>'Admin','prefix'=>'admin'], function(){
     Route::get('/', 'AdminController@index');
+
+    //分类路由
+    Route::post('category_edit', 'CateGoryController@category_edit');
+    Route::post('add_category', 'CateGoryController@add_category');
+    Route::get('create_category/{id}', 'CateGoryController@create_category');
+    Route::resource('category', 'CateGoryController');
+
     Route::get('product/images/{img_id}', 'ProductController@getImages');
     Route::post('product/images/{img_id}', 'ProductController@postImages');
     Route::delete('product/images/{img_id}', 'ProductController@deleteImages');
@@ -42,7 +49,7 @@ Route::get( '/upload/{path}/{id}/{url}', 'PublicC\UploadController@getUpload' );
 Route::post( '/upload', 'PublicC\UploadController@postUpload' );
 
 Route::group(['namespace'=>'Home',], function(){
-    Route::get('product/info/{p_id}','HomeController@productInfo');
-    Route::post('/product/ajaxGetSpec/{p_id}', 'HomeController@ajaxGetSpecToInfo');
+    Route::get('/product/info/{p_id}','HomeController@productInfo');
+    Route::get('/product/ajaxGetVersionColor/{ver_id}', 'HomeController@ajaxGetVersionColor');
     Route::get('/','HomeController@index');
 });

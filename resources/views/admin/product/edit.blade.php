@@ -54,6 +54,7 @@
                         <form class="layui-form" method="post" id="productDetail">
                             {{ csrf_field() }}
                             <input type="hidden" name="_method" value="PUT">
+                            <input type="hidden" name="p_id" value="{{ $info->p_id }}">
                             <div class="layui-form-item">
                                 <label class="layui-form-label">商品名称</label>
                                 <div class="layui-input-block">
