@@ -10,6 +10,7 @@ use Flc\Alidayu\Client;
 use Flc\Alidayu\App;
 use Flc\Alidayu\Requests\AlibabaAliqinFcSmsNumSend;
 use Session;
+use Mail;
 use App\Entity\Member;
 class SmsController extends Controller
 {
@@ -43,18 +44,19 @@ class SmsController extends Controller
         }
     }
 
-    public function smsCode(Request $request, $uid, $code)
+    public function smsCode(Request $request)
     {
-//        dump($uid);
-        $str = $uid.'123456';
-//        dd(md5($str));
-////        dd($code);
-        if($code == md5($str)){
-           Member::find($uid)->update(['status'=>0]);
+        $data = $request->all();
+        $rand = rand(10000,99999);
+        $request->session()->put('email_code',$rand);
 
-           return redirect('/');
-        };
+        $to = $data['email'];
 
+       Mail::raw('你好, 本次的验证码为'.$rand, function ($message) use ($to) {
+            $dump = $message ->to($to)->subject('纯文本信息邮件验证码');
+
+        });
+        
 
     }
 

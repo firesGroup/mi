@@ -236,50 +236,54 @@ class MemberController extends Controller
 
 
 
-         $data = $request->data;
+         $data = $request->all();
+//        dd($data);
 
 
-        $data = array_combine(array_column($data, 'name'),array_column($data, 'value'));
+        $this->validate($request, [
+            'email' => 'email|string|required|unique:member,email,',
+            'password' =>'confirmed|required|min:6|max:12|required',
+        ],[
+            'email.email' => '请输入正确的邮箱地址',
+            'email.unique' => '邮箱已存在',
+            'password.confirmed' => '输入的密码不一致'
+        ]);
 
-        $array = DB::table('member')->lists('email');
 
 
-        if(in_array($data['email'], $array)){
-            return 1;
-        };
-        if($data['password'] != $data['password_confirmation']){
-            return 2;
-        }
+//              if(in_array($data['email'], $array)){
+//            return 1;
+//        };
+//        if($data['password'] != $data['password_confirmation']){
+//            return 2;
+//        }
 
 
         $data['nick_name'] = "米粉".rand(0, 1000000);
         $data['password'] = bcrypt($data['password']);
-        $data['status'] = '1';
+        $data['status'] = '0';
         $request->setTrustedProxies(array('10.32.0.1/16'));
         $ip = $request->getClientIp();
         $data['last_ip'] = $ip;
 //        dd($data);
+//        dd($data);
         if(session('img_code') != $data['code']) {
 //                dd(session('img_code'));
+            return 1;
+        }
+
+        if (session('email_code') != $data['email_code'])  {
+            return 2;
+        }
+
+        if(Member::create($data)){
+            return redirect('/');
+        }else{
             return 3;
         }
-//        dd();
-        if(Member::create($data)){
 
-          $arr = Member::where('email', $data['email'])->get();
-          $uid = $arr[0]->id;
-          $email = $arr[0]->email;
-          $username = $arr[0]->nick_name;
 
-          $code = md5($uid.'123456');  //获取邮箱验证时的随机串
-            $data = ['email'=>$email, 'name'=>$username, 'uid'=>$uid, 'code'=>$code];
-            Mail::send('home/reg_login/activemail', $data, function($message) use($data)//use用于引入function外面的数据  activemail是指定的视图
-        {
-        $message->to($data['email'], $data['name'])->subject('发送邮件');
-});
-        }else{
-            return back();
-        }
+
     }
 
 

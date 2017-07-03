@@ -76,25 +76,32 @@
                     <div class="shu layui-form">
                         <div class="xiao layui-form" >
                             <form id="em" class="layui-form">
-                            <input type="text" name="email" required lay-verify="required|email|number" placeholder="请输入邮箱地址"
-                                   autocomplete="off" class="layui-input qing" value="{{old('email')}}">
+                            <input type="text" name="email" required lay-verify="required|email" placeholder="请输入邮箱地址"
+                                   autocomplete="off" class="layui-input qing">
                             <input type="password" id='pass' name="password" required lay-verify="required|pass" placeholder="请输入密码"
-                                   autocomplete="off" class="layui-input qing" value="{{old('password')}}">
-                            <input type="password" name="password_confirmation" required lay-verify="required" placeholder="请再次输入密码"
+                                   autocomplete="off" class="layui-input qing password">
+                            <input type="password" id="con_password" name="password_confirmation" required lay-verify="required" placeholder="请再次输入密码"
                                    autocomplete="off" class="layui-input qing">
 
                             <div style="display: inline-table;clear:both;">
                                 <input type="text" id="email-code" name="code" required lay-verify="required" placeholder="请输入图片验证码"
-                                       autocomplete="off" class="layui-input qing" style="width:220px" value="{{old('code')}}">
+                                       autocomplete="off" class="layui-input qing" style="width:220px">
                             </div>
                             <a onclick="javascript:re();">
                                 <img src="{{ url('/kit/capt/1') }}" alt="验证码" title="刷新图片" width="100"
                                      height="40" id="img_code" border="1"
                                      style="float:right;margin-top: 20px;">
                             </a>
-                                <button class="liji" id="sub">立即注册</button>
-                            </form>
+                                <div style="display: inline-table;clear:both;">
+                                    <input type="text" id="moblieVerify" name="email_code" required lay-verify="required" placeholder="请输入邮件验证码"
+                                           autocomplete="off" class="layui-input qing" style="width:220px" value="{{old('sms_code')}}">
+                                </div>
+                                <button type="button" id="emailVerify" class="layui-btn layui-btn-small"
+                                        style="">发送邮件验证码
+                                </button>
 
+                            </form>
+                            <button class="liji" id="sub">立即注册</button>
 
                             <div class="dian">
                                 点击“立即注册”，即表示您同意并愿意遵守小米<b class="dian-1"><a href=""> 用户协议 </a></b> 和<b class="dian-2"><a
@@ -213,25 +220,72 @@
                             })
                         })
 
+
+                        $('#emailVerify').click(function () {
+//                            alert(123);
+                            var email = $('input[name=email]').val();
+                            if (email == '') {
+                                layer.msg('请填写正确的邮箱号', {time: 2000, icon: 5});
+                                return false;
+                            }
+                            var $btn = $(this);
+                            $.ajax({
+                                url: "{{url('/mailBox')}}",
+                                type: 'post',
+                                data: {'_token': "{{csrf_token()}}", 'email': email},
+                                success: function (data) {
+                                    var $data = JSON.parse(data);
+                                    if ($data['ResultData'] == '0') {
+                                        var n = 60;
+                                        $btn.attr('disabled', 'true');
+                                        $btn.addClass('layui-btn-disabled').removeClass('bg-color');
+                                        var timeid = setInterval(function () {
+                                            $btn.html('重新发送(' + n + ')');
+                                            if (n == 0) {
+                                                clearInterval(timeid);
+                                                $btn.html('发送邮件验证码');
+                                                $btn.removeAttr('disabled').removeClass('layui-btn-disabled').addClass('bg-color');
+                                            }
+                                            n--;
+                                        }, 1000);
+                                    } else {
+                                        alert('短信发送失败, 请等会在尝试');
+                                    }
+                                }
+                            })
+                        })
                         $('#sub').click( function () {
                             var data = $('#em').serializeArray();
+                            var email = $('input[name=email]').val();
+                            var pass = $('.password').val();
+                            var pass_con = $('#con_password').val();
+                            var code = $('#email-code').val();
+                            var email_code = $('input[name=email_code]').val();
                             $('code').remove();
                             $.ajax({
                                 url:"{{url('admin/mail_code')}}",
                                 type:'post',
-                                data:{'_token':"{{csrf_token()}}",'data':data},
+                                data:{'_token':"{{csrf_token()}}",'email':email, 'password':pass,'password_confirmation': pass_con, 'code':code, 'email_code':email_code },
                                 success:function (data) {
+
                                     switch(data)
                                     {
                                         case 1:
-                                            layer.msg("邮箱已存在");
+                                            layer.msg('验证码错误');
                                             break;
                                         case 2:
-                                            layer.msg('密码不一致');
-                                            break;
+                                            layer.msg('邮箱验证码错误');
                                         case 3:
-                                            layer.msg('验证码错误');
+                                            layer.msg('注册会员失败');
                                     }
+                                },
+                                error:function (error) {
+                                    var msgObj=JSON.parse(error.responseText);
+                                    var msg = '';
+                                    for(var name in msgObj){//遍历对象属性名
+                                        msg += msgObj[name] + "<br>";
+                                    }
+                                    layer.msg(msg,{icon:2,time:3000});
                                 },
                                 dataType:"json"
                             })
