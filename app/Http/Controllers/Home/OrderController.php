@@ -6,9 +6,8 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-use DB;
 
-class CommentController extends Controller
+class OrderController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,9 +16,7 @@ class CommentController extends Controller
      */
     public function index()
     {
-
-
-
+        return view ('home.order.order');
     }
 
     /**
@@ -35,7 +32,7 @@ class CommentController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request $request
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -46,33 +43,18 @@ class CommentController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int $id
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
     {
-        $data = DB::table('comment')->where('p_id',$id)->get();
-
-//        foreach ($data as $k=>$v ){
-//            $member[] = $v->member_id;
-//        }
-//        dd($member[]);
-        //根据商品id 拿到商品信息
-        $shop = DB::table('product')->where('id',$id)->get();
-//        dd($shop);
-        $num = DB::table('comment')->count('id');
-//        dd($num);
-
-        $lim = DB::table('comment')->where('p_id',$id)->paginate(8);
-
-//dump($limit);
-        return view('home.comment.comment',compact('data','shop','lim','num'));
+        //
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int $id
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
@@ -83,8 +65,8 @@ class CommentController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request $request
-     * @param  int $id
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
@@ -95,7 +77,7 @@ class CommentController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int $id
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)

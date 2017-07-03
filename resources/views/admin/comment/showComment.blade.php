@@ -54,14 +54,13 @@
 
                         @foreach($comment as $v)
 
-                        @if($v->member_id == $id && $v->type != 2)
-
-                        <tr>
+                            @if($v->member_id == $id && $v->type == 0 )
+                                <tr>
                             <td style="height: 300px;">
                                 <div style="width:800px;height: auto;background-color: white;float: left;">
 
-                                    <div style="text-align: left;padding-left: 20px;width: 100px;height: 60px;"><h2
-                                                style="padding-top: 20px;">{{$member[0]->nick_name}}</h2></div>
+                                    <div style="text-align: left;padding-left: 20px;width: 100px;height: 60px;">
+                                        <h2 style="padding-top: 20px;">{{$member[0]->nick_name}}</h2></div>
 
                                     <div style="width:150px;height:20px; text-align: right;padding-left: 400px;white-space:nowrap;color:#d2d2d2;">
                                         <span>{{$v->created_at}}</span></div>
@@ -80,7 +79,9 @@
                             </td>
                         </tr>
 
-                        @elseif($v->type ==2)
+                            @endif
+
+                        @if($v->member_id == 4 && $v->type == 2 )
                         <tr>
                             <td>
                                 <div style="width: 1400px;height: 150px;background-color: white;margin-top: 10px;float: right;">
@@ -94,7 +95,7 @@
 
                                         <div style="width:0px;height:0px;font-size:0;border:solid 10px;border-color:#FFFFFF #FFFFFF #FFFFFF #F8C301 ;margin-top: 20px;padding-right: 50px;"></div>
 
-                                        <div style="width:auto;height:auto;background:#F8C301;border-radius:4px;margin-right: 100px;margin-top: -35px;float: right;white-space:nowrap;line-height: 40px;
+                                        <div style="width:900px;height:auto;background:#F8C301;border-radius:4px;margin-right: 100px;margin-top: -35px;float: right;line-height: 40px;word-wrap:break-word;
                 ">{{$v->content}}
 
                                         </div>
@@ -111,8 +112,7 @@
                         </tr>
 
                         @endif
-                        @endforeach
-
+@endforeach
                 </tbody>
             </table>
 
