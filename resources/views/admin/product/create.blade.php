@@ -220,7 +220,7 @@
                                     icon: 6,
                                     title:'提示',
                                     yes:function(){
-                                        location.href="{{ url('/admin/product/versions/create') }}?id="+res.id;
+                                        location.href="{{ url('/admin/product/versions/create') }}/"+res.id;
                                     },
                                     end:function(){
                                         location.href="{{ url('/admin/product/') }}";

@@ -51,9 +51,11 @@ $('div#version ul').on('click', 'li', function(){
     var desc = that.data('desc');
     //获取当前选择的颜色
     var colorName = $('div#color ul li.active').data('value');
+    //获取商品名称
+    var proName = $('h1.J_proName').text();
 
     // 获取版本的颜色
-    //自执行请求数据 不是第一个版本才请求
+    //自执行请求数据
     $.ajax({
         url:'/product/ajaxGetVersionColor/'+verId,
         type: 'get',
@@ -65,10 +67,19 @@ $('div#version ul').on('click', 'li', function(){
                 }else{
                     str +='<li class="btn btn-biglarge" data-ver_id="'+ data[i].ver_id +'" data-color_id="'+ data[i].color_id +'" data-value="'+ data[i].color_name +'" data-index="'+ i +'"><a href="javascript:void(0);"><img class="cacheload" src="'+ data[i].color_img +'" data-src="'+ data[i].color_img +'" alt="'+ data[i].color_name +'">'+ data[i].color_name +'</a></li>';
                 }
-
                 $('div#color ul').html(str);
             }
         }
+    });
+
+    //获取版本信息 再次比对
+    $.ajax({
+        url:'url:'/product/ajaxGetVersion/'+verId,',
+        type:'get',
+        success:function(data){
+
+        }
+
     });
 
     // 改变价格
@@ -76,7 +87,7 @@ $('div#version ul').on('click', 'li', function(){
     //改变简介
     $('div#version div.step-title span').html(desc);
     //改变总价
-    $('div#J_proList li.totleName').html('{{ $info->p_name }}'+' '+name + ' ' + colorName + '<span>'+ price +'</span>');
+    $('div#J_proList li.totleName').html( proName +' '+name + ' ' + colorName + '<span>'+ price +'</span>');
     $('div#J_proList li.totlePrice').html('总计  ：'+ price);
     $(this).addClass('active').siblings().removeClass('active');
 });
@@ -91,7 +102,10 @@ $('div#color ul').on('click','li', function(){
     //获取价格
     var price = $('div#version ul li.active').data('price');
 
-    $('div#J_proList li.totleName').html('{{ $info->p_name }}'+' '+name + ' ' + colorName + '<span>'+ price +'</span>');
+    //获取商品名称
+    var proName = $('h1.J_proName').text();
+
+    $('div#J_proList li.totleName').html(proName +' '+name + ' ' + colorName + '<span>'+ price +'</span>');
     $('div#J_proList li.totlePrice').html('总计  ：'+ price);
     $(this).addClass('active').siblings().removeClass('active');
 });
