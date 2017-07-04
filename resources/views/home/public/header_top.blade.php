@@ -35,7 +35,7 @@
             <a rel="nofollow" href="#J_modal-globalSites" data-toggle="modal">Select Region</a>
         </div>
         <div class="topbar-cart" id="J_miniCartTrigger">
-            <a rel="nofollow" class="cart-mini" id="J_miniCartBtn" href="" data-event="mouseover">
+            <a rel="nofollow" class="cart-mini" id="J_miniCartBtn" href="{{url('cart')}}" data-event="mouseover">
                 <i class="iconfont">&#xe60c;</i>购物车
                 <span class="cart-mini-num J_cartNum"></span>
             </a>

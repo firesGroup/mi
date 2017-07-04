@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use DB;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use App\Entity\Address;
+use Session;
 
 class AddressController extends Controller
 {
@@ -17,25 +19,20 @@ class AddressController extends Controller
     public function index()
     {
 
-        $userArr = DB::table('member')->where('id', '=', 1)->get();
-//        dd($userArr);
-        foreach($userArr as $v){
-//            dump($v);
-            $UserArr = $v;
-        }
-//        dd($UArr->id);
+        $userArr = DB::table('member')->where('id', '=', 1)->select('nick_name')->get();
+//        dd($userArr[0]->nick_name);
 
-        $userAdd = DB::table('address')->where('member_id', '=', 1)->get();
+        $UserArr = $userArr[0]->nick_name;
+
+
+        $userAdd = DB::table('address')->where('member_id', '=', 1)->select('member_id', 'buy_user', 'buy_phone', 'address')->get();
 //        dd($userAdd);
 
-        foreach ($userAdd as $k) {
-            $UserAdd = $k;
-        }
 
         $data = DB::table('district')->where('id', '<=', 36)->get();
 //        dd($data);
 
-        return view('home/address/index', compact('data', 'UserArr', 'UserAdd'));
+        return view('home/address/index', compact('data', 'UserArr', 'userAdd'));
     }
 
     /**
@@ -138,7 +135,27 @@ class AddressController extends Controller
     {
         $data = $request->all();
 //        dd($data);
+        $arr = $data['arr'];
 
+        $buy_user = $arr[0];
+//        dd($buy_user);
+
+        $buy_phone = $arr[1];
+        $address = $arr[2].$arr[3];
+//        dd($address);
+
+        $member_id = $data['id'];
+//        dd($id);
+
+        $array = ['member_id'=>$member_id, 'buy_user'=>$buy_user, 'buy_phone'=>$buy_phone, 'address'=>$address, 'status'=>1];
+
+//        dd($array);
+
+        if (Address::create($array)) {
+            return 1;
+        } else {
+            return 2;
+        }
 
 
     }
