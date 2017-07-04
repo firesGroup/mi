@@ -10,16 +10,20 @@
  * Time: 18:19
  */
 ?>
-@extends('layouts.iframe')
+@extends('layouts.home')
+
+@section('title','')
 
 @section('css')
     @parent
+
+    <link rel="stylesheet" type="text/css" href="{{ asset('/css/home/comment.css') }}">
+
 @endsection
 
 @section('content')
 
     <link rel="stylesheet" href="{{ asset('/css/home/order.css') }}">
-    {{--<link rel="stylesheet" href="{{ asset('/css/home/base.css') }}">--}}
     <link rel="stylesheet" href="{{ asset('/css/home/orderbase.css') }}">
 
     <div class="uc-box uc-main-box">
@@ -57,6 +61,7 @@
                     </form>
                 </div>
             </div>
+
             <div class="box-bd">
                 <div id="J_orderList">
                     <ul class="order-list">
@@ -64,6 +69,7 @@
                             <div class="order-detail">
                                 <div class="order-summary">
                                     <div class="order-status">等待付款</div>
+                                    <p class="order-desc J_deliverDesc">  我们将尽快为您发货 </p>
                                 </div>
                                 <table class="order-detail-table">
                                     <thead>
@@ -131,12 +137,16 @@
                                 <table class="order-detail-table">
                                     <thead>
                                     <tr>
-                                        <th class="col-main"><p class="caption-info">2016年11月07日 20:11<span class="sep">|</span>潘珺<span
-                                                        class="sep">|</span>订单号：<a
-                                                        href="//order.mi.com/user/orderView/1161107696915384">1161107696915384</a><span
-                                                        class="sep">|</span>微信支付（Native）</p></th>
-                                        <th class="col-sub"><p class="caption-price">订单金额：<span
-                                                        class="num">498.00</span>元</p></th>
+                                        <th class="col-main">
+                                            <p class="caption-info">2016年11月07日 20:11<span class="sep">|</span>潘珺<span
+                                                        class="sep">|</span>订单号：
+                                                <a href="//order.mi.com/user/orderView/1161107696915384">1161107696915384</a><span class="sep">|</span>微信支付（Native）</p>
+                                        </th>
+                                        <th class="col-sub">
+                                            <p class="caption-price">
+                                                订单金额：<span class="num">498.00</span>元
+                                            </p>
+                                        </th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -144,28 +154,45 @@
                                         <td class="order-items">
                                             <ul class="goods-list">
                                                 <li>
-                                                    <div class="figure figure-thumb"><a
-                                                                href="//item.mi.com/1160800072.html" target="_blank">
+                                                    <div class="figure figure-thumb">
+                                                        <a href="//item.mi.com/1160800072.html" target="_blank">
                                                             <img src="//i1.mifile.cn/a1/T1AaJQBbZT1RXrhCrK!80x80.jpg"
-                                                                 width="80" height="80" alt="小米盒子3 增强版 白色"> </a></div>
-                                                    <p class="name"><a href="//item.mi.com/1160800072.html"
-                                                                       target="_blank">小米盒子3 增强版 白色</a></p>
-                                                    <p class="price">399元 × 1</p></li>
+                                                                 width="80" height="80" alt="小米盒子3 增强版 白色">
+                                                        </a>
+                                                    </div>
+                                                    <p class="name">
+                                                        <a href="//item.mi.com/1160800072.html" target="_blank">
+                                                            小米盒子3 增强版 白
+                                                        </a>
+                                                    </p>
+                                                    <p class="price">399元 × 1</p>
+                                                </li>
+
                                                 <li>
-                                                    <div class="figure figure-thumb"><a
-                                                                href="//item.mi.com/1161200010.html" target="_blank">
+                                                    <div class="figure figure-thumb">
+                                                        <a href="//item.mi.com/1161200010.html" target="_blank">
                                                             <img src="//i1.mifile.cn/a1/T1ycK_BjYv1RXrhCrK!80x80.jpg"
-                                                                 width="80" height="80" alt="小米圈铁耳机 金色"> </a></div>
-                                                    <p class="name"><a href="//item.mi.com/1161200010.html"
-                                                                       target="_blank">小米圈铁耳机 金色</a></p>
-                                                    <p class="price">99元 × 1</p></li>
+                                                                 width="80" height="80" alt="小米圈铁耳机 金色">
+                                                        </a>
+                                                    </div>
+                                                    <p class="name">
+                                                        <a href="//item.mi.com/1161200010.html" target="_blank">
+                                                            小米圈铁耳机 金色
+                                                        </a>
+                                                    </p>
+                                                    <p class="price">99元 × 1</p>
+                                                </li>
                                             </ul>
                                         </td>
-                                        <td class="order-actions"><a class="btn btn-small btn-line-gray"
-                                                                     href="//order.mi.com/user/orderView/1161107696915384">订单详情</a>
+                                        <td class="order-actions">
+                                            <a class="btn btn-small btn-line-gray" href="//order.mi.com/user/orderView/1161107696915384">
+                                                订单详情
+                                            </a>
                                             <a class="btn btn-small btn-line-gray"
                                                href="//service.order.mi.com/apply/order/id/1161107696915384"
-                                               target="_blank">申请售后</a></td>
+                                               target="_blank">申请售后
+                                            </a>
+                                        </td>
                                     </tr>
                                     </tbody>
                                 </table>
@@ -174,9 +201,11 @@
                     </ul>
                 </div>
                 <div id="J_orderListPages">
-                    <div class="xm-pagenavi"><span class="numbers first"><span class="iconfont"></span></span> <span
-                                class="numbers current">1</span> <span class="numbers last"><span
-                                    class="iconfont"></span></span></div>
+                    <div class="xm-pagenavi">
+                        <span class="numbers first"><span class="iconfont"></span></span>
+                        <span class="numbers current">1</span> <span class="numbers last">
+                            <span class="iconfont"></span></span>
+                    </div>
                 </div>
             </div>
         </div>

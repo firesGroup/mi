@@ -161,17 +161,7 @@
             $('#button').on('click',function () {
 
                 pid = $('#pid').text();
-    //alert(pid);
-                {{--var url ='{{url('admin/commentShow')}}';--}}
-                {{--$.ajax({--}}
-                    {{--url: url,--}}
-                    {{--type: 'get',--}}
-                    {{--data: { 'pid': pid , '_token': '{{ csrf_token() }}'},--}}
-                    {{--success: function (data) {--}}
-                        {{--console.log({{ csrf_token()}});--}}
-                    {{--}--}}
 
-                {{--});--}}
             });
         });
 

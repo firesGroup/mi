@@ -41,13 +41,30 @@ class CommentController extends Controller
      */
     public function store(Request $request)
     {
-        dd(111);
+        $input = $request->input;
+        $cid = $request->cid;
+        $pid = $request->pid;
+//dd($pid);
+        if($input != null){
+            $bool = Comment::insert([
+                'member_id'=>'15',
+                'p_id'=>$pid,
+                'content'=>$input,
+                'type' => '2',
+                'comment_id'=> $cid,
+                'created_at'=>date('Y:m:d H:i:s')
+            ]);
+//dd($bool);
+            if($bool){
+                return $input;
+//                return redirect('comment/'.$pid);
+            } else {
+//                echo "<script>alert('回复失败')</script>";
+                return 1;
+            }
+        }
     }
 
-    public function insert(Request $request)
-    {
-        dd($request->all());
-    }
 
 
     /**
