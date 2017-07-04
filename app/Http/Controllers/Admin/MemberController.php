@@ -15,6 +15,7 @@ use Hash;
 use Session;
 use Mail;
 
+
 class MemberController extends Controller
 {
     /**
@@ -78,7 +79,17 @@ class MemberController extends Controller
         $ip = $request->getClientIp();
         $data['last_ip'] = $ip;
         if(Member::create($data)){
-            return redirect('/');
+
+            $arr =  DB::table('member')->where('nick_name', '=', $data['nick_name'])->get()[0];
+            $request->session()->put('user_deta', ['nick_name'=>$arr->nick_name, 'phone'=>$arr->phone, 'email'=>$arr->email, 'id'=>$arr->id]);
+            $array['member_id'] = $arr->id;
+            $array['level_id'] = 0;
+            $array['sex'] = 0;
+            $array['avator'] = '/uploads/avator/default.jpg' ;
+            if(MemberDetail::create($array)){
+                return redirect('/');
+            }
+            return back();
         }else{
             return back();
         }
@@ -265,6 +276,8 @@ class MemberController extends Controller
         $request->setTrustedProxies(array('10.32.0.1/16'));
         $ip = $request->getClientIp();
         $data['last_ip'] = $ip;
+
+
 //        dd($data);
 //        dd($data);
         if(session('img_code') != $data['code']) {
@@ -275,9 +288,18 @@ class MemberController extends Controller
         if (session('email_code') != $data['email_code'])  {
             return 2;
         }
-
+        DB::beginTransaction();
         if(Member::create($data)){
-            return redirect('/');
+
+           $arr =  DB::table('member')->where('nick_name', '=', $data['nick_name'])->get()[0];
+            $request->session()->put('user_deta', ['nick_name'=>$arr->nick_name, 'phone'=>$arr->phone, 'email'=>$arr->email, 'id'=>$arr->id]);
+           $array['member_id'] = $arr->id;
+           $array['level_id'] = 0;
+           $array['sex'] = 0;
+           $array['avator'] = '/uploads/avator/default.jpg' ;
+          if(MemberDetail::create($array)){
+              return 0;
+            }
         }else{
             return 3;
         }

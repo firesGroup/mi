@@ -62,7 +62,7 @@
             </div>
             <div class="box-bd">
                 <ul class="uc-nav-list">
-                    <li><a href="https://account.xiaomi.com/" target="_blank" data-stat-id="35eef2fd7467d6ca" onclick="_msq.push(['trackEvent', '73ce9fb1e71baa17-35eef2fd7467d6ca', 'https://account.xiaomi.com/', 'pcpid', '']);">个人信息</a></li>
+                    <li><a href="{{url('personal')}}" target="_blank" data-stat-id="35eef2fd7467d6ca">个人信息</a></li>
                     <li><a href="https://account.xiaomi.com/pass/auth/security/home#service=setPassword" target="_blank" data-stat-id="ae5ee0188510f1e6" onclick="_msq.push(['trackEvent', '73ce9fb1e71baa17-ae5ee0188510f1e6', 'https://account.xiaomi.com/pass/auth/security/home#service=setPassword', 'pcpid', '']);">修改密码</a></li>
                     <li><a href="http://uvip.xiaomi.cn" target="_blank" data-stat-id="c130c3dbf41fd4d8" onclick="_msq.push(['trackEvent', '73ce9fb1e71baa17-c130c3dbf41fd4d8', 'http://uvip.xiaomi.cn', 'pcpid', '']);">社区VIP认证</a></li>
                 </ul>

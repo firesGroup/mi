@@ -7,7 +7,7 @@ a{text-decoration:none;color:#333;}
 
 .zhuti{
     width:854px;
-    height:702px;
+    height:600px;
     background:#fff;
     margin:0  auto;
     margin-top:125px;
@@ -25,12 +25,12 @@ a{text-decoration:none;color:#333;}
 }
 
 
-.biao{
-    width:785px;
-    height:45px;
-    margin:0  auto;
-    /*border:1px   solid   red;*/
-}
+/*.biao{*/
+    /*width:785px;*/
+    /*height:45px;*/
+    /*margin:0  auto;*/
+    /*!*border:1px   solid   red;*!*/
+/*}*/
 
 .zi{
     font-size:30px;
@@ -40,14 +40,12 @@ a{text-decoration:none;color:#333;}
 
 }
 
-.shu{
-    width:786px;
-    height:339px;
-    /*border:1px   solid   red;*/
-    margin:30px auto;
-
-
-}
+/*.shu{*/
+    /*width:786px;*/
+    /*height:339px;*/
+    /*!*border:1px   solid   red;*!*/
+    /*margin:30px auto;*/
+/*}*/
 
 
 

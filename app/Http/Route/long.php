@@ -52,6 +52,10 @@ Route::group( ['namespace'=>'Home'], function(){
    Route::get('login/exit', 'LoginController@loginout');
 
    Route::get('user_detail', 'UserDetailController@user_detail');
+   Route::post('mail_code', 'UserDetailController@mailcode');
+   Route::post('phone_code', 'UserDetailController@phonecode');
+   Route::post('member_update', 'UserDetailController@update_pass');
+   Route::get('personal', 'UserDetailController@personal');
 });
 
 Route::get('kit/captcha/{tmp}', 'Home\CodeController@captcha');

@@ -48,9 +48,9 @@
                                        autocomplete="off" class="layui-input qing" style="width:200px" value="{{old('code')}}">
                             </div>
                             <a onclick="javascript:re_captcha();">
-                                <img src="{{ url('/kit/captcha/1') }}" alt="验证码" title="刷新图片" width="130"
+                                <img src="{{ url('/kit/captcha/1') }}" alt="验证码" title="刷新图片" width="100"
                                      height="40" id="code" border="1"
-                                     style="float:right;margin-top: 22px;">
+                                     style="float:right;margin-top: 20px;">
                             </a>
                                 <div class="code">{{session('error')?session('error'):''}}</div>
                             <div style="display: inline-table;clear:both;">
@@ -90,11 +90,11 @@
                             <a onclick="javascript:re();">
                                 <img src="{{ url('/kit/capt/1') }}" alt="验证码" title="刷新图片" width="100"
                                      height="40" id="img_code" border="1"
-                                     style="float:right;margin-top: 20px;">
+                                     style="float:right;margin-top: 25px;">
                             </a>
                                 <div style="display: inline-table;clear:both;">
                                     <input type="text" id="moblieVerify" name="email_code" required lay-verify="required" placeholder="请输入邮件验证码"
-                                           autocomplete="off" class="layui-input qing" style="width:220px" value="{{old('sms_code')}}">
+                                           autocomplete="off" class="layui-input qing" style="width:200px" value="{{old('sms_code')}}">
                                 </div>
                                 <button type="button" id="emailVerify" class="layui-btn layui-btn-small"
                                         style="">发送邮件验证码
@@ -271,14 +271,22 @@
 
                                     switch(data)
                                     {
+                                        case 0:
+                                            window.location = "http://www.mi.cn";
+                                            break;
                                         case 1:
                                             layer.msg('验证码错误');
                                             break;
                                         case 2:
                                             layer.msg('邮箱验证码错误');
+                                            break;
                                         case 3:
                                             layer.msg('注册会员失败');
+                                            break;
                                     }
+
+
+
                                 },
                                 error:function (error) {
                                     var msgObj=JSON.parse(error.responseText);
