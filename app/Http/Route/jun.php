@@ -38,9 +38,10 @@ Route::group(['namespace' => 'Home'], function () {
     Route::get('store','CommentController@store');
 
     Route::resource('order','OrderController');
-    Route::get('order','OrderController@show');
+    Route::get('order/{id}','OrderController@show');
+    Route::get('orderdetail/{id}','OrderController@detail');
 
 
 });
 
-//Route::get('comment', 'CommentController@index');
+

@@ -65,24 +65,31 @@
             <div class="box-bd">
                 <div id="J_orderList">
                     <ul class="order-list">
-                        <li class="uc-order-item uc-order-item-pay">
+                        @foreach($data as $v)
+                            @if($v->order_status == 0 )
+                        <li class="uc-order-item uc-order-item-pay">{{-- 颜色 finish灰色--}}
+                            @else
+                                <li class="uc-order-item uc-order-item-finish">
+                                @endif
                             <div class="order-detail">
                                 <div class="order-summary">
-                                    <div class="order-status">等待付款</div>
+                                    <div class="order-status">{{$status[$v->order_status]}}</div>
+                                    @if($v->order_status == 1 || $v->order_status == 2)
                                     <p class="order-desc J_deliverDesc">  我们将尽快为您发货 </p>
+                                        @endif
                                 </div>
                                 <table class="order-detail-table">
                                     <thead>
                                     <tr>
                                         <th class="col-main">
-                                            <p class="caption-info">2017年07月02日 20:08<span class="sep">|</span>
-                                                潘珺<span class="sep">|</span>
-                                    订单号： <a href="//order.mi.com/user/orderView/1170702438900346">1170702438900346</a>
+                                            <p class="caption-info">{{$v->add_time}}<span class="sep">|</span>
+                                                {{$v->buy_user}}<span class="sep">|</span>
+                                    订单号： <a href="//order.mi.com/user/orderView/1170702438900346">{{$v->order_sn}}</a>
                                                 <span class="sep">|</span>在线支付</p>
                                         </th>
 
                                         <th class="col-sub">
-                                            <p class="caption-price">订单金额：<span class="num">3798.00</span>元</p>
+                                            <p class="caption-price">订单金额：<span class="num">{{$v->total}}</span>元</p>
                                         </th>
                                     </tr>
                                     </thead>
@@ -90,6 +97,8 @@
                                     <tr>
                                         <td class="order-items">
                                             <ul class="goods-list">
+                                                @foreach($orderdetail as $d)
+                                                    @if($v->id == $d->order_id)
                                                 <li>
                                                     <div class="figure figure-thumb">
                                                         <a href="//item.mi.com/1163700032.html" target="_blank">
@@ -99,105 +108,44 @@
                                                         </a>
                                                     </div>
                                                     <p class="name">
-                                                        <a target="_blank" href="//item.mi.com/1163700032.html">小米手机5s Plus
-                                                            全网通版 4GB内存 灰色 64GB</a>
-                                                    </p>
-                                                    <p class="price">2299元 × 1</p>
-                                                </li>
-
-                                                <li>
-                                                    <div class="figure figure-thumb">
-                                                        <a href="//item.mi.com/1171800018.html" target="_blank">
-                                                        <img src="//i1.mifile.cn/a1/pms_1495692033.10494295!80x80.jpg"width="80" height="80"
-                                                                 alt="小米Max 2 全网通版 4GB内存 金色 64GB">
+                                                        {{--跳转链接--}}
+                                                        <a target="_blank" href="//item.mi.com/1163700032
+                                                        .html">
+                                                            {{$d->p_name}}
                                                         </a>
-                                                    </div>
-
-                                                    <p class="name">
-                                                        <a target="_blank" href="//item.mi.com/1171800018.html">小米Max 2 全网通版
-                                                            4GB内存 金色 64GB</a>
                                                     </p>
-                                                    <p class="price">1699元 × 1</p></li>
+                                                    <p class="price">{{$d->p_price}}元 × {{$d->buy_num}}</p>
+                                                </li>
+                                                    @endif
+                                                @endforeach
+
                                             </ul>
                                         </td>
                                         <td class="order-actions">
-                                            <a class="btn btn-small btn-primary" href="//order.mi.com/buy/confirm.php?id=1170702438900346" target="_blank">立即支付</a>
-                                            <a class="btn btn-small btn-line-gray" href="//order.mi.com/user/orderView/1170702438900346">订单详情</a>
-                                        </td>
-                                    </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </li>
-                        <li class="uc-order-item uc-order-item-finish">
-                            <div class="order-detail">
-                                <div class="order-summary">
-                                    <div class="order-status">已收货</div>
-                                </div>
-                                <table class="order-detail-table">
-                                    <thead>
-                                    <tr>
-                                        <th class="col-main">
-                                            <p class="caption-info">2016年11月07日 20:11<span class="sep">|</span>潘珺<span
-                                                        class="sep">|</span>订单号：
-                                                <a href="//order.mi.com/user/orderView/1161107696915384">1161107696915384</a><span class="sep">|</span>微信支付（Native）</p>
-                                        </th>
-                                        <th class="col-sub">
-                                            <p class="caption-price">
-                                                订单金额：<span class="num">498.00</span>元
-                                            </p>
-                                        </th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    <tr>
-                                        <td class="order-items">
-                                            <ul class="goods-list">
-                                                <li>
-                                                    <div class="figure figure-thumb">
-                                                        <a href="//item.mi.com/1160800072.html" target="_blank">
-                                                            <img src="//i1.mifile.cn/a1/T1AaJQBbZT1RXrhCrK!80x80.jpg"
-                                                                 width="80" height="80" alt="小米盒子3 增强版 白色">
-                                                        </a>
-                                                    </div>
-                                                    <p class="name">
-                                                        <a href="//item.mi.com/1160800072.html" target="_blank">
-                                                            小米盒子3 增强版 白
-                                                        </a>
-                                                    </p>
-                                                    <p class="price">399元 × 1</p>
-                                                </li>
-
-                                                <li>
-                                                    <div class="figure figure-thumb">
-                                                        <a href="//item.mi.com/1161200010.html" target="_blank">
-                                                            <img src="//i1.mifile.cn/a1/T1ycK_BjYv1RXrhCrK!80x80.jpg"
-                                                                 width="80" height="80" alt="小米圈铁耳机 金色">
-                                                        </a>
-                                                    </div>
-                                                    <p class="name">
-                                                        <a href="//item.mi.com/1161200010.html" target="_blank">
-                                                            小米圈铁耳机 金色
-                                                        </a>
-                                                    </p>
-                                                    <p class="price">99元 × 1</p>
-                                                </li>
-                                            </ul>
-                                        </td>
-                                        <td class="order-actions">
-                                            <a class="btn btn-small btn-line-gray" href="//order.mi.com/user/orderView/1161107696915384">
+                                            @if($v->order_status == 0)
+                                            <a class="btn btn-small btn-primary" href="//order.mi.com/buy/confirm
+                                            .php?id=1170702438900346" target="_blank">
+                                                立即支付
+                                                </a>
+                                            @endif
+                                            <a class="btn btn-small btn-line-gray" href="{{url('orderdetail').'/'.+$v->id}}">
                                                 订单详情
                                             </a>
+                                                @if($v->order_status != 0)
                                             <a class="btn btn-small btn-line-gray"
                                                href="//service.order.mi.com/apply/order/id/1161107696915384"
-                                               target="_blank">申请售后
+                                               target="_blank">
+                                                申请售后
                                             </a>
+                                                    @endif
                                         </td>
+
                                     </tr>
                                     </tbody>
                                 </table>
                             </div>
                         </li>
+                                @endforeach
                     </ul>
                 </div>
                 <div id="J_orderListPages">

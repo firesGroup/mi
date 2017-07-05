@@ -17,7 +17,7 @@ class OrderController extends Controller
      */
     public function index()
     {
-
+        //
     }
 
     /**
@@ -53,19 +53,38 @@ class OrderController extends Controller
         $data = Order::where('member_id',$id)->get();
 
         //获取订单ID
-        $orderid = Order::where('member_id',$id)->value('id');
+        $orderid = DB::table('order')->where('member_id',$id)->lists('id');
 
         //根据订单ID 查询订单详情表信息
-        $orderdetail =DB::table('order_detail')->where('order_id',$orderid)->get();
+        $orderdetail =DB::table('order_detail')->whereIn('order_id',$orderid)->get();
 
         //查询出商品ID
         $pid = DB::table('order_detail')->where('order_id',$orderid)->value('p_id');
 
-//        dd($orderdetail);
-        return view ('home.order.order',compact('data','orderdetail'));
+        //获取价格
+        $price = DB::table('product')->where('id',$pid)->value('price');
+
+        $status = ['0'=>'等待支付','1'=>'已支付','2'=>'未发货','3'=>'已发货','4'=>'已收货','5'=>'退款中','6'=>'交易成功','7'=>'已关闭'];
+
+        return view ('home.order.order',compact('data','orderdetail','status','price','orderid'));
 
     }
 
+
+    public function detail($id)
+    {
+        //根据订单详情ID查订单详情表
+        $odetail = DB::table('order_detail')->where('order_id',$id)->get();
+
+//        $oid = DB::table('order_detail')->where('member_id',$id)->value('')
+//        $orderid =
+        //查询订单信息
+        $orderid = DB::table('order')->where('id',$id)->get();
+
+        $status = ['0'=>'等待支付','1'=>'已支付','2'=>'未发货','3'=>'已发货','4'=>'已收货','5'=>'退款中','6'=>'交易成功','7'=>'已关闭'];
+
+        return view('home.order.orderDetail',compact('odetail','orderid','status'));
+    }
     /**
      * Show the form for editing the specified resource.
      *
