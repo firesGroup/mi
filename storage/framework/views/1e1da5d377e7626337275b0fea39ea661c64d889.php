@@ -1,0 +1,135 @@
+<?php
+/**
+ * File Name: index.blade.php
+ * Description:  权限展示页面
+ * Created by PhpStorm.
+ * Group: FiresGroup
+ * Auth: Wim
+ * Date: 2017/6/26
+ * Time: 9:16
+ */
+?>
+
+<?php /*<?php echo e(dd(1)); ?>*/ ?>
+
+
+
+
+<?php $__env->startSection('title','权限首页'); ?>
+
+<?php $__env->startSection('css'); ?>
+    @parent
+<?php $__env->stopSection(); ?>
+
+<?php $__env->startSection('content'); ?>
+    <section class="larry-grid">
+        <div class="larry-personal">
+            <header class="larry-personal-tit">
+                <span>权限-列表</span>
+            </header>
+            <div class="row" id="infoSwitch">
+                <blockquote class="layui-elem-quote col-md-12 head-con">
+                    <div class="title">
+                        <i class="larry-icon larry-caozuo"></i>
+                        <h4 title="提示相关设置操作时应注意的要点">操作提示</h4>
+                    </div>
+                    <ul>
+                        <li>请不要随意更改权限信息</li>
+                        <li>按要求对权限增, 删, 改</li>
+                    </ul>
+                    <i class="larry-icon larry-guanbi close" id="closeInfo"></i>
+                </blockquote>
+            </div>
+            <div class="larry-personal-body clearfix">
+                <div class="btn-group">
+
+
+                    <a href="<?php echo e(url('admin/role/create')); ?>" style="color:white">
+
+                        <button class="layui-btn layui-btn-small">
+                            <i class="layui-icon">&#xe608;</i>
+                            添加权限
+                        </button>
+                    </a>
+
+                    <button class="layui-btn layui-btn-small" id="refresh">
+                        <i class="layui-icon">&#x1002;</i> 刷新本页
+                    </button>
+                </div>
+                <br><br>
+
+                <table class="layui-table larry-table-info">
+                    <colgroup>
+                        <col width="100">
+                        <col width="200">
+                        <col>
+                    </colgroup>
+                    <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>权限名</th>
+                        <th>权限拥有的控制器</th>
+                        <th>权限描述</th>
+                        <th>状态</th>
+                        <th>操作</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <?php /*<?php echo e(dd($data)); ?>*/ ?>
+                    <?php foreach( $data as $role ): ?>
+                        <?php /*<?php echo e(dump($user)); ?>*/ ?>
+                        <tr>
+                            <td><?php echo e($role->id); ?></td>
+                            <td style="color:#1E9FFF"><?php echo e($role->role_name); ?></td>
+                            <td><?php echo e($role->role); ?></td>
+                            <td><?php echo e($role->role_desc); ?></td>
+                            <td><?php echo e($status[$role->status]); ?></td>
+                            <td>
+                                <div class="layui-btn-group">
+                                    <a href="<?php echo e(url('admin/role').'/'.$role->id); ?>" class="layui-btn  layui-btn-small"
+                                       data-alt="查看">
+                                        <i class="layui-icon">&#xe60b;</i>
+                                    </a>
+                                    <a href="<?php echo e(url('admin/role').'/'.$role->id."/edit"); ?>"
+                                       class="layui-btn  layui-btn-small" data-alt="修改">
+                                        <i class="layui-icon">&#xe642;</i>
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
+                    </tbody>
+                </table>
+                <div class="larry-table-page" style="text-align: center">
+                    <?php echo e($data->render()); ?>
+
+                    共计(<?php echo e($sum); ?>)条
+                </div>
+            </div>
+        </div>
+    </section>
+<?php $__env->stopSection(); ?>
+
+<?php $__env->startSection('js'); ?>
+    @parent
+    <script>
+        layui.use(['jquery', 'layer'], function () {
+            var $ = layui.jquery,
+                layer = layui.layer;
+            var index;
+            $('a.layui-btn').on('mouseover', function () {
+                var alt = $(this).attr('data-alt');
+                index = layer.tips(alt, $(this), {tips: [1, '#0FA6D8']});
+            });
+            $('a.layui-btn').on('mouseout', function () {
+                layer.close(index);
+            });
+            $('button#refresh').on('click', function () {
+                location.href = location.href;
+            });
+        });
+
+    </script>
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('layouts.iframe', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
