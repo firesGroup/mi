@@ -12,7 +12,7 @@ layui.use(['jquery','layer','form'],function(){
     
     //登录链接测试，使用时可删除
     $(".submit_btn").click(function(){
-      location.href="index.php";
+      location.href="index.php"; 
     });
     $(function(){
         $("#canvas").jParticle({

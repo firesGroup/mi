@@ -186,6 +186,14 @@
                                     layer.close(index);
                                 }});
                             }
+                        },
+                        error:function (XMLHttpRequest) {
+                            var msgObj = XMLHttpRequest.responseJSON;
+                            var msg = '';
+                            for(var name in msgObj){//遍历对象属性名
+                                msg += msgObj[name] + "<br>";
+                            }
+                            layer.msg(msg,{icon:2,time:3000});
                         }
                     });
                 }

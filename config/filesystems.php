@@ -65,6 +65,12 @@ return [
             'root' => public_path('uploads'),
         ],
 
+        // 视图缓存文件目录
+        'viewCache' => [
+            'driver' => 'local',
+            'root' => storage_path('framework/views'),
+        ],
+
         // Amazon S3 相关配置
         's3' => [
             'driver' => 's3',

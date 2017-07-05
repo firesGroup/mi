@@ -112,12 +112,24 @@ layui.use(['elements','jquery','layer','larry','navtab','form','common','global'
 		$('#larry-body').width($('.layui-layout-admin').width() - $('#larry-side').width());
 		$('#larry-footer').width($('.layui-layout-admin').width() - $('#larry-side').width());
 	}
-	
+
     //清除缓存
     $('#clearCached').on('click', function () {
         larry.cleanCached();
-        layer.alert('缓存清除完成!本地存储数据也清理成功！', { icon: 1, title: '系统提示' }, function () {
-            location.reload();//刷新
+        $.ajax({
+            url:'/admin/cancle',
+            type:'get',
+            success:function(status){
+                if( status == 0 ){
+                    layer.alert('缓存文件清除完成!本地存储数据也清理成功！', { icon: 1, title: '系统提示' }, function () {
+                        location.reload();//刷新
+                    });
+                }else{
+                    layer.alert('缓存文件清除失败!本地存储数据也清理成功！', { icon: 3, title: '系统提示' }, function () {
+                        location.reload();//刷新
+                    });
+                }
+            }
         });
     });
 

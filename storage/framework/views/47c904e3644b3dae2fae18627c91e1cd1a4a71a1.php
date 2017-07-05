@@ -22,17 +22,17 @@
         <meta name="format-detection" content="telephone=no">
         <link rel="Shortcut Icon" href="/favicon.ico" />
         <!-- load css -->
-        <link rel="stylesheet" type="text/css" href="{{ asset('/plugin/layui/css/layui.css') }}" media="all">
-        <link rel="stylesheet" type="text/css" href="{{ asset('/css/admin/global.css') }}">
-        <link rel="stylesheet" type="text/css" href="{{ asset('/css/admin/font.css') }}">
-        <link rel="stylesheet" type="text/css" href="{{ asset('/css/admin/backstage.css') }}">
+        <link rel="stylesheet" type="text/css" href="<?php echo e(asset('/plugin/layui/css/layui.css')); ?>" media="all">
+        <link rel="stylesheet" type="text/css" href="<?php echo e(asset('/css/admin/global.css')); ?>">
+        <link rel="stylesheet" type="text/css" href="<?php echo e(asset('/css/admin/font.css')); ?>">
+        <link rel="stylesheet" type="text/css" href="<?php echo e(asset('/css/admin/backstage.css')); ?>">
     </head>
     <body>
         <!-- 内容正文-->
         <div class="layui-layout layui-layout-admin" id="layui_layout">
             <!-- 顶部区域 -->
             <div class="layui-header header-menu">
-                <div class="logo posb" id="log"><img src="{{ asset('/images/admin/logo.png')  }}" width="200px" height="65px"></div>
+                <div class="logo posb" id="log"><img src="<?php echo e(asset('/images/admin/logo.png')); ?>" width="200px" height="65px"></div>
                 <div class="layui-main posb">
                     <!-- 左侧导航收缩开关 -->
                     <div class="side-menu-switch posb" id="toggle"><span class="switch"  ara-hidden="true"></span></div>
@@ -81,58 +81,58 @@
                     <!-- 管理员信息      -->
                     <div class="user-info">
                         <div class="photo">
-                            <img src="{{ asset('/images/admin/user.jpg') }}" alt="">
+                            <img src="<?php echo e(asset('/images/admin/user.jpg')); ?>" alt="">
                         </div>
                         <p>admin您好！欢迎登录</p>
                     </div>
                     <!-- 系统菜单 -->
                     <div class="sys-menu-box" >
                         <ul class="layui-nav layui-nav-tree" id="larrySideNav" lay-filter="side" >
-                            <li class="layui-nav-item" data-pid="undefined"><a data-url="{{url('/admin/welcome')}}"><i class="larry-icon larry-houtaishouye" data-icon="larry-houtaishouye"aria-hidden="true"></i><cite>后台首页</cite></a></li>
+                            <li class="layui-nav-item" data-pid="undefined"><a data-url="<?php echo e(url('/admin/welcome')); ?>"><i class="larry-icon larry-houtaishouye" data-icon="larry-houtaishouye"aria-hidden="true"></i><cite>后台首页</cite></a></li>
                             <li class="layui-nav-item" data-pid="undefined">
-                                <a data-url="{{url('/admin/menu')}}">
+                                <a data-url="<?php echo e(url('/admin/menu')); ?>">
                                     <i class="larry-icon larry-houtaishouye" data-icon="larry-houtaishouye" aria-hidden="true"></i>
                                     <cite>菜单管理</cite>
                                 </a>
                             </li>
                             <li class="layui-nav-item" data-pid="undefined">
-                                <a data-url="{{url('/admin/product')}}">
+                                <a data-url="<?php echo e(url('/admin/product')); ?>">
                                     <i class="larry-icon larry-houtaishouye" data-icon="larry-houtaishouye" aria-hidden="true"></i>
                                     <cite>商品管理</cite>
                                 </a>
                             </li>
                             <li class="layui-nav-item" data-pid="undefined">
-                                <a data-url="{{url('/admin/product/brand')}}">
+                                <a data-url="<?php echo e(url('/admin/product/brand')); ?>">
                                     <i class="larry-icon larry-houtaishouye" data-icon="larry-houtaishouye" aria-hidden="true"></i>
                                     <cite>品牌管理</cite>
                                 </a>
                             </li>
                             <li class="layui-nav-item" data-pid="undefined">
-                                <a data-url="{{url('/admin/product/color')}}">
+                                <a data-url="<?php echo e(url('/admin/product/color')); ?>">
                                     <i class="larry-icon larry-houtaishouye" data-icon="larry-houtaishouye" aria-hidden="true"></i>
                                     <cite>颜色管理</cite>
                                 </a>
                             </li>
                             <li class="layui-nav-item" data-pid="undefined">
-                                <a data-url="{{url('/admin/product/attr')}}">
+                                <a data-url="<?php echo e(url('/admin/product/attr')); ?>">
                                     <i class="larry-icon larry-houtaishouye" data-icon="larry-houtaishouye" aria-hidden="true"></i>
                                     <cite>属性管理</cite>
                                 </a>
                             </li>
                             <li class="layui-nav-item" data-pid="undefined">
-                                <a data-url="{{url('/admin/user')}}">
+                                <a data-url="<?php echo e(url('/admin/user')); ?>">
                                     <i class="larry-icon larry-houtaishouye" data-icon="larry-houtaishouye" aria-hidden="true"></i>
                                     <cite>管理员管理</cite>
                                 </a>
                             </li>
                             <li class="layui-nav-item" data-pid="undefined">
-                                <a data-url="{{url('/admin/order')}}">
+                                <a data-url="<?php echo e(url('/admin/order')); ?>">
                                     <i class="larry-icon larry-houtaishouye" data-icon="larry-houtaishouye" aria-hidden="true"></i>
                                     <cite>订单管理</cite>
                                 </a>
                             </li>
                             <li class="layui-nav-item" data-pid="undefined">
-                                <a data-url="{{url('/admin/member')}}">
+                                <a data-url="<?php echo e(url('/admin/member')); ?>">
                                     <i class="larry-icon larry-houtaishouye" data-icon="larry-houtaishouye" aria-hidden="true"></i>
                                     <cite>会员管理</cite>
                                 </a>
@@ -181,7 +181,7 @@
                     </div>
                     <div class="layui-tab-content">
                         <div class="layui-tab-item layui-show">
-                            <iframe class="larry-iframe" data-id='0' name="ifr_0" id='ifr0' src="{{ url('/admin/welcome') }}"></iframe>
+                            <iframe class="larry-iframe" data-id='0' name="ifr_0" id='ifr0' src="<?php echo e(url('/admin/welcome')); ?>"></iframe>
                         </div>
                     </div>
                 </div>
@@ -264,9 +264,9 @@
             </div>
         </div>
         <!-- 加载 JS -->
-        <script type="text/javascript" src="{{ asset('/plugin/layui/layui.js') }}"></script>
-        <script type="text/javascript" src="{{ asset('/js/admin/larry.js') }}"></script>
-        <script type="text/javascript" src="{{ asset('/js/public/base.js') }}"></script>
+        <script type="text/javascript" src="<?php echo e(asset('/plugin/layui/layui.js')); ?>"></script>
+        <script type="text/javascript" src="<?php echo e(asset('/js/admin/larry.js')); ?>"></script>
+        <script type="text/javascript" src="<?php echo e(asset('/js/public/base.js')); ?>"></script>
         <script>
             layui.use(['jquery','layer','navtab'],function() {
                 var $ = layui.jquery,

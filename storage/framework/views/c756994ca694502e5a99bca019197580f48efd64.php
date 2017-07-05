@@ -20,16 +20,16 @@
  * Time: 16:09
  */
 ?>
-@extends('layouts.iframe')
 
-@section('title','修改商品信息')
 
-@section('css')
+<?php $__env->startSection('title','修改商品信息'); ?>
+
+<?php $__env->startSection('css'); ?>
     @parent
-    <meta name="_token" content="{{ csrf_token() }}">
-@endsection
+    <meta name="_token" content="<?php echo e(csrf_token()); ?>">
+<?php $__env->stopSection(); ?>
 
-@section('content')
+<?php $__env->startSection('content'); ?>
     <section class="larry-grid">
         <div class="larry-personal">
             <header class="larry-personal-tit">
@@ -51,28 +51,29 @@
                 <div class="layui-tab-item layui-show" style="padding-top:20px">
                     <div class="form-body">
                         <form class="layui-form" method="post" id="productDetail">
-                            {{ csrf_field() }}
+                            <?php echo e(csrf_field()); ?>
+
                             <input type="hidden" name="_method" value="PUT">
-                            <input type="hidden" name="p_id" value="{{ $info->p_id }}">
+                            <input type="hidden" name="p_id" value="<?php echo e($info->p_id); ?>">
                             <!-- 商品名称 -->
                             <div class="layui-form-item">
                                 <label class="layui-form-label">商品名称</label>
                                 <div class="layui-input-block">
-                                    <input type="text" name="p_name" lay-verify="required" placeholder="请输入商品名称" autocomplete="off" class="layui-input" value="{{ $info->p_name }}">
+                                    <input type="text" name="p_name" lay-verify="required" placeholder="请输入商品名称" autocomplete="off" class="layui-input" value="<?php echo e($info->p_name); ?>">
                                 </div>
                             </div>
                             <!-- 商品简介 -->
                             <div class="layui-form-item">
                                 <label class="layui-form-label">商品简介</label>
                                 <div class="layui-input-block">
-                                    <textarea type="text" name="summary" lay-verify="required" placeholder="请输入商品简介" autocomplete="off" class="layui-input">{{ $detail->summary or ''}}</textarea>
+                                    <textarea type="text" name="summary" lay-verify="required" placeholder="请输入商品简介" autocomplete="off" class="layui-input"><?php echo e(isset($detail->summary) ? $detail->summary : ''); ?></textarea>
                                 </div>
                             </div>
                             <!-- 活动提醒 -->
                             <div class="layui-form-item">
                                 <label class="layui-form-label">活动提醒</label>
                                 <div class="layui-input-block">
-                                    <textarea type="text" name="remind_title" lay-verify="required" placeholder="请输入位于商品简介前的活动提醒" autocomplete="off" class="layui-input">{{ $detail->remind_title or "" }}</textarea>
+                                    <textarea type="text" name="remind_title" lay-verify="required" placeholder="请输入位于商品简介前的活动提醒" autocomplete="off" class="layui-input"><?php echo e(isset($detail->remind_title) ? $detail->remind_title : ""); ?></textarea>
                                 </div>
                             </div>
                             <!-- 商品分类 -->
@@ -82,89 +83,89 @@
                                     <div class="layui-input-inline">
                                         <select name='category[1]' id='select1'  lay-filter='select1'>
                                             <option value="">请选择商品分类</option>
-                                            @foreach( $category[0] as $cate )
-                                                <option value="{{ $cate['id'] }}"{{ $cate['id'] == $ids[1]?'selected':"" }}>{{ $cate['category_name'] }}</option>
-                                            @endforeach
+                                            <?php foreach( $category[0] as $cate ): ?>
+                                                <option value="<?php echo e($cate['id']); ?>"<?php echo e($cate['id'] == $ids[1]?'selected':""); ?>><?php echo e($cate['category_name']); ?></option>
+                                            <?php endforeach; ?>
                                         </select>
                                     </div>
-                                    @if( $num > 1 )
-                                        @for( $i = 1 ; $i<$num ; $i++ )
+                                    <?php if( $num > 1 ): ?>
+                                        <?php for( $i = 1 ; $i<$num ; $i++ ): ?>
                                             <div class="layui-input-inline">
-                                                <select name='category[{{ $i+1 }}]' id='select{{ $i+1 }}'  lay-filter='select{{ $i+1 }}'>
+                                                <select name='category[<?php echo e($i+1); ?>]' id='select<?php echo e($i+1); ?>'  lay-filter='select<?php echo e($i+1); ?>'>
                                                     <option value="">请选择商品分类</option>
-                                                    @foreach( $category[$i] as $cate )
-                                                        <option value="{{ $cate['id'] }}"{{ $cate['id'] == $ids[$i+1]?'selected':"" }}>{{ $cate['category_name'] }}</option>
-                                                    @endforeach
+                                                    <?php foreach( $category[$i] as $cate ): ?>
+                                                        <option value="<?php echo e($cate['id']); ?>"<?php echo e($cate['id'] == $ids[$i+1]?'selected':""); ?>><?php echo e($cate['category_name']); ?></option>
+                                                    <?php endforeach; ?>
                                                 </select>
                                             </div>
-                                        @endfor
-                                    @endif
+                                        <?php endfor; ?>
+                                    <?php endif; ?>
                                 </div>
                             </div>
                             <!-- 商品价格 -->
                             <div class="layui-form-item">
                                 <label class="layui-form-label">商品价格</label>
                                 <div class="layui-input-block">
-                                    <input type="text" name="price" lay-verify="required" placeholder="请输入商品默认价格" autocomplete="off" class="layui-input" value="{{ $info->price }}" onkeyup="this.value=this.value.replace(/[^\d.]/g,'')" onpaste="this.value=this.value.replace(/[^\d.]/g,'')">
+                                    <input type="text" name="price" lay-verify="required" placeholder="请输入商品默认价格" autocomplete="off" class="layui-input" value="<?php echo e($info->price); ?>" onkeyup="this.value=this.value.replace(/[^\d.]/g,'')" onpaste="this.value=this.value.replace(/[^\d.]/g,'')">
                                 </div>
                             </div>
                             <!-- 商品货号 -->
                             <div class="layui-form-item">
                                 <label class="layui-form-label">商品货号</label>
                                 <div class="layui-input-block">
-                                    <input type="text" name="p_num"  placeholder="为空将自动生成" autocomplete="off" class="layui-input" value="{{ $info->p_num }}">
+                                    <input type="text" name="p_num"  placeholder="为空将自动生成" autocomplete="off" class="layui-input" value="<?php echo e($info->p_num); ?>">
                                 </div>
                             </div>
                             <!-- 商品库存 -->
                             <div class="layui-form-item">
                                 <label class="layui-form-label">商品总库存</label>
                                 <div class="layui-input-block">
-                                    <input type="text" name="store" lay-verify="required" placeholder="请输入商品总库存量" autocomplete="off" class="layui-input" value="{{ $info->store }}" onkeyup="this.value=this.value.replace(/[^\d.]/g,'')" onpaste="this.value=this.value.replace(/[^\d.]/g,'')">
+                                    <input type="text" name="store" lay-verify="required" placeholder="请输入商品总库存量" autocomplete="off" class="layui-input" value="<?php echo e($info->store); ?>" onkeyup="this.value=this.value.replace(/[^\d.]/g,'')" onpaste="this.value=this.value.replace(/[^\d.]/g,'')">
                                 </div>
                             </div>
                             <!-- 商品成交量 -->
                             <div class="layui-form-item">
                                 <label class="layui-form-label">商品成交量</label>
                                 <div class="layui-input-block">
-                                    <div class="layui-input">{{ $info->sell_num }}<font style="color:#e2e2e2">(无法修改)</font></div>
+                                    <div class="layui-input"><?php echo e($info->sell_num); ?><font style="color:#e2e2e2">(无法修改)</font></div>
                                 </div>
                             </div>
                             <!-- 商品点击量 -->
                             <div class="layui-form-item">
                                 <label class="layui-form-label">商品点击量</label>
                                 <div class="layui-input-block">
-                                    <div class="layui-input">{{ $info->click_num }}<font style="color:#e2e2e2">(无法修改)</font></div>
+                                    <div class="layui-input"><?php echo e($info->click_num); ?><font style="color:#e2e2e2">(无法修改)</font></div>
                                 </div>
                             </div>
                             <!-- 是否包邮 -->
                             <div class="layui-form-item">
                                 <label class="layui-form-label">是否包邮</label>
                                 <div class="layui-input-block">
-                                    {{--@if( $detail->is_free_shipping == 0 )--}}
-                                        {{--<input type="radio" name="is_free_shipping" value="0" checked title="包邮">--}}
-                                        {{--<input type="radio" name="is_free_shipping" value="1" title="不包邮">--}}
-                                    {{--@elseif( $detail->is_free_shipping == 1 )--}}
-                                        {{--<input type="radio" name="is_free_shipping" value="0" title="包邮">--}}
-                                        {{--<input type="radio" name="is_free_shipping" value="1" checked title="不包邮">--}}
-                                    {{--@else--}}
+                                    <?php /*<?php if( $detail->is_free_shipping == 0 ): ?>*/ ?>
+                                        <?php /*<input type="radio" name="is_free_shipping" value="0" checked title="包邮">*/ ?>
+                                        <?php /*<input type="radio" name="is_free_shipping" value="1" title="不包邮">*/ ?>
+                                    <?php /*<?php elseif( $detail->is_free_shipping == 1 ): ?>*/ ?>
+                                        <?php /*<input type="radio" name="is_free_shipping" value="0" title="包邮">*/ ?>
+                                        <?php /*<input type="radio" name="is_free_shipping" value="1" checked title="不包邮">*/ ?>
+                                    <?php /*<?php else: ?>*/ ?>
                                         <input type="radio" name="is_free_shipping" value="0" checked title="包邮">
                                         <input type="radio" name="is_free_shipping" value="1" title="不包邮">
-                                    {{--@endif--}}
+                                    <?php /*<?php endif; ?>*/ ?>
                                 </div>
                             </div>
                             <!-- 是否推荐 -->
                             <div class="layui-form-item">
                                 <label class="layui-form-label">是否推荐</label>
                                 <div class="layui-input-block">
-                                    <input type="radio" name="recommend" value="0" {{ $info->recommend == 0?"checked":'' }} title="推荐">
-                                    <input type="radio" name="recommend" value="1" {{ $info->recommend == 1?"checked":'' }} title="不推荐">
+                                    <input type="radio" name="recommend" value="0" <?php echo e($info->recommend == 0?"checked":''); ?> title="推荐">
+                                    <input type="radio" name="recommend" value="1" <?php echo e($info->recommend == 1?"checked":''); ?> title="不推荐">
                                 </div>
                             </div>
                             <!-- 推荐标签 -->
                             <div class="layui-form-item">
                                 <label class="layui-form-label">推荐标签</label>
                                 <div class="layui-input-block">
-                                    <input type="text" name="flag"  placeholder="请输入推荐标签" autocomplete="off" class="layui-input" value="{{ $info->flag }}">
+                                    <input type="text" name="flag"  placeholder="请输入推荐标签" autocomplete="off" class="layui-input" value="<?php echo e($info->flag); ?>">
                                 </div>
                             </div>
                             <!-- 商品关键字 -->
@@ -179,13 +180,13 @@
                                 <label class="layui-form-label">商品状态</label>
                                 <div class="layui-input-block">
                                     <select name="status">
-                                        @for( $i=0;$i<5;$i++ )
-                                            @if( $i == $info->status  )
-                                                <option value="{{$info->status}}" selected>{{ $zhStatus[$i]}}</option>
-                                            @else
-                                                <option value="{{$i}}">{{ $zhStatus[$i]}}</option>
-                                            @endif
-                                        @endfor
+                                        <?php for( $i=0;$i<5;$i++ ): ?>
+                                            <?php if( $i == $info->status  ): ?>
+                                                <option value="<?php echo e($info->status); ?>" selected><?php echo e($zhStatus[$i]); ?></option>
+                                            <?php else: ?>
+                                                <option value="<?php echo e($i); ?>"><?php echo e($zhStatus[$i]); ?></option>
+                                            <?php endif; ?>
+                                        <?php endfor; ?>
                                     </select>
                                 </div>
                             </div>
@@ -219,23 +220,23 @@
             </div>
         </div>
     </section>
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section('js')
+<?php $__env->startSection('js'); ?>
     @parent
     <!--上传文件插件-->
-    <script type="text/javascript" src="{{ asset('/js/public/jquery-1.12.4.min.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('/js/public/uploadFile.js') }}"></script>
+    <script type="text/javascript" src="<?php echo e(asset('/js/public/jquery-1.12.4.min.js')); ?>"></script>
+    <script type="text/javascript" src="<?php echo e(asset('/js/public/uploadFile.js')); ?>"></script>
     <!--富文本编辑器插件-->
-    <script type="text/javascript" src="{!!asset('/plugin/ueditor/ueditor.config.js')!!}"></script>
-    <script type="text/javascript" src="{!!asset('/plugin/ueditor/ueditor.all.min.js')!!}"></script>
-    {{-- 载入语言文件,根据laravel的语言设置自动载入 --}}
-    <script type="text/javascript" src="{!!asset($UeditorLangFile)!!}"></script>
+    <script type="text/javascript" src="<?php echo asset('/plugin/ueditor/ueditor.config.js'); ?>"></script>
+    <script type="text/javascript" src="<?php echo asset('/plugin/ueditor/ueditor.all.min.js'); ?>"></script>
+    <?php /* 载入语言文件,根据laravel的语言设置自动载入 */ ?>
+    <script type="text/javascript" src="<?php echo asset($UeditorLangFile); ?>"></script>
     <script type="text/javascript">
         //富文本编辑器
         var ue = UE.getEditor('ueditor');
         ue.ready(function() {
-            ue.execCommand('serverparam', '_token', '{{ csrf_token() }}');//此处为支持laravel5 csrf ,根据实际情况修改,目的就是设置 _token 值.
+            ue.execCommand('serverparam', '_token', '<?php echo e(csrf_token()); ?>');//此处为支持laravel5 csrf ,根据实际情况修改,目的就是设置 _token 值.
             ue.sync('productDetail');//设置编辑器内容同步到from的id
         });
     </script>
@@ -247,15 +248,15 @@
             ,element = layui.element()
             ,layer = layui.layer;
         var token = $('meta[name=_token]').attr('content');
-        var id = {{ $info->id }};
-        var rootUrl = '{{ url('/') }}';
+        var id = <?php echo e($info->id); ?>;
+        var rootUrl = '<?php echo e(url('/')); ?>';
 
         //页面加载时一些处理
         $('div#edui1').css('width','auto').css('z-index','2');
         $('div#edui1_iframeholder').css('width','auto');
 
         $('select[name=status] option').each(function(){
-            if( $(this).val() == {{ $info->status }} ){
+            if( $(this).val() == <?php echo e($info->status); ?> ){
                 $(this).attr('selected','true');
             }
         });
@@ -265,7 +266,7 @@
         function loadAjaxSpecItem()
         {
             $.ajax({
-                url: '{{ url('/admin/product/getSpecKeyExists/'.$info->id) }}',
+                url: '<?php echo e(url('/admin/product/getSpecKeyExists/'.$info->id)); ?>',
                 type: 'get',
                 success: function(data){
                     $('div.layui-form-item input[type=checkbox]').each(function(){
@@ -294,7 +295,7 @@
                     icon: 16
                 });
                 $.ajax({
-                    url:'{{ url('/admin/product').'/'.$info->id }}',
+                    url:'<?php echo e(url('/admin/product').'/'.$info->id); ?>',
                     type: 'put',
                     data: data.field,
                     success: function(res){
@@ -345,7 +346,7 @@
                 }
                 console.log(22);
                 $.ajax({
-                    url: "{{url('admin/product/getAjaxCategoryChild')}}/"+data.value
+                    url: "<?php echo e(url('admin/product/getAjaxCategoryChild')); ?>/"+data.value
                     , type: 'get'
                     , success: function (data) {
                         if (data == 1) {
@@ -383,7 +384,7 @@
             var th = $(this);
             if (th.attr('id') == 'p-images') {
                 if( !$('div.images-list').hasClass('request') ){
-                    ajaxGetImagesList('{{ $info->id }}', '{{ $info->p_name }}');
+                    ajaxGetImagesList('<?php echo e($info->id); ?>', '<?php echo e($info->p_name); ?>');
                 }
 
             }
@@ -392,11 +393,11 @@
         layui.upload({
             elem: '#imgUpload', //文件input上传域 id
             method: 'post', //文件上传传输方式
-            url: '{{ url('/upload') }}', //后台处理程序地址
+            url: '<?php echo e(url('/upload')); ?>', //后台处理程序地址
             before: function (input) {
                 //上传前回调
                 //定义存储路径与token
-                $('input#imgUpload').parent().append('<input type="hidden" name="_token" value="{{ csrf_token() }}"><input type="hidden" name="path" value="product">');
+                $('input#imgUpload').parent().append('<input type="hidden" name="_token" value="<?php echo e(csrf_token()); ?>"><input type="hidden" name="path" value="product">');
                 l = layer.msg('正在上传 请稍后...', {icon: 6});
             }
             , success: function (res) {
@@ -414,23 +415,23 @@
             }
         });
 
-        {{--//封面图片修改--}}
-        {{--$( '#uploadImage' ).on('click', function(){--}}
-            {{--openUpload(id,'{{ $info->p_name }}', 'product',"@admin@product@indexImage@"+ id, function(){--}}
-                {{--$.ajax({--}}
-                    {{--url: "{{ url('/admin/product/indexImage/'.$info->id) }}",--}}
-                    {{--type:"get",--}}
-                    {{--success:function(data){--}}
-                        {{--$('input#upload-input').val(data);--}}
-                    {{--}--}}
-                {{--});--}}
-            {{--});--}}
-        {{--});--}}
+        <?php /*//封面图片修改*/ ?>
+        <?php /*$( '#uploadImage' ).on('click', function(){*/ ?>
+            <?php /*openUpload(id,'<?php echo e($info->p_name); ?>', 'product',"@admin@product@indexImage@"+ id, function(){*/ ?>
+                <?php /*$.ajax({*/ ?>
+                    <?php /*url: "<?php echo e(url('/admin/product/indexImage/'.$info->id)); ?>",*/ ?>
+                    <?php /*type:"get",*/ ?>
+                    <?php /*success:function(data){*/ ?>
+                        <?php /*$('input#upload-input').val(data);*/ ?>
+                    <?php /*}*/ ?>
+                <?php /*});*/ ?>
+            <?php /*});*/ ?>
+        <?php /*});*/ ?>
 
         //相册图片上传
         $('div#upload-div-1').on('click', '#uploadFile',function(){
             if( $('div.images-list li').length < 5 ){
-                openUpload( id ,'{{ $info->p_name }}' ,'product', '@admin@product@images@' + id)
+                openUpload( id ,'<?php echo e($info->p_name); ?>' ,'product', '@admin@product@images@' + id)
             }else{
                 layer.alert('最多上传5张图片!',{title:'提示',icon:2});
             }
@@ -443,7 +444,7 @@
                  iid = img.attr('data-id'),
                  path = img.attr('src');
              $.ajax({
-                 url: "{{ url('/admin/product') }}/images/" + iid,
+                 url: "<?php echo e(url('/admin/product')); ?>/images/" + iid,
                  type: 'DELETE',
                  data: {'id': iid, 'path': path , '_token': token },
                  success: function(res){
@@ -457,7 +458,7 @@
                         }else{
                             layer.msg('未知错误!删除失败!',{ icon:2,time:1000 });
                         }
-                     ajaxGetImagesList('{{ $info->id }}', '{{ $info->p_name }}');
+                     ajaxGetImagesList('<?php echo e($info->id); ?>', '<?php echo e($info->p_name); ?>');
                  }
              });
 
@@ -475,7 +476,7 @@
 
         /**
          *  点击商品规格触发 下面输入框显示
-         *  @param id  商品id;
+         *  @param  id  商品id;
          */
         function ajaxGetSpecInput()
         {
@@ -500,8 +501,8 @@
         {
             $.ajax({
                 type:'POST',
-                data:{'spec_arr':spec_arr,'_token': '{{ csrf_token() }}' },
-                url:'{{ url('/admin/product/ajaxGetSpecInput/'.$info->id) }}',
+                data:{'spec_arr':spec_arr,'_token': '<?php echo e(csrf_token()); ?>' },
+                url:'<?php echo e(url('/admin/product/ajaxGetSpecInput/'.$info->id)); ?>',
                 success:function(data){
                     $("div#spec_table").html('');
                     $("div#spec_table").append(data);
@@ -551,13 +552,13 @@
         form.on('submit(editSpecInfo)', function(data){
 //            layer.alert(JSON.stringify(data.field));
             $.ajax({
-                url:'{{ url('/admin/product/editModelInfo/'.$info->id) }}',
+                url:'<?php echo e(url('/admin/product/editModelInfo/'.$info->id)); ?>',
                 type: 'POST',
                 data: data.field,
                 success:function(res){
                     if( res == 0 ){
                         layer.msg('修改成功!',{time:2000, icon:6});
-                        location.href="{{ url('/admin/product') }}";
+                        location.href="<?php echo e(url('/admin/product')); ?>";
                     }else if( res == 1 ){
                         layer.msg('修改失败!',{time:3000, icon:2});
                     }else{
@@ -569,4 +570,5 @@
         });
     });
 </script>
-@endsection
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layouts.iframe', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

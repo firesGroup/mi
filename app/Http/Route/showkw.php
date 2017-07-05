@@ -11,6 +11,7 @@
 
 Route::group(['namespace'=>'Admin','prefix'=>'admin'], function(){
     Route::get('/', 'AdminController@index');
+    Route::get('/cancle', 'AdminController@cancle');
 
     //分类路由
     Route::post('category_edit', 'CateGoryController@category_edit');
@@ -41,6 +42,7 @@ Route::group(['namespace'=>'Admin','prefix'=>'admin'], function(){
     Route::resource('product/attr', 'ProductAttributeController',['parameters' => [
         'attr' => 'attr_id'
     ]],['except'=>['show']]);
+    Route::get('product/getAjaxCategoryChild/{category_id}', 'ProductController@getAjaxCategoryChild');
     Route::resource('product', 'ProductController',['parameters' => [
         'product' => 'id'
     ]],['except'=>['show']]);
@@ -49,41 +51,19 @@ Route::get( '/upload/{path}/{id}/{url}', 'PublicC\UploadController@getUpload' );
 Route::post( '/upload', 'PublicC\UploadController@postUpload' );
 
 Route::group(['namespace'=>'Home',], function(){
+    Route::get('/search/{key}','SearchController@index' );
     Route::get('/product/info/{p_id}','HomeController@productInfo');
     Route::get('/product/ajaxGetVersion/{ver_id}', 'HomeController@ajaxGetVersion');
     Route::get('/product/ajaxGetVersionColor/{ver_id}', 'HomeController@ajaxGetVersionColor');
     Route::get('/','HomeController@index');
 });
 
-Route::get('/search/{key}', function ($key){
-    $xs = new XS(config_path('search-demo.ini'));
-    $search = $xs->search; // 获取 搜索对象
-    $query = $key;
-    $search->setQuery($query)
-        ->setSort('chrono', true) //按照chrono 正序排列
-        ->setLimit(20,0) // 设置搜索语句, 分页, 偏移量
-    ;
-
-    $docs = $search->search(); // 执行搜索，将搜索结果文档保存在 $docs 数组中
-    $count = $search->count(); // 获取搜索结果的匹配总数估算值
-    foreach ($docs as $doc){
-        $subject = $search->highlight($doc->subject); // 高亮处理 subject 字段
-        $message = $search->highlight($doc->message); // 高亮处理 message 字段
-        echo $doc->rank() . '. ' . $subject . " [" . $doc->percent() . "%] - ";
-        echo date("Y-m-d", $doc->chrono) . "<br>" . $message . "<br>";
-        echo '<br>========<br>';
-    }
-    echo  '总数:'. $count;
-});
-
-Route::get('/makedoc/{title}/{message}', function ($title, $message){
+Route::get('/makedoc/{title}/', function ($title){
     $xs = new XS('product');
     $doc = new XSDocument;
     $doc->setFields([
-        'pid' => 1,
-        'subject' => $title,
-        'message' => $message,
-        'chrono' => time(),
+        'id' => 1,
+        'p_name' => $title,
     ]); // 用数组进行批量赋值
     $xs->index->add($doc);
 });

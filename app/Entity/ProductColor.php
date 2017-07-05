@@ -19,6 +19,7 @@ class ProductColor extends Model
     {
         return ucfirst($value);
     }
+    
     public function getColorImgAttribute($value)
     {
         return ucfirst($value);
