@@ -20,7 +20,7 @@
 // include('Route/long.php');
 
 //潘珺-路由文件
-//include('Route/jun.php');
+include('Route/jun.php');
 
 //这个不要动
 Route::get('/admin/welcome', function(){
