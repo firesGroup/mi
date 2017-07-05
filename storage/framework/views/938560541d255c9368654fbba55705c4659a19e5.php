@@ -8,16 +8,16 @@
  * Time: 下午 10:54
  */
 ?>
-@extends('layouts.iframe')
-@section('title', '注册')
-@section('css')
+
+<?php $__env->startSection('title', '注册'); ?>
+<?php $__env->startSection('css'); ?>
     @parent
-    <link rel="stylesheet" type="text/css" href="{{ asset('/css/home/mi_reg/layout.css') }}">
-@endsection
-@section('content')
+    <link rel="stylesheet" type="text/css" href="<?php echo e(asset('/css/home/mi_reg/layout.css')); ?>">
+<?php $__env->stopSection(); ?>
+<?php $__env->startSection('content'); ?>
     <div class="zhuti">
         <div class="tou">
-            <img class="logo" src="{{url('images/home/logo.png')}}">
+            <img class="logo" src="<?php echo e(url('images/home/logo.png')); ?>">
         </div>
 
         <div class="biao">
@@ -33,34 +33,35 @@
                 <div class="layui-tab-item layui-show" style="">
                     <div class="shu layui-form">
                         <div class="xiao layui-form">
-                            <form class="layui-form" action="{{url('admin/member')}}" method="post">
-                                {{csrf_field()}}
+                            <form class="layui-form" action="<?php echo e(url('admin/member')); ?>" method="post">
+                                <?php echo e(csrf_field()); ?>
+
                             <input type="text" name="phone" required lay-verify="required|phone|number" placeholder="请输入手机号码"
-                                   autocomplete="off" class="layui-input qing" value="{{old('phone')}}">
-                                <span class="code">{{$errors->first('phone')}}</span>
+                                   autocomplete="off" class="layui-input qing" value="<?php echo e(old('phone')); ?>">
+                                <span class="code"><?php echo e($errors->first('phone')); ?></span>
                             <input type="password" id="pass" name="password" required lay-verify="required|pass" placeholder="请输入密码"
-                                   autocomplete="off" class="layui-input qing" value="{{old('password')}}">
+                                   autocomplete="off" class="layui-input qing" value="<?php echo e(old('password')); ?>">
                             <input type="password" name="password_confirmation" required lay-verify="required" placeholder="请再次输入密码"
-                                   autocomplete="off" class="layui-input qing" value="{{old('password_confirmation')}}">
-                            <span class="code">{{$errors->first('password')}}</span>
+                                   autocomplete="off" class="layui-input qing" value="<?php echo e(old('password_confirmation')); ?>">
+                            <span class="code"><?php echo e($errors->first('password')); ?></span>
                             <div style="display: inline-table;clear:both;">
                                 <input type="text" id="verify" name="code" required lay-verify="required" placeholder="请输入图片验证码"
-                                       autocomplete="off" class="layui-input qing" style="width:200px" value="{{old('code')}}">
+                                       autocomplete="off" class="layui-input qing" style="width:200px" value="<?php echo e(old('code')); ?>">
                             </div>
                             <a onclick="javascript:re_captcha();">
-                                <img src="{{ url('/kit/captcha/1') }}" alt="验证码" title="刷新图片" width="100"
+                                <img src="<?php echo e(url('/kit/captcha/1')); ?>" alt="验证码" title="刷新图片" width="100"
                                      height="40" id="code" border="1"
                                      style="float:right;margin-top: 20px;">
                             </a>
-                                <div class="code">{{session('error')?session('error'):''}}</div>
+                                <div class="code"><?php echo e(session('error')?session('error'):''); ?></div>
                             <div style="display: inline-table;clear:both;">
                                 <input type="text" id="moblieVerify" name="sms_code" required lay-verify="required" placeholder="请输入短信验证码"
-                                       autocomplete="off" class="layui-input qing" style="width:220px" value="{{old('sms_code')}}">
+                                       autocomplete="off" class="layui-input qing" style="width:220px" value="<?php echo e(old('sms_code')); ?>">
                             </div>
                             <button type="button" id="sendVerify" class="layui-btn layui-btn-small"
                                     style="">发送手机验证码
                             </button>
-                                <div class="code">{{session('sms')?session('error'):''}}</div>
+                                <div class="code"><?php echo e(session('sms')?session('error'):''); ?></div>
                                 <input type="submit" value="立即注册" class="liji">
                             </form>
 
@@ -88,13 +89,13 @@
                                        autocomplete="off" class="layui-input qing" style="width:220px">
                             </div>
                             <a onclick="javascript:re();">
-                                <img src="{{ url('/kit/capt/1') }}" alt="验证码" title="刷新图片" width="100"
+                                <img src="<?php echo e(url('/kit/capt/1')); ?>" alt="验证码" title="刷新图片" width="100"
                                      height="40" id="img_code" border="1"
                                      style="float:right;margin-top: 25px;">
                             </a>
                                 <div style="display: inline-table;clear:both;">
                                     <input type="text" id="moblieVerify" name="email_code" required lay-verify="required" placeholder="请输入邮件验证码"
-                                           autocomplete="off" class="layui-input qing" style="width:200px" value="{{old('sms_code')}}">
+                                           autocomplete="off" class="layui-input qing" style="width:200px" value="<?php echo e(old('sms_code')); ?>">
                                 </div>
                                 <button type="button" id="emailVerify" class="layui-btn layui-btn-small"
                                         style="">发送邮件验证码
@@ -125,18 +126,18 @@
             </div>
         </div>
     </div>
-@endsection
-@section('js')
+<?php $__env->stopSection(); ?>
+<?php $__env->startSection('js'); ?>
                 @parent
                 <script>
                     function re_captcha() {
-                        $url = "{{ URL('kit/captcha') }}";
+                        $url = "<?php echo e(URL('kit/captcha')); ?>";
                         $url = $url + "/" + Math.random();
                         document.getElementById('code').src = $url;
                     }
 
                     function re(){
-                        $url = "{{ URL('kit/capt') }}";
+                        $url = "<?php echo e(URL('kit/capt')); ?>";
                         $url = $url + "/" + Math.random();
                         document.getElementById('img_code').src = $url;
                     }
@@ -170,7 +171,10 @@
                             }
                         });
                         form.verify({
-
+                            pass: [
+                                /^[a-zA-Z]+/
+                                , '请输入至少6位并以字母开头的密码'
+                            ],
                             verify: function (value) {
                                 if (value == '') {
                                     return '请输入验证码！';
@@ -192,9 +196,9 @@
                             }
                             var $btn = $(this);
                             $.ajax({
-                                url: "{{url('/sms')}}",
+                                url: "<?php echo e(url('/sms')); ?>",
                                 type: 'post',
-                                data: {'_token': "{{csrf_token()}}", 'phone': phone},
+                                data: {'_token': "<?php echo e(csrf_token()); ?>", 'phone': phone},
                                 success: function (data) {
                                     var $data = JSON.parse(data);
                                     if ($data['ResultData'] == '0') {
@@ -227,9 +231,9 @@
                             }
                             var $btn = $(this);
                             $.ajax({
-                                url: "{{url('/mailBox')}}",
+                                url: "<?php echo e(url('/mailBox')); ?>",
                                 type: 'post',
-                                data: {'_token': "{{csrf_token()}}", 'email': email},
+                                data: {'_token': "<?php echo e(csrf_token()); ?>", 'email': email},
                                 success: function (data) {
 //                                    alert(data);
                                     if (data == 1) {
@@ -261,9 +265,9 @@
                             var email_code = $('input[name=email_code]').val();
                             $('code').remove();
                             $.ajax({
-                                url:"{{url('admin/mail_code')}}",
+                                url:"<?php echo e(url('admin/mail_code')); ?>",
                                 type:'post',
-                                data:{'_token':"{{csrf_token()}}",'email':email, 'password':pass,'password_confirmation': pass_con, 'code':code, 'email_code':email_code },
+                                data:{'_token':"<?php echo e(csrf_token()); ?>",'email':email, 'password':pass,'password_confirmation': pass_con, 'code':code, 'email_code':email_code },
                                 success:function (data) {
 
                                     switch(data)
@@ -299,4 +303,6 @@
 
                     });
                 </script>
-@endsection
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('layouts.iframe', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

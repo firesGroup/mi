@@ -9,22 +9,22 @@
  */
 ?>
 
-@extends('layouts.home')
-@section('title', '个人信息')
-    @section('css')
+
+<?php $__env->startSection('title', '个人信息'); ?>
+    <?php $__env->startSection('css'); ?>
         @parent
-        <link rel="stylesheet" type="text/css" href="{{ asset('/css/home/member_center.css') }}">
-        <link rel="stylesheet" type="text/css" href="{{ asset('/css/home/personal.css') }}">
-        <link rel="stylesheet" type="text/css" href="{{ asset('/css/home/personal_01.css') }}">
-        <link rel="stylesheet" type="text/css" href="{{ asset('/css/home/personal_02.css') }}">
-        <link rel="stylesheet" type="text/css" href="{{ asset('/css/admin/jquery.Jcrop.min.css') }}">
+        <link rel="stylesheet" type="text/css" href="<?php echo e(asset('/css/home/member_center.css')); ?>">
+        <link rel="stylesheet" type="text/css" href="<?php echo e(asset('/css/home/personal.css')); ?>">
+        <link rel="stylesheet" type="text/css" href="<?php echo e(asset('/css/home/personal_01.css')); ?>">
+        <link rel="stylesheet" type="text/css" href="<?php echo e(asset('/css/home/personal_02.css')); ?>">
+        <link rel="stylesheet" type="text/css" href="<?php echo e(asset('/css/admin/jquery.Jcrop.min.css')); ?>">
         <link rel="stylesheet" type="text/css" href="http://www.mi.cn/plugin/layui/css/layui.css">
 
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section('content')
-    @include('home.public.header_top')
-    @include('home.public.header_nav')
+<?php $__env->startSection('content'); ?>
+    <?php echo $__env->make('home.public.header_top', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+    <?php echo $__env->make('home.public.header_nav', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
     <div class="breadcrumbs">
         <div class="container">
             <a href="//www.mi.com/index.html" data-stat-id="b0bcd814768c68cc" onclick="_msq.push(['trackEvent', '45a270e10b1f8e93-b0bcd814768c68cc', '//www.mi.com/index.html', 'pcpid', '']);">首页</a><span class="sep">&gt;</span><span>个人信息</span>    </div>
@@ -33,14 +33,14 @@
     <div class="page-main user-main">
         <div class="container">
             <div class="row">
-    @include('home.member.member_modoul')
+    <?php echo $__env->make('home.member.member_modoul', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
                 <div class="n-frame" style="width:600px;height:500px;float:left;margin-left: 250px;margin-top: 200px">
                     <div class="uinfo c_b">
 
                             <div class="main_r">
                                 <div class="framedatabox">
                                     <div style="text-align :center;">
-                                        <img style="border-radius: 50%" src="{{$data->avator}}">
+                                        <img style="border-radius: 50%" src="<?php echo e($data->avator); ?>">
                                     </div>
                                     <div style="text-align :center;">
                                         <input type="file" name="avator" class="layui-upload-file" id="sumbit">
@@ -53,27 +53,30 @@
                                     <div class="fdata lblnickname">
                                         <p>
                                             <span>姓名:</span>
-                                            <span class="value" id="nick_name">{{$member->nick_name}}</span>
+                                            <span class="value" id="nick_name"><?php echo e($member->nick_name); ?></span>
                                         </p>
                                     </div>
                                     <div class="fdata lblbirthday">
                                         <p><span>生日：</span><span class="value" id="birthday">
 
-                        {{$data->birthday}}
+                        <?php echo e($data->birthday); ?>
+
 
 			  </span></p>
                                     </div>
                                     <div class="fdata lblgender">
-                                        <p><span>性别：</span><span class="value" data-id="{{$data->sex}}" id="sex">
+                                        <p><span>性别：</span><span class="value" data-id="<?php echo e($data->sex); ?>" id="sex">
 
-					{{$arr[$data->sex]}}
+					<?php echo e($arr[$data->sex]); ?>
+
 
 			  </span></p>
                                     </div>
                                     <div class="fdata lblgender">
                                         <p><span>等级：</span><span class="value">
 
-					                    {{$level->level_name}}
+					                    <?php echo e($level->level_name); ?>
+
 
 			  </span></p>
                                     </div>
@@ -88,7 +91,8 @@
     <div class="modal fade" id="exampleModal" tabindex="-1">
         <div class="modal-dialog modal-md" role="document">
             <div class="modal-content">
-                {!! Form::open( [ 'url' => ['/admin/ponseral_change'], 'method' => 'POST', 'onsubmit'=>'return checkCoords();','files' => true ] ) !!}
+                <?php echo Form::open( [ 'url' => ['/admin/ponseral_change'], 'method' => 'POST', 'onsubmit'=>'return checkCoords();','files' => true ] ); ?>
+
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true" style="color: #ffffff">&times;</span></button>
                     <h4 class="modal-title" id="exampleModalLabel">裁剪头像</h4>
@@ -97,7 +101,7 @@
                         <div class="crop-image-wrapper">
                             <img src="/images/default-avatar.png"
                                  class="ui centered image" id="cropbox" >
-                            <input type="hidden" name="id" value="{{session('user_deta')['id']}}">
+                            <input type="hidden" name="id" value="<?php echo e(session('user_deta')['id']); ?>">
                             <input type="hidden" id="photo" name="photo" />
                             <input type="hidden" id="x" name="x" />
                             <input type="hidden" id="y" name="y" />
@@ -111,18 +115,19 @@
                     <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
                     <button type="submit" class="btn btn-primary">裁剪头像</button>
                 </div>
-                {!! Form::close() !!}
+                <?php echo Form::close(); ?>
+
             </div>
         </div>
 
-    @endsection
+    <?php $__env->stopSection(); ?>
 
-@section('js')
+<?php $__env->startSection('js'); ?>
     @parent
-    <script type="text/javascript" src="{{ asset('/js/public/jquery.Jcrop.min.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('/plugin/bootstrap/js/bootstrap.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('/js/home/collect/collect.js') }}"></script>
-    <script  src="{{ asset('/js/home/member/member.js') }}"></script>
+    <script type="text/javascript" src="<?php echo e(asset('/js/public/jquery.Jcrop.min.js')); ?>"></script>
+    <script type="text/javascript" src="<?php echo e(asset('/plugin/bootstrap/js/bootstrap.js')); ?>"></script>
+    <script type="text/javascript" src="<?php echo e(asset('/js/home/collect/collect.js')); ?>"></script>
+    <script  src="<?php echo e(asset('/js/home/member/member.js')); ?>"></script>
 
     <script>
         layui.use(['form','upload','jquery'],function(){
@@ -137,10 +142,10 @@
             }
 
             layui.upload({
-                url: '{{url('admin/avator')}}' ,//上传接口
+                url: '<?php echo e(url('admin/avator')); ?>' ,//上传接口
                 unwrap: false,
             before: function(input){
-                    var data = {"id":"{{$data->id}}"};
+                    var data = {"id":"<?php echo e($data->id); ?>"};
                     extra_data(input, data);
                 }
                 ,title : '上传头像'
@@ -177,4 +182,6 @@
 
         });
     </script>
-@endsection
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('layouts.home', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
