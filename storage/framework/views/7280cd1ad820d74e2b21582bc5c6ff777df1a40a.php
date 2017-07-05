@@ -8,14 +8,14 @@
  * Time: 下午 11:54
  */
 ?>
-@extends('layouts.iframe')
 
-@section('title', '修改会员信息')
-@section('css')
+
+<?php $__env->startSection('title', '修改会员信息'); ?>
+<?php $__env->startSection('css'); ?>
     @parent
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section('content')
+<?php $__env->startSection('content'); ?>
     <section class="larry-grid">
         <div class="larry-personal">
             <header class="larry-personal-tit">
@@ -41,27 +41,28 @@
                     <div class="layui-tab-content">
                         <div class="layui-tab-item layui-show" style="padding-top:20px">
                             <div class="form-body">
-                                <form class="layui-form" action="{{url('admin/member/'.$data->id)}}" method="post">
-                                    {{csrf_field()}}
+                                <form class="layui-form" action="<?php echo e(url('admin/member/'.$data->id)); ?>" method="post">
+                                    <?php echo e(csrf_field()); ?>
+
                                     <input type="hidden" name="_method" value="PUT">
                                     <div class="layui-form-item">
                                         <label class="layui-form-label">会员呢称</label>
                                         <div class="layui-input-block">
                                             <input type="text" name="nick_name" lay-verify="required" autocomplete="off"
-                                                   class="layui-input" value="{{$data->nick_name}}">
+                                                   class="layui-input" value="<?php echo e($data->nick_name); ?>">
                                         </div>
                                     </div>
                                     <div class="layui-form-item">
                                         <label class="layui-form-label">会员邮箱</label>
                                         <div class="layui-input-block">
                                             <input type="text" name="email" lay-verify="email"
-                                                   autocomplete="off" class="layui-input" value="{{$data->email}}">
+                                                   autocomplete="off" class="layui-input" value="<?php echo e($data->email); ?>">
                                         </div>
                                     </div>
                                     <div class="layui-form-item">
                                         <label class="layui-form-label">会员电话</label>
                                         <div class="layui-input-block">
-                                            <input type="text" name="phone" class="layui-input" value="{{$data->phone}}"
+                                            <input type="text" name="phone" class="layui-input" value="<?php echo e($data->phone); ?>"
                                                    lay-verify="required|phone">
                                         </div>
                                     </div>
@@ -69,10 +70,10 @@
                                         <label class="layui-form-label">会员等级</label>
                                         <div class="layui-input-block">
                                             <select name="level_id" lay-verify="">
-                                                @foreach($array as $k => $v)
-                                                    <option value="{{$k}}"
-                                                    {{($user_detail->level_id == $k)?'selected':'' }}>{{$v}}</option>
-                                                @endforeach
+                                                <?php foreach($array as $k => $v): ?>
+                                                    <option value="<?php echo e($k); ?>"
+                                                    <?php echo e(($user_detail->level_id == $k)?'selected':''); ?>><?php echo e($v); ?></option>
+                                                <?php endforeach; ?>
                                             </select>
                                         </div>
                                     </div>
@@ -80,20 +81,20 @@
                                         <label class="layui-form-label">会员状态</label>
                                         <div class="layui-input-block">
                                             <input type="radio" name="status" value=0
-                                                   {{($data->status == '0')?'checked':''}} title="普通">
+                                                   <?php echo e(($data->status == '0')?'checked':''); ?> title="普通">
                                             <input type="radio" name="status" value=1
-                                                   {{($data->status == '1')?'checked':''}} title="锁定">
+                                                   <?php echo e(($data->status == '1')?'checked':''); ?> title="锁定">
                                         </div>
                                     </div>
                                     <div class="layui-form-item" pane>
                                         <label class="layui-form-label">会员性别</label>
                                         <div class="layui-input-block">
                                             <input type="radio" name="sex" value=0
-                                                   {{($user_detail->sex == '0')?'checked':''}} title="保密">
+                                                   <?php echo e(($user_detail->sex == '0')?'checked':''); ?> title="保密">
                                             <input type="radio" name="sex" value=1
-                                                   {{($user_detail->sex == '1')?'checked':''}}  title="男">
+                                                   <?php echo e(($user_detail->sex == '1')?'checked':''); ?>  title="男">
                                             <input type="radio" name="sex" value=2
-                                                   {{($user_detail->sex == '2')?'checked':''}}  title="女">
+                                                   <?php echo e(($user_detail->sex == '2')?'checked':''); ?>  title="女">
                                         </div>
                                     </div>
                                     <div class="layui-form-item">
@@ -101,10 +102,10 @@
                                         <div class="layui-input-block">
                                             <input class="layui-input" name="birthday" placeholder="自定义日期格式" id="date"
                                                    onclick="layui.laydate({elem: this, festival: true, istime: false} )"
-                                                   value="{{$user_detail->birthday}}" lay-verify="">
+                                                   value="<?php echo e($user_detail->birthday); ?>" lay-verify="">
                                         </div>
                                     </div>
-                                    <input type="hidden" name="last_ip" value="{{$data->last_ip}}">
+                                    <input type="hidden" name="last_ip" value="<?php echo e($data->last_ip); ?>">
                                     <div class="layui-form-item">
                                         <div class="layui-input-block">
                                             <button id="submit" class="layui-btn" lay-submit="" lay-filter="go">立即提交
@@ -120,9 +121,9 @@
             </div>
         </div>
     </section>
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section('js')
+<?php $__env->startSection('js'); ?>
     @parent
     <script>
 
@@ -139,9 +140,9 @@
                 var origin = that.data('u');
                 if (origin != m_name) {
                     $.ajax({
-                        url: "{{url('admin/member_check_name/'.$data->id)}}",
+                        url: "<?php echo e(url('admin/member_check_name/'.$data->id)); ?>",
                         type: "post",
-                        data: {"_token": "{{csrf_token()}}", "m_name": m_name},
+                        data: {"_token": "<?php echo e(csrf_token()); ?>", "m_name": m_name},
                         success: function (data) {
                             if (data == 1) {
                                 that.data('u', m_name);
@@ -164,9 +165,9 @@
                 var origin = that.data('u');
                 if (origin != m_phone) {
                     $.ajax({
-                        url: "{{url('admin/member_ajax_phone/'.$data->id)}}",
+                        url: "<?php echo e(url('admin/member_ajax_phone/'.$data->id)); ?>",
                         type: "post",
-                        data: {"_token": "{{csrf_token()}}", "m_phone": m_phone},
+                        data: {"_token": "<?php echo e(csrf_token()); ?>", "m_phone": m_phone},
                         success: function (data) {
                             if (data == 1) {
                                 that.data('u', m_phone);
@@ -189,9 +190,9 @@
                 var origin = that.data('u');
                 if (origin != m_email) {
                     $.ajax({
-                        url: "{{url('admin/member_ajax_email/'.$data->id)}}",
+                        url: "<?php echo e(url('admin/member_ajax_email/'.$data->id)); ?>",
                         type: "post",
-                        data: {"_token": "{{csrf_token()}}", "m_email": m_email},
+                        data: {"_token": "<?php echo e(csrf_token()); ?>", "m_email": m_email},
                         success: function (data) {
                             if (data == 1) {
                                 that.data('u', m_email);
@@ -209,4 +210,5 @@
             });
         });
     </script>
-@endsection
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layouts.iframe', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

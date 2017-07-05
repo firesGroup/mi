@@ -177,7 +177,8 @@ class MemberController extends Controller
         $id = $_POST['id'];
         $file = $request->file('avator');
         $destinationpath = 'uploads/avator/';
-        $filename = $id.'-'.time()."-".$file->getClientOriginalName();
+        $ext = $file->getClientOriginalExtension();
+        $filename = md5($id.'.'.time().".".$file->getClientOriginalName()).'.'.$ext;
         $file->move($destinationpath, $filename);
         Image::make($destinationpath.$filename)->fit(500)->save();
         $url = '/'.$destinationpath.$filename;
@@ -209,7 +210,28 @@ class MemberController extends Controller
 
      }
 
-     public function member_check_name(Request $request, $id)
+    public function ponseral_change(Request $request)
+    {
+//        dd($request->all());
+        $photo = mb_substr($request->get('photo'),1);
+        $w = $request->get('w');
+        $h = $request->get('h');
+        $x = $request->get('x');
+        $y = $request->get('y');
+        $id = $request->get('id');
+        Image::make($photo)->crop($w, $h, $x, $y)->save();
+
+        $avator = MemberDetail::find($id);
+//        dd($avator);
+        $avator->avator = $request->get('photo');
+
+        $avator->save();
+
+        return redirect('/personal');
+
+    }
+
+    public function member_check_name(Request $request, $id)
      {
 
          $data = DB::table('member')->lists('nick_name');
