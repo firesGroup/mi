@@ -25,14 +25,14 @@
             </header>
             <div class="row" id="infoSwitch">
                 <blockquote class="layui-elem-quote col-md-12 head-con">
-                        <div class="title">
-                            <i class="larry-icon larry-caozuo"></i>
-                            <h4 title="提示相关设置操作时应注意的要点">操作提示</h4>
-                        </div>
-                        <ul>
-                            <li>商品管理注意发布商品后清理缓存.</li>
-                            <li>商品缩列图也有缓存.</li>
-                        </ul>
+                    <div class="title">
+                        <i class="larry-icon larry-caozuo"></i>
+                        <h4 title="提示相关设置操作时应注意的要点">操作提示</h4>
+                    </div>
+                    <ul>
+                        <li>商品管理注意发布商品后清理缓存.</li>
+                        <li>商品缩列图也有缓存.</li>
+                    </ul>
                     <i class="larry-icon larry-guanbi close" id="closeInfo"></i>
                 </blockquote>
             </div>
@@ -43,40 +43,31 @@
                     </button>
                 </div>
                 <div class="order">
-                        <select name="category">
-                            <option value="">选择分类</option>
-                            <option value="0">所有分类</option>
-                        </select>
-                        <select name="brand">
-                            <option value="">选择品牌</option>
-                            <option value="0">所有品牌</option>
-                            @foreach( $brandList as $brand )
-                                    <option value="{{ $brand->id }}" checked>{{ $brand->brand_name }}</option>
-                            @endforeach
-                        </select>
-                        <select name="sort_price">
-                            <option value="">选择价格排序</option>
-                            <option value="1">默认排序</option>
-                            <option value="2">按价格由高到低</option>
-                            <option value="3">按价格由低到高</option>
-                        </select>
-                        <input class="layui-input-inline" placeholder="搜索关键词" name="search" value="">
-                        <span class="layui-btn">
+                    <select name="category">
+                        <option value="">选择分类</option>
+                        <option value="0">所有分类</option>
+                        @foreach( $category as $cate )
+                            <option value="{{ $cate->id }}"{{ isset($category_id)&& $cate->id == $category_id?'selected':''  }}>{{ $cate->category_name }}</option>
+                        @endforeach
+                    </select>
+                    <select name="sort_price">
+                        <option value="">选择价格排序</option>
+                        <option value="1" {{ isset($sort_price)&& $sort_price == 1?'selected':'' }}>默认排序</option>
+                        <option value="2" {{ isset($sort_price)&& $sort_price == 2?'selected':'' }}>按价格由高到低</option>
+                        <option value="3" {{ isset($sort_price)&& $sort_price == 3?'selected':'' }}>按价格由低到高</option>
+                    </select>
+                    <input class="layui-input-inline" placeholder="搜索关键词" name="search" value="{{ isset($word)?$word:'' }}">
+                    <span class="layui-btn" id="search">
                             <i class="layui-icon">&#xe615;</i>搜索
-                        </span>
+                    </span>
                 </div>
                 <table class="layui-table larry-table-info">
-                    <colgroup>
-                        <col width="100">
-                        <col width="200">
-                        <col>
-                    </colgroup>
                     <thead>
                     <tr>
                         <th>ID</th>
                         <th>商品名称</th>
-                        <th>商品货号</th>
                         <th>所属分类</th>
+                        <th>价格</th>
                         <th>销售量</th>
                         <th>总库存</th>
                         <th>状态</th>
@@ -88,8 +79,8 @@
                         <tr>
                             <td>{{ $product->id }}</td>
                             <td>{{ $product->p_name }}</td>
-                            <td>{{ $product->p_num }}</td>
-                            <td>{{ $product->category_id }}</td>
+                            <td>{{ $product->category->category_name }}</td>
+                            <td>{{ $product->price }}元</td>
                             <td>{{ $product->sell_num }}</td>
                             <td>{{ $product->store }}</td>
                             <td>
@@ -130,7 +121,7 @@
                                 </div>
                             </td>
                         </tr>
-                        @empty
+                    @empty
                         <tr>
                             <td colspan="8" style="height:70px;font-size:15px">
                                 <i class="layui-icon" style="font-size: 30px; color: #FF5722;">&#xe60c;</i> 什么都没找到
@@ -154,13 +145,10 @@
             var $ = layui.jquery,
                 global = layui.global,
                 layer = layui.layer;
-                url = '{{ url('/admin/product') }}' + '/';
-
+            url = '{{ url('/admin/product') }}' + '/';
             global.aAdd('button#addProduct','{{ url('/admin/product/create') }}');
-
             global.aDelete('a#delete','友情提醒','确定要删除吗','{{ csrf_token() }}',url);
             var tipIndex;
-
             $('div.layui-btn-group').on('mouseover', 'a.layui-btn', function(e){
                 var alt = $(this).attr('alt'), t = this;
                 tipIndex = layer.tips(alt, t, {
@@ -171,14 +159,15 @@
                 layer.close(tipIndex);
                 layui.stope(e);
             } );
-
-            $('select[name=brand]').on('change', function(){
-                location.href='{{ url('/admin/product?search=oneSelect') }}'+'&brand_id='+ $(this).val();
+            $('select[name=category]').on('change', function(){
+                location.href='{{ url('/admin/product?search=oneSelect') }}'+'&category='+ $(this).val();
             });
             $('select[name=sort_price]').on('change', function(){
                 location.href='{{ url('/admin/product?search=oneSelect') }}'+'&sort_price='+ $(this).val();
             });
+            $('span#search').on('click', function(){
+                location.href='{{ url('/admin/product?search=oneSelect') }}'+'&word='+ $('input[name=search]').val();
+            });
         });
-
     </script>
 @endsection

@@ -13,6 +13,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Entity\CateGory;
 use App\Entity\Product;
 use App\Entity\ProductAttribute;
 use App\Entity\ProductAttributeValue;
@@ -39,35 +40,31 @@ class ProductController extends Controller
     {
         if( $request->has('search') ){
             $search = $request->search;
-            $brand_id = $request->brand_id;
-            $cateGory_id = $request->cateGory;
-            $sort_price_type = $request->sort_price;
+            $category_id = $request->category;
+            $sort_price = $request->sort_price;
             $word = $request->word;
             if( $search == 'oneSelect' ){
-                if( $brand_id && $brand_id > 0 ){
-                    $productList = Product::where('brand_id',$brand_id)->paginate(10);
-                }elseif( $brand_id == 0 ){
-                    $productList = Product::paginate(10);
+                if( $category_id ){
+                    $productList = Product::where('category_id', $category_id)->paginate(15);
+                }else{
+                    $productList = Product::orderBy('id', 'desc')->paginate(15);
                 }
-                if( $cateGory_id ){
-                    $productList = Product::where('cateGory_id', $cateGory_id)->paginate(10);
-                }
-                if( $sort_price_type == 1 ){
-                    $productList = Product::orderBy('id', 'desc')->paginate(10);
-                }elseif( $sort_price_type == 2 ){
-                    $productList = Product::orderBy('price', 'desc')->paginate(10);
-                }elseif( $sort_price_type == 3 ){
-                    $productList = Product::orderBy('price','asc')->paginate(10);
+                if( $sort_price == 1 ){
+                    $productList = Product::orderBy('id', 'desc')->paginate(15);
+                }elseif( $sort_price == 2 ){
+                    $productList = Product::orderBy('price', 'desc')->paginate(15);
+                }elseif( $sort_price == 3 ){
+                    $productList = Product::orderBy('price','asc')->paginate(15);
                 }
                 if( $word ){
-                    $productList = Product::where('p_name','like',"%{$word}%")->paginate(10);
+                    $productList = Product::where('p_name','like',"%{$word}%")->paginate(15);
                 }
             }
         }else{
-            $productList = Product::orderBy('id', 'desc')->paginate(10);
+            $productList = Product::orderBy('id', 'desc')->paginate(15);
         }
-        $brandList = ProductBrand::all();
-        return view('admin.product.index',compact('productList', 'brandList'));
+        $category = CateGory::all();
+        return view('admin.product.index',compact('category_id','sort_price', 'word','productList', 'category'));
     }
 
     /**
@@ -77,9 +74,34 @@ class ProductController extends Controller
      */
     public function create()
     {
+        //商品状态
         $zhStatus = ['在售','下架','预购','缺货','新品上市'];
+        //颜色列表
         $colorList = ProductColor::all();
-        return view('admin.product.create', compact('zhStatus','colorList'));
+        //查询所有顶级分类列表
+        $categoryList = CateGory::where('sort',1)->get();
+        return view('admin.product.create', compact('categoryList','zhStatus','colorList'));
+    }
+
+    /*
+     * 获取选择的分类的子类 ajax
+     *
+     * @param $category_id 选择的分类 (也就是父id)
+     *
+     */
+
+    public function getAjaxCategoryChild($category_id)
+    {
+        if( $category_id == 0 ){
+            return 2;
+        }
+        $childArr = CateGory::where('parent_id',$category_id)->get()->toArray();
+        if( $childArr){
+            return response()->json($childArr);
+        }else{
+            return 1;
+        }
+
     }
 
     /**
@@ -91,26 +113,33 @@ class ProductController extends Controller
      */
     public function store(ProductRequest $request)
     {
+        //传递过来的分类是数组
+        $category = $request->category;
+        //找出最大的键名
+        $key = array_keys($category, max($category));
+        //那么选择的分类id为
+        $cate_id = $category[$key[0]];
         $productData = [
-            'category_id'  => '3',
-            'price'        => $request->price,
-            'p_name'       => $request->p_name,
-            'status'       => $request->status,
-            'store'        => $request->store,
-            'recommend'    => $request->recommend,
+            'category_id'      => $cate_id,
+            'price'            => $request->price,
+            'p_name'           => $request->p_name,
+            'status'           => $request->status,
+            'store'            => $request->store,
+            'recommend'        => $request->recommend,
+            'is_free_shipping' => $request->is_free_shipping,
+            'flag'             => $request->flag,
+            'tags'             => $request->tags,
+            'p_index_image'    => $request->p_index_image,
         ];
         $detailData = [
-            'p_index_image'    => $request->p_index_image,
             'summary'          => $request->summary,
             'description'      => $request->description,
             'remind_title'     => $request->remind_title,
-            'is_free_shipping' => $request->is_free_shipping,
-            'tags'             => $request->tags,
         ];
 
         //生成商品货号
         if( !($request->p_num) ){
-            $productData['p_num'] = "mi".date('YmdH',time()).mt_rand(000,999);
+            $productData['p_num'] = "mi".date('mdHi',time()).mt_rand(000,999);
         }else{
             $productData['p_num'] = $request->p_num;
         }
@@ -138,20 +167,6 @@ class ProductController extends Controller
             $res = DB::transaction(function () use ($detailData) {
                 //写入详情表
                 ProductDetail::insert($detailData);
-
-//                //写入商品图片表
-//                if( $imagesData ){
-//                    ProductImages::insert($imagesData);
-//                }
-//                //写入规格价格
-//                if ($specData) {
-//                    ProductSpecPrice::insert($specData);
-//                }
-//                //写入属性
-//                if ($attrData) {
-//                    ProductAttributeValue::insert($attrData);
-//                }
-
                 return true;
             });
             if($res){
@@ -173,20 +188,65 @@ class ProductController extends Controller
     }
 
     /**
-     * 修改商品信息页面
+     * 修改商品信息页面 模板
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
     {
+        //获取商品信息
         $info = Product::find($id);
+
+        //获取商品详情
         $detail = $info->detail;
-        $description = new HtmlString($detail->description);
+
+        //$description = new HtmlString($detail->description);
+        //商品状态
         $zhStatus = ['在售','下架','预购','缺货','新品上市'];
-        $brand = (new Brand())->getIdAndName();
-        return view('admin.product.edit',compact('info', 'detail','brand', 'description','zhStatus'));
+        //$brand = (new Brand())->getIdAndName();
+
+        //查询当前商品的分类的id 与 父类路径
+        $id = $info->category->id;
+        $path = $info->category->parent_path;
+
+        //获取父类路径逗号个数
+        $num = substr_count($path,',');
+        //大于1 说明是多级分类
+        if($num > 1){
+            //将路径分割为数组
+            $ids = explode(',',rtrim($path,','));
+            //从1开始循环,因为0 为 分类的根分类 0 ,
+            //父类路径中 第一个都为0;
+            for( $i=1; $i< $num; $i++ ){
+                //获取分类的子类
+                $cid = $ids[$i];
+                $category[$i] = $this->getCategoryChild($cid);
+            }
+            $ids[$num] = $id;
+        }else{
+            //$num 不大于1 说明商品的分类本身就是顶级分类
+            $ids[1] = $id;
+        }
+        //查询顶级分类列表
+        $category[0] = CateGory::where('parent_id',0)->get()->toArray();
+
+        return view('admin.product.edit',compact('info', 'num', 'ids', 'category', 'detail','brand', 'description','zhStatus'));
     }
+
+
+    /*
+     *
+     * 获取分类的所有子类
+     *
+     * @param $category_id int 分类id
+     */
+    public function getCategoryChild($category_id)
+    {
+        $childArr = CateGory::where('parent_id',$category_id)->get()->toArray();
+        return $childArr;
+    }
+
 
     /**
      * 处理商品信息修改
@@ -198,31 +258,53 @@ class ProductController extends Controller
     public function update(ProductRequest $request, $id)
     {
         $product = [
-            'category_id'          => '3',
-            'price'        => $request->price,
-            'p_name'       => $request->p_name,
-            'p_num'        => $request->p_num,
-            'status'       => $request->status,
-            'store'         => $request->store,
-            'recommend'    => $request->recommend,
+            'category_id' => '3',
+            'price'       => $request->price,
+            'p_name'      => $request->p_name,
+            'store'       => $request->store,
+            'flag'        => $request->flag,
+            'tags'             => $request->tags,
+            'status'      => $request->status,
+            'recommend'   => $request->recommend,
+            'is_free_shipping' => $request->is_free_shipping,
         ];
         $detail = [
-            'p_index_image' => $request->p_index_image,
-            'summary'       => $request->summary,
-            'description'   => $request->description,
-            'remind_title'  => $request->remind_title,
-            'is_free_shipping' => $request->is_free_shipping,
-            'tags'         => $request->tags
+            'summary'          => $request->summary,
+            'remind_title'     => $request->remind_title,
+            'description'      => $request->description,
         ];
+        //若商品货号不存在 则生成商品货号
+        if( !($request->p_num) ){
+            $productData['p_num'] = "mi".date('mdH',time()).mt_rand(000,999);
+        }else{
+            $productData['p_num'] = $request->p_num;
+        }
+        //接收商品封面图片
+        $img = $request->p_index_image;
+
+        $image = getUrlImages($img,'product');
+        dd($image);
+        //查询数据库中封面图片
+        $oldImg = Product::find($id)->p_index_image;
+        if( $img ){
+            if( $img !== $oldImg ){
+                //分割路径
+                $path = substr($oldImg, 8);
+                //从磁盘删除原来的图片
+                Storage::disk('uploads')->delete($path);
+                $product['p_index_image'] = $img;
+            }
+        }
         //开启事务处理
-        $res = DB::transaction(function() use($id, $product, $detail){
-            DB::table('product')->where('id',$id)->update($product);
-            DB::table('product_detail')->where('p_id',$id)->update($detail);
+        $res = DB::transaction(function () use ($id, $product, $detail) {
+            DB::table('product')->where('id', $id)->update($product);
+            DB::table('product_detail')->where('p_id', $id)->update($detail);
+
             return true;
         });
-        return $res?0:1;
-    }
 
+        return $res ? 0 : 1;
+    }
     /**
      * Remove the specified resource from storage.
      *
@@ -232,52 +314,53 @@ class ProductController extends Controller
     public function destroy($id)
     {
         //查询该商品的所有图片信息
-        $product = Product::find($id);
-        $detail = $product->detail;
-        $images = $product->images();
-        $version = $product->versions();
-        $colors = $product->color();
-        //商品详情
-        if( $detail ){
-            //获取封面图片地址
-            $p_index_image = $detail->p_index_image;
-            //若存在则删除
-            if( $p_index_image ){
-                //在磁盘删除封面图片
-                Storage::delete($p_index_image);
-            }
+        $product  = Product::find($id);
+        $detail   = $product->detail;
+        $images   = $product->images();
+        $version  = $product->versions();
+        $colors   = $product->color();
+
+        //获取封面图片地址
+        $p_index_image = $product->p_index_image;
+        //若存在则删除
+        if ($p_index_image) {
+            //在磁盘删除封面图片
+            Storage::delete($p_index_image);
         }
+
 
         //获取商品相册所有图片
         //存在图片则删除
-        if( $images ){
-            foreach( $images as $img ){
+        if ($images) {
+            foreach ($images as $img) {
                 //从磁盘删除封面图片
                 Storage::delete($img->path);
             }
         }
 
-        $res = DB::transaction(function() use($id, $product, $version, $colors , $images, $detail){
+        $res = DB::transaction(function () use ($id, $product, $version, $colors, $images, $detail) {
             $product->delete();
             //删除版本
-            if( $version ) {
+            if ($version) {
                 $version->delete();
             }
-            if( $colors ){
+            if ($colors) {
                 $colors->delete();
             }
-            if( $images ){
+            if ($images) {
                 $images->delete();
             }
-            if( $detail ){
+            if ($detail) {
                 $detail->delete();
             }
+
             return true;
         });
         //删除商品详情
-        if($res){
+        if ($res) {
             return 0;
-        }else{
+        }
+        else {
             return 1;
         }
     }
@@ -288,7 +371,8 @@ class ProductController extends Controller
      */
     public function getIndexImage($img_id)
     {
-        $path = DB::table('product_detail')->where('p_id',$img_id)->value('p_index_image');
+        $path = Product::where('id', $img_id)->value('p_index_image');
+
         return $path;
     }
 
@@ -301,19 +385,21 @@ class ProductController extends Controller
     public function postIndexImage(ProductRequest $request)
     {
         //判断是否post提交
-        if( $request->isMethod('post') ) {
+        if ($request->isMethod('post')) {
             $id = $request->input('id');
             $src = $request->input('src');
             //先获取数据库中原来的图片地址
             $path = Product::find($id)->p_index_image;
             //分割路径
-            $path = substr( $path, 8 );
+            $path = substr($path, 8);
             //从磁盘删除原来的图片
             $bool1 = Storage::disk('uploads')->delete($path);
-            if( $bool1 ){
-                $id = DB::table('product_detail')->where('p_id', $id)->update(['p_index_image' => $src]);
-                return $id != -1?0:1;
-            }else{
+            if ($bool1) {
+                $id = Product::where('id', $id)->update(['p_index_image' => $src]);
+
+                return $id? 0 : 1;
+            }
+            else {
                 //图片删除失败
                 return 2;
             }
@@ -331,7 +417,8 @@ class ProductController extends Controller
 
     public function getImages($img_id)
     {
-        $list = ProductImages::where('p_id',$img_id)->get();
+        $list = ProductImages::where('p_id', $img_id)->get();
+
         return $list;
     }
 
@@ -344,19 +431,20 @@ class ProductController extends Controller
     public function postImages(ProductRequest $request)
     {
         //判断是否post提交
-        if( $request->isMethod('post') ){
+        if ($request->isMethod('post')) {
             $id = $request->input('id');
             $src = $request->input('src');
 
 //            dd($id.$src);
             //获取当前商品已上传的数量
-            $count = ProductImages::where('p_id',$id)->count();
-            if( $count < 6 ){
-                $id = DB::table('product_images')->insertGetId(['p_id'=>$id, 'path' => $src]);
-                if( $id ){
-                    return '{"id":'.$id.', "status":0}';
+            $count = ProductImages::where('p_id', $id)->count();
+            if ($count < 6) {
+                $id = DB::table('product_images')->insertGetId(['p_id' => $id, 'path' => $src]);
+                if ($id) {
+                    return '{"id":' . $id . ', "status":0}';
                 }
-            }else{
+            }
+            else {
                 return 1;
             }
 
@@ -377,22 +465,25 @@ class ProductController extends Controller
         $id = $request->input('id');
         $path = $request->input('path');
         //分割路径
-        $path = substr( $path,  9);
+        $path = substr($path, 9);
         //从磁盘删除图片
         $bool1 = Storage::disk('uploads')->delete($path);
         //如果不为0 则是编辑页面相册图片删除,若为0 则是添加商品页面相册图片删除
-        if( $id != 0 ){
+        if ($id != 0) {
             //从数据库删除对应id的图片数据
             $bool2 = DB::table('product_images')->delete($id);
-            if( $bool1 && $bool2 ){
+            if ($bool1 && $bool2) {
                 return 0;
-            }elseif ( !$bool1 ) {
+            }
+            elseif (!$bool1) {
                 return 1;
-            }else{
+            }
+            else {
                 return 2;
             }
-        }else{
-            return $bool1?0:1;
+        }
+        else {
+            return $bool1 ? 0 : 1;
         }
 
     }
@@ -406,19 +497,20 @@ class ProductController extends Controller
      */
     public function getSpecKeyExists($id)
     {
-      $specKeyArr = ProductSpecPrice::where('p_id', $id)->get()->toArray();
-      //先获得所有已存在的spec_key 键
-      foreach( $specKeyArr as $key=>$value ){
-          $spec_key[] = $value['spec_key'];
-          $keyArr = explode('_',$value['spec_key']);
-          for( $i = 0; $i < count($keyArr); $i++ ){
-              $specItemIdArr[] = intval($keyArr[$i]);
-          }
-          $keyArr = null;
-      }
-      //去除重复
-      $specItemIdArr = array_unique($specItemIdArr);
+        $specKeyArr = ProductSpecPrice::where('p_id', $id)->get()->toArray();
+        //先获得所有已存在的spec_key 键
+        foreach ($specKeyArr as $key => $value) {
+            $spec_key[] = $value['spec_key'];
+            $keyArr = explode('_', $value['spec_key']);
+            for ($i = 0; $i < count($keyArr); $i++) {
+                $specItemIdArr[] = intval($keyArr[$i]);
+            }
+            $keyArr = null;
+        }
+        //去除重复
+        $specItemIdArr = array_unique($specItemIdArr);
         $specItemIdArr = array_values($specItemIdArr);
+
         return $specItemIdArr;
     }
 

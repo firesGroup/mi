@@ -30,7 +30,6 @@
 @endsection
 
 @section('content')
-{{--    {{var_dump($detail)}}--}}
     <section class="larry-grid">
         <div class="larry-personal">
             <header class="larry-personal-tit">
@@ -55,108 +54,127 @@
                             {{ csrf_field() }}
                             <input type="hidden" name="_method" value="PUT">
                             <input type="hidden" name="p_id" value="{{ $info->p_id }}">
+                            <!-- 商品名称 -->
                             <div class="layui-form-item">
                                 <label class="layui-form-label">商品名称</label>
                                 <div class="layui-input-block">
                                     <input type="text" name="p_name" lay-verify="required" placeholder="请输入商品名称" autocomplete="off" class="layui-input" value="{{ $info->p_name }}">
                                 </div>
                             </div>
+                            <!-- 商品简介 -->
                             <div class="layui-form-item">
                                 <label class="layui-form-label">商品简介</label>
                                 <div class="layui-input-block">
-                                    <textarea type="text" name="summary" lay-verify="required" placeholder="请输入商品简介" autocomplete="off" class="layui-input">{{ $detail->summary }}</textarea>
+                                    <textarea type="text" name="summary" lay-verify="required" placeholder="请输入商品简介" autocomplete="off" class="layui-input">{{ $detail->summary or ''}}</textarea>
                                 </div>
                             </div>
+                            <!-- 活动提醒 -->
                             <div class="layui-form-item">
                                 <label class="layui-form-label">活动提醒</label>
                                 <div class="layui-input-block">
-                                    <textarea type="text" name="remind_title" lay-verify="required" placeholder="请输入位于商品简介前的活动提醒" autocomplete="off" class="layui-input">{{ $detail->remind_title }}</textarea>
+                                    <textarea type="text" name="remind_title" lay-verify="required" placeholder="请输入位于商品简介前的活动提醒" autocomplete="off" class="layui-input">{{ $detail->remind_title or "" }}</textarea>
                                 </div>
                             </div>
-                            <div class="layui-form-item">
+                            <!-- 商品分类 -->
+                            <div class="layui-form-item" id="category">
                                 <label class="layui-form-label">商品分类</label>
                                 <div class="layui-input-block">
                                     <div class="layui-input-inline">
-                                        <select >
+                                        <select name='category[1]' id='select1'  lay-filter='select1'>
                                             <option value="">请选择商品分类</option>
-                                            <option value="你的工号">江西省</option>
-                                            <option value="你最喜欢的老师">福建省</option>
+                                            @foreach( $category[0] as $cate )
+                                                <option value="{{ $cate['id'] }}"{{ $cate['id'] == $ids[1]?'selected':"" }}>{{ $cate['category_name'] }}</option>
+                                            @endforeach
                                         </select>
                                     </div>
-                                    <div class="layui-input-inline">
-                                        <select >
-                                            <option value="">请选择商品分类</option>
-                                            <option value="杭州">杭州</option>
-                                            <option value="宁波" disabled="">宁波</option>
-                                            <option value="温州">温州</option>
-                                            <option value="温州">台州</option>
-                                            <option value="温州">绍兴</option>
-                                        </select>
-                                    </div>
-                                    <div class="layui-input-inline">
-                                        <select >
-                                            <option value="">请选择商品分类</option>
-                                            <option value="西湖区">西湖区</option>
-                                            <option value="余杭区">余杭区</option>
-                                            <option value="拱墅区">临安市</option>
-                                        </select>
-                                    </div>
+                                    @if( $num > 1 )
+                                        @for( $i = 1 ; $i<$num ; $i++ )
+                                            <div class="layui-input-inline">
+                                                <select name='category[{{ $i+1 }}]' id='select{{ $i+1 }}'  lay-filter='select{{ $i+1 }}'>
+                                                    <option value="">请选择商品分类</option>
+                                                    @foreach( $category[$i] as $cate )
+                                                        <option value="{{ $cate['id'] }}"{{ $cate['id'] == $ids[$i+1]?'selected':"" }}>{{ $cate['category_name'] }}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                        @endfor
+                                    @endif
                                 </div>
                             </div>
+                            <!-- 商品价格 -->
                             <div class="layui-form-item">
                                 <label class="layui-form-label">商品价格</label>
                                 <div class="layui-input-block">
-                                    <input type="text" name="price" lay-verify="required" placeholder="请输入商品价格" autocomplete="off" class="layui-input" value="{{ $info->price }}" onkeyup="this.value=this.value.replace(/[^\d.]/g,'')" onpaste="this.value=this.value.replace(/[^\d.]/g,'')">
+                                    <input type="text" name="price" lay-verify="required" placeholder="请输入商品默认价格" autocomplete="off" class="layui-input" value="{{ $info->price }}" onkeyup="this.value=this.value.replace(/[^\d.]/g,'')" onpaste="this.value=this.value.replace(/[^\d.]/g,'')">
                                 </div>
                             </div>
+                            <!-- 商品货号 -->
                             <div class="layui-form-item">
                                 <label class="layui-form-label">商品货号</label>
                                 <div class="layui-input-block">
                                     <input type="text" name="p_num"  placeholder="为空将自动生成" autocomplete="off" class="layui-input" value="{{ $info->p_num }}">
                                 </div>
                             </div>
+                            <!-- 商品库存 -->
                             <div class="layui-form-item">
                                 <label class="layui-form-label">商品总库存</label>
                                 <div class="layui-input-block">
                                     <input type="text" name="store" lay-verify="required" placeholder="请输入商品总库存量" autocomplete="off" class="layui-input" value="{{ $info->store }}" onkeyup="this.value=this.value.replace(/[^\d.]/g,'')" onpaste="this.value=this.value.replace(/[^\d.]/g,'')">
                                 </div>
                             </div>
+                            <!-- 商品成交量 -->
                             <div class="layui-form-item">
                                 <label class="layui-form-label">商品成交量</label>
                                 <div class="layui-input-block">
                                     <div class="layui-input">{{ $info->sell_num }}<font style="color:#e2e2e2">(无法修改)</font></div>
                                 </div>
                             </div>
+                            <!-- 商品点击量 -->
                             <div class="layui-form-item">
                                 <label class="layui-form-label">商品点击量</label>
                                 <div class="layui-input-block">
                                     <div class="layui-input">{{ $info->click_num }}<font style="color:#e2e2e2">(无法修改)</font></div>
                                 </div>
                             </div>
+                            <!-- 是否包邮 -->
                             <div class="layui-form-item">
                                 <label class="layui-form-label">是否包邮</label>
                                 <div class="layui-input-block">
-                                    @if( $detail->is_free_shipping == 0 )
+                                    {{--@if( $detail->is_free_shipping == 0 )--}}
+                                        {{--<input type="radio" name="is_free_shipping" value="0" checked title="包邮">--}}
+                                        {{--<input type="radio" name="is_free_shipping" value="1" title="不包邮">--}}
+                                    {{--@elseif( $detail->is_free_shipping == 1 )--}}
+                                        {{--<input type="radio" name="is_free_shipping" value="0" title="包邮">--}}
+                                        {{--<input type="radio" name="is_free_shipping" value="1" checked title="不包邮">--}}
+                                    {{--@else--}}
                                         <input type="radio" name="is_free_shipping" value="0" checked title="包邮">
                                         <input type="radio" name="is_free_shipping" value="1" title="不包邮">
-                                    @elseif( $detail->is_free_shipping == 1 )
-                                        <input type="radio" name="is_free_shipping" value="0" title="包邮">
-                                        <input type="radio" name="is_free_shipping" value="1" checked title="不包邮">
-                                    @endif
+                                    {{--@endif--}}
                                 </div>
                             </div>
+                            <!-- 是否推荐 -->
                             <div class="layui-form-item">
                                 <label class="layui-form-label">是否推荐</label>
                                 <div class="layui-input-block">
-                                    @if( $info->recommend == 0 )
-                                    <input type="radio" name="recommend" value="0" checked title="推荐">
-                                    <input type="radio" name="recommend" value="1" title="不推荐">
-                                    @elseif( $info->recommend == 1 )
-                                    <input type="radio" name="recommend" value="0" title="推荐">
-                                    <input type="radio" name="recommend" value="1" checked title="不推荐">
-                                    @endif
+                                    <input type="radio" name="recommend" value="0" {{ $info->recommend == 0?"checked":'' }} title="推荐">
+                                    <input type="radio" name="recommend" value="1" {{ $info->recommend == 1?"checked":'' }} title="不推荐">
                                 </div>
                             </div>
+                            <!-- 推荐标签 -->
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">推荐标签</label>
+                                <div class="layui-input-block">
+                                    <input type="text" name="flag"  placeholder="请输入推荐标签" autocomplete="off" class="layui-input" value="{{ $info->flag }}">
+                                </div>
+                            </div>
+                            <!-- 商品关键字 -->
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">商品关键字</label>
+                                <div class="layui-input-block">
+                                    <input type="text" name="tags" lay-verify="required" placeholder="请输入商品关键字" autocomplete="off" class="layui-input" value="">
+                                </div>
+                            </div>
+                            <!-- 商品状态 -->
                             <div class="layui-form-item">
                                 <label class="layui-form-label">商品状态</label>
                                 <div class="layui-input-block">
@@ -171,29 +189,27 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="layui-form-item">
-                                <label class="layui-form-label">商品关键字</label>
-                                <div class="layui-input-block">
-                                    <input type="text" name="tags" lay-verify="required" placeholder="请输入商品关键字" autocomplete="off" class="layui-input" value="{{ $detail->tags }}">
-                                </div>
-                            </div>
+                            <!-- 商品封面 -->
                             <div class="layui-form-item">
                                 <label class="layui-form-label">商品封面</label>
                                 <div class="layui-input-block">
-                                        <input id="upload-input" type="text" class="layui-input layui-input-inline" name="p_index_image" value="{{ $detail->p_index_image }}" style="width:520px;height:38px;margin:0px" placeholder="输入图片地址或点击上传">
-                                        <span class="layui-btn" id="uploadImage"><i class="layui-icon"></i>上传商品封面图片</span>
+                                        <input id="upload-input" type="text" class="layui-input layui-input-inline" name="p_index_image" value="" style="width:520px;height:38px;margin:0px" placeholder="输入图片地址或点击上传">
+                                    <div id="brand_logo">
+                                        <input type="file" name="file" id="imgUpload" class="layui-upload-file" accept="image/*"  lay-ext="jpg|png|gif|bmp" lay-title="点击或拖拽文传上传">
+                                    </div>
                                 </div>
                             </div>
+                            <!-- 商品详情 -->
                             <div class="layui-form-item">
                                 <label class="layui-form-label">商品详情</label>
                                 <div class="layui-input-block">
                                     <!-- 加载uefitor编辑器的容器 -->
-                                    <script id="ueditor" name="description" type="text/plain">{{ $description }}</script>
+                                    <script id="ueditor" name="description" type="text/plain"></script>
                                 </div>
                             </div>
                             <div class="layui-form-item">
                                 <div class="layui-input-block">
-                                    <button class="layui-btn" lay-submit="" lay-filter="editInfo">立即提交</button>
+                                    <button class="layui-btn" lay-submit="" lay-filter="editInfo">修改</button>
                                     <button type="reset" class="layui-btn layui-btn-primary">重置</button>
                                 </div>
                             </div>
@@ -233,6 +249,7 @@
         var token = $('meta[name=_token]').attr('content');
         var id = {{ $info->id }};
         var rootUrl = '{{ url('/') }}';
+
         //页面加载时一些处理
         $('div#edui1').css('width','auto').css('z-index','2');
         $('div#edui1_iframeholder').css('width','auto');
@@ -265,7 +282,6 @@
             });
         }
 
-
         //序列化表单值 用于判断是否被修改过
         var loadFormData = $('form#productDetail').serialize();
         //表单提交监听
@@ -293,11 +309,73 @@
                                 location.href = location.href;
                             }});
                         }
+                    },
+                    error:function (XMLHttpRequest) {
+                        var msgObj = XMLHttpRequest.responseJSON;
+                        var msg = '';
+                        for(var name in msgObj){//遍历对象属性名
+                            msg += msgObj[name] + "<br>";
+                        }
+                        layer.msg(msg,{icon:2,time:3000});
                     }
                 });
             }
             return false;
         });
+
+        //分类选择请求数据
+        //监听
+        setInterval(function(){
+            addSelect();
+        },1000);
+
+        function addSelect()
+        {
+            var num = $('div#category div.layui-input-inline').size();
+            for( var i=1;i <= num; i++ ){
+                formOn(i);
+            }
+        }
+        function formOn(n)
+        {
+            form.on('select(select' + n + ')', function (data) {
+                if( n == 1 ){
+                    $('select#select1').parent().siblings('div').remove();
+                    $('select#select1').data('id',1)
+                }
+                console.log(22);
+                $.ajax({
+                    url: "{{url('admin/product/getAjaxCategoryChild')}}/"+data.value
+                    , type: 'get'
+                    , success: function (data) {
+                        if (data == 1) {
+                            return false;
+                        } else if(data == 2){
+                            //说明选择的是顶级分类
+                            //那么如果存在之前选择的子分类,就应该删掉元素
+                            $('select#select1').parent().next('div').remove();
+                            return false;
+                        }else if( data == null ){
+                            return false;
+                        }else{
+                            var did = $('select#select1').data('id');
+                            var newDid = did+1;
+                            var str = "<div class='layui-input-inline'><select " +
+                                "name='category["+ newDid +"]' id='select"+newDid+"'  lay-filter='select"+newDid+"' lay-verify='required'><option value=''>请选择分类</option>";
+                            for (var i = 0; i < data.length; i++) {
+                                str += "<option value='" + data[i].id +"'>" + data[i].category_name + "</option>";
+                            }
+                            str += "</select></div>";
+                            $('select#select'+n).parent().next('div').remove();
+                            $('select#select'+n).parent().parent().append(str);
+                            $('select#select1').data('id',n);
+                            form.render();
+                        }
+                    },
+                    typeOf: 'json'
+                })
+            });
+        }
 
         //tab切换到相册
         element.on('tab(tab)',function(){
@@ -311,18 +389,43 @@
             }
         } );
 
-        //封面图片修改
-        $( '#uploadImage' ).on('click', function(){
-            openUpload(id,'{{ $info->p_name }}', 'product',"@admin@product@indexImage@"+ id, function(){
-                $.ajax({
-                    url: "{{ url('/admin/product/indexImage/'.$info->id) }}",
-                    type:"get",
-                    success:function(data){
-                        $('input#upload-input').val(data);
-                    }
-                });
-            });
+        layui.upload({
+            elem: '#imgUpload', //文件input上传域 id
+            method: 'post', //文件上传传输方式
+            url: '{{ url('/upload') }}', //后台处理程序地址
+            before: function (input) {
+                //上传前回调
+                //定义存储路径与token
+                $('input#imgUpload').parent().append('<input type="hidden" name="_token" value="{{ csrf_token() }}"><input type="hidden" name="path" value="product">');
+                l = layer.msg('正在上传 请稍后...', {icon: 6});
+            }
+            , success: function (res) {
+                if (res.status == 0) {
+                    layer.close(l);
+                    layer.msg('上传成功',{
+                        icon: 6,
+                        time: 1000 //1秒关闭（如果不配置，默认是3秒）
+                    });
+                    $('input[name=p_index_image]').val(res.src);
+                }else if( res == 1 ){
+                    layer.close(l);
+                    layer.msg('上传失败', {'time': 2000});
+                }
+            }
         });
+
+        {{--//封面图片修改--}}
+        {{--$( '#uploadImage' ).on('click', function(){--}}
+            {{--openUpload(id,'{{ $info->p_name }}', 'product',"@admin@product@indexImage@"+ id, function(){--}}
+                {{--$.ajax({--}}
+                    {{--url: "{{ url('/admin/product/indexImage/'.$info->id) }}",--}}
+                    {{--type:"get",--}}
+                    {{--success:function(data){--}}
+                        {{--$('input#upload-input').val(data);--}}
+                    {{--}--}}
+                {{--});--}}
+            {{--});--}}
+        {{--});--}}
 
         //相册图片上传
         $('div#upload-div-1').on('click', '#uploadFile',function(){
@@ -444,7 +547,6 @@
                 }
             }
         }
-
 
         form.on('submit(editSpecInfo)', function(data){
 //            layer.alert(JSON.stringify(data.field));

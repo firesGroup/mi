@@ -40,72 +40,65 @@
                 <form class="layui-form" method="post" id="addProduct">
                     <div class="form-body">
                         {{ csrf_field() }}
+                        <!-- 商品名称 -->
                         <div class="layui-form-item">
                             <label class="layui-form-label">商品名称</label>
                             <div class="layui-input-block">
                                 <input type="text" name="p_name" lay-verify="required" placeholder="请输入商品名称" autocomplete="off" class="layui-input" value="{{ old('p_name') }}">
                             </div>
                         </div>
+                        <!-- 商品简介 -->
                         <div class="layui-form-item">
                             <label class="layui-form-label">商品简介</label>
                             <div class="layui-input-block">
-                                <textarea type="text" name="summary" lay-verify="required" placeholder="请输入商品简介" autocomplete="off" class="layui-input">{{ old('summary') }}</textarea>
+                                <textarea type="text" name="summary" placeholder="请输入商品简介" autocomplete="off" class="layui-input">{{ old('summary') }}</textarea>
                             </div>
                         </div>
+                        <!-- 活动提醒 -->
                         <div class="layui-form-item">
                             <label class="layui-form-label">活动提醒</label>
                             <div class="layui-input-block">
                                 <textarea type="text" name="remind_title"  placeholder="请输入位于商品简介前活动提醒" autocomplete="off" class="layui-input">{{ old('remind_title') }}</textarea>
                             </div>
                         </div>
-                        <div class="layui-form-item">
+                        <!-- 商品分类 -->
+                        <div class="layui-form-item" id="category">
                             <label class="layui-form-label">商品分类</label>
                             <div class="layui-input-block">
                                 <div class="layui-input-inline">
-                                    <select >
+                                    <select name="category[1]" id="select1" data-id='1' lay-filter="select1">
                                         <option value="">请选择商品分类</option>
-                                        <option value="你的工号">江西省</option>
-                                        <option value="你最喜欢的老师">福建省</option>
-                                    </select>
-                                </div>
-                                <div class="layui-input-inline">
-                                    <select >
-                                        <option value="">请选择商品分类</option>
-                                        <option value="杭州">杭州</option>
-                                        <option value="宁波" disabled="">宁波</option>
-                                        <option value="温州">温州</option>
-                                        <option value="温州">台州</option>
-                                        <option value="温州">绍兴</option>
-                                    </select>
-                                </div>
-                                <div class="layui-input-inline">
-                                    <select >
-                                        <option value="">请选择商品分类</option>
-                                        <option value="西湖区">西湖区</option>
-                                        <option value="余杭区">余杭区</option>
-                                        <option value="拱墅区">临安市</option>
+                                        @forelse( $categoryList as $cate)
+                                            <option value="{{ $cate->id }}">{{ $cate->category_name }}</option>
+                                            @empty
+                                                一个分类都没有呢!
+                                        @endforelse
                                     </select>
                                 </div>
                             </div>
                         </div>
+                        <!-- 商品价格 -->
                         <div class="layui-form-item">
                             <label class="layui-form-label">商品价格</label>
                             <div class="layui-input-block">
-                                <input type="text" name="price" lay-verify="required" placeholder="请输入商品价格" autocomplete="off" class="layui-input" value="{{ old('price') }}" onkeyup="this.value=this.value.replace(/[^\d.]/g,'')" onpaste="this.value=this.value.replace(/[^\d.]/g,'')">
+                                <input type="text" name="price" lay-verify="required" placeholder="请输入商品默认价格" autocomplete="off" class="layui-input" value="{{ old('price') }}" onkeyup="this.value=this.value.replace(/[^\d.]/g,'')" onpaste="this.value=this.value.replace(/[^\d.]/g,'')">
                             </div>
                         </div>
+                        <!-- 商品货号 -->
                         <div class="layui-form-item">
                             <label class="layui-form-label">商品货号</label>
                             <div class="layui-input-block">
-                                <input type="text" name="p_num"  placeholder="为空将自动生成" autocomplete="off" class="layui-input" value="{{ old('p_name') }}">
+                                <input type="text" name="p_num"  placeholder="留空将自动生成 可不填" autocomplete="off" class="layui-input" value="{{ old('p_name') }}">
                             </div>
                         </div>
+                        <!-- 商品库存 -->
                         <div class="layui-form-item">
                             <label class="layui-form-label">商品总库存</label>
                             <div class="layui-input-block">
                                 <input type="text" name="store" lay-verify="required" placeholder="请输入商品总库存量" autocomplete="off" class="layui-input" value="{{ old('store') }}" onkeyup="this.value=this.value.replace(/[^\d.]/g,'')" onpaste="this.value=this.value.replace(/[^\d.]/g,'')">
                             </div>
                         </div>
+                        <!-- 是否包邮 -->
                         <div class="layui-form-item">
                             <label class="layui-form-label">是否包邮</label>
                             <div class="layui-input-block">
@@ -113,6 +106,7 @@
                                 <input type="radio" name="is_free_shipping" value="1" checked title="不包邮">
                             </div>
                         </div>
+                        <!-- 是否推荐 -->
                         <div class="layui-form-item">
                             <label class="layui-form-label">是否推荐</label>
                             <div class="layui-input-block">
@@ -120,22 +114,32 @@
                                     <input type="radio" name="recommend" value="1" checked title="不推荐">
                             </div>
                         </div>
+                        <!-- 推荐标签 -->
                         <div class="layui-form-item">
-                            <label class="layui-form-label">商品状态</label>
+                            <label class="layui-form-label">推荐标签</label>
                             <div class="layui-input-block">
-                                <select name="status">
-                                    @for( $i=0;$i<5;$i++ )
-                                        <option value="{{$i}}">{{ $zhStatus[$i]}}</option>
-                                    @endfor
-                                </select>
+                                <input type="text" name="flag"  placeholder="请输入推荐标签" autocomplete="off" class="layui-input" value="{{ old('flag') }}">
                             </div>
                         </div>
+                        <!-- 商品关键字 -->
                         <div class="layui-form-item">
                             <label class="layui-form-label">商品关键字</label>
                             <div class="layui-input-block">
                                 <input type="text" name="tags" lay-verify="required" placeholder="请输入商品关键字" autocomplete="off" class="layui-input" value="{{ old('tags')  }}">
                             </div>
                         </div>
+                        <!-- 商品状态 -->
+                        <div class="layui-form-item">
+                                <label class="layui-form-label">商品状态</label>
+                                <div class="layui-input-block">
+                                    <select name="status">
+                                        @for( $i=0;$i<5;$i++ )
+                                            <option value="{{$i}}">{{ $zhStatus[$i]}}</option>
+                                        @endfor
+                                    </select>
+                                </div>
+                            </div>
+                        <!-- 商品封面 -->
                         <div class="layui-form-item">
                             <label class="layui-form-label">商品封面</label>
                             <div class="layui-input-block">
@@ -145,8 +149,9 @@
                                 </div>
                             </div>
                         </div>
+                        <!-- 商品详情 -->
                         <div class="layui-form-item">
-                            <label class="layui-form-label">商品详情</label>
+                            <label class="layui-form-label">商品详情页排版</label>
                             <div class="layui-input-block">
                                 <!-- 加载uefitor编辑器的容器 -->
                                 <script id="ueditor" name="description" type="text/plain"></script>
@@ -344,6 +349,58 @@
                 }
             }
 
+                setInterval(function(){
+                    addSelect();
+                },1000);
+
+                function addSelect()
+                {
+                    var num = $('div#category div.layui-input-inline').size();
+                    for( var i=1;i <= num; i++ ){
+                        formOn(i);
+                    }
+                }
+
+                function formOn(n)
+                {
+                    form.on('select(select' + n + ')', function (data) {
+                        if( n == 1 ){
+                            $('select#select1').parent().siblings('div').remove();
+                            $('select#select1').data('id',1)
+                        }
+                        console.log(22);
+                        $.ajax({
+                            url: "{{url('admin/product/getAjaxCategoryChild')}}/"+data.value
+                            , type: 'get'
+                            , success: function (data) {
+                                if (data == 1) {
+                                    return false;
+                                } else if(data == 2){
+                                    //说明选择的是顶级分类
+                                    //那么如果存在之前选择的子分类,就应该删掉元素
+                                    $('select#select1').parent().next('div').remove();
+                                    return false;
+                                }else if( data == null ){
+                                    return false;
+                                }else{
+                                    var did = $('select#select1').data('id');
+                                    var newDid = did+1;
+                                    var str = "<div class='layui-input-inline'><select " +
+                                        "name='category["+ newDid +"]' id='select"+newDid+"'  lay-filter='select"+newDid+"' lay-verify='required'><option value=''>请选择分类</option>";
+                                    for (var i = 0; i < data.length; i++) {
+                                            str += "<option value='" + data[i].id +"'>" + data[i].category_name + "</option>";
+                                    }
+                                    str += "</select></div>";
+                                    $('select#select'+n).parent().next('div').remove();
+                                    $('select#select'+n).parent().parent().append(str);
+                                    $('select#select1').data('id',n);
+                                    form.render();
+                                }
+                            },
+                            typeOf: 'json'
+                        })
+                    });
+                }
 
             //用户选择模型  根据选择不同模型id,返回不同的表格
             form.on('select(modelSelect)', function(data){

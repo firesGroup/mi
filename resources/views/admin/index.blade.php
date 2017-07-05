@@ -52,9 +52,6 @@
                                 <a class="onFullScreen" id="FullScreen"><i class="larry-icon larry-quanping"></i>全屏</a>
                             </li>
                             <li class="layui-nav-item">
-                                <a id="lock"><i class="larry-icon larry-diannao5"></i>锁屏</a>
-                            </li>
-                            <li class="layui-nav-item">
                                 <a id="clearCached"><i class="larry-icon larry-qingchuhuancun"></i>清除缓存</a>
                             </li>
                             <li class="layui-nav-item">
@@ -277,6 +274,8 @@
                     navtab = layui.navtab({
                         elem: '#larry-tab'
                     });
+
+                //临时菜单
                 $('div.sys-menu-box li.layui-nav-item').each(function(){
                     $(this).on('click', function(){
                         var th = $(this);
@@ -295,6 +294,7 @@
                         navtab.tabAdd(data);
                     });
                 });
+
             });
         </script>
     </body>

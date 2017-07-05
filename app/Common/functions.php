@@ -52,3 +52,54 @@ function combineArray($arr1,$arr2) {
     }
     return $result;
 }
+
+/*
+ * 远程图片自动保存为本地图片
+ *
+ * @param $url  远程图片地址
+ * @param $path  保存目录  相对于 public/uploads
+ *
+ */
+
+function getUrlImages($url, $path)
+{
+    //存储目录(相对于 public/upload)
+    $path = isset($path)?$path:'temp';
+    //检查目录是否存在
+    //若不存在则创建目录
+    if( !file_exists( 'uploads/'.$path ) ) {
+        mkdir('uploads/'.$path, 0755, true);
+    }
+    //生成文件名
+    $fileName = md5(date('YmdHis').rand(000000,9999999)).'.jpeg';//设置jpeg对于 gif和png没有任何影响
+
+    //组成完成文件路径
+    $filePath = $path.'/'.date('Ymd',time()).'/'.$fileName;
+
+    //去除URL连接上面可能的引号
+    $url = preg_replace( '/(?:^[\'"]+|[\'"\/]+$)/', '', $url );
+    //初始化curl
+    $hander = curl_init( );
+    //设置要获取的图片的url
+    curl_setopt($hander,CURLOPT_URL,$url);
+    // 设置header
+    curl_setopt($hander,CURLOPT_HEADER,0);
+    // 设置cURL 参数，
+    curl_setopt($hander,CURLOPT_FOLLOWLOCATION,1);
+    //以数据流的方式返回数据,当为false 时是直接显示出来
+    curl_setopt($hander,CURLOPT_RETURNTRANSFER,1);
+    curl_setopt($hander,CURLOPT_CONNECTTIMEOUT,3);
+    //设置超时
+    curl_setopt($hander,CURLOPT_TIMEOUT,60);
+    // 运行cURL，请求网页
+    $file = curl_exec($hander);
+    // 关闭URL请求
+    curl_close($hander);
+    //将文件写入获得的数据
+    $result = \Illuminate\Support\Facades\Storage::disk('uploads')->put($filePath,$file);
+    if( !$result ){
+        return false;
+    }
+    return '/uploads/'.$filePath;
+}
+

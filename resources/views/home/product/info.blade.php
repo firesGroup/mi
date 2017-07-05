@@ -82,8 +82,13 @@
                     </div>
                     <div id="J_img" class="img-con" style="left: 19.5px; margin-top: 0px;">
                         <div id="J_sliderView" class="sliderWrap" style="width: auto; position: relative;">
-                            <img data-url="//i8.mifile.cn/a1/pms_1495692033.10494295!560x560.jpg" class="loaded slider done" src="/images/public/placeholder-220.png">
-                            <img data-url="//i8.mifile.cn/a1/pms_1495692036.1252953!560x560.jpg" class="slider done" src="/images/public/placeholder-220.png">
+                            @foreach( $imgArr as $k=>$img )
+                                @if($k == 0)
+                                    <img data-url="{{ $img }}" class="loaded slider done" src="/images/public/placeholder-220.png">
+                                @else
+                                    <img data-url="{{ $img }}" class="slider done" src="/images/public/placeholder-220.png">
+                                @endif
+                            @endforeach
                         </div>
                     </div>
                 </div>
@@ -110,13 +115,13 @@
                                 <ul class="step-list step-one clearfix">
                                     @foreach( $versions as $k=>$ver )
                                         @if( $k == 0 )
-                                            <li class="btn btn-biglarge active" data-name="{{ $ver['ver_name'] }} {{$ver['ver_spec']}}" data-price="{{ $ver['price'] }}元  " data-index="{{ $k }}" data-ver_id="{{ $ver['id'] }}" data-desc="{{ $ver['ver_desc'] }}"> <a href="javascript:void(0);">
+                                            <li class="btn btn-biglarge active" data-name="{{ $ver['ver_name'] }} {{$ver['ver_spec']}}" data-price="{{ $ver['price'] }}" data-index="{{ $k }}" data-ver_id="{{ $ver['id'] }}" data-desc="{{ $ver['ver_desc'] }}"> <a href="javascript:void(0);">
                                                     <span class="name">{{ $ver['ver_name'] }} {{$ver['ver_spec']}} </span>
                                                     <span class="price"> {{ $ver['price'] }}元 </span>
                                                 </a>
                                             </li>
                                         @else
-                                            <li class="btn btn-biglarge" data-name="{{ $ver['ver_name'] }} {{$ver['ver_spec']}}" data-price="{{ $ver['price'] }}元  " data-index="{{ $k }}" data-ver_id="{{ $ver['id'] }}" data-desc="{{ $ver['ver_desc'] }}"> <a href="javascript:void(0);">
+                                            <li class="btn btn-biglarge" data-name="{{ $ver['ver_name'] }} {{$ver['ver_spec']}}" data-price="{{ $ver['price'] }}" data-index="{{ $k }}" data-ver_id="{{ $ver['id'] }}" data-desc="{{ $ver['ver_desc'] }}"> <a href="javascript:void(0);">
                                                     <span class="name">{{ $ver['ver_name'] }} {{$ver['ver_spec']}} </span>
                                                     <span class="price"> {{ $ver['price'] }}元 </span>
                                                 </a>
@@ -151,22 +156,28 @@
                         <ul class="btn-wrap clearfix" id="J_buyBtnBox">
                             <li>
                                 @if( $versions[0]['status'] == 0  )
-                                    <a href="javascript:void(0);" class="btn btn-primary btn-biglarge J_proBuyBtn" data-type="common">加入购物车</a>
+                                    <a href="javascript:void(0);" class="btn btn-primary btn-biglarge J_proBuyBtn" data-type="0">加入购物车</a>
                                 @elseif( $versions[0]['status'] == 1  )
-                                    <a data-tip="" class="btn btn-gray  btn-biglarge btn-line-gray J_setRemind" href="javascript:void(0);" disabled>已下架</a>
+                                    <a class="btn btn-gray  btn-biglarge btn-line-gray J_setRemind" href="javascript:void(0);" data-type="1" disabled>已下架</a>
                                 @elseif( $versions[0]['status'] == 2  )
-                                    <a data-tip="" class="btn btn-line-primary btn-biglarge btn- J_setRemind" href="javascript:void(0);">新品预售</a>
+                                    <a class="btn btn-line-primary btn-biglarge btn- J_setRemind" href="javascript:void(0);" data-type="2">新品预售</a>
                                 @elseif( $versions[0]['status'] == 3  )
-                                    <a data-tip="" class="btn btn-red btn-biglarge btn-line-red J_setRemind" href="javascript:void(0);" disabled>缺货中</a>
+                                    <a class="btn btn-red btn-biglarge btn-line-red J_setRemind" href="javascript:void(0);" data-type="3" disabled>缺货中</a>
                                 @elseif( $versions[0]['status'] == 4  )
-                                    <a data-tip="" class="btn btn-line-primary btn-biglarge btn- J_setRemind" href="javascript:void(0);">新品上市</a>
+                                    <a class="btn btn-line-primary btn-biglarge btn- J_setRemind" href="javascript:void(0);" data-type="4">新品上市</a>
                                 @endif
                             </li>
                         </ul>
                         <div class="pro-policy" id="J_policy">
                             <i class="iconfont support"></i>
                             <i class="iconfont nosupport hide"></i>
-                            <span class="J_tips ">支持7天无理由退货</span>
+                            <span class="J_tips " style="margin-right:15px">支持7天无理由退货</span>
+                            @if( $info->detail->is_free_shipping == 0 )
+                                <i class="iconfont support"></i>
+                            @else
+                                <i class="iconfont nosupport hide"></i>
+                            @endif
+                            <span class="J_tips ">包邮</span>
                         </div>
                     </div>
                     <div class="error hide J_error">
@@ -194,6 +205,6 @@
 @endsection
 @section('js')
     @parent
-    <script type="text/javascript" src="{{ asset('/js/home/product_info.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('/js/home/product_info.js') }}?ver=<?php echo time();  ?>"></script>
 
 @endsection

@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Home;
 
 use App\Entity\ProductColor;
-use App\Entity\ProductSpecItem;
+use App\Entity\ProductVersions;
 use App\Entity\ProductVersionsColors;
 use Illuminate\Http\Request;
 
@@ -47,7 +47,19 @@ class HomeController extends Controller
             }
         }
 
-        return view('home.product.info', compact('p_id','info','versions','colorArr'));
+        //取得所有版本的图片的信息
+        //先拿到商品封面图
+        $img1 = $info->detail->p_index_image;
+        //在获取所有版本的图片
+        foreach( $versions as $ver ){
+            if( $ver['ver_img'] !== null ){
+                $imgArr = json_decode($ver['ver_img']);
+            }
+        }
+        if( !isset($imgArr)){
+            $imgArr[]=$img1;
+        }
+        return view('home.product.info', compact('p_id', 'imgArr','info','versions','colorArr'));
     }
 
     /*
@@ -59,6 +71,17 @@ class HomeController extends Controller
     {
         $color = ProductVersionsColors::where('ver_id', $ver_id)->get();
        return response()->json($color);
+    }
+
+    /*
+     * ajax 获取商品版本的信息
+     * @param $id int 商品id
+     *
+     */
+    public function ajaxGetVersion($ver_id)
+    {
+        $info = ProductVersions::where('id', $ver_id)->get();
+        return $info;
     }
 
     /*

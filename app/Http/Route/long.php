@@ -44,7 +44,18 @@ Route::group( ['namespace'=>'Home'], function(){
 
    });
    Route::post('sms', 'SmsController@sms');
-   Route::get('mailBox/{uid}/{code}/{u}', 'SmsController@smsCode');
+   Route::post('mailBox', 'SmsController@smsCode');
+   Route::get('login', function () {
+      return view('home/reg_login/login');
+   });
+   Route::post('login', 'LoginController@login');
+   Route::get('login/exit', 'LoginController@loginout');
+
+   Route::get('user_detail', 'UserDetailController@user_detail');
+   Route::post('mail_code', 'UserDetailController@mailcode');
+   Route::post('phone_code', 'UserDetailController@phonecode');
+   Route::post('member_update', 'UserDetailController@update_pass');
+   Route::get('personal', 'UserDetailController@personal');
 });
 
 Route::get('kit/captcha/{tmp}', 'Home\CodeController@captcha');

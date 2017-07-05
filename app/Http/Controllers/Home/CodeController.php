@@ -17,7 +17,7 @@ class CodeController extends Controller
         //生成验证码图片的Builder对象，配置相应属性
         $builder = new CaptchaBuilder;
         //可以设置图片宽高及字体
-        $builder->build($width = 100, $height = 40, $font = null);
+        $builder->build($width = 250, $height = 70, $font = null);
         //获取验证码的内容
         $phrase = $builder->getPhrase();
 

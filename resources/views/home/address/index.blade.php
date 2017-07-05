@@ -29,11 +29,11 @@
             <div class="topbar-info" id="J_userInfo">
             <span class="user">
                 <a rel="nofollow" class="user-name" href="" target="_blank">
-                    <span class="name">1178705369</span>
+                    <span class="name">{{$UserArr}}</span>
                     <i class="iconfont"></i>
                 </a>
                 <ul class="user-menu" style="display: none;">
-                    <li><a rel="nofollow" href="" target="_blank">个人中心</a></li>
+                    <li><a rel="nofollow" href="{{url('user_detail')}}" target="_blank">个人中心</a></li>
                     <li><a rel="nofollow" href="" target="_blank">评价晒单</a></li>
                     <li><a rel="nofollow" href="" target="_blank">我的喜欢</a></li>
                     <li><a rel="nofollow" href="" target="_blank">小米账户</a></li>
@@ -57,24 +57,25 @@
                     </div>
                     <div class="section-body clearfix" id="J_addressList">
                         <!-- addresslist begin -->
+                        @foreach($userAdd as $UserAdd)
                         <div class="address-item J_addressItem ">
                             <dl>
                                 <dt>
                                     <span class="tag"></span>
-                                    <em class="uname">潘珺</em>
+                                    <em class="uname">{{$UserAdd->buy_user}}</em>
                                 </dt>
                                 <dd class="utel">
-                                    135****5920
+                                    {{$UserAdd->buy_phone}}
                                 </dd>
                                 <dd class="uaddress">
-                                    广东 珠海市 香洲区 前山街道<br>
-                                    夏湾河畔豪庭346号德晋商贸
+                                    {{$UserAdd->address}}
                                 </dd>
                             </dl>
                             <div class="actions">
-                                <a href="javascript:void(0);" class="modify J_addressModify">修改</a>
+                                <a href="javascript:;" class="modify J_addressModify">修改</a>
                             </div>
                         </div>
+                        @endforeach
                         <!-- addresslist end -->
                         <div class="address-item address-item-new" id="J_newAddress">
                             <i class="iconfont"></i>
@@ -199,7 +200,7 @@
                     <div class="section-header clearfix">
                         <h3 class="title">商品及优惠券</h3>
                         <div class="more">
-                            <a href="{{url('home/cart')}}">返回购物车
+                            <a href="{{url('cart')}}">返回购物车
                                 <i class="iconfont"></i></a>
                         </div>
                     </div>
@@ -269,7 +270,7 @@
                         <div class="big-pro-tip hide J_confirmBigProTip"></div>
                     </div>
                     <div class="fr">
-                        <a href="javascript:void(0);" class="btn btn-primary" id="J_checkoutToPay">去结算</a>
+                        <a href="javascript:;" class="btn btn-primary" id="J_checkoutToPay">去结算</a>
                     </div>
                 </div>
 
@@ -384,7 +385,7 @@
                     </div>
                     <div class="modal-footer">
                         <a href="javascript:;" class="btn btn-primary" id="J_editAddressSave">保存</a>
-                        <a href="#J_modalEditAddress" class="btn btn-gray" data-toggle="modal">取消</a>
+                        <a href="javascript:;" class="btn btn-gray" data-toggle="modal">取消</a>
                     </div>
                 </div>
             </div>
@@ -403,9 +404,16 @@
                 layer = layui.layer;
             var index;
 
-            $('div.J_addressItem').on('click', function () {
-//                console.log($(this));
-                $(this).addClass('selected');
+            $('a.user-name').on('mouseenter', function () {
+//                alert($(this));
+                $(this).parent().addClass('user-active').children('ul').css({'display': 'block'});
+
+            });
+
+            $('span.user').on('mouseleave', function () {
+//                alert($(this));
+                $(this).removeClass('user-active').children('ul').css({'display': 'none'});
+
             });
 
             $('ul li.J_option').on('click', function () {
@@ -432,7 +440,7 @@
             $('#J_newAddress').on('click', function () {
 //                console.log($(this));
 //                console.log($('#J_modalEditAddress'));
-                if ($('input.input-text')) {
+                if ($('input.input-text').val()) {
                     $('div.form-section').addClass('form-section-valid form-section-active');
                 }
                 $('div #J_modalEditAddress').css({"display": "block"}).attr('aria-hidden', 'false');
@@ -484,7 +492,7 @@
                 $('div.select-first').addClass('active').text(address).next('.select-item').removeClass('hide').text('选择城市/地区');
 
                 $.ajax({
-                    url: "{{url('home/chooseAddress')}}",
+                    url: "{{url('chooseAddress')}}",
                     type: 'get',
                     data: {'_token': '{{csrf_token()}}', 'id': id},
                     success: function (data) {
@@ -507,7 +515,7 @@
                             $('div.select-first').next().text(cities).next().removeClass('hide').text('选择区县');
 
                             $.ajax({
-                                url: "{{url('home/cities')}}",
+                                url: "{{url('cities')}}",
                                 type: 'get',
                                 data: {'_token': '{{csrf_token()}}', 'id': citiesId},
                                 success: function (data) {
@@ -564,17 +572,64 @@
 
                 $('div #J_modalEditAddress').css({"display": "none"}).attr('aria-hidden', 'true');
 
+                var id = "{{$UserAdd->member_id}}";
+
                 $.ajax({
-                    url: "{{url('home/addAddress')}}",
+                    url: "{{url('addAddress')}}",
                     type: 'get',
-                    data: {'_token': '{{csrf_token()}}', 'arr': arr},
+                    data: {'_token': '{{csrf_token()}}', 'arr': arr, 'id': id},
                     success: function (data) {
+//                        console.log(1);
+                        if (data == 1) {
+                            var buy_user = $('input[name=user_name]').val();
+                            var buy_phone = $('input[name=user_phone]').val();
+                            var address = $('input[name=four_address]').val() + $('textarea[name=user_address]').val();
+
+//                            console.log(address);
+
+                            $('#J_newAddress').before("<div class='address-item J_addressItem'><dl><dt><span class='tag'></span><em class='uname'>"+buy_user+"</em></dt><dd class='utel'>"+buy_phone+"</dd><dd class='uaddress'>"+address+"</dd></dl><div class='actions'><a href='javascript:;' class='modify J_addressModify'>修改</a></div> </div>");
+                        }
 
                     },
                     dataType: 'json'
                 });
 
 
+            });
+
+            $('input[name=user_phone]').on('blur', function () {
+//                console.log($(this).val());
+
+                var phone = $(this).val();
+
+                if (!/^1[3578]\d{9}$/.test(phone)) {
+                    layer.msg('手机号不符合');
+                    $(this).after('<p class="msg msg-error">请输入正确的手机号</p>').parent().addClass('form-section-error');
+                } else {
+                    $(this).next().remove().parent().removeClass('form-section-error');
+                }
+
+            });
+
+            $('#J_addressList').on('click', '.J_addressItem', function () {
+//                console.log($(this));
+                $(this).addClass('selected').siblings().removeClass('selected');
+
+                $('div.fr').children('#J_checkoutToPay').text('立即下单');
+
+                var uname = $(this).children('dl').children('dt').text();
+                var uphone = $(this).children('dl').children('dd.utel').text();
+                var uaddress = $(this).children('dl').children('dd.uaddress').text();
+//                console.log(uphone);
+                $('#J_confirmAddress').removeClass('hide').html(uname+'&nbsp;&nbsp;&nbsp;&nbsp;'+uphone+'<br/>'+uaddress);
+
+            });
+
+            $('#J_addressList').on('click', 'a.J_addressModify', function () {
+                if ($('input.input-text').val()) {
+                    $('div.form-section').addClass('form-section-valid form-section-active');
+                }
+                $('div #J_modalEditAddress').css({"display": "block"}).attr('aria-hidden', 'false');
             });
 
         });
