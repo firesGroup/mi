@@ -10,15 +10,15 @@
  */
 ?>
 
-@extends('layouts.home')
 
-@section('title', '我的购物车-小米商城')
-@section('css')
+
+<?php $__env->startSection('title', '我的购物车-小米商城'); ?>
+<?php $__env->startSection('css'); ?>
     @parent
-    <link rel="stylesheet" type="text/css" href="{{ asset('/css/home/cart.css') }}">
-@endsection
-@section('content')
-    {{--{{dd(session('user_detail'))}}--}}
+    <link rel="stylesheet" type="text/css" href="<?php echo e(asset('/css/home/cart.css')); ?>">
+<?php $__env->stopSection(); ?>
+<?php $__env->startSection('content'); ?>
+    <?php /*<?php echo e(dd(session('user_detail'))); ?>*/ ?>
     <div class="site-header site-mini-header">
         <div class="container">
             <div class="header-logo">
@@ -30,13 +30,13 @@
             </div>
 
             <div class="topbar-info" id="J_userInfo">
-                @if (!session('user_detail'))
-                    <a class="link" href="{{url('login')}}" data-needlogin="true">登录</a><span class="sep">|</span><a
-                            class="link" href="{{url('reg')}}">注册</a>
-                @else
+                <?php if(!session('user_detail')): ?>
+                    <a class="link" href="<?php echo e(url('login')); ?>" data-needlogin="true">登录</a><span class="sep">|</span><a
+                            class="link" href="<?php echo e(url('reg')); ?>">注册</a>
+                <?php else: ?>
                     <span class="user">
                         <a rel="nofollow" class="user-name" href="javascript:;" target="_blank">
-                            <span class="name">{{session('user_detail')}}</span>
+                            <span class="name"><?php echo e(session('user_detail')); ?></span>
                             <i class="iconfont"></i>
                         </a>
                         <ul class="user-menu" style="display: none;">
@@ -59,7 +59,7 @@
                     </span>
                     <span class="sep">|</span>
                     <a rel="nofollow" class="link link-order" href="//static.mi.com/order/" target="_blank">我的订单</a>
-                @endif
+                <?php endif; ?>
             </div>
 
         </div>
@@ -69,10 +69,10 @@
         <div class="container">
             <div class="cart-empty cart-empty-nologin" id="J_cartEmpty">
                 <h2>您的购物车还是空的！</h2>
-                @if (!session('user_detail'))
+                <?php if(!session('user_detail')): ?>
                     <p class="login-desc">登录后将显示您之前加入的商品</p>
-                    <a href="{{url('login')}}" class="btn btn-primary btn-login">立即登录</a>
-                @endif
+                    <a href="<?php echo e(url('login')); ?>" class="btn btn-primary btn-login">立即登录</a>
+                <?php endif; ?>
                 <a href="//list.mi.com/0" class="btn btn-primary btn-shoping J_goShoping">马上去购物</a>
             </div>
 
@@ -186,7 +186,7 @@
                 <span class="total-price">
                     合计（不含运费）：<em id="J_cartTotalPrice">0.00</em>元
                 </span>
-                <a href="{{url('address')}}" class="btn btn-a btn btn-disabled" id="J_goCheckout">去结算</a>
+                <a href="<?php echo e(url('address')); ?>" class="btn btn-a btn btn-disabled" id="J_goCheckout">去结算</a>
 
                 <div class="no-select-tip" id="J_noSelectTip">
                     请勾选需要结算的商品
@@ -217,11 +217,11 @@
 
 
 
-    @include('home/public/footer')
-@endsection
-@section('js')
+    <?php echo $__env->make('home/public/footer', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+<?php $__env->stopSection(); ?>
+<?php $__env->startSection('js'); ?>
     @parent
-    <script type="text/javascript" src="{{asset('js/home/cart/cart.js')}}"></script>
+    <script type="text/javascript" src="<?php echo e(asset('js/home/cart/cart.js')); ?>"></script>
     <script>
 
         layui.use(['jquery', 'layer'], function () {
@@ -235,4 +235,5 @@
 
         });
     </script>
-@endsection
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layouts.home', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
