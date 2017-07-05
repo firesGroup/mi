@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Home;
 
 use App\Entity\MemberDetail;
 use Illuminate\Http\Request;
+use App\Entity\Level;
 use Session;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
@@ -110,7 +111,64 @@ class UserDetailController extends Controller
 
     public function personal()
     {
-        return view('home/member/personal');
+        $id = session('user_deta')['id'];
+        $arr = [0=>'保密', 1=>'男', 2=>'女'];
+        $data = MemberDetail::find($id);
+        $member = Member::find(session('user_deta')['id']);
+//        dd($data->level_id);
+        $level = Level::find($data->level_id);
+//        dd($level);
+
+
+        return view('home/member/personal', compact('data', 'arr', 'level', 'member'));
+    }
+
+    public function personal_update(Request $request)
+    {
+        $array = $request->all();
+
+       $nick_name = $request->get('nick_name');
+
+       $birthday = $request->get('birthday');
+
+
+//       dump($nick_name);
+       $sex = $request->get('sex');
+
+       $id = session('user_deta')['id'];
+       $data = MemberDetail::find($id);
+//       dd($data);
+        $data->birthday = $birthday;
+        $data->sex = $sex;
+
+        $flight = Member::find($id);
+
+        $all_member = DB::table('member')->lists('nick_name');
+
+        if($nick_name != $request->get('name')){
+
+            if(in_array($nick_name, $all_member)){
+                    return 1;
+            }
+        }
+
+            $flight->nick_name = $nick_name;
+//        dd($request->get('name'));
+
+
+
+        DB::beginTransaction();
+
+        if($data->save() && $flight->save()){
+            DB::commit();
+            $request->session()->forget('user_deta');
+            $request->session()->put('user_deta', ['nick_name'=>$nick_name, 'phone'=>$flight->phone, 'email'=>$flight->email, 'id'=>$flight->id]);
+//            dd(session('user_deta'));
+
+            return json_encode($array);
+        }else{
+            DB::rollBack();
+        };
     }
 
 

@@ -11,6 +11,7 @@
 Route::group( ['namespace'=>'Admin', 'prefix'=>'admin'], function(){
     Route::get('/', 'AdminController@index');
     Route::post('change', 'MemberController@change');
+    Route::post('ponseral_change', 'MemberController@ponseral_change');
     Route::post('member_check_name/{id}', 'MemberController@member_check_name');
     Route::post('member_ajax_phone/{id}', 'MemberController@member_check_phone');
     Route::post('member_ajax_email/{id}', 'MemberController@member_check_email');
@@ -55,7 +56,10 @@ Route::group( ['namespace'=>'Home'], function(){
    Route::post('mail_code', 'UserDetailController@mailcode');
    Route::post('phone_code', 'UserDetailController@phonecode');
    Route::post('member_update', 'UserDetailController@update_pass');
+   Route::post('personal_update', 'UserDetailController@personal_update');
    Route::get('personal', 'UserDetailController@personal');
+   Route::post('collect', 'CollectController@add_collect');
+   Route::get('ponseral_collect', 'CollectController@ponseral_collect');
 });
 
 Route::get('kit/captcha/{tmp}', 'Home\CodeController@captcha');

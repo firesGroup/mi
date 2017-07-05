@@ -170,10 +170,7 @@
                             }
                         });
                         form.verify({
-                            pass: [
-                                /^[a-zA-Z]+/
-                                , '请输入至少6位并以字母开头的密码'
-                            ],
+
                             verify: function (value) {
                                 if (value == '') {
                                     return '请输入验证码！';

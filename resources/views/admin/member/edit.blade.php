@@ -54,7 +54,7 @@
                                     <div class="layui-form-item">
                                         <label class="layui-form-label">会员邮箱</label>
                                         <div class="layui-input-block">
-                                            <input type="text" name="email" lay-verify="required|email"
+                                            <input type="text" name="email" lay-verify="email"
                                                    autocomplete="off" class="layui-input" value="{{$data->email}}">
                                         </div>
                                     </div>
@@ -100,8 +100,8 @@
                                         <label class="layui-form-label">会员生日</label>
                                         <div class="layui-input-block">
                                             <input class="layui-input" name="birthday" placeholder="自定义日期格式" id="date"
-                                                   onclick="layui.laydate({elem: this, festival: true} )"
-                                                   value="{{$user_detail->birthday}}" lay-verify="required">
+                                                   onclick="layui.laydate({elem: this, festival: true, istime: false} )"
+                                                   value="{{$user_detail->birthday}}" lay-verify="">
                                         </div>
                                     </div>
                                     <input type="hidden" name="last_ip" value="{{$data->last_ip}}">
