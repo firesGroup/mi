@@ -150,7 +150,6 @@ return [
         Intervention\Image\ImageServiceProvider::class,
         Collective\Html\HtmlServiceProvider::class,
         Stevenyangecho\UEditor\UEditorServiceProvider::class,
-//        iscms\Alisms\AlidayuServiceProvider::class,
 
 
 
@@ -212,7 +211,7 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
         'Form'      => Collective\Html\FormFacade::class,
         'HTML'      => Collective\Html\HtmlFacade::class,
-        'Image'     => Intervention\Image\Facades\Image::class
+        'Image'     => Intervention\Image\Facades\Image::class,
 
     ],
 

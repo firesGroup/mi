@@ -46,7 +46,7 @@ $('ul.J_navMainList').find('li#J_navCategory').on('mouseover','a.link-category',
     $('div#J_navMenu').css('display','none');
 }).on('mouseleave',function(){
     $(this).removeClass('nav-item-active');
-    if(window.location.pathname != '/'){
+    if(window.location.pathname !== '/'){
         $(this).children('div.site-category').css('display','none');
     }
 });

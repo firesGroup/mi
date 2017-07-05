@@ -69,7 +69,7 @@
                     </tr>
                     </thead>
                     <tbody>
-                    @foreach( $verList as $ver )
+                    @forelse( $verList as $ver )
                         <tr>
                             <td>{{ $ver->id }}</td>
                             <td>{{ $ver->ver_name }}</td>
@@ -87,7 +87,13 @@
                                 </div>
                             </td>
                         </tr>
-                    @endforeach
+                        @empty
+                            <tr>
+                                <td colspan="8" style="height:70px;font-size:15px">
+                                    <i class="layui-icon" style="font-size: 30px; color: #FF5722;">&#xe60c;</i> 什么都没找到
+                                </td>
+                            </tr>
+                    @endforelse
                     </tbody>
                 </table>
                 <div class="larry-table-page">

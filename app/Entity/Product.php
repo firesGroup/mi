@@ -26,6 +26,13 @@ class Product extends Model
     {
         return $this->hasOne('App\Entity\ProductDetail', 'p_id');
     }
+    /**
+     * 获取商品分类。
+     */
+    public function category()
+    {
+        return $this->belongsTo('App\Entity\CateGory', 'category_id');
+    }
 
     /*
      *

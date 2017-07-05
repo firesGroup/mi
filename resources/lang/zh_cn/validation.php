@@ -99,5 +99,6 @@ return [
         'attr_name' => '属性名称',
         'nick_name' => '会员名字',
         'category_name'=>'分类名字',
+        'p_num'     => '商品货号',
     ],
 ];

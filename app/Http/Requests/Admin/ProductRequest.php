@@ -24,25 +24,46 @@ class ProductRequest extends Request
     public function rules()
     {
         return [
-            'id'=>[
+            'id'       => [
                 'numeric',
             ],
-            'img_id'=>[
+            'category_id'=>[
                 'numeric',
             ],
-            'p_name'=>[
-                'required'
+            'img_id'   => [
+                'numeric',
             ],
-            'model_id'=>[
-                'numeric'
+            'p_name'   => [
+                'required',
+                'min:3',
             ],
-            'brand_id'=>[
-                'numeric'
+            'p_num'    => [
+                'alpha_dash',
             ],
-            'weight'=>[
-                'numeric'
+            'price'    => [
+                'numeric',
             ],
-            ''
+            'store'   =>[
+                'required',
+                'integer',
+                'min:1'
+            ],
+            'status'   => [
+                'required',
+            ],
+            'recommend'=>[
+                'required',
+                'in:0,1',
+            ],
+            'flag' =>[
+                'string'
+            ],
+            'summary'=>[
+                'string',
+            ],
+            'is_free_shipping'=>[
+                'in:0,1',
+            ]
         ];
     }
 }
