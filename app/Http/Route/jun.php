@@ -35,10 +35,10 @@ Route::group(['namespace' => 'Home'], function () {
 
     Route::resource('comment','CommentController');
     Route::get('comment','CommentController@show');
-    Route::get('insert','CommentController@insert');
+    Route::get('store','CommentController@store');
 
     Route::resource('order','OrderController');
-    Route::get('order','OrderController@index');
+    Route::get('order','OrderController@show');
 
 
 });

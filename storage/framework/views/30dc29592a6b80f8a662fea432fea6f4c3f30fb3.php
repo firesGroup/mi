@@ -11,24 +11,24 @@
  */
 ?>
 
-@extends('layouts.home')
 
-@section('title','')
 
-@section('css')
+<?php $__env->startSection('title',''); ?>
+
+<?php $__env->startSection('css'); ?>
     @parent
 
-    <link rel="stylesheet" type="text/css" href="{{ asset('/css/home/comment.css') }}">
+    <link rel="stylesheet" type="text/css" href="<?php echo e(asset('/css/home/comment.css')); ?>">
 
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section('content')
+<?php $__env->startSection('content'); ?>
 
 
     <div id="J_proHeader">
         <div class="xm-product-box">
             <div class="nav-bar" id="J_headNav">
-                <div class="container J_navSwitch"><h2 class="J_proName">{{$shop[0]->p_name}}</h2>
+                <div class="container J_navSwitch"><h2 class="J_proName"><?php echo e($shop[0]->p_name); ?></h2>
                     <div class="con">
                         <div class="right"><a href="//www.mi.com/max2/" data-stat-id="0d06d9d5f98ac836"
                             >概述</a>
@@ -85,7 +85,7 @@
             <div class="m-comment-nav J_nav"><h2>大家认为</h2>
                 <div class="nav-box">
                     <a class="item cur" data-profileid="0" href="javascript:;"> 全部 （<span
-                                id="allnum">{{$num}}</span>）</a>
+                                id="allnum"><?php echo e($num); ?></span>）</a>
                     <a class="item item1" data-profileid="2" href="javascript:;"> 外观漂亮（528） </a>
                     <a class="item item2" data-profileid="9" href="javascript:;"> 值得拥有（341） </a>
                     <a class="item item3" data-profileid="11" href="javascript:;"> 手感很棒（288） </a>
@@ -102,27 +102,28 @@
                     </div>
                     <div class="m-comment-box J_commentList">
                         <ul class="m-comment-list J_listBody">
-                            @foreach($data as $v)
-                                @if($v->member_id != 4)
+                            <?php foreach($data as $v): ?>
+                                <?php if($v->member_id != 4): ?>
                                     <li class="com-item J_resetImgCon J_canZoomBox" data-id="144906250">
-                                        <input type="hidden" value="{{$v->id}}" id="commentid">
-                                        <input type="hidden" value="{{$v->p_id}}" id="p_id">
+                                        <input type="hidden" value="<?php echo e($v->id); ?>" id="commentid">
+                                        <input type="hidden" value="<?php echo e($v->p_id); ?>" id="p_id">
                                         <a class="user-img" href="/comment/user?user_id=679923323">
-                                            {{--头像--}}
+                                            <?php /*头像*/ ?>
                                             <img src="https://s1.mi-img.com/mfsv2/avatar/s010/p01YK9vgR0Lj/2knbWH5I3lXsA1_90.jpg">
                                         </a>
 
                                         <div class="comment-info">
                                             <a class="user-name"
-                                               href="/comment/user?user_id=679923323">{{ $v->member->nick_name }}</a>
-                                            <p class="time">{{$v->created_at}}</p>
+                                               href="/comment/user?user_id=679923323"><?php echo e($v->member->nick_name); ?></a>
+                                            <p class="time"><?php echo e($v->created_at); ?></p>
                                         </div>
 
                                         <div class="comment-eval"><i class="iconfont"></i> 超爱</div>
 
                                         <div class="comment-txt">
                                             <a href="/comment/detail?comment_id=144906250" target="_blank">
-                                                {{$v->content}}
+                                                <?php echo e($v->content); ?>
+
                                             </a>
                                         </div>
                                         <!-- 评论图片 -->
@@ -160,16 +161,17 @@
                                             <a href="Javascript:;" class="btn  answer-btn J_commentAnswerBtn reply_"
                                                data-commentid="144906250">回复</a>
                                         </div>
-                                        @endif
+                                        <?php endif; ?>
 
                                         <div class="comment-answer" id="suibian">
-                                            @foreach( $data as $value )
-                                                @if($v->id == $value->comment_id && $value->type == 2 )
+                                            <?php foreach( $data as $value ): ?>
+                                                <?php if($v->id == $value->comment_id && $value->type == 2 ): ?>
                                                     <div class="answer-item">
                                                         <img class="answer-img" src="//s01.mifile.cn/i/logo.png">
                                                         <div class="answer-content">
-                                                            <h3 class="official-name">{{ $value->member->nick_name }}</h3>
-                                                            <p> {{$value->content}}
+                                                            <h3 class="official-name"><?php echo e($value->member->nick_name); ?></h3>
+                                                            <p> <?php echo e($value->content); ?>
+
                                                                 <a href="javascript:void(0);" class="J_csLike "
                                                                    data-commentid="144906250"> <i class="iconfont"></i>&nbsp;<span
                                                                             class="amount">  158 </span>
@@ -177,8 +179,8 @@
                                                             </p>
                                                         </div>
                                                     </div>
-                                                @endif
-                                            @endforeach
+                                                <?php endif; ?>
+                                            <?php endforeach; ?>
 
                                         </div>
                                         <div class="J_canZoomData">
@@ -193,7 +195,7 @@
                                             </div>
                                         </div>
                                     </li>
-                                    @endforeach
+                                    <?php endforeach; ?>
                         </ul>
                         <div class="comment-more">
                             <a class="load-more J_loadMore" href="javascript:;" data-stat-id="5a1e4e882c6db2b9"
@@ -209,21 +211,22 @@
                     <h2 class="m-tit">最新评价</h2>
                     <ul class="m-spe-list J_speList">
 
-                        @foreach($lim as $v)
-                            @if($v->type != 2 && $v->elite == 0 )
+                        <?php foreach($lim as $v): ?>
+                            <?php if($v->type != 2 && $v->elite == 0 ): ?>
                                 <li class="" data-id="144940948">
                                     <div class="spe-top">
                                 <span class="time">
-                                    {{$time = $v->created_at}}
+                                    <?php echo e($time = $v->created_at); ?>
+
 
                                 </span>.
                                         <a class=""
-                                           href="/comment/user?user_id=137816676">{{$v->member->nick_name}} </a>
+                                           href="/comment/user?user_id=137816676"><?php echo e($v->member->nick_name); ?> </a>
                                     </div>
 
                                     <div class="txt">
                                         <a href="/comment/detail?comment_id=144940948" target="_blank">
-                                            {{$v->content}} </a>
+                                            <?php echo e($v->content); ?> </a>
                                     </div>
 
                                     <div class="comment-handler">
@@ -234,8 +237,8 @@
 
                                     <div class="comment-eval"><i class="iconfont"></i> 超爱</div>
                                 </li>
-                            @endif
-                        @endforeach
+                            <?php endif; ?>
+                        <?php endforeach; ?>
 
                     </ul>
                     <a href="javascript:;" class="m-scroll-top J_scrollTop hidden" data-stat-id="3580ecd7d0252a8d"
@@ -321,9 +324,9 @@
         </div>
     </div>
     <div class="modal-backdrop fade in" style="width: 100%; height: 5695px;display: none;"></div>
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section('js')
+<?php $__env->startSection('js'); ?>
     @parent
 
     <script>
@@ -384,13 +387,13 @@
                         var pid = $('#p_id').val();
 
                         //定义路由
-                        var url = '{{url('comment')}}';
+                        var url = '<?php echo e(url('comment')); ?>';
 
 
                         $.ajax({
                             url: url,
                             type: 'post',
-                            data: {'input': input, 'cid': cid, '_token': "{{csrf_token()}}", 'pid': pid},
+                            data: {'input': input, 'cid': cid, '_token': "<?php echo e(csrf_token()); ?>", 'pid': pid},
                             success: function (data) {
 
                                 if (data) {
@@ -398,7 +401,7 @@
                                         "<div class='answer-item'>" +
                                         "<img class='answer-img' src='//s01.mifile.cn/i/logo.png' style='width: 32px;height: 32px;'>" +
                                         "<div class='answer-content'> " +
-                                        "<h3 class='official-name'>"+'{{$value->member->nick_name}}'+"</h3>" +
+                                        "<h3 class='official-name'>"+'<?php echo e($value->member->nick_name); ?>'+"</h3>" +
                                         "<p>" + data + "<a href='javascript:void(0);' class='J_csLike 'data-commentid='144906250'> <i class='iconfont'></i>&nbsp;<spanclass='amount'>  158 </span> </a> " +
                                         "</p> " +
                                         "</div> " +
@@ -427,4 +430,6 @@
 
     </script>
 
-@endsection
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('layouts.home', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

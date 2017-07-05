@@ -58,14 +58,14 @@ class CommentController extends Controller
     {
 
         $text = $request->text;
-//        $a = $request->id;
-//dd($a);
+
+
         if($text != null){
         $bool= DB::table('comment')->insert([
             'member_id'=> '4',
             'p_id'=>$request->id,
             'content' => $request->text,
-            'is_hide' => 1,
+            'elite' => 1,
             'type'=> 2,
             'created_at'=> date('Y-m-d H:i:s')
         ]);

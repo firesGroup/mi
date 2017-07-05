@@ -10,21 +10,21 @@
  * Time: 18:19
  */
 ?>
-@extends('layouts.home')
 
-@section('title','')
 
-@section('css')
+<?php $__env->startSection('title',''); ?>
+
+<?php $__env->startSection('css'); ?>
     @parent
 
-    <link rel="stylesheet" type="text/css" href="{{ asset('/css/home/comment.css') }}">
+    <link rel="stylesheet" type="text/css" href="<?php echo e(asset('/css/home/comment.css')); ?>">
 
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section('content')
+<?php $__env->startSection('content'); ?>
 
-    <link rel="stylesheet" href="{{ asset('/css/home/order.css') }}">
-    <link rel="stylesheet" href="{{ asset('/css/home/orderbase.css') }}">
+    <link rel="stylesheet" href="<?php echo e(asset('/css/home/order.css')); ?>">
+    <link rel="stylesheet" href="<?php echo e(asset('/css/home/orderbase.css')); ?>">
 
     <div class="uc-box uc-main-box">
         <div class="uc-content-box order-list-box">
@@ -211,4 +211,5 @@
         </div>
     </div>
 
-@endsection
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layouts.home', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
