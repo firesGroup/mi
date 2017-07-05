@@ -55,13 +55,13 @@
                         <div class="layui-form-item">
                             <label class="layui-form-label">版本规格</label>
                             <div class="layui-input-block">
-                                <input type="text" name="ver_spec" lay-verify="required" placeholder="请输入版本规格" autocomplete="off" class="layui-input" value="{{old('ver_spec')}}">
+                                <input type="text" name="ver_spec"  placeholder="请输入版本规格" autocomplete="off" class="layui-input" value="{{old('ver_spec')}}">
                             </div>
                         </div>
                         <div class="layui-form-item">
                             <label class="layui-form-label">版本简介</label>
                             <div class="layui-input-block">
-                                <input type="text" name="ver_desc" lay-verify="required" placeholder="请输入版本简介" autocomplete="off" class="layui-input" value="{{old('ver_desc')}}">
+                                <input type="text" name="ver_desc" placeholder="请输入版本简介" autocomplete="off" class="layui-input" value="{{old('ver_desc')}}">
                             </div>
                         </div>
                         <div class="layui-form-item">
@@ -146,7 +146,7 @@
                         layer.close(index);
                         if( res.status == 0 ){
                             layer.msg('添加成功', {icon:6, time:1000, end:function(){
-                                location.href= '{{ url('/admin/product/') }}';
+                                location.href= '{{ url('/admin/product/versions/'.$p_id ) }}';
                             }});
                         }else if( res.status == 1){
                             layer.msg('添加失败!', {icon:2, time:2000, end:function(){

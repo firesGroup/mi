@@ -131,8 +131,19 @@
                     </tbody>
                 </table>
                 <div class="larry-table-page">
-                    <?php echo e($productList->render()); ?>
+                    <?php if( isset($category_id) ): ?>
+                        <?php echo e($productList->appends(['search'=>'oneSelect','category' => $category_id])->links()); ?>
 
+                    <?php elseif(isset($sort_price)): ?>
+                        <?php echo e($productList->appends(['search'=>'oneSelect','sort_price' => $sort_price])->links()); ?>
+
+                    <?php elseif(isset($word)): ?>
+                        <?php echo e($productList->appends(['search'=>'oneSelect','word' => $word])->links()); ?>
+
+                    <?php else: ?>
+                     <?php echo e($productList->render()); ?>
+
+                    <?php endif; ?>
                 </div>
             </div>
         </div>

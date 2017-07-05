@@ -28,10 +28,10 @@ class ProductVersionsRequest extends Request
                 'required'
             ],
             'ver_spec'=>[
-                'required'
+                'string'
             ],
             'ver_desc'=>[
-                'required'
+                'string'
             ],
             'price'=>[
                 'required',

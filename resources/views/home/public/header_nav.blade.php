@@ -32,83 +32,28 @@
                         <div class="item-children">
                             <div class="container">
                                 <ul class="children-list clearfix">
-                                    <li class="first">
-                                        <div class="figure figure-thumb">
-                                            <a href="//www.mi.com/mi6/">
-                                                <img src="/images/public/default.gif" data-url="//c1.mifile.cn/f/i/2014/cn/placeholder-220!110x110.png"   alt="小米6" width="160" height="110" />
-                                            </a>
-                                        </div>
-                                        <div class="title">
-                                            <a href="//www.mi.com/mi6/">小米6</a>
-                                        </div>
-                                        <p class="price">2499元起</p>
-                                        <div class="flags">
-                                            <div class="flag">新品</div>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div class="figure figure-thumb">
-                                            <a href="//www.mi.com/max2/">
-                                                <img src="/images/public/default.gif" data-url="//c1.mifile.cn/f/i/2014/cn/placeholder-220!110x110.png"   alt="小米Max 2" width="160" height="110" />
-                                            </a>
-                                        </div>
-                                        <div class="title">
-                                            <a href="//www.mi.com/max2/">小米Max 2</a>
-                                        </div>
-                                        <p class="price">1699元起</p>
-                                        <div class="flags">
-                                            <div class="flag">新品</div>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div class="figure figure-thumb">
-                                            <a href="//www.mi.com/minote2/">
-                                                <img src="/images/public/default.gif" data-url="//c1.mifile.cn/f/i/2014/cn/placeholder-220!110x110.png"   alt="小米Note 2" width="160" height="110" />
-                                            </a>
-                                        </div>
-                                        <div class="title">
-                                            <a href="//www.mi.com/minote2/">小米Note 2</a>
-                                        </div>
-                                        <p class="price">2799元起</p>
-                                        <div class="flags">
-                                            <div class="flag">现货</div>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div class="figure figure-thumb">
-                                            <a href="//www.mi.com/mix/">
-                                                <img src="/images/public/default.gif" data-url="//c1.mifile.cn/f/i/2014/cn/placeholder-220!110x110.png"   alt="小米MIX" width="160" height="110" />
-                                            </a>
-                                        </div>
-                                        <div class="title">
-                                            <a href="//www.mi.com/mix/">小米MIX</a>
-                                        </div>
-                                        <p class="price">3499元起</p>                                    <div class="flags">
-                                            <div class="flag">现货</div>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div class="figure figure-thumb">
-                                            <a href="//www.mi.com/mi5splus/">
-                                                <img src="/images/public/default.gif" data-url="//c1.mifile.cn/f/i/2014/cn/placeholder-220!110x110.png"   alt="小米5s Plus" width="160" height="110" />
-                                            </a>
-                                        </div>
-                                        <div class="title">
-                                            <a href="//www.mi.com/mi5splus/">小米5s Plus</a>
-                                        </div>
-                                        <p class="price">2299元起</p>
-                                    </li>
-                                    <li>
-                                        <div class="figure figure-thumb">
-                                            <a href="//www.mi.com/mi5c/">
-                                                <img src="/images/public/default.gif" data-url="//c1.mifile.cn/f/i/2014/cn/placeholder-220!110x110.png"   alt="小米手机5c" width="160" height="110" />
-                                            </a>
-                                        </div>
-                                        <div class="title">
-                                            <a href="//www.mi.com/mi5c/">小米手机5c</a>
-                                        </div>
-                                        <p class="price">1499元</p>
-                                    </li>
+                                    @foreach( $header_nav['xiaomi'] as $k=>$v )
+                                        @if( $k == 0 )
+                                            <li class="first">
+                                        @else
+                                            <li>
+                                        @endif
+                                            <div class="figure figure-thumb">
+                                                <a href="{{ url('/product/info/'.$v->id) }}">
+                                                    <img class="nav_img_load" src="/images/public/default.gif" data-url="{{ $v->p_index_image }}!160_110" alt="{{ $v->p_name }}"/>
+                                                </a>
+                                            </div>
+                                            <div class="title">
+                                                <a href="{{ url('/product/info/'.$v->id) }}">{{ $v->p_name }}</a>
+                                            </div>
+                                            <p class="price">{{ $v->price }}元起</p>
+                                            @if( $v->flag )
+                                                <div class="flags">
+                                                    <div class="flag">{{ $v->flag }}</div>
+                                                </div>
+                                            @endif
+                                        </li>
+                                    @endforeach
                                 </ul>
                             </div>
                         </div>
@@ -118,30 +63,28 @@
                         <div class="item-children">
                             <div class="container">
                                 <ul class="children-list clearfix">
-                                    <li class="first">
-                                        <div class="figure figure-thumb">
-                                            <a href="//www.mi.com/redminote4x/"><img src="/images/public/default.gif" data-url="//c1.mifile.cn/f/i/2014/cn/placeholder-220!110x110.png"   alt="红米Note 4X" width="160" height="110" /></a>
-                                        </div>
-                                        <div class="title"><a href="//www.mi.com/redminote4x/">红米Note 4X</a></div>
-                                        <p class="price">799元起</p>                                    <div class="flags"><div class="flag">热卖</div></div>                                </li>
-                                    <li>
-                                        <div class="figure figure-thumb">
-                                            <a href="//www.mi.com/redmi4x/"><img src="/images/public/default.gif" data-url="//c1.mifile.cn/f/i/2014/cn/placeholder-220!110x110.png"   alt="红米4X" width="160" height="110" /></a>
-                                        </div>
-                                        <div class="title"><a href="//www.mi.com/redmi4x/">红米4X</a></div>
-                                        <p class="price">699元起</p>                                    <div class="flags"><div class="flag">热卖</div></div>                                </li>
-                                    <li>
-                                        <div class="figure figure-thumb">
-                                            <a href="//www.mi.com/redmi4a/"><img src="/images/public/default.gif" data-url="//c1.mifile.cn/f/i/2014/cn/placeholder-220!110x110.png"   alt="红米4A" width="160" height="110" /></a>
-                                        </div>
-                                        <div class="title"><a href="//www.mi.com/redmi4a/">红米4A</a></div>
-                                        <p class="price">599元</p>                                                                    </li>
-                                    <li>
-                                        <div class="figure figure-thumb">
-                                            <a href="//www.mi.com/redmi4"><img src="/images/public/default.gif" data-url="//c1.mifile.cn/f/i/2014/cn/placeholder-220!110x110.png"   alt="红米4" width="160" height="110" /></a>
-                                        </div>
-                                        <div class="title"><a href="//www.mi.com/redmi4">红米4</a></div>
-                                        <p class="price">799元起</p>                                                                    </li>
+                                    @foreach( $header_nav['hongmi'] as $k=>$v )
+                                        @if( $k == 0 )
+                                            <li class="first">
+                                        @else
+                                        <li>
+                                            @endif
+                                            <div class="figure figure-thumb">
+                                                <a href="{{ url('/product/info/'.$v->id) }}">
+                                                    <img class="nav_img_load" src="/images/public/default.gif" data-url="{{ $v->p_index_image }}!160_110"   alt="{{ $v->p_name }}" />
+                                                </a>
+                                            </div>
+                                            <div class="title">
+                                                <a href="{{ url('/product/info/'.$v->id) }}">{{ $v->p_name }}</a>
+                                            </div>
+                                            <p class="price">{{ $v->price }}元起</p>
+                                            @if( $v->flag )
+                                                <div class="flags">
+                                                    <div class="flag">{{ $v->flag }}</div>
+                                                </div>
+                                            @endif
+                                        </li>
+                                    @endforeach
                                 </ul>
                             </div>
                         </div>
@@ -151,40 +94,28 @@
                         <div class="item-children">
                             <div class="container">
                                 <ul class="children-list clearfix">
-                                    <li class="first">
-                                        <div class="figure figure-thumb">
-                                            <a href="//www.mi.com/mipad3/">
-                                                <img src="/images/public/default.gif" data-url="//c1.mifile.cn/f/i/2014/cn/placeholder-220!110x110.png"   alt="小米平板3 64GB" width="160" height="110" />
-                                            </a>
-                                        </div>
-                                        <div class="title">
-                                            <a href="//www.mi.com/mipad3/">小米平板3 64GB</a></div>
-                                        <p class="price">1499元</p>
-                                    </li>
-                                    <li>
-                                        <div class="figure figure-thumb">
-                                            <a href="//www.mi.com/mibookair-12/">
-                                                <img src="/images/public/default.gif" data-url="//c1.mifile.cn/f/i/2014/cn/placeholder-220!110x110.png"   alt="小米笔记本Air 12.5"" width="160" height="110" />
-                                            </a>
-                                        </div>
-                                        <div class="title">
-                                            <a href="//www.mi.com/mibookair-12/">小米笔记本Air 12.5"</a>
-                                        </div>
-                                        <p class="price">3599元</p>
-                                    </li>
-                                    <li>
-                                        <div class="figure figure-thumb">
-                                            <a href="//www.mi.com/mibookair/">
-                                                <img src="/images/public/default.gif" data-url="//c1.mifile.cn/f/i/2014/cn/placeholder-220!110x110.png"   alt="小米笔记本Air 13.3"" width="160" height="110" />
-                                            </a>
-                                        </div>
-                                        <div class="title">
-                                            <a href="//www.mi.com/mibookair/">小米笔记本Air 13.3"</a>
-                                        </div>
-                                        <p class="price">4799元</p>                                    <div class="flags">
-                                            <div class="flag">新品</div>
-                                        </div>
-                                    </li>
+                                    @foreach( $header_nav['pingban'] as $k=>$v )
+                                        @if( $k == 0 )
+                                            <li class="first">
+                                        @else
+                                        <li>
+                                            @endif
+                                            <div class="figure figure-thumb">
+                                                <a href="{{ url('/product/info/'.$v->id) }}">
+                                                    <img class="nav_img_load" src="/images/public/default.gif" data-url="{{ $v->p_index_image }}!160_110"   alt="{{ $v->p_name }}" />
+                                                </a>
+                                            </div>
+                                            <div class="title">
+                                                <a href="{{ url('/product/info/'.$v->id) }}">{{ $v->p_name }}</a>
+                                            </div>
+                                            <p class="price">{{ $v->price }}元起</p>
+                                            @if( $v->flag )
+                                                <div class="flags">
+                                                    <div class="flag">{{ $v->flag }}</div>
+                                                </div>
+                                            @endif
+                                        </li>
+                                    @endforeach
                                 </ul>
                             </div>
                         </div>
@@ -194,55 +125,31 @@
                         <div class="item-children">
                             <div class="container">
                                 <ul class="children-list clearfix">
-                                    <li class="first">
-                                        <div class="figure figure-thumb">
-                                            <a href="//www.mi.com/mitv4/49/">
-                                                <img src="/images/public/default.gif" data-url="//c1.mifile.cn/f/i/2014/cn/placeholder-220!110x110.png"   alt="小米电视4 49英寸" width="160" height="110" />
-                                            </a>
-                                        </div>
-                                        <div class="title">
-                                            <a href="//www.mi.com/mitv4/49/">小米电视4 49英寸</a>
-                                        </div>
-                                        <p class="price">3499元</p>                                    <div class="flags">
-                                            <div class="flag">新品</div>
-                                        </div>
-                                    </li>
+                                    @foreach( $header_nav['dianshi'] as $k=>$v )
+                                        @if( $k == 0 )
+                                            <li class="first">
+                                        @else
+                                            <li>
+                                                @endif
+                                                <div class="figure figure-thumb">
+                                                    <a href="{{ url('/product/info/'.$v->id) }}">
+                                                        <img class="nav_img_load" src="/images/public/default.gif" data-url="{{ $v->p_index_image }}!160_110"   alt="{{ $v->p_name }}" />
+                                                    </a>
+                                                </div>
+                                                <div class="title">
+                                                    <a href="{{ url('/product/info/'.$v->id) }}">{{ $v->p_name }}</a>
+                                                </div>
+                                                <p class="price">{{ $v->price }}元起</p>
+                                                @if( $v->flag )
+                                                    <div class="flags">
+                                                        <div class="flag">{{ $v->flag }}</div>
+                                                    </div>
+                                                @endif
+                                            </li>
+                                            @endforeach
                                     <li>
                                         <div class="figure figure-thumb">
-                                            <a href="//www.mi.com/mitv4/55/">
-                                                <img src="/images/public/default.gif" data-url="//c1.mifile.cn/f/i/2014/cn/placeholder-220!110x110.png"   alt="小米电视4 55英寸" width="160" height="110" />
-                                            </a>
-                                        </div>
-                                        <div class="title">
-                                            <a href="//www.mi.com/mitv4/55/">小米电视4 55英寸</a></div>
-                                        <p class="price">3999元</p>
-                                        <div class="flags">
-                                            <div class="flag">新品</div>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div class="figure figure-thumb">
-                                            <a href="//www.mi.com/mitv4/65/">
-                                                <img src="/images/public/default.gif" data-url="//c1.mifile.cn/f/i/2014/cn/placeholder-220!110x110.png"   alt="小米电视4 65英寸" width="160" height="110" />
-                                            </a>
-                                        </div>
-                                        <div class="title"><a href="//www.mi.com/mitv4/65/">小米电视4 65英寸</a></div>
-                                        <p class="price">9999元</p>                                    <div class="flags"><div class="flag">新品</div></div>                                </li>
-                                    <li>
-                                        <div class="figure figure-thumb">
-                                            <a href="//www.mi.com/mitv4A/43/"><img src="/images/public/default.gif" data-url="//c1.mifile.cn/f/i/2014/cn/placeholder-220!110x110.png"   alt="小米电视4A 43英寸" width="160" height="110" /></a>
-                                        </div>
-                                        <div class="title"><a href="//www.mi.com/mitv4A/43/">小米电视4A 43英寸</a></div>
-                                        <p class="price">2099元</p>                                                                    </li>
-                                    <li>
-                                        <div class="figure figure-thumb">
-                                            <a href="//www.mi.com/mitv4A/49/"><img src="/images/public/default.gif" data-url="//c1.mifile.cn/f/i/2014/cn/placeholder-220!110x110.png"   alt="小米电视4A 49英寸" width="160" height="110" /></a>
-                                        </div>
-                                        <div class="title"><a href="//www.mi.com/mitv4A/49/">小米电视4A 49英寸</a></div>
-                                        <p class="price">2599元起</p>                                                                    </li>
-                                    <li>
-                                        <div class="figure figure-thumb">
-                                            <a href="//www.mi.com/buytv/"><img src="/images/public/default.gif" data-url="//c1.mifile.cn/f/i/2014/cn/placeholder-220!110x110.png"   alt="查看全部<br/>小米电视" width="160" height="110" /></a>
+                                            <a href="//www.mi.com/buytv/"><img src="/images/public/default.gif" data-url="//c1.mifile.cn/f/i/2014/cn/placeholder-220!110x110.png"   alt="查看全部<br/>小米电视" /></a>
                                         </div>
                                         <div class="title"><a href="//www.mi.com/buytv/">查看全部<br/>小米电视</a></div>
                                     </li>
@@ -255,36 +162,28 @@
                         <div class="item-children">
                             <div class="container">
                                 <ul class="children-list clearfix">
-                                    <li class="first">
-                                        <div class="figure figure-thumb">
-                                            <a href="//www.mi.com/mibox3s/"><img src="/images/public/default.gif" data-url="//c1.mifile.cn/f/i/2014/cn/placeholder-220!110x110.png"   alt="小米盒子3s" width="160" height="110" /></a>
-                                        </div>
-                                        <div class="title"><a href="//www.mi.com/mibox3s/">小米盒子3s</a></div>
-                                        <p class="price">299元</p>                                                                    </li>
-                                    <li>
-                                        <div class="figure figure-thumb">
-                                            <a href="//www.mi.com/mibox3c/"><img src="/images/public/default.gif" data-url="//c1.mifile.cn/f/i/2014/cn/placeholder-220!110x110.png"   alt="小米盒子3c" width="160" height="110" /></a>
-                                        </div>
-                                        <div class="title"><a href="//www.mi.com/mibox3c/">小米盒子3c</a></div>
-                                        <p class="price">199元</p>                                                                    </li>
-                                    <li>
-                                        <div class="figure figure-thumb">
-                                            <a href="//www.mi.com/hezi3s/"><img src="/images/public/default.gif" data-url="//c1.mifile.cn/f/i/2014/cn/placeholder-220!110x110.png"   alt="小米盒子3 增强版" width="160" height="110" /></a>
-                                        </div>
-                                        <div class="title"><a href="//www.mi.com/hezi3s/">小米盒子3 增强版</a></div>
-                                        <p class="price">399元</p>                                                                    </li>
-                                    <li>
-                                        <div class="figure figure-thumb">
-                                            <a href="//www.mi.com/misurround/"><img src="/images/public/default.gif" data-url="//c1.mifile.cn/f/i/2014/cn/placeholder-220!110x110.png"   alt="小米家庭影院" width="160" height="110" /></a>
-                                        </div>
-                                        <div class="title"><a href="//www.mi.com/misurround/">小米家庭影院</a></div>
-                                        <p class="price">1999元</p>                                                                    </li>
-                                    <li>
-                                        <div class="figure figure-thumb">
-                                            <a href="//item.mi.com/1160800074.html"><img src="/images/public/default.gif" data-url="//c1.mifile.cn/f/i/2014/cn/placeholder-220!110x110.png"   alt="小米家庭音响 标准版" width="160" height="110" /></a>
-                                        </div>
-                                        <div class="title"><a href="//item.mi.com/1160800074.html">小米家庭音响 标准版</a></div>
-                                        <p class="price">699元</p>                                                                    </li>
+                                    @foreach( $header_nav['hezi'] as $k=>$v )
+                                        @if( $k == 0 )
+                                            <li class="first">
+                                        @else
+                                            <li>
+                                        @endif
+                                            <div class="figure figure-thumb">
+                                                <a href="{{ url('/product/info/'.$v->id) }}">
+                                                    <img class="nav_img_load" src="/images/public/default.gif" data-url="{{ $v->p_index_image }}!160_110"   alt="{{ $v->p_name }}" />
+                                                </a>
+                                            </div>
+                                            <div class="title">
+                                                <a href="{{ url('/product/info/'.$v->id) }}">{{ $v->p_name }}</a>
+                                            </div>
+                                            <p class="price">{{ $v->price }}元起</p>
+                                            @if( $v->flag )
+                                                <div class="flags">
+                                                    <div class="flag">{{ $v->flag }}</div>
+                                                </div>
+                                            @endif
+                                        </li>
+                                    @endforeach
                                 </ul>
                             </div>
                         </div>
@@ -294,42 +193,28 @@
                         <div class="item-children">
                             <div class="container">
                                 <ul class="children-list clearfix">
-                                    <li class="first">
-                                        <div class="figure figure-thumb">
-                                            <a href="//www.mi.com/miwifihd/"><img src="/images/public/default.gif" data-url="//c1.mifile.cn/f/i/2014/cn/placeholder-220!110x110.png"   alt="小米路由器 HD/Pro" width="160" height="110" /></a>
-                                        </div>
-                                        <div class="title"><a href="//www.mi.com/miwifihd/">小米路由器 HD/Pro</a></div>
-                                        <p class="price">499元起</p>                                                                    </li>
-                                    <li>
-                                        <div class="figure figure-thumb">
-                                            <a href="//www.mi.com/miwifi3g/"><img src="/images/public/default.gif" data-url="//c1.mifile.cn/f/i/2014/cn/placeholder-220!110x110.png"   alt="小米路由器 3G" width="160" height="110" /></a>
-                                        </div>
-                                        <div class="title"><a href="//www.mi.com/miwifi3g/">小米路由器 3G</a></div>
-                                        <p class="price">249元</p>                                    <div class="flags"><div class="flag">新品</div></div>                                </li>
-                                    <li>
-                                        <div class="figure figure-thumb">
-                                            <a href="//www.mi.com/miwifi3/"><img src="/images/public/default.gif" data-url="//c1.mifile.cn/f/i/2014/cn/placeholder-220!110x110.png"   alt="小米路由器 3" width="160" height="110" /></a>
-                                        </div>
-                                        <div class="title"><a href="//www.mi.com/miwifi3/">小米路由器 3</a></div>
-                                        <p class="price">149元</p>                                    <div class="flags"><div class="flag">包邮</div></div>                                </li>
-                                    <li>
-                                        <div class="figure figure-thumb">
-                                            <a href="//www.mi.com/miwifi3c/"><img src="/images/public/default.gif" data-url="//c1.mifile.cn/f/i/2014/cn/placeholder-220!110x110.png"   alt="小米路由器 3C" width="160" height="110" /></a>
-                                        </div>
-                                        <div class="title"><a href="//www.mi.com/miwifi3c/">小米路由器 3C</a></div>
-                                        <p class="price">99元</p>                                    <div class="flags"><div class="flag">包邮</div></div>                                </li>
-                                    <li>
-                                        <div class="figure figure-thumb">
-                                            <a href="//www.mi.com/plc/"><img src="/images/public/default.gif" data-url="//c1.mifile.cn/f/i/2014/cn/placeholder-220!110x110.png"   alt="小米WiFi电力猫" width="160" height="110" /></a>
-                                        </div>
-                                        <div class="title"><a href="//www.mi.com/plc/">小米WiFi电力猫</a></div>
-                                        <p class="price">249元</p>                                                                    </li>
-                                    <li>
-                                        <div class="figure figure-thumb">
-                                            <a href="//item.mi.com/1164700010.html"><img src="/images/public/default.gif" data-url="//c1.mifile.cn/f/i/2014/cn/placeholder-220!110x110.png"   alt="小米WiFi放大器 2" width="160" height="110" /></a>
-                                        </div>
-                                        <div class="title"><a href="//item.mi.com/1164700010.html">小米WiFi放大器 2</a></div>
-                                        <p class="price">49元</p>                                                                    </li>
+                                    @foreach( $header_nav['luyou'] as $k=>$v )
+                                        @if( $k == 0 )
+                                            <li class="first">
+                                        @else
+                                            <li>
+                                        @endif
+                                            <div class="figure figure-thumb">
+                                                <a href="{{ url('/product/info/'.$v->id) }}">
+                                                    <img class="nav_img_load" src="/images/public/default.gif" data-url="{{ $v->p_index_image }}!160_110"   alt="{{ $v->p_name }}" />
+                                                </a>
+                                            </div>
+                                            <div class="title">
+                                                <a href="{{ url('/product/info/'.$v->id) }}">{{ $v->p_name }}</a>
+                                            </div>
+                                            <p class="price">{{ $v->price }}元起</p>
+                                            @if( $v->flag )
+                                                <div class="flags">
+                                                    <div class="flag">{{ $v->flag }}</div>
+                                                </div>
+                                            @endif
+                                        </li>
+                                    @endforeach
                                 </ul>
                             </div>
                         </div>
@@ -339,42 +224,28 @@
                         <div class="item-children">
                             <div class="container">
                                 <ul class="children-list clearfix">
-                                    <li class="first">
-                                        <div class="figure figure-thumb">
-                                            <a href="//www.mi.com/scale2/"><img src="/images/public/default.gif" data-url="//c1.mifile.cn/f/i/2014/cn/placeholder-220!110x110.png"   alt="小米体脂秤" width="160" height="110" /></a>
-                                        </div>
-                                        <div class="title"><a href="//www.mi.com/scale2/">小米体脂秤</a></div>
-                                        <p class="price">199元</p>                                                                    </li>
-                                    <li>
-                                        <div class="figure figure-thumb">
-                                            <a href="//www.mi.com/shouhuan2/"><img src="/images/public/default.gif" data-url="//c1.mifile.cn/f/i/2014/cn/placeholder-220!110x110.png"   alt="小米手环2" width="160" height="110" /></a>
-                                        </div>
-                                        <div class="title"><a href="//www.mi.com/shouhuan2/">小米手环2</a></div>
-                                        <p class="price">149元</p>                                    <div class="flags"><div class="flag">包邮</div></div>                                </li>
-                                    <li>
-                                        <div class="figure figure-thumb">
-                                            <a href="//www.mi.com/water3/"><img src="/images/public/default.gif" data-url="//c1.mifile.cn/f/i/2014/cn/placeholder-220!110x110.png"   alt="小米净水器" width="160" height="110" /></a>
-                                        </div>
-                                        <div class="title"><a href="//www.mi.com/water3/">小米净水器</a></div>
-                                        <p class="price">1499元起</p>                                    <div class="flags"><div class="flag">新品</div></div>                                </li>
-                                    <li>
-                                        <div class="figure figure-thumb">
-                                            <a href="//www.mi.com/mivr2c/"><img src="/images/public/default.gif" data-url="//c1.mifile.cn/f/i/2014/cn/placeholder-220!110x110.png"   alt="小米VR眼镜 PLAY2" width="160" height="110" /></a>
-                                        </div>
-                                        <div class="title"><a href="//www.mi.com/mivr2c/">小米VR眼镜 PLAY2</a></div>
-                                        <p class="price">99元</p>                                    <div class="flags"><div class="flag">新品</div></div>                                </li>
-                                    <li>
-                                        <div class="figure figure-thumb">
-                                            <a href="//www.mi.com/dianfanbao2/"><img src="/images/public/default.gif" data-url="//c1.mifile.cn/f/i/2014/cn/placeholder-220!110x110.png"   alt="米家IH电饭煲" width="160" height="110" /></a>
-                                        </div>
-                                        <div class="title"><a href="//www.mi.com/dianfanbao2/">米家IH电饭煲</a></div>
-                                        <p class="price">399元</p>                                                                    </li>
-                                    <li>
-                                        <div class="figure figure-thumb">
-                                            <a href="//www.mi.com/smart/"><img src="/images/public/default.gif" data-url="//c1.mifile.cn/f/i/2014/cn/placeholder-220!110x110.png"   alt="查看全部<br/>智能硬件" width="160" height="110" /></a>
-                                        </div>
-                                        <div class="title"><a href="//www.mi.com/smart/">查看全部<br/>智能硬件</a></div>
-                                    </li>
+                                    @foreach( $header_nav['zhineng'] as $k=>$v )
+                                        @if( $k == 0 )
+                                            <li class="first">
+                                        @else
+                                            <li>
+                                        @endif
+                                            <div class="figure figure-thumb">
+                                                <a href="{{ url('/product/info/'.$v->id) }}">
+                                                    <img class="nav_img_load" src="/images/public/default.gif" data-url="{{ $v->p_index_image }}!160_110"   alt="{{ $v->p_name }}" />
+                                                </a>
+                                            </div>
+                                            <div class="title">
+                                                <a href="{{ url('/product/info/'.$v->id) }}">{{ $v->p_name }}</a>
+                                            </div>
+                                            <p class="price">{{ $v->price }}元起</p>
+                                            @if( $v->flag )
+                                                <div class="flags">
+                                                    <div class="flag">{{ $v->flag }}</div>
+                                                </div>
+                                            @endif
+                                        </li>
+                                    @endforeach
                                 </ul>
                             </div>
                         </div>
