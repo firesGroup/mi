@@ -1,17 +1,31 @@
 <?php
-/**
- * File Name: routes.php
- * Description:路由文件
- * Created by PhpStorm.
- * Auth: Long
- * Date: 2017/7/5 0005
- * Time: 上午 9:43
- */
+/*
+|--------------------------------------------------------------------------
+| Application Routes
+|--------------------------------------------------------------------------
+|
+| Here is where you can register all of the routes for an application.
+| It's a breeze. Simply tell Laravel the URIs it should respond to
+| and give it the controller to call when that URI is requested.
+|
+*/
+//肖开文-路由文件
+ include('Route/showkw.php');
 
-include('Route/showkw.php');
+//王明-路由文件
+ include('Route/wim.php');
 
+//龙彪-路由文件
+ include('Route/long.php');
+
+//潘珺-路由文件
 include('Route/jun.php');
 
-include('Route/wim.php');
+//这个不要动
+Route::get('/admin/welcome', function(){
+    return view('welcome');
+});
 
-include('Route/long.php');
+Route::get('admin', function () {
+    return view('login');
+});

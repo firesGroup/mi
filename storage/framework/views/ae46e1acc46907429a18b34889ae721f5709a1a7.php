@@ -10,30 +10,30 @@
  */
 ?>
 
-@extends('layouts.home')
 
-@section('title', '我的收货地址-小米商城')
-@section('css')
+
+<?php $__env->startSection('title', '我的收货地址-小米商城'); ?>
+<?php $__env->startSection('css'); ?>
     @parent
-    <link rel="stylesheet" type="text/css" href="{{ asset('/css/home/checkout.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('/css/home/address.css') }}">
-@endsection
-@section('content')
+    <link rel="stylesheet" type="text/css" href="<?php echo e(asset('/css/home/checkout.css')); ?>">
+    <link rel="stylesheet" type="text/css" href="<?php echo e(asset('/css/home/address.css')); ?>">
+<?php $__env->stopSection(); ?>
+<?php $__env->startSection('content'); ?>
 
     <div class="site-header site-mini-header">
         <div class="container">
             <div class="header-logo">
-                <a class="logo " href="{{url('/')}}" title="小米官网"></a>
+                <a class="logo " href="<?php echo e(url('/')); ?>" title="小米官网"></a>
             </div>
             <div class="header-title" id="J_miniHeaderTitle"><h2>确认订单</h2></div>
             <div class="topbar-info" id="J_userInfo">
             <span class="user">
                 <a rel="nofollow" class="user-name" href="" target="_blank">
-                    <span class="name">{{$UserArr}}</span>
+                    <span class="name"><?php echo e($UserArr); ?></span>
                     <i class="iconfont"></i>
                 </a>
                 <ul class="user-menu" style="display: none;">
-                    <li><a rel="nofollow" href="{{url('user_detail')}}" target="_blank">个人中心</a></li>
+                    <li><a rel="nofollow" href="<?php echo e(url('user_detail')); ?>" target="_blank">个人中心</a></li>
                     <li><a rel="nofollow" href="" target="_blank">评价晒单</a></li>
                     <li><a rel="nofollow" href="" target="_blank">我的喜欢</a></li>
                     <li><a rel="nofollow" href="" target="_blank">小米账户</a></li>
@@ -57,25 +57,27 @@
                     </div>
                     <div class="section-body clearfix" id="J_addressList">
                         <!-- addresslist begin -->
-                        @foreach($userAdd as $UserAdd)
+                        <?php foreach($userAdd as $UserAdd): ?>
                         <div class="address-item J_addressItem ">
                             <dl>
                                 <dt>
                                     <span class="tag"></span>
-                                    <em class="uname">{{$UserAdd->buy_user}}</em>
+                                    <em class="uname"><?php echo e($UserAdd->buy_user); ?></em>
                                 </dt>
                                 <dd class="utel">
-                                    {{$UserAdd->buy_phone}}
+                                    <?php echo e($UserAdd->buy_phone); ?>
+
                                 </dd>
                                 <dd class="uaddress">
-                                    {{$UserAdd->address}}
+                                    <?php echo e($UserAdd->address); ?>
+
                                 </dd>
                             </dl>
                             <div class="actions">
                                 <a href="javascript:;" class="modify J_addressModify">修改</a>
                             </div>
                         </div>
-                        @endforeach
+                        <?php endforeach; ?>
                         <!-- addresslist end -->
                         <div class="address-item address-item-new" id="J_newAddress">
                             <i class="iconfont"></i>
@@ -200,7 +202,7 @@
                     <div class="section-header clearfix">
                         <h3 class="title">商品及优惠券</h3>
                         <div class="more">
-                            <a href="{{url('cart')}}">返回购物车
+                            <a href="<?php echo e(url('cart')); ?>">返回购物车
                                 <i class="iconfont"></i></a>
                         </div>
                     </div>
@@ -367,9 +369,9 @@
                                     </div>
                                     <div class="options-box">
                                         <ul class="options-list J_optionsWrapper clearfix">
-                                            @foreach($data as $v)
-                                                <li class="option J_option" value="{{$v->id}}">{{$v->name}}</li>
-                                            @endforeach
+                                            <?php foreach($data as $v): ?>
+                                                <li class="option J_option" value="<?php echo e($v->id); ?>"><?php echo e($v->name); ?></li>
+                                            <?php endforeach; ?>
                                         </ul>
                                         <ul class="options-list J_optionsWrapper clearfix hide"></ul>
                                         <ul class="options-list J_optionsWrapper clearfix hide"></ul>
@@ -392,12 +394,12 @@
         </div>
     </div>
 
-    @include('home/public/footer')
-@endsection
+    <?php echo $__env->make('home/public/footer', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+<?php $__env->stopSection(); ?>
 
-@section('js')
+<?php $__env->startSection('js'); ?>
     @parent
-    <script type="text/javascript" src="{{asset('js/home/address/address.js')}}"></script>
+    <script type="text/javascript" src="<?php echo e(asset('js/home/address/address.js')); ?>"></script>
     <script>
 
         layui.use(['jquery', 'layer'], function () {
@@ -405,6 +407,8 @@
                 layer = layui.layer;
             var index;
         });
-
+        
     </script>
-@endsection
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('layouts.home', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
