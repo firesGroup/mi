@@ -50,7 +50,7 @@
 
                                     </form>
                                     <div class="alink">
-                                        <a href="{{ url('/register')  }}">注册小米账号</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="">忘记密码?</a>
+                                        <a href="{{ url('/reg')  }}">注册小米账号</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="">忘记密码?</a>
                                     </div>
                                 </div>
                                 <div class="layui-tab-item">

@@ -26,7 +26,7 @@ class LoginController extends Controller
 //            dd($email[0]->password);
 
             if(Hash::check($data['password'], $email[0]->password)){
-                $request->session()->put('user_detail', $email[0]->nick_name);
+                $request->session()->put('user_deta', ['nick_name'=>$email[0]->nick_name, 'phone'=>$email[0]->phone, 'email'=>$email[0]->email, 'id'=>$email[0]->id]);
                 return redirect('/');
             }else{
                 return back()->with('password', '密码错误')->withInput();
@@ -41,9 +41,12 @@ class LoginController extends Controller
             }
 
             if(Hash::check($data['password'], $phone[0]->password)){
-                $request->session()->put('user_detail', $phone[0]->nick_name);
+//                dd($phone);
+                $request->session()->put('user_deta', ['nick_name'=>$phone[0]->nick_name, 'phone'=>$phone[0]->phone, 'email'=>$phone[0]->email, 'id'=>$phone[0]->id]);
+//                dd(session('user_detail'));
                 return redirect('/');
             }else{
+
                 return back()->with('password', '密码错误')->withInput();
             }
         }
@@ -58,7 +61,7 @@ class LoginController extends Controller
 
     public function loginout(Request $request)
     {
-        $request->session()->forget('user_detail');
+        $request->session()->forget('user_deta');
         return redirect('/');
     }
 

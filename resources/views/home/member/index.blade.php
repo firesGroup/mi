@@ -30,8 +30,6 @@
                 @include('home.member.member_modoul')
                 <div class="span16">
                     <div class="protal-content-update hide">
-                        <div class="protal-username">
-                            Hi, ……        </div>
                         <p class="msg">我们做了一个小升级：你的用户名可以直接修改啦，去换个酷炫的名字吧。<a href="https://account.xiaomi.com/pass/auth/profile/home" target="_blank" data-stat-id="a7bae9e996d7d321" onclick="_msq.push(['trackEvent', '45a270e10b1f8e93-a7bae9e996d7d321', 'https://account.xiaomi.com/pass/auth/profile/home', 'pcpid', '']);"> 立即前往&gt;</a></p>
                     </div>
                     <div class="uc-box uc-main-box">
@@ -41,12 +39,13 @@
                                     <div class="user-card">
                                         <h2 class="username">{{$arr->nick_name}}</h2>
                                         <p class="tip">晚上好</p>
-                                        <a class="link" href="https://account.xiaomi.com/pass/userInfo" target="_blank" data-stat-id="4b099f76f8f470d2" onclick="_msq.push(['trackEvent', '45a270e10b1f8e93-4b099f76f8f470d2', 'https://account.xiaomi.com/pass/userInfo', 'pcpid', '']);">修改个人信息 &gt;</a>
-                                        <img class="avatar" src="https://account.xiaomi.com/static/img/passport/photo.jpg" width="150" height="150" alt="……">
+                                        <a class="link" href="javascript:;" data-stat-id="4b099f76f8f470d2" id="update">修改个人密码 &gt;</a>
+                                        <img class="avatar" src="{{$array->avator}}" width="150" height="150" alt="……">
                                     </div>
                                     <div class="user-actions">
                                         <ul class="action-list">
                                             <li>账户安全：<span class="level level-2">普通</span></li>
+
                                             @if(empty($arr->email))
                                         <li>绑定手机：<span class="tel">{{$arr->phone}}</span></li>
                                             <li>绑定邮箱：<span class="tel">{{$arr->email}}</span>
@@ -55,8 +54,16 @@
                                             @elseif(empty($arr->phone))
 
                                         <li>绑定邮箱：<span class="tel">{{$arr->email}}</span></li>
-                                                <li>绑定手机：<span class="tel">{{$arr->email}}</span><a class="btn btn-small btn-primary" href="https://account.xiaomi.com/pass/userInfo" target="_blank" data-stat-id="f51e486b2c529448" onclick="_msq.push(['trackEvent', '45a270e10b1f8e93-f51e486b2c529448', 'https://account.xiaomi.com/pass/userInfo', 'pcpid', '']);">绑定</a></li>
+                                        <li>绑定手机：<span class="tel"></span>
+                                        <button class="btn btn-small btn-primary layui-btn"   data-method="notice" id="phone">绑定</button></li>
+
                                             @endif
+
+                                            @if(!empty($arr->phone) && !empty($arr->email))
+                                        <li>绑定手机：<span class="tel">{{$arr->phone}}</span></li>
+                                        <li>绑定邮箱：<span class="tel">{{$arr->email}}</span></li>
+                                                @endif
+
                                         </ul>
                                     </div>
                                 </div>
@@ -95,7 +102,7 @@
 
 @section('js')
     @parent
-
+    <script  src="{{ asset('/js/home/member/member.js') }}"></script>
     <script>
         layui.use(['layer','jquery'], function () {
                 var $ = layui.jquery,
@@ -109,34 +116,237 @@
                         ,
                         closeBtn: false
                         ,
-                        area: '[700px, 500px];'
+                        area: '[800px, 900px];'
+                        ,
+                        closeBtn:1
                         ,
                         shade: 0.8
                         ,
                         id: 'LAY_layuipro' //设定一个id，防止重复弹出
                         ,
-                        btn: ['火速围观', '残忍拒绝']
-                        ,
                         moveType: 1 //拖拽模式，0或者1
                         ,
-                        content: '<div style="padding: 50px; line-height: 22px; background-color: #393D49; color: #fff; font-weight: 300;">你知道吗？亲！<br>layer ≠ layui<br><br>layer只是作为Layui的一个弹层模块，由于其用户基数较大，所以常常会有人以为layui是layerui<br><br>layer虽然已被 Layui 收编为内置的弹层模块，但仍然会作为一个独立组件全力维护、升级。<br><br>我们此后的征途是星辰大海 ^_^</div>'
+                        content:
+                        '<h1 align="center">邮箱绑定</h1>' +
+                        '<div class="layui-form">'+
+                        '<div style="width:600px;height:200px;" class="layui-form">' +
+                        ' <div class="layui-form-item" align="center">'+
+                        '<input type="text" name="email" lay-verify="required|email" autocomplete="off" placeholder="请输入邮箱" class="layui-input" style="width:300px" id="mail">'+
+                        '</div>'+
+                        '<div style="text-align:center">'+
+                        '<input type="text" name="" placeholder="请输入验证码" autocomplete="off" class="layui-input" style="width:185px;display:inline-block" id="code">' +
+                        '<button class="layui-btn" style="margin-left:5px" id="img_code">发送验证码</button>' +
+                        '</div>'+
+                        '<div align="center" style="margin-top:10px">'+
+                        '<button lay-submit class="layui-btn layui-btn-big layui-btn-normal" style="width:300px" align="center" id="binding">立即绑定</button>' +
+                        '</div>'+
+                        '</div>'+
+                        '</div>'
                         ,
-                        success: function (layero) {
-                            var btn = layero.find('.layui-layer-btn');
-                            btn.css('text-align', 'center');
-                            btn.find('.layui-layer-btn0').attr({
-                                href: 'http://www.layui.com/'
-                                , target: '_blank'
-                            });
+                        success: function (layero, index) {
+                            $(layero).children().addClass('layui-form');
+                            $('#img_code').click(function () {
+
+                                var email = $('#mail').val();
+//
+                                if (email == '') {
+                                    layer.msg('邮箱不能为空', {time: 2000, icon: 5});
+                                    return false;
+                                }
+
+                            var reg = /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+/ ;
+                                if(!reg.test(email)){
+                                    layer.msg('邮箱格式不正确', {time:2000, icon: 5});
+                                    return false;
+                                }
+                                var $btn = $(this);
+                                $.ajax({
+                                    url: "{{url('/mailBox')}}",
+                                    type: 'post',
+                                    data: {'_token': "{{csrf_token()}}", 'email': email},
+                                    success: function (data) {
+//                                    alert(data);
+                                        if (data == 1) {
+                                            layer.msg('邮件已发送, 请登录邮箱查看');
+                                            var n = 60;
+                                            $btn.attr('disabled', 'true');
+                                            $btn.addClass('layui-btn-disabled').removeClass('bg-color');
+                                            var timeid = setInterval(function () {
+                                                $btn.html('重新发送(' + n + ')');
+                                                if (n == 0) {
+                                                    clearInterval(timeid);
+                                                    $btn.html('发送邮件验证码');
+                                                    $btn.removeAttr('disabled').removeClass('layui-btn-disabled').addClass('bg-color');
+                                                }
+                                                n--;
+                                            }, 1000);
+                                        } else {
+                                            layer.msg('邮箱发送失败, 请等会在尝试', {time:2000, icon:5});
+                                        }
+                                    }
+                                })
+                          })
+
+                            $('#binding').click( function () {
+                                var email = $('#mail').val();
+                                var img_code = $('#code').val();
+
+                                if (email == '' || img_code == '') {
+                                    layer.msg('必填项不能为空', {time: 2000, icon: 5});
+                                    return false;
+                                }
+
+                                var reg =  /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+                                if(!reg.test(email)){
+                                    layer.msg('邮箱格式不正确', {time:2000, icon: 5});
+                                    return false;
+                                }
+                                $.ajax({
+                                    url:"{{url('mail_code')}}",
+                                    type:'post',
+                                data:{'_token':"{{csrf_token()}}", 'email':email, 'code':img_code},
+                                success: function (data) {
+                                            if(data == 1){
+                                                layer.closeAll();
+                                                top.location.reload()
+                                            }
+                                    },
+                                    error:function (error) {
+                                        var msgObj=JSON.parse(error.responseText);
+                                        var msg = '';
+                                        for(var name in msgObj){//遍历对象属性名
+                                            msg += msgObj[name] + "<br>";
+                                        }
+                                        layer.msg(msg, {icon:2,time:3000});
+                                    },
+                                })
+                            })
                         }
                     });
 
 
+            });
+
+                $('#phone').click( function() {
+                    layer.open({
+                        type: 1
+                        ,
+                        title: false //不显示标题栏
+                        ,
+                        closeBtn: false
+                        ,
+                        area: '[800px, 900px];'
+                        ,
+                        closeBtn:1
+                        ,
+                        shade: 0.8
+                        ,
+                        id: 'LAY_layuipro' //设定一个id，防止重复弹出
+                        ,
+                        moveType: 1 //拖拽模式，0或者1
+                        ,
+                        content:
+                        '<h1 align="center">手机绑定</h1>' +
+                        '<div class="layui-form">'+
+                        '<div style="width:600px;height:200px;" class="layui-form">' +
+                        ' <div class="layui-form-item" align="center">'+
+                        '<input type="text" name="email" lay-verify="" autocomplete="off" placeholder="请输入手机号码" class="layui-input" style="width:300px" id="phone">'+
+                        '</div>'+
+                        '<div style="text-align:center">'+
+                        '<input type="text" name="" placeholder="请输入验证码" autocomplete="off" class="layui-input" style="width:185px;display:inline-block" id="code">' +
+                        '<button class="layui-btn" style="margin-left:5px" id="phone_code">发送验证码</button>' +
+                        '</div>'+
+                        '<div align="center" style="margin-top:10px">'+
+                        '<button lay-submit class="layui-btn layui-btn-big layui-btn-normal" style="width:300px" align="center" id="binding">立即绑定</button>' +
+                        '</div>'+
+                        '</div>'+
+                        '</div>'
+                        ,
+                        success: function (layero, index) {
+
+                            $('#phone_code').click(function () {
+
+                                var phone = $('input#phone').val();
+//
+                                if (phone == '') {
+                                    layer.msg('手机号不能为空', {time: 2000, icon: 5});
+                                    return false;
+                                }
+
+                                var reg = /^1[3|4|5|8][0-9]\d{4,8}$/;
+                                if(!reg.test(phone)){
+                                    layer.msg('手机格式不正确', {time:2000, icon: 5});
+                                    return false;
+                                }
+                                var $btn = $(this);
+                                $.ajax({
+                                    url: "{{url('/sms')}}",
+                                    type: 'post',
+                                    data: {'_token': "{{csrf_token()}}", 'phone': phone},
+                                    success: function (data) {
+                                    var $data = JSON.parse(data);
+                                        if ($data['ResultData'] == '0') {
+                                            layer.msg('邮件已发送, 请查看手机');
+                                            var n = 60;
+                                            $btn.attr('disabled', 'true');
+                                            $btn.addClass('layui-btn-disabled').removeClass('bg-color');
+                                            var timeid = setInterval(function () {
+                                                $btn.html('重新发送(' + n + ')');
+                                                if (n == 0) {
+                                                    clearInterval(timeid);
+                                                    $btn.html('发送验证码');
+                                                    $btn.removeAttr('disabled').removeClass('layui-btn-disabled').addClass('bg-color');
+                                                }
+                                                n--;
+                                            }, 1000);
+                                        } else {
+                                            layer.msg('发送验证码失败, 请等会在尝试', {time:2000, icon:5});
+                                        }
+                                    }
+                                })
+                            });
+
+                            $('#binding').click( function () {
+                                var phone = $('input#phone').val();
+//                                console.log(phone);
+                                var phone_code = $('#code').val();
+
+                                if (phone == '' || phone_code == '') {
+                                    layer.msg('必填项不能为空', {time: 2000, icon: 5});
+                                    return false;
+                                }
+
+                                var reg =  /^1[3|4|5|8][0-9]\d{4,8}$/;
+                                if(!reg.test(phone)){
+                                    layer.msg('手机格式不正确', {time:2000, icon: 5});
+                                    return false;
+                                }
+                                $.ajax({
+                                    url:"{{url('phone_code')}}",
+                                    type:'post',
+                                    data:{'_token':"{{csrf_token()}}", 'phone':phone, 'code':phone_code},
+                                    success: function (data) {
+                                        if(data == 1){
+                                            layer.closeAll();
+                                            top.location.reload()
+                                        }
+                                    },
+                                    error:function (error) {
+                                        var msgObj=JSON.parse(error.responseText);
+                                        var msg = '';
+                                        for(var name in msgObj){//遍历对象属性名
+                                            msg += msgObj[name] + "<br>";
+                                        }
+                                        layer.msg(msg, {icon:2,time:3000});
+                                    }
+                                })
+                            })
+                        }
+                    });
+
+                });
+
+
         });
-
-                //示范一个公告层
-
-
-        })
     </script>
 @endsection
