@@ -84,7 +84,7 @@
                     <div class="col col-name">商品名称</div>
                     <div class="col col-price">单价</div>
                     <div class="col col-num">数量</div>
-                    <div class="col col-total">小计</div>
+                    <div class="col col-total" id="xiaoji">小计</div>
                     <div class="col col-action">操作</div>
                 </div>
                 <div class="list-body" id="J_cartListBody">
@@ -115,7 +115,8 @@
                                         <a href="javascript:;" class="J_minus">
                                             <i class="iconfont"></i>
                                         </a>
-                                        <input tyep="text" name="2161200011_0_buy" value="1" data-num="1" data-buylimit="50" autocomplete="off" class="goods-num J_goodsNum">
+                                        <input tyep="text" name="2161200011_0_buy" value="1" data-num="1"
+                                               data-buylimit="50" autocomplete="off" class="goods-num J_goodsNum">
                                         <a href="javascript:;" class="J_plus">
                                             <i class="iconfont"></i>
                                         </a>
@@ -130,6 +131,49 @@
                             </div>
                         </div>
                     </div>
+                    <div class="item-box">
+                        <div class="item-table J_cartGoods">
+                            <div class="item-row clearfix">
+                                <div class="col col-check">
+                                    <i class="iconfont icon-checkbox J_itemCheckbox"
+                                       data-itemid="2161200067_0_buy" data-status="1">√</i>
+                                </div>
+                                <div class="col col-img">
+                                    <a href="//item.mi.com/1161200061.html" target="_blank">
+                                        <img alt="" src="//i1.mifile.cn/a1/T1T2AjBybv1RXrhCrK!80x80.jpg" width="80"
+                                             height="80">
+                                    </a>
+                                </div>
+                                <div class="col col-name">
+                                    <div class="tags"></div>
+                                    <h3 class="name">
+                                        <a href="//item.mi.com/1161200061.html" target="_blank">
+                                            1MORE入耳式耳机（活塞复刻版） 玫瑰金 </a>
+                                    </h3>
+                                </div>
+                                <div class="col col-price"> 89元</div>
+                                <div class="col col-num">
+                                    <div class="change-goods-num clearfix J_changeGoodsNum">
+                                        <a href="javascript:;" class="J_minus">
+                                            <i class="iconfont"></i>
+                                        </a>
+                                        <input tyep="text" name="2161200067_0_buy" value="1" data-num="1"
+                                               data-buylimit="50" autocomplete="off" class="goods-num J_goodsNum">
+                                        <a href="javascript:;" class="J_plus">
+                                            <i class="iconfont"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="col col-total"> 89元 <p class="pre-info"></p></div>
+                                <div class="col col-action">
+                                    <a id="2161200067_0_buy" data-msg="确定删除吗？" href="javascript:;" title="删除"
+                                       class="del J_delGoods">
+                                        <i class="iconfont"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
             <!-- 加价购 -->
@@ -138,23 +182,11 @@
             <div class="cart-bar clearfix" id="J_cartBar">
                 <div class="section-left">
                     <a href="//list.mi.com/0" class="back-shopping J_goShoping">继续购物</a>
-                    <span class="cart-total">共
-                        <i id="J_cartTotalNum">1</i>
-                        件商品，已选择
-                        <i id="J_selTotalNum">0</i>
-                        件
-                    </span>
-                    <span class="cart-coudan hide" id="J_coudanTip">
-                        ，还需 <i id="J_postFreeBalance">150</i> 元即可免邮费  <a href="javascript:;" id="J_showCoudan">立即凑单</a>
-                    </span>
                 </div>
-                <span class="activity-money hide">
-                    活动优惠：减 <i id="J_cartActivityMoney">0</i> 元
-                </span>
                 <span class="total-price">
                     合计（不含运费）：<em id="J_cartTotalPrice">0.00</em>元
                 </span>
-                <a href="javascript:;" class="btn btn-a btn btn-disabled" id="J_goCheckout">去结算</a>
+                <a href="{{url('address')}}" class="btn btn-a btn btn-disabled" id="J_goCheckout">去结算</a>
 
                 <div class="no-select-tip" id="J_noSelectTip">
                     请勾选需要结算的商品
@@ -168,12 +200,28 @@
 
     </div>
 
+    <div class="modal fade modal-hide  modal-alert" id="J_modalAlert" style="display: none;" aria-hidden="true">
+        <div class="modal-bd">
+            <div class="text">
+                <h3 id="J_alertMsg">确定删除吗？</h3>
+            </div>
+            <div class="actions">
+                <button class="btn btn-gray" data-dismiss="modal" id="J_alertCancel">取消</button>
+                <button class="btn btn-primary" data-dismiss="modal" id="J_alertOk">确定</button>
+            </div>
+            <a class="close" data-dismiss="modal" href="javascript: void(0);">
+                <i class="iconfont"></i>
+            </a>
+        </div>
+    </div>
+
 
 
     @include('home/public/footer')
 @endsection
 @section('js')
     @parent
+    <script type="text/javascript" src="{{asset('js/home/cart/cart.js')}}"></script>
     <script>
 
         layui.use(['jquery', 'layer'], function () {
@@ -181,71 +229,9 @@
                 layer = layui.layer;
             var index;
 
-            $('a.user-name').on('mouseenter', function () {
-//                alert($(this));
-                $(this).parent().addClass('user-active').children('ul').css({'display': 'block'});
 
-            });
 
-            $('span.user').on('mouseleave', function () {
-//                alert($(this));
-                $(this).removeClass('user-active').children('ul').css({'display': 'none'});
 
-            });
-
-            $('#J_selectAll').on('click', function () {
-                if ($(this).hasClass('icon-checkbox-selected')) {
-                    $(this).removeClass('icon-checkbox-selected');
-                    $('i.J_itemCheckbox').removeClass('icon-checkbox-selected').attr('data-status', 0);
-                    $('#J_goCheckout').removeClass('btn-primary').addClass('btn-disabled');
-                    $('#J_noSelectTip').removeClass('hide');
-                } else {
-                    $(this).addClass('icon-checkbox-selected');
-                    $('i.J_itemCheckbox').addClass('icon-checkbox-selected').attr('data-status', 1);
-                    $('#J_goCheckout').removeClass('btn-disabled').addClass('btn-primary');
-                    $('#J_noSelectTip').addClass('hide');
-                }
-            });
-
-            $('a.J_minus').on('click', function () {
-//                console.log($(this).next().val());
-                var num = $(this).next().val();
-                if (num > 1) {
-                    num = num - 1;
-//                    console.log($('input.J_goodsNum'));
-                    $('input.J_goodsNum').attr('value', num);
-                } else {
-                    num = 1;
-                }
-            });
-
-            $('a.J_plus').on('click', function () {
-
-                var num = $(this).prev().val();
-//                console.log(num);
-                var maxNum = parseInt($(this).prev().attr('data-buylimit'));
-//                console.log(maxNum);
-                if (num < maxNum) {
-                    num = parseInt(num) + 1;
-//                    console.log(sum);
-//                    console.log($('input.J_goodsNum'));
-                    $('input.J_goodsNum').attr('value', num);
-                } else {
-                    num = 50;
-                }
-            });
-
-            $('i.J_itemCheckbox').on('click', function () {
-                if($(this).hasClass('icon-checkbox-selected')){
-                    $(this).removeClass('icon-checkbox-selected');
-                    $('#J_goCheckout').removeClass('btn-primary').addClass('btn-disabled');
-                    $('#J_noSelectTip').removeClass('hide');
-                } else {
-                    $(this).addClass('icon-checkbox-selected');
-                    $('#J_goCheckout').removeClass('btn-disabled').addClass('btn-primary');
-                    $('#J_noSelectTip').addClass('hide');
-                }
-            })
 
         });
     </script>
