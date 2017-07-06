@@ -11,7 +11,7 @@
 ?>
 @extends('layouts.home')
 
-@section('title', '首页')
+@section('title', '加入购物车')
 @section('keywords','')
 @section('description','')
 
@@ -104,7 +104,7 @@
                         <!-- 已选择的产品 -->
                         <div class="pro-list" id="J_proList">
                             <ul>
-                                <li class="totleName">{{ $info->p_name }} {{ isset($versions)? $versions[0]['ver_name']:'' }} {{  isset($versions)?$versions[0]['ver_spec']:'' }} {{  isset($colorArr)?$colorArr[0]['color_name']:'' }}   <span>{{ isset($versions)? $versions[0]['price']:$info->price }}元</span>  </li>
+                                <li class="totalName">{{ $info->p_name }}{{ isset($versions)? $versions[0]['ver_name']:'' }} {{  isset($versions)?$versions[0]['ver_spec']:'' }} {{  isset($colorArr)?$colorArr[0]['color_name']:'' }}  <span id="price">{{ isset($versions)? $versions[0]['price']:$info->price }}元</span></li>
                                 <li class="totlePrice">  总计  ：{{ isset($versions)?$versions[0]['price']:$info->price }}元</li>
                             </ul>
                         </div>
@@ -159,7 +159,7 @@
                 type:'get',
                 success:function(data){
                     if( data == 0 ){
-                        $('#J_buyBtnBox li').html('<a href="javascript:void(0);" class="btn btn-primary btn-biglarge J_proBuyBtn" data-type="0">加入购物车</a>');
+                        $('#J_buyBtnBox li').html('<a href="javascript:;" class="btn btn-primary btn-biglarge J_proBuyBtn" data-type="0">加入购物车</a>');
                     }else if( data == 1 ){
                         $('#J_buyBtnBox li').html('<a class="btn btn-gray btn-line-gray btn-biglarge btn- J_setRemind" href="javascript:void(0);" data-type="1">已下架</a>');
                     }else if( data == 2 ){
@@ -169,9 +169,34 @@
                     }else if( data == 4 ){
                         $('#J_buyBtnBox li').html('<a class="btn btn-line-primary btn-biglarge btn- J_setRemind" href="javascript:void(0);" data-type="4">新品上市</a>');
                     }
+
                 }
             })
         })();
+
+        $('#J_buyBtnBox li').on('click', '.btn-primary', function () {
+//            console.log($('li.totleName').text());
+            var pName = $('li.totalName').text();
+//            var price = $('#J_proList').children().children().children().text();
+//            console.log(total);
+            var p_id = "{{ $info->id }}";
+//            alert(id);
+            $.ajax({
+                url:"{{url('addCart')}}",
+                type: 'post',
+                data: {'_token': '{{csrf_token()}}', 'pName': pName, 'p_id': p_id},
+                success: function (data) {
+//                    alert(data);
+                    if(data){
+                        window.location.href="{{url('addCartSuccess')}}";
+                    }
+
+                },
+                dataType: 'json'
+            });
+
+        });
+
     </script>
 
 @endsection

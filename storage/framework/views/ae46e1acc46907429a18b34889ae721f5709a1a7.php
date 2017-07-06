@@ -407,7 +407,7 @@
                 layer = layui.layer;
             var index;
         });
-        
+
     </script>
 <?php $__env->stopSection(); ?>
 

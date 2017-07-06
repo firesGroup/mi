@@ -5,11 +5,11 @@ namespace App\Http\Controllers\Home;
 use Illuminate\Http\Request;
 use DB;
 use App\Http\Requests;
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\Home\BaseController;
 use App\Entity\Address;
 use Session;
 
-class AddressController extends Controller
+class AddressController extends BaseController
 {
     /**
      * Display a listing of the resource.
@@ -21,7 +21,7 @@ class AddressController extends Controller
 
         $userArr = DB::table('member')->where('id', '=', 1)->select('nick_name')->get();
 //        dd($userArr[0]->nick_name);
-
+//        dd($userArr);
         $UserArr = $userArr[0]->nick_name;
 
 

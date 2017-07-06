@@ -12,11 +12,13 @@ use App\Http\Requests;
 use App\Entity\Product;
 use App\Entity\ProductSpecPrice;
 use App\Http\Controllers\Home\BaseController;
+use Session;
 
 class HomeController extends BaseController
 {
     public function index()
     {
+
         return view('home.index',compact('nav'));
     }
 

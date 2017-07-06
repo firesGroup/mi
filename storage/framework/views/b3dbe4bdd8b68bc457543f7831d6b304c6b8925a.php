@@ -9,7 +9,7 @@
  * Time: 23:14
  */
 ?>
-
+<?php /*<?php echo e(dd(session('goods'))); ?>*/ ?>
 <!-- 公共顶部 start -->
 <div class="site-topbar">
     <div class="container">
@@ -35,7 +35,7 @@
             <a rel="nofollow" href="#J_modal-globalSites" data-toggle="modal">Select Region</a>
         </div>
         <div class="topbar-cart" id="J_miniCartTrigger">
-            <a rel="nofollow" class="cart-mini" id="J_miniCartBtn" href="<?php echo e(url('cart')); ?>" data-event="mouseover">
+            <a rel="nofollow" class="cart-mini" id="J_miniCartBtn" href="<?php echo e(url('cart')); ?>">
                 <i class="iconfont">&#xe60c;</i>购物车
                 <span class="cart-mini-num J_cartNum"></span>
             </a>
@@ -92,5 +92,69 @@
     </div>
     <!-- 公共顶部 end -->
 
+<?php $__env->startSection('js'); ?>
+    @parent
+
+    <script>
+
+        layui.use(['jquery', 'layer'], function () {
+            var $ = layui.jquery,
+                layer = layui.layer;
+            var index;
+            $('a#J_miniCartBtn').on('mouseover', function () {
+
+                   <?php /*$('div.loading').replaceWith("<ul class='cart-list'><li><div class='cart-item clearfix first'><a class='thumb' href=''><img src='<?php echo e(session(session('goods')['id'])); ?>'></a><a class='name' href=''><?php echo e(session('goods')['total']); ?></a><span class='price'><?php echo e(session('goods')['price']); ?></span><a class='btn-del J_delItem' href='javascript:;' data-isbigtap='false'><i class='iconfont'></i></a></div></li></ul><div class='cart-total clearfix'><span class='total'>共 <em><?php echo e(session('goods')['num']); ?></em>件商品<span class='price'><em><?php echo e(session('goods')['price']); ?></em>元</span></span><a class='btn btn-primary btn-cart' href='<?php echo e(url('cart')); ?>'>去购物车结算</a></div>");*/ ?>
+
+//                }
+
+                $.ajax({
+                    url: "<?php echo e(url('searchCart')); ?>",
+                    type: 'post',
+                    data: {'_token': '<?php echo e(csrf_token()); ?>'},
+                    success:function (data) {
+//                        alert(1);
+                        if(data){
+
+                            $('div#J_miniCartMenu').children().remove();
+
+                            var str = "<ul class='cart-list'>";
+
+                            var totalPrice = 0;
+
+                            for (var i =0; i< data.length; i++) {
+
+                                str += "<li><div class='cart-item clearfix first'>";
+
+                                str += "<a class='thumb' href=''><img src='"+data[i]['img']+"!60_60'></a>";
+
+                                str += "<a class='name' href=''>"+data[i]['pName']+"</a>";
+
+                                str += "<span class='price'>"+data[i]['price']+"</span><a class='btn-del J_delItem' href='javascript:;' data-isbigtap='false'><i class='iconfont'></i>";
+
+                                str += "</a></div></li>";
+                                totalPrice += parseInt(data[i]['price']) * data[i]['num'];
+                            }
+
+                            str += "</ul><div class='cart-total clearfix'>";
+
+                            str += "<span class='total'>共 <em>"+data.length+"</em>件商品<span class='price'><em>"+totalPrice+"</em>元</span></span>";
+
+                            str += "<a class='btn btn-primary btn-cart' href='<?php echo e(url('cart')); ?>'>去购物车结算</a></div>";
+
+                            $('div#J_miniCartMenu').append(str);
+                        }
+
+                    },
+                    dataType: 'json'
+                });
+
+
+            });
+
+
+        });
+    </script>
+
+<?php $__env->stopSection(); ?>
 
 
