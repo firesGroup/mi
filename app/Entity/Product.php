@@ -19,6 +19,10 @@ class Product extends Model
     //指定关联数据库表主键
     protected $primaryKey = 'id';
 
+    protected $fillable = [
+        'category_id','p_name','p_num','price','store','status','flag','tags','sell_num','click_num','p_index_image','is_free_shipping','recommend'
+    ];
+
     /**
      * 获取商品详情。
      */

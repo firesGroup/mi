@@ -131,7 +131,15 @@
                     </tbody>
                 </table>
                 <div class="larry-table-page">
-                    {{ $productList->render() }}
+                    @if( isset($category_id) )
+                        {{ $productList->appends(['search'=>'oneSelect','category' => $category_id])->links()  }}
+                    @elseif(isset($sort_price))
+                        {{ $productList->appends(['search'=>'oneSelect','sort_price' => $sort_price])->links()  }}
+                    @elseif(isset($word))
+                        {{ $productList->appends(['search'=>'oneSelect','word' => $word])->links()  }}
+                    @else
+                     {{ $productList->render() }}
+                    @endif
                 </div>
             </div>
         </div>

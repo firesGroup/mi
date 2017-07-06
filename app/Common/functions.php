@@ -63,6 +63,12 @@ function combineArray($arr1,$arr2) {
 
 function getUrlImages($url, $path)
 {
+    //解析远程地址
+    $urlArr = parse_url($url);
+    if (empty($urlArr['host']) || $urlArr['host'] == $_SERVER['HTTP_HOST']) {
+        //如果不是远程地址或不是网址,就返回原连接
+        return $url;
+    }
     //存储目录(相对于 public/upload)
     $path = isset($path)?$path:'temp';
     //检查目录是否存在
@@ -103,3 +109,46 @@ function getUrlImages($url, $path)
     return '/uploads/'.$filePath;
 }
 
+/*
+ * 根据尺寸自动生成对应图片地址
+ * @param $img 图片地址
+ * @param $width 需要的宽度
+ * @param $height 需要的高度
+ * return 返回处理过的图片地址
+ */
+
+function make_img_url($img, $width = 200, $height = 200) {
+    $img_info = parse_url($img);
+    /* 外部链接直接返回图片地址 */
+    if (!empty($img_info['host']) && $img_info['host'] != $_SERVER['HTTP_HOST']) {
+        return $img;
+    } else {
+        $pos = strrpos($img, '.');
+        $img = substr($img, 0, $pos) . '_' . $width . '_' . $height . substr($img, $pos);
+        return $img;
+    }
+}
+
+/*
+ * 直接返回图片标签字符串
+ *
+ *
+ * @param $img 图片地址
+ * @param $width 需要的宽度
+ * @param $height 需要的高度
+ * return 返回处理过的图片地址
+ *
+ *
+ */
+function img($img,$width,$height){
+    $img_info = parse_url($img);
+    /* 外部链接直接返回图片地址 */
+    if (!empty($img_info['host']) && $img_info['host'] != $_SERVER['HTTP_HOST']) {
+        return $img;
+    } else {
+        $pos = strrpos($img, '.');
+        $img = substr($img, 0, $pos) . '_' . $width . '_' . $height . substr($img, $pos);
+        echo '<img src="'.$img.'" width="'.$width.'" height="'.$height.'" />';
+        return ;
+    }
+}

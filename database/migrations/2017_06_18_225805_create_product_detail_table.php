@@ -16,7 +16,7 @@ class CreateProductDetailTable extends Migration
             $table->integer('p_id')->comment('商品id');
             $table->string('summary')->nullable()->comment('商品简介');
             $table->string('remind_title')->nullable()->comment('商品简介前活动提醒');
-            $table->text('description')->nullabled()->comment('商品详情');
+            $table->text('description')->nullabled()->comment('商品详情排版');
             $table->timestamps();
             $table->primary('p_id');
             $table->charset='utf8';

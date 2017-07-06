@@ -20,16 +20,21 @@ class ProductVersionsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index($id)
+    public function index(Request $request,$id)
     {
         if( empty($id) ){
             return redirect('/admin/product');
         }
+
         $verList = new ProductVersions;
         $verList->color;
-        $verList = $verList::where('p_id',$id)->paginate(10);
-
-        return view('admin.product.versions.index',compact('verList','id'));
+        if( $request->has('word') ){
+            $word = $request->word;
+            $verList = $verList::where('ver_name','like',"%{$word}%")->paginate(15);
+        }else{
+            $verList = $verList::where('p_id',$id)->paginate(10);
+        }
+        return view('admin.product.versions.index',compact('verList','id','word'));
 
     }
 
@@ -91,7 +96,7 @@ class ProductVersionsController extends Controller
             if( $colorData ){
                 foreach($colorData as $k=>$color){
                     $color['ver_id'] = $id;
-                    ProductVersionsColors::insert($color);
+                    ProductVersionsColors::create($color);
                 }
             }
             return true;

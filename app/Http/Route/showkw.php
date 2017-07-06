@@ -52,11 +52,17 @@ Route::post( '/upload', 'PublicC\UploadController@postUpload' );
 
 Route::group(['namespace'=>'Home',], function(){
     Route::get('/search/{key}','SearchController@index' );
-    Route::get('/product/info/{p_id}','HomeController@productInfo');
+    Route::get('/product/buy/{p_id}','HomeController@productBuy');
+    Route::get('/product/info/{p_id}','HomeController@productIndex');
     Route::get('/product/ajaxGetVersion/{ver_id}', 'HomeController@ajaxGetVersion');
     Route::get('/product/ajaxGetVersionColor/{ver_id}', 'HomeController@ajaxGetVersionColor');
+    Route::get('/product/getVersionStatus/{p_id}', 'HomeController@getVersionStatus');
     Route::get('/','HomeController@index');
 });
+
+Route::get('uploads/{pathName}/{imgSrc}', 'PublicC\ImageController@oneDirImage');
+Route::get('uploads/{pathName}/{date}/{imgSrc}', 'PublicC\ImageController@twoDirImage');
+
 
 Route::get('/makedoc/{title}/', function ($title){
     $xs = new XS('product');

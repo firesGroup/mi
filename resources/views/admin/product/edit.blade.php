@@ -65,14 +65,14 @@
                             <div class="layui-form-item">
                                 <label class="layui-form-label">商品简介</label>
                                 <div class="layui-input-block">
-                                    <textarea type="text" name="summary" lay-verify="required" placeholder="请输入商品简介" autocomplete="off" class="layui-input">{{ $detail->summary or ''}}</textarea>
+                                    <textarea type="text" name="summary" placeholder="请输入商品简介" autocomplete="off" class="layui-input">{{ $detail->summary or ''}}</textarea>
                                 </div>
                             </div>
                             <!-- 活动提醒 -->
                             <div class="layui-form-item">
                                 <label class="layui-form-label">活动提醒</label>
                                 <div class="layui-input-block">
-                                    <textarea type="text" name="remind_title" lay-verify="required" placeholder="请输入位于商品简介前的活动提醒" autocomplete="off" class="layui-input">{{ $detail->remind_title or "" }}</textarea>
+                                    <textarea type="text" name="remind_title" placeholder="请输入位于商品简介前的活动提醒" autocomplete="off" class="layui-input">{{ $detail->remind_title or "" }}</textarea>
                                 </div>
                             </div>
                             <!-- 商品分类 -->
@@ -140,16 +140,8 @@
                             <div class="layui-form-item">
                                 <label class="layui-form-label">是否包邮</label>
                                 <div class="layui-input-block">
-                                    {{--@if( $detail->is_free_shipping == 0 )--}}
-                                        {{--<input type="radio" name="is_free_shipping" value="0" checked title="包邮">--}}
-                                        {{--<input type="radio" name="is_free_shipping" value="1" title="不包邮">--}}
-                                    {{--@elseif( $detail->is_free_shipping == 1 )--}}
-                                        {{--<input type="radio" name="is_free_shipping" value="0" title="包邮">--}}
-                                        {{--<input type="radio" name="is_free_shipping" value="1" checked title="不包邮">--}}
-                                    {{--@else--}}
-                                        <input type="radio" name="is_free_shipping" value="0" checked title="包邮">
-                                        <input type="radio" name="is_free_shipping" value="1" title="不包邮">
-                                    {{--@endif--}}
+                                    <input type="radio" name="is_free_shipping" value="0" {{ $info->is_free_shipping == 0?"checked":'' }} title="包邮">
+                                    <input type="radio" name="is_free_shipping" value="1" {{ $info->is_free_shipping == 1?"checked":'' }} title="不包邮">
                                 </div>
                             </div>
                             <!-- 是否推荐 -->
@@ -171,7 +163,7 @@
                             <div class="layui-form-item">
                                 <label class="layui-form-label">商品关键字</label>
                                 <div class="layui-input-block">
-                                    <input type="text" name="tags" lay-verify="required" placeholder="请输入商品关键字" autocomplete="off" class="layui-input" value="">
+                                    <input type="text" name="tags" lay-verify="required" placeholder="请输入商品关键字" autocomplete="off" class="layui-input" value="{{ $info->tags }}">
                                 </div>
                             </div>
                             <!-- 商品状态 -->
@@ -193,7 +185,7 @@
                             <div class="layui-form-item">
                                 <label class="layui-form-label">商品封面</label>
                                 <div class="layui-input-block">
-                                        <input id="upload-input" type="text" class="layui-input layui-input-inline" name="p_index_image" value="" style="width:520px;height:38px;margin:0px" placeholder="输入图片地址或点击上传">
+                                        <input id="upload-input" type="text" class="layui-input layui-input-inline" name="p_index_image" value="{{ $info->p_index_image }}" style="width:520px;height:38px;margin:0px" placeholder="输入图片地址或点击上传">
                                     <div id="brand_logo">
                                         <input type="file" name="file" id="imgUpload" class="layui-upload-file" accept="image/*"  lay-ext="jpg|png|gif|bmp" lay-title="点击或拖拽文传上传">
                                     </div>
@@ -204,7 +196,9 @@
                                 <label class="layui-form-label">商品详情</label>
                                 <div class="layui-input-block">
                                     <!-- 加载uefitor编辑器的容器 -->
-                                    <script id="ueditor" name="description" type="text/plain"></script>
+                                    <script id="ueditor" name="description" type="text/plain">{{
+                                    isset( $detail->description )?$detail->description:''
+                                    }}</script>
                                 </div>
                             </div>
                             <div class="layui-form-item">
@@ -293,6 +287,7 @@
                 var index = layer.msg('正在修改信息!请稍后...', {
                     icon: 16
                 });
+//                layer.msg(JSON.stringify(data.field));
                 $.ajax({
                     url:'{{ url('/admin/product').'/'.$info->id }}',
                     type: 'put',

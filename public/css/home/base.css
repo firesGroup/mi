@@ -1760,8 +1760,8 @@ textarea.input-text {
     text-align:center
 }
 .site-header .header-nav-menu .figure-thumb img {
-    width:160px;
-    height:110px
+    /*width:160px;*/
+    /*height:110px*/
 }
 .site-header .header-nav-menu .figure-thumb a {
     display:block

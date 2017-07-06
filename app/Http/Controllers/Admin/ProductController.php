@@ -129,7 +129,6 @@ class ProductController extends Controller
             'is_free_shipping' => $request->is_free_shipping,
             'flag'             => $request->flag,
             'tags'             => $request->tags,
-            'p_index_image'    => $request->p_index_image,
         ];
         $detailData = [
             'summary'          => $request->summary,
@@ -143,25 +142,18 @@ class ProductController extends Controller
         }else{
             $productData['p_num'] = $request->p_num;
         }
+        //接收商品封面图片
+        $img = $request->p_index_image;
+        //如果是远程图片就获取到本地
+        $imageSrc = getUrlImages($img,'product');
+
+        $productData['p_index_image'] = $imageSrc;
         //先写入商品表,获得商品id;
         $id = Product::insertGetId($productData);
 
         if ($id) {
             //将商品id 放入将要写入的各个数组中
             $detailData['p_id'] = $id;
-
-//            //商品相册数据
-//            $imagesDataArr = $request->p_images;
-//            if( isset($imagesDataArr) ){
-//                foreach ($imagesDataArr as $img) {
-//                    $imagesData[] = [
-//                        'p_id' => $id,
-//                        'path' => $img,
-//                    ];
-//                }
-//            }else{
-//                $imagesData = null;
-//            }
 
             //开启事务处理
             $res = DB::transaction(function () use ($detailData) {
@@ -257,8 +249,14 @@ class ProductController extends Controller
      */
     public function update(ProductRequest $request, $id)
     {
+        $category = $request->category;
+        //传递的选择分类id数组中,最大的键 的 值才是该商品的最后分类id
+        //找出最大的键,
+        $key = max(array_keys($category));
+        //获得分类id
+        $category_id = $category[$key];
         $product = [
-            'category_id' => '3',
+            'category_id' => $category_id,
             'price'       => $request->price,
             'p_name'      => $request->p_name,
             'store'       => $request->store,
@@ -280,26 +278,32 @@ class ProductController extends Controller
             $productData['p_num'] = $request->p_num;
         }
         //接收商品封面图片
-        $img = $request->p_index_image;
-
+        $img = $request->p_index_image;;
+        //如果是远程图片就获取
         $image = getUrlImages($img,'product');
-        dd($image);
+
         //查询数据库中封面图片
         $oldImg = Product::find($id)->p_index_image;
-        if( $img ){
-            if( $img !== $oldImg ){
+        if( $image ){
+            if( $image !== $oldImg ){
                 //分割路径
                 $path = substr($oldImg, 8);
                 //从磁盘删除原来的图片
                 Storage::disk('uploads')->delete($path);
-                $product['p_index_image'] = $img;
+                $product['p_index_image'] = $image;
             }
         }
         //开启事务处理
         $res = DB::transaction(function () use ($id, $product, $detail) {
-            DB::table('product')->where('id', $id)->update($product);
-            DB::table('product_detail')->where('p_id', $id)->update($detail);
-
+            Product::where('id', $id)->update($product);
+            //查询一下是否存在详情 不存在就改为写入
+            $re = ProductDetail::where('p_id', $id)->first();
+            if ($re) {
+                ProductDetail::where('p_id', $id)->update($detail);
+            }else {
+                $detail['p_id'] = $id;
+                ProductDetail::create($detail);
+            }
             return true;
         });
 
@@ -327,8 +331,7 @@ class ProductController extends Controller
             //在磁盘删除封面图片
             Storage::delete($p_index_image);
         }
-
-
+        
         //获取商品相册所有图片
         //存在图片则删除
         if ($images) {
