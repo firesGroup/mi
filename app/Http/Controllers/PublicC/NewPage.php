@@ -22,7 +22,7 @@ class NewPage extends Boot
         if ($this->hasPages())
         {
             return  new HtmlString(sprintf(
-                '<div class="layui-box layui-laypage layui-laypage-default">%s %s %s</div>',
+                '<div style="text-align:center"><div class="xm-pagenavi layui-box layui-laypage layui-laypage-default ">%s %s %s</div></div>',
                 //上一页按钮
                 $this->getPreviousButton('上一页'),
                 //分页
@@ -40,7 +40,7 @@ class NewPage extends Boot
     {
         $rel = is_null($rel) ? '' : ' rel="'.$rel.'"';
         //返回html代码
-        return '<a href="'.htmlentities($url).'" data-page="'.$page.'">'.$page.'</a>';
+        return '<a class="numbers" href="'.htmlentities($url).'" data-page="'.$page.'">'.$page.'</a>';
     }
 
     //定义禁用显示页html
@@ -53,7 +53,7 @@ class NewPage extends Boot
     //定义当前显示页html
     protected function getActivePageWrapper($text)
     {
-        return '<span class="layui-laypage-curr"><em class="layui-laypage-em"></em><em>'.$text.'</em></span>';
+        return '<span class="layui-laypage-curr numbers current"><em class="layui-laypage-em"></em><em>'.$text.'</em></span>';
     }
 
 }

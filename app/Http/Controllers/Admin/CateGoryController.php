@@ -16,12 +16,17 @@ class CateGoryController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $map = "concat(parent_path,id)";
-        $data = DB::table('category')->orderBy(DB::raw('concat(parent_path,id)'))->paginate(15);
+        if($request->has('search')){
+            $modelId = $request->input('word',null);
 
-
+            $data = CateGory::where('category_name','like',"%{$modelId}%")->paginate(10);
+//            dd($data);
+        }else{
+            $map = "concat(parent_path,id)";
+            $data = DB::table('category')->orderBy(DB::raw('concat(parent_path,id)'))->paginate(15);
+        }
         return view('admin/category/index', compact('data'));
     }
 
@@ -206,4 +211,7 @@ class CateGoryController extends Controller
             return back();
         }
     }
+
+
+
 }

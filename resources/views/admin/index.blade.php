@@ -137,6 +137,18 @@
                                     <cite>会员管理</cite>
                                 </a>
                             </li>
+                            <li class="layui-nav-item" data-pid="undefined">
+                                <a data-url="{{url('/admin/category')}}">
+                                    <i class="larry-icon larry-houtaishouye" data-icon="larry-houtaishouye" aria-hidden="true"></i>
+                                    <cite>分类管理</cite>
+                                </a>
+                            </li>
+                            <li class="layui-nav-item" data-pid="undefined">
+                                <a data-url="{{url('/admin/advert')}}">
+                                    <i class="larry-icon larry-houtaishouye" data-icon="larry-houtaishouye" aria-hidden="true"></i>
+                                    <cite>广告管理</cite>
+                                </a>
+                            </li>
                         </ul>
                     </div>
                 </div>
@@ -249,7 +261,7 @@
             <div class="lock-wrapper" id="lock-screen">
                 <div id="time"></div>
                 <div class="lock-box">
-                    <img src="images/user.jpg" alt="">
+                    <img src="images/admin/user.jpg" alt="">
                     <h1>admin</h1>
                     <form action="" class="layui-form lock-form">
                         <div class="layui-form-item">
@@ -266,7 +278,6 @@
         <!-- 加载 JS -->
         <script type="text/javascript" src="{{ asset('/plugin/layui/layui.js') }}"></script>
         <script type="text/javascript" src="{{ asset('/js/admin/larry.js') }}"></script>
-        <script type="text/javascript" src="{{ asset('/js/public/base.js') }}"></script>
         <script>
             layui.use(['jquery','layer','navtab'],function() {
                 var $ = layui.jquery,

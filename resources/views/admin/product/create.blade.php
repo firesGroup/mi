@@ -393,7 +393,7 @@
                                     str += "</select></div>";
                                     $('select#select'+n).parent().next('div').remove();
                                     $('select#select'+n).parent().parent().append(str);
-                                    $('select#select1').data('id',n);
+                                    $('select#select1').data('id',n+1);
                                     form.render();
                                 }
                             },

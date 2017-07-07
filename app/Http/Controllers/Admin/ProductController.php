@@ -29,6 +29,7 @@ use Illuminate\Support\HtmlString;
 use Storage;
 use DB;
 
+
 class ProductController extends Controller
 {
     /**
@@ -38,6 +39,7 @@ class ProductController extends Controller
      */
     public function index(Request $request)
     {
+
         if( $request->has('search') ){
             $search = $request->search;
             $category_id = $request->category;

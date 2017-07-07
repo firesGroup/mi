@@ -17,7 +17,7 @@ class OrderController extends Controller
      */
     public function index()
     {
-
+        //
     }
 
     /**
@@ -52,20 +52,51 @@ class OrderController extends Controller
         //根据用户ID 查出订单信息
         $data = Order::where('member_id',$id)->get();
 
+        //查询未支付订单总数
+        $num = DB::table('order')->where('member_id',$id)->where('order_status',0)->count();
+
+        //查询已关闭订单总数
+        $close = DB::table('order')->where('member_id',$id)->where('order_status',7)->count();
+
+        //查询待收货订单总数
+        $Receiving = DB::table('order')->where('member_id',$id)->where('order_status',3)->count();
+
         //获取订单ID
-        $orderid = Order::where('member_id',$id)->value('id');
+        $orderid = DB::table('order')->where('member_id',$id)->lists('id');
 
         //根据订单ID 查询订单详情表信息
-        $orderdetail =DB::table('order_detail')->where('order_id',$orderid)->get();
+        $orderdetail =DB::table('order_detail')->whereIn('order_id',$orderid)->get();
 
         //查询出商品ID
         $pid = DB::table('order_detail')->where('order_id',$orderid)->value('p_id');
 
-//        dd($orderdetail);
-        return view ('home.order.order',compact('data','orderdetail'));
+        //获取价格
+        $price = DB::table('product')->where('id',$pid)->value('price');
+
+        $status = ['0'=>'等待支付','1'=>'已支付','2'=>'未发货','3'=>'已发货','4'=>'已收货','5'=>'退款中','6'=>'交易成功','7'=>'已取消'];
+
+        return view ('home.order.order',compact('data','orderdetail','status','price','orderid','num','close','Receiving'));
 
     }
 
+
+    public function detail($id)
+    {
+        //根据订单详情ID查订单详情表
+        $odetail = DB::table('order_detail')->where('order_id',$id)->get();
+
+        //查询订单信息
+        $orderid = DB::table('order')->where('id',$id)->get();
+
+        $mid = DB::table('order')->where('id',$id)->value('member_id');
+//
+
+        $status = ['0'=>'等待支付','1'=>'已支付','2'=>'未发货','3'=>'已发货','4'=>'已收货','5'=>'退款中','6'=>'交易成功','7'=>'已取消'];
+//
+        $data = DB::table('district')->where('id', '<=', 36)->get();
+
+        return view('home.order.orderDetail',compact('odetail','orderid','status','data'));
+    }
     /**
      * Show the form for editing the specified resource.
      *
@@ -86,7 +117,20 @@ class OrderController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+//        dd(111);
+    }
+
+    public function addressUpdate(Request $request)
+    {
+        $oid = $request->oid;
+        $name = $request->name;
+        $phone = $request->phone;
+        $address = $request->address;
+
+        $data = DB::table('order')->where('id',$oid)
+            ->update(['buy_user'=>$name,'buy_phone'=>$phone,'address'=>$address]);
+
+        return $data;
     }
 
     /**
@@ -98,5 +142,18 @@ class OrderController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+
+
+    public function orderStatus(Request $request)
+    {
+        $oid = $request->oid;
+
+        $data = DB::table('order')->where('order_sn',$oid)->update(['order_status'=>4]);
+
+        if($data){
+            return $data;
+        }
     }
 }

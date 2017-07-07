@@ -12,32 +12,22 @@
         <!-- 轮播图 start -->
         <div class="home-hero-slider">
             <div id="J_homeSlider" class="xm-slider" data-stat-title="焦点图轮播">
+                @foreach( $slide as $k=>$v )
+                    @if( $k == 0 )
                         <div class="slide loaded exposure">
-                            <a href="" target="_blank">
-                                <img src="https://i3.mifile.cn/a4/xmad_1498577544104_VOIAC.jpg"/>
+                            <a href="{{ $v->url }}" target="_blank">
+                                <img src="{{ $v->images }}"/>
                             </a>
                         </div>
+                        @else
                         <div class="slide exposure">
-                            <a href="" target="_blank">
-                                <img src="https://i3.mifile.cn/a4/xmad_14985676331715_bZRyN.jpg">
+                            <a href="{{ $v->url }}" target="_blank">
+                                <img src="/images/public/default.gif" data-url="{{ $v->images }}"/>
                             </a>
                         </div>
-                        <div class="slide exposure">
-                            <a href="" target="_blank">
-                                <img src="https://i3.mifile.cn/a4/xmad_14985334169431_YXbeD.jpg">
-                            </a>
-                        </div>
-                        <div class="slide exposure">
-                            <a href="" target="_blank">
-                                <img src="https://i3.mifile.cn/a4/xmad_14954204563199_hUckQ.jpg">
-                            </a>
-                        </div>
-                        <div class="slide exposure">
-                            <a href="" target="_blank">
-                                <img src="https://i3.mifile.cn/a4/xmad_14985333471899_VxOnf.jpg">
-                            </a>
-                        </div>
-                    </div>
+                    @endif
+                @endforeach
+            </div>
         </div>
         <div class="home-hero-sub row">
             <div class="span4">

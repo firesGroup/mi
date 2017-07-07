@@ -12,7 +12,7 @@
 
 @extends('layouts.home')
 @section('title', '会员中心')
-    @section('css');
+    @section('css')
         @parent
     <link rel="stylesheet" type="text/css" href="{{ asset('/css/home/member_center.css') }}">
  @endsection

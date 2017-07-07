@@ -1,10 +1,10 @@
 
 @font-face {font-family: "larry-icon";
-    src: url('//at.alicdn.com/t/font_bmgv5kod196q1tt9.eot?t=1495980873687'); /* IE9*/
-    src: url('//at.alicdn.com/t/font_bmgv5kod196q1tt9.eot?t=1495980873687#iefix') format('embedded-opentype'), /* IE6-IE8 */
-    url('//at.alicdn.com/t/font_bmgv5kod196q1tt9.woff?t=1495980873687') format('woff'), /* chrome, firefox */
-    url('//at.alicdn.com/t/font_bmgv5kod196q1tt9.ttf?t=1495980873687') format('truetype'), /* chrome, firefox, opera, Safari, Android, iOS 4.2+*/
-    url('//at.alicdn.com/t/font_bmgv5kod196q1tt9.svg?t=1495980873687#larry-icon') format('svg'); /* iOS 4.1- */
+    src: url('../../fonts/larry.eot'); /* IE9*/
+    src: url('../../fonts/larry.eot#iefix') format('embedded-opentype'), /* IE6-IE8 */
+    url('../../fonts/larry.woff') format('woff'), /* chrome, firefox */
+    url('../../fonts/larry.ttf') format('truetype'), /* chrome, firefox, opera, Safari, Android, iOS 4.2+*/
+    url('../../fonts/larry.svg#larry-icon') format('svg'); /* iOS 4.1- */
 }
 
 .larry-icon {

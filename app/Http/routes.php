@@ -1,4 +1,6 @@
+
 <?php
+
 /*
 |--------------------------------------------------------------------------
 | Application Routes
@@ -9,17 +11,19 @@
 | and give it the controller to call when that URI is requested.
 |
 */
-//肖开文-路由文件
+
+////肖开文-路由文件
  include('Route/showkw.php');
-
-//王明-路由文件
+//
+////王明-路由文件
  include('Route/wim.php');
-
+//
+///潘郡-路由文件
+ include('Route/jun.php');
+//
 //龙彪-路由文件
  include('Route/long.php');
 
-//潘珺-路由文件
-include('Route/jun.php');
 
 //这个不要动
 Route::get('/admin/welcome', function(){

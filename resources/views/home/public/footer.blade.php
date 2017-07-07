@@ -105,48 +105,47 @@
         <div class="logo ir">小米官网</div>
         <div class="info-text">
             <p>小米旗下网站：
-                <a href="//www.mi.com/index.html" target="_blank">小米商城</a>
+                <a href="" target="_blank">小米商城</a>
                 <span class="sep">|</span>
-                <a href="http://www.miui.com/" target="_blank">MIUI</a>
+                <a href="" target="_blank">MIUI</a>
                 <span class="sep">|</span>
-                <a href="http://www.miliao.com/" target="_blank">米聊</a>
+                <a href="" target="_blank">米聊</a>
                 <span class="sep">|</span>
-                <a href="http://www.duokan.com/" target="_blank">多看书城</a>
+                <a href="" target="_blank">多看书城</a>
                 <span class="sep">|</span>
-                <a href="http://www.miwifi.com/" target="_blank">小米路由器</a>
+                <a href="" target="_blank">小米路由器</a>
                 <span class="sep">|</span>
-                <a href="http://call.mi.com/" target="_blank">视频电话</a>
+                <a href="" target="_blank">视频电话</a>
                 <span class="sep">|</span>
-                <a href="http://xiaomi.tmall.com/" target="_blank">小米天猫店</a>
+                <a href="" target="_blank">小米天猫店</a>
                 <span class="sep">|</span>
-                <a href="http://shop115048570.taobao.com" target="_blank">小米淘宝直营店</a>
+                <a href="" target="_blank">小米淘宝直营店</a>
                 <span class="sep">|</span>
-                <a href="http://union.mi.com/" target="_blank">小米网盟</a>
+                <a href="" target="_blank">小米网盟</a>
                 <span class="sep">|</span>
-                <a href="//www.mi.com/mimobile/" target="_blank">小米移动</a>
+                <a href="" target="_blank">小米移动</a>
                 <span class="sep">|</span>
-                <a href="http://www.miui.com/res/doc/privacy/cn.html" target="_blank">隐私政策</a>
+                <a href="" target="_blank">隐私政策</a>
                 <span class="sep">|</span>
                 <a href="#J_modal-globalSites">Select Region</a>
             </p>
             <p>&copy;<a href="/" target="_blank" title="">mi</a> 京ICP证110507号 <a href="" target="_blank" rel="nofollow">京ICP备10046444号</a>
-                <a rel="nofollow" href="" target="_blank">京公网安备11010802020134号 </a><a rel="nofollow" href=""
-                                                                                      target="_blank" rel="nofollow">京网文[2014]0059-0009号</a>
-
+                <a rel="nofollow" href="" target="_blank">京公网安备11010802020134号 </a>
+                <a rel="nofollow" href=""target="_blank" rel="nofollow">京网文[2014]0059-0009号</a>
                 <br> 违法和不良信息举报电话：185-0130-1238，本网站所列数据，除特殊说明，所有数据均出自我司实验室测试</p>
         </div>
         <div class="info-links">
-            <a href="//privacy.truste.com/privacy-seal/validation?rid=4fc28a8c-6822-4980-9c4b-9fdc69b94eb8&amp;lang=zh-cn" target="_blank">
-                <img src="//c1.mifile.cn/f/i/17/site/truste.png" alt="TRUSTe Privacy Certification">
+            <a href="" target="_blank">
+                <img class="cacheload" src="/images/public/default.gif" data-url="/images/home/truste.png" alt="TRUSTe Privacy Certification">
             </a>
-            <a href="//search.szfw.org/cert/l/CX20120926001783002010" target="_blank">
-                <img src="//s01.mifile.cn/i/v-logo-2.png" alt="诚信网站">
+            <a href="" target="_blank">
+                <img class="cacheload" src="/images/public/default.gif"  data-url="/images/home/v-logo-2.png" alt="诚信网站">
             </a>
-            <a href="https://ss.knet.cn/verifyseal.dll?sn=e12033011010015771301369&amp;ct=df&amp;pa=461082" target="_blank">
-                <img src="//s01.mifile.cn/i/v-logo-1.png" alt="可信网站">
+            <a href="" target="_blank">
+                <img class="cacheload"  src="/images/public/default.gif"  data-url="/images/home/v-logo-1.png" alt="可信网站">
             </a>
-            <a href="http://www.315online.com.cn/member/315140007.html" target="_blank">
-                <img src="//s01.mifile.cn/i/v-logo-3.png" alt="网上交易保障中心">
+            <a href="" target="_blank">
+                <img class="cacheload" src="/images/public/default.gif"  data-url="/images/home/v-logo-3.png" alt="网上交易保障中心">
             </a>
         </div>
     </div>
