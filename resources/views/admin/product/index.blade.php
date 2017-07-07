@@ -98,7 +98,7 @@
                             </td>
                             <td>
                                 <div class="layui-btn-group">
-                                    <a href="{{ url('/product/info').'/'.$product->id }}" target="_top"
+                                    <a href="{{ url('/product/info').'/'.$product->id }}" target="_blank"
                                        class="layui-btn  layui-btn-small" alt="查看商品">
                                         <i class="larry-icon">&#xe638;</i>
                                     </a>

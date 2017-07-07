@@ -224,19 +224,8 @@
 
     </div>
 </body>
-</html>
-
-
 <script type="text/javascript" src="{{ asset('/plugin/layui/layui.js') }}"></script>
 <script type="text/javascript" src="{{ asset('/js/admin/larry.js') }}"></script>
-<script type="text/javascript" src="{{ asset('/js/public/base.js') }}"></script>
-
-
-{{--<script type="text/javascript" src="{{asset('/js/public/jquery-3.2.0.min.js')}}"></script>--}}
-{{--<script type="text/javascript" src="{{asset('/js/admin/echarts.js')}}"></script>--}}
-{{--<script type="text/javascript" src="{{asset('/js/admin/lewo.js')}}"></script>--}}
-{{--<script type="text/javascript" src="{{asset('/plugin/js/bootstrap.js')}}"></script>--}}
-
 <script>
 
     function showTime() {
@@ -260,20 +249,5 @@
     }
 
     showTime();
-
-//饼状图
-    gvChartInit();
-    $(document).ready(function(){
-        $('#myTable5').gvChart({
-            chartType: 'PieChart',
-            gvSettings: {
-                vAxis: {title: 'No of players'},
-                hAxis: {title: 'Month'},
-                width: 600,
-                height: 350
-            }
-        });
-    });
 </script>
-
-
+</html>

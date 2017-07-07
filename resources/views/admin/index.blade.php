@@ -249,7 +249,7 @@
             <div class="lock-wrapper" id="lock-screen">
                 <div id="time"></div>
                 <div class="lock-box">
-                    <img src="images/user.jpg" alt="">
+                    <img src="images/admin/user.jpg" alt="">
                     <h1>admin</h1>
                     <form action="" class="layui-form lock-form">
                         <div class="layui-form-item">
@@ -266,7 +266,6 @@
         <!-- 加载 JS -->
         <script type="text/javascript" src="{{ asset('/plugin/layui/layui.js') }}"></script>
         <script type="text/javascript" src="{{ asset('/js/admin/larry.js') }}"></script>
-        <script type="text/javascript" src="{{ asset('/js/public/base.js') }}"></script>
         <script>
             layui.use(['jquery','layer','navtab'],function() {
                 var $ = layui.jquery,

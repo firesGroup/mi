@@ -212,6 +212,7 @@ return [
         'Form'      => Collective\Html\FormFacade::class,
         'HTML'      => Collective\Html\HtmlFacade::class,
         'Image'     => Intervention\Image\Facades\Image::class,
+        'Home'      =>App\Http\Controllers\Home\HomeController::class
 
     ],
 
