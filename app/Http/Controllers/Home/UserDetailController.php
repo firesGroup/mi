@@ -7,27 +7,38 @@ use Illuminate\Http\Request;
 use App\Entity\Level;
 use Session;
 use App\Http\Requests;
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\Home\BaseController;
 use DB;
 use App\Entity\Member;
 use Hash;
-class UserDetailController extends Controller
+class UserDetailController extends BaseController
 {
 
     public function user_detail(Request $request)
     {
-        if(session('user_deta')) {
+        if(!empty(session('user_deta'))) {
             $data = session('user_deta')['nick_name'];
-//        dd($data);
+            $id = session('user_deta')['id'];
+
             $arr = DB::table('member')->where('nick_name', '=', $data)->get();
 
-            $array = MemberDetail::find(session('user_deta')['id']);
-
+            $array = MemberDetail::find($id);
+//            dd($array);
             $arr = $arr[0];
 //        dd($arr);
+            $num = DB::table('collect')->where('member_id',$id )->get();
+//            dd(count($num));
             $string = $arr->email ? $arr->email : '';
 
+            //查询带评价数
 
+            //获取到当前用户下所有的已收货的id
+
+            $comment = DB::table('comment')->where('member_id', $id)->get();
+
+
+
+            //隐藏字符串
             $str = substr($arr->phone, 3, 6);
             $string = substr($string, 3, 7);
             $char = "******";
@@ -35,7 +46,7 @@ class UserDetailController extends Controller
             $string = str_replace($string, $char, $arr->email);
             $arr->phone = $str;
             $arr->email = $string;
-            return view('/home/member/index', compact('arr', 'array'));
+            return view('/home/member/index', compact('arr', 'array', 'num', 'comment'));
         }else{
             return redirect('/');
         }
@@ -93,10 +104,17 @@ class UserDetailController extends Controller
     public function update_pass(Request $request)
     {
         $data = $request->all();
-
         if($data['data'] == ''){
             return 1;
         }
+
+       if(count($data) == 2){
+           $arr = DB::table('member')->where('nick_name','=', session('user_deta')['nick_name'])->get()[0];
+           if(Hash::check($data['data'], $arr->password)){
+               return 2;
+           }
+       }
+
         $arr = DB::table('member')->where('nick_name','=', session('user_deta')['nick_name'])->get()[0];
         if(Hash::check($data['data'], $arr->password)){
             $hash = bcrypt($data['newpass']);
@@ -171,5 +189,13 @@ class UserDetailController extends Controller
         };
     }
 
+    public function member_address()
+    {
+        $id = session('user_deta')['id'];
+       $member_address =  DB::table('address')->where('member_id', '=', $id)->get();
+
+        $data = DB::table('district')->where('level', '=', 1)->get();
+        return view('home/member/member_address', compact('data', 'member_address'));
+    }
 
 }

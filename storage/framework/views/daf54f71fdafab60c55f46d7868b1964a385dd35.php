@@ -24,9 +24,6 @@
         <span class="layui-btn layui-btn-small">
             <i class="layui-icon">&#xe615;</i>搜索会员
         </span>
-        <button class="layui-btn layui-btn-small">
-            <i class="layui-icon">&#xe608;</i> 添加会员
-        </button>
         <button class="layui-btn layui-btn-small" id="refresh">
             <i class="layui-icon">&#x1002;</i> 刷新本页
         </button>

@@ -134,7 +134,7 @@ class AddressController extends Controller
     public function AddAddress(Request $request)
     {
         $data = $request->all();
-//        dd($data);
+        dd($data);
         $arr = $data['arr'];
 
         $buy_user = $arr[0];

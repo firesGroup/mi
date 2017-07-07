@@ -58,21 +58,32 @@
 
                                     <input type="hidden" name="_method" value="PUT">
                                     <input type="hidden" name="id" value="<?php echo e($data->id); ?>">
+                                    <?php /*<?php echo e(dd($data->id)); ?>*/ ?>
                                     <input type="hidden" name="cate_id" value="">
-                                    <div class="layui-form-item" id="item">
-                                        <label class="layui-form-label">上级分类</label>
+                                    <div class="layui-form-item" id="category">
+                                        <label class="layui-form-label">商品分类</label>
                                         <div class="layui-input-block">
-                                            <select name="parent_id" lay-verify="" id="select" style="width:200px">
-                                                <option value="">请选择一个上级分类</option>
-                                                <option value="0" <?php echo e($data->parent_id ==0?" selected":""); ?>>顶级分类</option>
-                                                <?php foreach($res as $category): ?>
-                                                    <option value="<?php echo e($category->id); ?> " <?php echo e($data->parent_id ==$category->id?"selected":""); ?>><?php echo e($category->category_name); ?></option>
-                                                <?php endforeach; ?>
-                                            </select>
+                                            <div class="layui-input-inline">
+                                                <select name="category[1]" id="select1" data-id='1' lay-filter="select1">
+                                                    <option value="">请选择商品分类</option>
+                                                    <?php $__empty_1 = true; foreach( $res as $cate): $__empty_1 = false; ?>
+                                                        <option value="<?php echo e($cate->id); ?>" <?php echo e((($cate->id)==($data->id))?'disabled':''); ?>><?php echo e($cate->category_name); ?></option>
+                                                    <?php endforeach; if ($__empty_1): ?>
+                                                        一个分类都没有呢!
+                                                    <?php endif; ?>
+                                                </select>
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="layui-form-item">
-                                        <label class="layui-form-label">等级名称</label>
+                                        <label class="layui-form-label">是否推荐</label>
+                                        <div class="layui-input-block">
+                                            <input type="radio" name="status" value=0 <?php echo e(($data->status==0)?"checked":""); ?> title="推荐">
+                                            <input type="radio" name="status" value=1 <?php echo e(($data->status==1)?"checked":""); ?> title="不推荐">
+                                        </div>
+                                    </div>
+                                    <div class="layui-form-item">
+                                        <label class="layui-form-label">分类名称</label>
                                         <div class="layui-input-block">
                                             <input type="text" id="category_name" name="category_name"
                                                    lay-verify="required"
@@ -106,40 +117,60 @@
                 form = layui.form(),
                 layer = layui.layer;
 
-            form.on('select', function (data) {
-                var that = $(this);
-                that.parent().parent().parent().parent().nextAll('#item').remove();
-                $.ajax({
-                    url: "<?php echo e(url('admin/category_edit')); ?>"
-                    , type: 'post'
-                    , data: {"_token": "<?php echo e(csrf_token()); ?>", "c_id": data.value, "id": '<?php echo e($data->id); ?>'}
-                    , success: function (data) {
-                        if (data == 1) {
-                            return false;
-                        } else if(data == 2){
-                            layer.msg('顶级分类不能修改');
-                            return false;
-                        }
-                        $str = Math.ceil(Math.random()*10)+ 'parent_id';
-                        var str = "<div class='layui-form-item' id='item'><label class='layui-form-label'>上级分类</label><div class='layui-input-block'><select name='cate_id' id='select'  lay-verify='required'><option value=''>请选择一个上级分类</option>";
-                        console.log(data);
-                        for (var i = 0; i < data.length; i++) {
-                            if (data[i].id == "<?php echo e($data->id); ?>") {
+            setInterval(function(){
+                addSelect();
+            },1000);
 
+            function addSelect()
+            {
+                var num = $('div#category div.layui-input-inline').size();
+                for( var i=1;i <= num; i++ ){
+                    formOn(i);
+                }
+            }
+
+            function formOn(n)
+            {
+                form.on('select(select' + n + ')', function (data) {
+                    if( n == 1 ){
+                        $('select#select1').parent().siblings('div').remove();
+                        $('select#select1').data('id',1)
+                    }
+                    var id = $('input[name=id]').val();
+                    $.ajax({
+                        url: "<?php echo e(url('admin/product/getAjaxCategoryChild')); ?>/"+data.value
+                        , type: 'get'
+                        , success: function (data) {
+                            if (data == 1) {
                                 return false;
+                            } else if(data == 2){
+                                //说明选择的是顶级分类
+                                //那么如果存在之前选择的子分类,就应该删掉元素
+                                $('select#select1').parent().next('div').remove();
+                                return false;
+                            }else if( data == null ){
+                                return false;
+                            }else{
+                                var did = $('select#select1').data('id');
+                                var newDid = did+1;
+                                var str = "<div class='layui-input-inline'><select " +
+                                    "name='category["+ newDid +"]' id='select"+newDid+"'  lay-filter='select"+newDid+"'><option value='0'>请选择分类</option>";
+                                for (var i = 0; i < data.length; i++) {
+                                    str += '<option value="'+data[i].id +'"'+((data[i].id == id)?"disabled=\"\" ":"")+'>'+ data[i].category_name + '</option>';
+                                }
+                                str += "</select></div>";
+                                $('select#select'+n).parent().next('div').remove();
+                                $('select#select'+n).parent().parent().append(str);
+                                $('select#select1').data('id',n+1);
+                                form.render();
                             }
-                            str += "<option value='" + data[i].id + ",'>" + data[i].category_name + "</option>";
-                        }
-                        str += "</select></div></div>";
-                        that.parent().parent().parent().parent().after(str);
-                        form.render();
+                        },
+                        typeOf: 'json'
+                    })
+                });
+            }
 
-                    },
-                    typeOf: 'json'
-                })
-
-            });
-        })
+        });
     </script>
 <?php $__env->stopSection(); ?>
 

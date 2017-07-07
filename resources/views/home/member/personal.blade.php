@@ -132,7 +132,7 @@
                 var item=[];
                 $.each(data,function(k,v){
                     item.push('<input type="hidden" name="'+k+'" value="'+v+'">');
-                })
+                });
                 $(input).after(item.join(''));
             }
 

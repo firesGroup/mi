@@ -73,7 +73,7 @@
                         <th>分类名称</th>
                         <th>父类id</th>
                         <th>父类路径</th>
-                        <th>排序</th>
+                        <th>推荐</th>
                         <th>操作</th>
                     </tr>
                     <tr>
@@ -98,7 +98,7 @@
                             </td>
                             <td><?php echo e($v->parent_id); ?></td>
                             <td><?php echo e($v->parent_path); ?></td>
-                            <td><?php echo e($v->sort); ?></td>
+                            <td><?php echo e(($v->status)==0?"推荐":"不推荐"); ?></td>
                             <td>
                                 <div class="layui-btn-group">
                                     <a href="<?php echo e(url('admin/category').'/'.$v->id."/edit"); ?>" class="layui-btn"
@@ -178,6 +178,8 @@
                                     layer.alert('删除失败!', {icon: 2});
                                 } else if (data == 2) {
                                     layer.alert('删除错误!该分类下有子分类!不能删除', {icon: 2});
+                                } else if (data == 3) {
+                                    layer.alert('删除错误!该分类下商品!不能删除', {icon: 2});
                                 }
                             } else {
                                 layer.alert('服务器错误!', {icon: 2});

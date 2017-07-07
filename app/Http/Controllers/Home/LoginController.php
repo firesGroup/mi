@@ -5,10 +5,10 @@ namespace App\Http\Controllers\Home;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Requests;
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\Home\BaseController;
 use Hash;
 use Session;
-class LoginController extends Controller
+class LoginController extends BaseController
 {
     public function login(Request $request)
     {

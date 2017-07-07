@@ -167,8 +167,12 @@ class MemberController extends Controller
     {
         //dd($id);
         $data = Member::find($id);
-        DB::table('member')->delete($id);
-       return DB::table('memberdetail')->where('mid', $data->id)->delete();
+
+        DB::transaction(function () use($data, $id) {
+            DB::table('member')->delete($id);
+            return DB::table('memberdetail')->where('member_id', $data->id)->delete();
+        });
+
     }
 
     public function changeavator(Request $request)
@@ -316,14 +320,16 @@ class MemberController extends Controller
            $arr =  DB::table('member')->where('nick_name', '=', $data['nick_name'])->get()[0];
             $request->session()->put('user_deta', ['nick_name'=>$arr->nick_name, 'phone'=>$arr->phone, 'email'=>$arr->email, 'id'=>$arr->id]);
            $array['member_id'] = $arr->id;
-           $array['level_id'] = 0;
+           $array['level_id'] = 1;
            $array['sex'] = 0;
            $array['avator'] = '/uploads/avator/default.jpg' ;
           if(MemberDetail::create($array)){
+              DB::commit();
               return 0;
             }
         }else{
             return 3;
+            DB::rollBack();
         }
 
 

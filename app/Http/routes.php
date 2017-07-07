@@ -26,6 +26,6 @@ Route::get('/admin/welcome', function(){
     return view('welcome');
 });
 
-Route::get('admin', function () {
-    return view('login');
-});
+//Route::get('admin', function () {
+//    return view('login');
+//});

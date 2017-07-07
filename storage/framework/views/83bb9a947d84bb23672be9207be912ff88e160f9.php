@@ -30,7 +30,7 @@
                 <?php echo $__env->make('home.member.member_modoul', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
                 <div class="span16">
                     <div class="protal-content-update hide">
-                        <p class="msg">我们做了一个小升级：你的用户名可以直接修改啦，去换个酷炫的名字吧。<a href="https://account.xiaomi.com/pass/auth/profile/home" target="_blank" data-stat-id="a7bae9e996d7d321" onclick="_msq.push(['trackEvent', '45a270e10b1f8e93-a7bae9e996d7d321', 'https://account.xiaomi.com/pass/auth/profile/home', 'pcpid', '']);"> 立即前往&gt;</a></p>
+                        <p class="msg">我们做了一个小升级：你的用户名可以直接修改啦，去换个酷炫的名字吧。<a href="" target="_blank" data-stat-id="a7bae9e996d7d321" onclick="_msq.push(['trackEvent', '45a270e10b1f8e93-a7bae9e996d7d321', 'https://account.xiaomi.com/pass/auth/profile/home', 'pcpid', '']);"> 立即前往&gt;</a></p>
                     </div>
                     <div class="uc-box uc-main-box">
                         <div class="uc-content-box portal-content-box">
@@ -47,21 +47,25 @@
                                             <li>账户安全：<span class="level level-2">普通</span></li>
 
                                             <?php if(empty($arr->email)): ?>
-                                        <li>绑定手机：<span class="tel"><?php echo e($arr->phone); ?></span></li>
+                                        <li>绑定手机：<span class="tel"><?php echo e($arr->phone); ?></span>
+                                            <button class="btn btn-small btn-primary layui-btn"   data-method="notice" id="update_phone">修改</button></li>
                                             <li>绑定邮箱：<span class="tel"><?php echo e($arr->email); ?></span>
                                                 <button class="btn btn-small btn-primary layui-btn"   data-method="notice" id="email">绑定</button></li>
 
                                             <?php elseif(empty($arr->phone)): ?>
 
-                                        <li>绑定邮箱：<span class="tel"><?php echo e($arr->email); ?></span></li>
+                                        <li>绑定邮箱：<span class="tel"><?php echo e($arr->email); ?></span>
+                                            <button class="btn btn-small btn-primary layui-btn"   data-method="notice" id="update_email">修改</button></li></li>
                                         <li>绑定手机：<span class="tel"></span>
                                         <button class="btn btn-small btn-primary layui-btn"   data-method="notice" id="phone">绑定</button></li>
 
                                             <?php endif; ?>
 
                                             <?php if(!empty($arr->phone) && !empty($arr->email)): ?>
-                                        <li>绑定手机：<span class="tel"><?php echo e($arr->phone); ?></span></li>
-                                        <li>绑定邮箱：<span class="tel"><?php echo e($arr->email); ?></span></li>
+                                        <li>绑定手机：<span class="tel"><?php echo e($arr->phone); ?></span>
+                                            <button class="btn btn-small btn-primary layui-btn"   data-method="notice" id="update_phone">修改</button></li>
+                                        <li>绑定邮箱：<span class="tel"><?php echo e($arr->email); ?></span>
+                                            <button class="btn btn-small btn-primary layui-btn"   data-method="notice" id="update_email">修改</button></li>
                                                 <?php endif; ?>
 
                                         </ul>
@@ -71,22 +75,22 @@
                                     <ul class="info-list clearfix">
                                         <li>
                                             <h3>待支付的订单：<span class="num">0</span></h3>
-                                            <a href="//static.mi.com/order/?type=7" data-stat-id="dd6496f77a167a5d" onclick="_msq.push(['trackEvent', '45a270e10b1f8e93-dd6496f77a167a5d', '//static.mi.com/order/', 'pcpid', '']);">查看待支付订单<i class="iconfont"></i></a>
+                                            <a href="">查看待支付订单<i class="iconfont"></i></a>
                                             <img src="//s01.mifile.cn/i/user/portal-icon-1.png" alt="">
                                         </li>
                                         <li>
                                             <h3>待收货的订单：<span class="num">0</span></h3>
-                                            <a href="//static.mi.com/order/?type=8" data-stat-id="92fa860987c1c734" onclick="_msq.push(['trackEvent', '45a270e10b1f8e93-92fa860987c1c734', '//static.mi.com/order/', 'pcpid', '']);">查看待收货订单<i class="iconfont"></i></a>
+                                            <a href="">查看待收货订单<i class="iconfont"></i></a>
                                             <img src="//s01.mifile.cn/i/user/portal-icon-2.png" alt="">
                                         </li>
                                         <li>
-                                            <h3>待评价商品数：<span class="num">0</span></h3>
-                                            <a href="https://order.mi.com/user/comment?filter=1&amp;r=76289.1499093562" data-stat-id="a79855fd870c7127" onclick="_msq.push(['trackEvent', '45a270e10b1f8e93-a79855fd870c7127', 'https://order.mi.com/user/comment', 'pcpid', '']);">查看待评价商品<i class="iconfont"></i></a>
+                                            <h3>评价商品数：<span class="num"><?php echo e(count($comment)); ?></span></h3>
+                                            <a href="">查看评价商品<i class="iconfont"></i></a>
                                             <img src="//s01.mifile.cn/i/user/portal-icon-3.png" alt="">
                                         </li>
                                         <li>
-                                            <h3>喜欢的商品：<span class="num">0</span></h3>
-                                            <a href="https://order.mi.com/user/favorite?r=76289.1499093562" data-stat-id="2e12d1c281c603d3" onclick="_msq.push(['trackEvent', '45a270e10b1f8e93-2e12d1c281c603d3', 'https://order.mi.com/user/favorite', 'pcpid', '']);">查看喜欢的商品<i class="iconfont"></i></a>
+                                            <h3>喜欢的商品：<span class="num"><?php echo e(count($num)); ?></span></h3>
+                                            <a href="<?php echo e(url('ponseral_collect')); ?>" data-stat-id="2e12d1c281c603d3" >查看喜欢的商品<i class="iconfont"></i></a>
                                             <img src="//s01.mifile.cn/i/user/portal-icon-4.png" alt="">
                                         </li>
                                     </ul>
@@ -108,7 +112,7 @@
                 var $ = layui.jquery,
                     layer = layui.layer;
 
-                $('#email').click( function () {
+                $('#email, #update_email').click( function () {
                     layer.open({
                         type: 1
                         ,
@@ -180,12 +184,15 @@
                                                 }
                                                 n--;
                                             }, 1000);
-                                        } else {
+                                        }
+
+                                        if(data==2){
                                             layer.msg('邮箱发送失败, 请等会在尝试', {time:2000, icon:5});
                                         }
+
                                     }
                                 })
-                          })
+                          });
 
                             $('#binding').click( function () {
                                 var email = $('#mail').val();
@@ -227,7 +234,7 @@
 
             });
 
-                $('#phone').click( function() {
+                $('#phone, #update_phone').click( function() {
                     layer.open({
                         type: 1
                         ,
@@ -286,7 +293,7 @@
                                     success: function (data) {
                                     var $data = JSON.parse(data);
                                         if ($data['ResultData'] == '0') {
-                                            layer.msg('邮件已发送, 请查看手机');
+                                            layer.msg('信息已发送, 请查看手机');
                                             var n = 60;
                                             $btn.attr('disabled', 'true');
                                             $btn.addClass('layui-btn-disabled').removeClass('bg-color');
@@ -302,6 +309,14 @@
                                         } else {
                                             layer.msg('发送验证码失败, 请等会在尝试', {time:2000, icon:5});
                                         }
+                                    },
+                                    error:function (error) {
+                                        var msgObj=JSON.parse(error.responseText);
+                                        var msg = '';
+                                        for(var name in msgObj){//遍历对象属性名
+                                            msg += msgObj[name] + "<br>";
+                                        }
+                                        layer.msg(msg,{icon:2,time:3000});
                                     }
                                 })
                             });

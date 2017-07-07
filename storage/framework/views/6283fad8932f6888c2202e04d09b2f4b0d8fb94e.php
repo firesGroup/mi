@@ -33,7 +33,7 @@
                                 <li style="color:#FF5722"><?php echo e($error); ?></li>
                             <?php endforeach; ?>
                         <?php else: ?>
-                            <li>请务必正确填写分类信息</li>
+
                         <?php endif; ?>
 
                     </ul>
