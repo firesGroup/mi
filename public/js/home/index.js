@@ -111,8 +111,16 @@
             this.start();
         },
     };
-    //执行轮播图滚动
-    slideObj.init();
+    $(window).on('load',function(){
+        $('#J_homeSlider div.slide img').each(function(i){
+            if( i !== 0 ){
+                $(this).attr('src',$(this).data('url'));
+            }
+        });
+        //执行轮播图滚动
+        slideObj.init();
+        $('a.ad2').attr('style','background-image:url(//c1.mifile.cn/f/i/g/2015/gif/yyymix.gif)');
+    });
     //上一页点击事件
     $('.home-hero-slider').on('click','div.ui-controls-direction a.ui-prev', function(){
         slideObj.prev();
@@ -226,5 +234,3 @@
             this.start();
         },
     }
-
-    console.log(recommendObj.superA);

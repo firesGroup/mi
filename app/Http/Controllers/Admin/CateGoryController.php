@@ -18,7 +18,7 @@ class CateGoryController extends Controller
     public function index()
     {
         $map = "concat(parent_path,id)";
-        $data = DB::table('category')->orderBy(DB::raw('concat(parent_path,id)'))->paginate(7);
+        $data = DB::table('category')->orderBy(DB::raw('concat(parent_path,id)'))->paginate(15);
 
 
         return view('admin/category/index', compact('data'));

@@ -222,19 +222,8 @@
 
     </div>
 </body>
-</html>
-
-
 <script type="text/javascript" src="<?php echo e(asset('/plugin/layui/layui.js')); ?>"></script>
 <script type="text/javascript" src="<?php echo e(asset('/js/admin/larry.js')); ?>"></script>
-<script type="text/javascript" src="<?php echo e(asset('/js/public/base.js')); ?>"></script>
-
-
-<?php /*<script type="text/javascript" src="<?php echo e(asset('/js/public/jquery-3.2.0.min.js')); ?>"></script>*/ ?>
-<?php /*<script type="text/javascript" src="<?php echo e(asset('/js/admin/echarts.js')); ?>"></script>*/ ?>
-<?php /*<script type="text/javascript" src="<?php echo e(asset('/js/admin/lewo.js')); ?>"></script>*/ ?>
-<?php /*<script type="text/javascript" src="<?php echo e(asset('/plugin/js/bootstrap.js')); ?>"></script>*/ ?>
-
 <script>
 
     function showTime() {
@@ -258,22 +247,6 @@
     }
 
     showTime();
-
-//饼状图
-    gvChartInit();
-    $(document).ready(function(){
-        $('#myTable5').gvChart({
-            chartType: 'PieChart',
-            gvSettings: {
-                vAxis: {title: 'No of players'},
-                hAxis: {title: 'Month'},
-                width: 600,
-                height: 350
-            }
-        });
-    });
 </script>
-
-
-
+</html>
 <?php echo $__env->make('layouts.iframe', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
