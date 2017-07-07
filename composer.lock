@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "716b2d7a3d3d2d03390a0e6fdeb0c065",
+    "content-hash": "02c420fb1c6d9225d593e138c84ae5ef",
     "packages": [
         {
             "name": "classpreloader/classpreloader",
@@ -367,16 +367,16 @@
         },
         {
             "name": "intervention/image",
-            "version": "2.3.13",
+            "version": "2.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Intervention/image.git",
-                "reference": "15a517f052ee15d373ffa145c9642d5fec7ddf5c"
+                "reference": "ff4f45412044f3ab26f29260570a14ff41631d87"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://files.phpcomposer.com/files/Intervention/image/15a517f052ee15d373ffa145c9642d5fec7ddf5c.zip",
-                "reference": "15a517f052ee15d373ffa145c9642d5fec7ddf5c",
+                "url": "https://files.phpcomposer.com/files/Intervention/image/ff4f45412044f3ab26f29260570a14ff41631d87.zip",
+                "reference": "ff4f45412044f3ab26f29260570a14ff41631d87",
                 "shasum": ""
             },
             "require": {
@@ -394,11 +394,6 @@
                 "intervention/imagecache": "Caching extension for the Intervention Image library"
             },
             "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "2.3-dev"
-                }
-            },
             "autoload": {
                 "psr-4": {
                     "Intervention\\Image\\": "src/Intervention/Image"
@@ -425,7 +420,7 @@
                 "thumbnail",
                 "watermark"
             ],
-            "time": "2017-04-23T18:45:36+00:00"
+            "time": "2015-06-28T15:55:12+00:00"
         },
         {
             "name": "iscms/alisms-for-laravel",
@@ -1651,16 +1646,16 @@
         },
         {
             "name": "symfony/event-dispatcher",
-            "version": "v3.3.2",
+            "version": "v3.3.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/event-dispatcher.git",
-                "reference": "4054a102470665451108f9b59305c79176ef98f0"
+                "reference": "67535f1e3fd662bdc68d7ba317c93eecd973617e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://files.phpcomposer.com/files/symfony/event-dispatcher/4054a102470665451108f9b59305c79176ef98f0.zip",
-                "reference": "4054a102470665451108f9b59305c79176ef98f0",
+                "url": "https://files.phpcomposer.com/files/symfony/event-dispatcher/67535f1e3fd662bdc68d7ba317c93eecd973617e.zip",
+                "reference": "67535f1e3fd662bdc68d7ba317c93eecd973617e",
                 "shasum": ""
             },
             "require": {
@@ -1710,7 +1705,7 @@
             ],
             "description": "Symfony EventDispatcher Component",
             "homepage": "https://symfony.com",
-            "time": "2017-06-04T18:15:29+00:00"
+            "time": "2017-06-09T14:53:08+00:00"
         },
         {
             "name": "symfony/finder",
@@ -3646,16 +3641,16 @@
         },
         {
             "name": "symfony/yaml",
-            "version": "v3.3.2",
+            "version": "v3.3.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/yaml.git",
-                "reference": "9752a30000a8ca9f4b34b5227d15d0101b96b063"
+                "reference": "1f93a8d19b8241617f5074a123e282575b821df8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://files.phpcomposer.com/files/symfony/yaml/9752a30000a8ca9f4b34b5227d15d0101b96b063.zip",
-                "reference": "9752a30000a8ca9f4b34b5227d15d0101b96b063",
+                "url": "https://files.phpcomposer.com/files/symfony/yaml/1f93a8d19b8241617f5074a123e282575b821df8.zip",
+                "reference": "1f93a8d19b8241617f5074a123e282575b821df8",
                 "shasum": ""
             },
             "require": {
@@ -3697,7 +3692,7 @@
             ],
             "description": "Symfony Yaml Component",
             "homepage": "https://symfony.com",
-            "time": "2017-06-02T22:05:06+00:00"
+            "time": "2017-06-15T12:58:50+00:00"
         },
         {
             "name": "webmozart/assert",
