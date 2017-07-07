@@ -1,7 +1,10 @@
 <?php
 
-namespace App\Http\Controllers\Home;
 
+<<<<<<< HEAD
+namespace App\Http\Controllers\Home;
+=======
+>>>>>>> 6d07e38230768a9a8bc7d67c79dcfd003abc8c28
 use App\Entity\CateGory;
 use App\Entity\Product;
 use App\Entity\SlideShow;
@@ -10,7 +13,6 @@ use App\Entity\ProductVersionsColors;
 use Illuminate\Http\Request;
 use Illuminate\Support\HtmlString;
 use App\Http\Controllers\Home\BaseController;
-
 class HomeController extends BaseController
 {
 
@@ -19,7 +21,10 @@ class HomeController extends BaseController
         $slide = $this->SlideShow();
         return view('home.index',compact('nav','slide'));
     }
+<<<<<<< HEAD
+=======
 
+>>>>>>> 6d07e38230768a9a8bc7d67c79dcfd003abc8c28
     /*
      *
      * 获得头部横排导航商品数据
@@ -43,11 +48,12 @@ class HomeController extends BaseController
         $nav['luyou'] = self::getNavSql(3,6);
         //智能硬件
         $nav['zhineng'] = self::getNavSql([24,94],6);
-
         return $nav;
-
     }
+<<<<<<< HEAD
+=======
 
+>>>>>>> 6d07e38230768a9a8bc7d67c79dcfd003abc8c28
     /*
      *
      * 获得首页纵向分类导航商品数据
@@ -55,7 +61,10 @@ class HomeController extends BaseController
      * return $arr  关联数组
      *
      */
+<<<<<<< HEAD
+=======
 
+>>>>>>> 6d07e38230768a9a8bc7d67c79dcfd003abc8c28
     public static function headerNavPort()
     {
         //头部纵向分类导航
@@ -91,13 +100,30 @@ class HomeController extends BaseController
         $navPort['zhoubian'] = self::getPortNavSql($zhoubianIds);
         return $navPort;
     }
+<<<<<<< HEAD
+=======
 
+>>>>>>> 6d07e38230768a9a8bc7d67c79dcfd003abc8c28
     public static function getNavSql($category_id, $num)
     {
         if( is_array($category_id) ){
             $sql = Product::whereIn('category_id',$category_id)->where('recommend',0)->where('status',0)->orderBy('id','desc')->limit($num)->get();
         }else{
             $sql = Product::where('category_id',$category_id)->where('recommend',0)->where('status',0)->orderBy('id','desc')->limit($num)->get();
+<<<<<<< HEAD
+        }
+        return $sql;
+    }
+    public static function getPortNavSql($category_id)
+    {
+        if( is_array($category_id) ){
+            $sql = Product::whereIn('category_id',$category_id)->where('status',0)->orderBy('id','desc')->limit(24)->get();
+        }else{
+            $sql = Product::where('category_id',$category_id)->where('status',0)->orderBy('id','desc')->limit(24)->get();
+        }
+        return $sql;
+    }
+=======
         }
         return $sql;
     }
@@ -113,6 +139,7 @@ class HomeController extends BaseController
     }
 
 
+>>>>>>> 6d07e38230768a9a8bc7d67c79dcfd003abc8c28
     /*
      * 商品详情页
      *
@@ -144,7 +171,6 @@ class HomeController extends BaseController
         if( $versions != null ){
             //拿到数组第一个版本的id
             $firstVersionId = $versions[0]['id'];
-
             //取得所有版本的图片的信息
             foreach( $versions as $ver ){
                 if( $ver['ver_img'] !== null ){
@@ -169,7 +195,6 @@ class HomeController extends BaseController
                 }
             }
         }
-
         //先拿到商品封面图
         $imgIndex = $info->p_index_image;
         if( !isset($imgArr)){
@@ -177,7 +202,6 @@ class HomeController extends BaseController
         }
         return view('home.product.buy', compact('p_id', 'imgArr','info','noversions','versions','colorArr'));
     }
-
     /*
      * ajax 获取商品版本的状态
      * @param $id int 商品id
@@ -193,8 +217,6 @@ class HomeController extends BaseController
             return $pro->status;
         }
     }
-
-
     /*
      * ajax 获取商品版本的颜色
      * @param $id int 商品id
@@ -203,9 +225,8 @@ class HomeController extends BaseController
     public function ajaxGetVersionColor($ver_id)
     {
         $color = ProductVersionsColors::where('ver_id', $ver_id)->get();
-       return response()->json($color);
+        return response()->json($color);
     }
-
     /*
      * ajax 获取商品版本的信息
      * @param $id int 商品id
@@ -216,7 +237,6 @@ class HomeController extends BaseController
         $info = ProductVersions::where('id', $ver_id)->get();
         return $info;
     }
-
     /*
      *
      * 获得商品已存在的Spec规格的规格项的id 列表
@@ -241,21 +261,29 @@ class HomeController extends BaseController
         //获得 规格名称
         foreach( $specItemIdArr as $spec_item_id ){
             $specId= ProductSpecItem::find($spec_item_id)->spec->spec_name;
-
         }
-
     }
+<<<<<<< HEAD
+=======
 
 
+>>>>>>> 6d07e38230768a9a8bc7d67c79dcfd003abc8c28
     /*
      *
      * 获得首页轮播图数据
      *
      */
+<<<<<<< HEAD
+=======
 
+>>>>>>> 6d07e38230768a9a8bc7d67c79dcfd003abc8c28
     public function slideShow()
     {
         $slide = SlideShow::where('status',0)->get();
         return  $slide;
     }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 6d07e38230768a9a8bc7d67c79dcfd003abc8c28

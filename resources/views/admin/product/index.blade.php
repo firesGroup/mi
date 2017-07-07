@@ -79,7 +79,7 @@
                         <tr>
                             <td>{{ $product->id }}</td>
                             <td>{{ $product->p_name }}</td>
-                            <td>{{ $product->category->category_name }}</td>
+                            <td>{{ $product->category->category_name or ''}}</td>
                             <td>{{ $product->price }}元</td>
                             <td>{{ $product->sell_num }}</td>
                             <td>{{ $product->store }}</td>
