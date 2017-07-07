@@ -16,7 +16,7 @@ class CreateProductVersionsTable extends Migration
             $table->increments('id')->comment('商品版本id');
             $table->integer('p_id')->index()->comment('商品id');
             $table->string('ver_name')->index()->comment('版本名称');
-            $table->string('ver_spec')->index()->comment('版本规格');
+            $table->string('ver_spec')->nullable()->index()->comment('版本规格');
             $table->string('ver_desc')->default('')->comment('版本简介');
             $table->float('price',12,2)->default(0.00)->comment('版本价格');
             $table->string('contact_p_num',15)->nullable()->comment('搭配商品货号');

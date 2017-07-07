@@ -55,13 +55,13 @@
                         <div class="layui-form-item">
                             <label class="layui-form-label">版本规格</label>
                             <div class="layui-input-block">
-                                <input type="text" name="ver_spec" lay-verify="required" placeholder="请输入版本规格" autocomplete="off" class="layui-input" value="{{$info->ver_spec}}">
+                                <input type="text" name="ver_spec"placeholder="请输入版本规格" autocomplete="off" class="layui-input" value="{{$info->ver_spec}}">
                             </div>
                         </div>
                         <div class="layui-form-item">
                             <label class="layui-form-label">版本简介</label>
                             <div class="layui-input-block">
-                                <input type="text" name="ver_desc" lay-verify="required" placeholder="请输入版本简介" autocomplete="off" class="layui-input" value="{{$info->ver_desc}}">
+                                <input type="text" name="ver_desc" placeholder="请输入版本简介" autocomplete="off" class="layui-input" value="{{$info->ver_desc}}">
                             </div>
                         </div>
                         <div class="layui-form-item">

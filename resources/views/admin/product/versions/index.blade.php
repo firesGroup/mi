@@ -45,13 +45,11 @@
                     </button>
                 </div>
                 <div class="order">
-                    <form>
-                        <input type="hidden" name="search" value="true">
-                    <input class="layui-input-inline" placeholder="搜索版本名称" name="word" value="">
-                    <button class="layui-btn" id="search">
+                    <input type="hidden" name="search" value="true">
+                    <input class="layui-input-inline" placeholder="搜索版本名称" name="word" value="{{ isset($word)?$word:"" }}">
+                    <span class="layui-btn" id="search">
                         <i class="layui-icon">&#xe615;</i>搜索
-                    </button>
-                    </form>
+                    </span>
                 </div>
                 <table class="layui-table larry-table-info">
                     <colgroup>
@@ -97,7 +95,11 @@
                     </tbody>
                 </table>
                 <div class="larry-table-page">
-                    {{ $verList->render() }}
+                    @if( isset($word) )
+                        {{ $verList->appends(['word'=>$word])->links() }}
+                    @else
+                        {{ $verList->links() }}
+                    @endif
                 </div>
             </div>
         </div>
@@ -123,6 +125,11 @@
                 '{{ csrf_token() }}',
                 url
             );
+
+            //版本搜索
+            $('span#search').on('click', function(){
+                location.href='{{ url('/admin/product/versions/'.$id) }}'+'?word='+ $('input[name=word]').val();
+            });
 
         });
     </script>

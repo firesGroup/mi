@@ -39,13 +39,10 @@ class ProductColorController extends Controller
     public function store(Request $request)
     {
         $data['color_name'] = $request->color_name;
-        $data['color_img']= $request->color_img;
-//        //匹配是否是远程地址图片
-//        $res = preg_match('/^(https?)(:\/\/)?([a-zA-Z0-9]+\.[\w]+\.[\w]{2,})/i',$color_img);
-//        if( $res !== 0 ){
-//            //不为0 则是远程图片
-//            //那么下载到本地
-//        }
+        $img= $request->color_img;
+        //如果是远程图片就获取
+        $image = getUrlImages($img,'product');
+        $data['color_img'] = $image;
         $res = ProductColor::create($data);
         return $res?0:1;
     }
@@ -72,7 +69,10 @@ class ProductColorController extends Controller
     public function update(Request $request, $id)
     {
         $data['color_name'] = $request->color_name;
-        $data['color_img'] = $request->color_img;
+        $img= $request->color_img;
+        //如果是远程图片就获取
+        $image = getUrlImages($img,'product');
+        $data['color_img'] = $image;
         $res = ProductColor::find($id)->update($data);
         return $res?0:1;
     }

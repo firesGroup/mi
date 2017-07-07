@@ -32,23 +32,6 @@
                         <i class="layui-icon">&#x1002;</i> 刷新本页
                     </button>
                 </div>
-                <div class="order">
-                    <select name="category">
-                        <option value="0">所有分类</option>
-                    </select>
-                    <select name="brand">
-                        <option value="0">所有品牌</option>
-                    </select>
-                    <select name="sort_price">
-                        <option value="0">默认排序</option>
-                        <option value="1">按价格由高到低</option>
-                        <option value="2">按价格由低到高</option>
-                    </select>
-                    <input class="layui-input-inline" placeholder="搜索关键词" name="search" value="">
-                    <span class="layui-btn">
-                        <i class="layui-icon">&#xe615;</i>搜索
-                    </span>
-                </div>
                 <table class="layui-table larry-table-info">
                     <thead>
                     <tr>

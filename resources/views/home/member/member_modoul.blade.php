@@ -38,7 +38,7 @@
                     <li><a href="https://order.mi.com/cashAccount?r=13726.1499097479" data-stat-id="c4cd67b3b40a9d9a" onclick="_msq.push(['trackEvent', '73ce9fb1e71baa17-c4cd67b3b40a9d9a', 'https://order.mi.com/cashAccount', 'pcpid', '']);">现金账户</a></li>
                     <li><a href="https://order.mi.com/ecard/bind?r=13726.1499097479" data-stat-id="68c5fcc53f12f0f9" onclick="_msq.push(['trackEvent', '73ce9fb1e71baa17-68c5fcc53f12f0f9', 'https://order.mi.com/ecard/bind', 'pcpid', '']);">小米礼品卡</a></li>
                     <li><a href="https://order.mi.com/huanxin/list?r=13726.1499097479" data-stat-id="2e7e0d30e8b96465" onclick="_msq.push(['trackEvent', '73ce9fb1e71baa17-2e7e0d30e8b96465', 'https://order.mi.com/huanxin/list', 'pcpid', '']);">现金券</a></li>
-                    <li><a href="https://order.mi.com/user/favorite?r=13726.1499097479" data-stat-id="15abb12569146c4d" onclick="_msq.push(['trackEvent', '73ce9fb1e71baa17-15abb12569146c4d', 'https://order.mi.com/user/favorite', 'pcpid', '']);">喜欢的商品</a></li>
+                    <li><a href="{{url('ponseral_collect')}}">喜欢的商品</a></li>
                     <li><a href="https://order.mi.com/user/coupon?r=13726.1499097479" data-stat-id="0699849a20bfe76e" onclick="_msq.push(['trackEvent', '73ce9fb1e71baa17-0699849a20bfe76e', 'https://order.mi.com/user/coupon', 'pcpid', '']);">优惠券</a></li>
                     <li class="active"><a href="https://order.mi.com/user/address?r=13726.1499097479" data-stat-id="becec4bcb77b9d67" onclick="_msq.push(['trackEvent', '73ce9fb1e71baa17-becec4bcb77b9d67', 'https://order.mi.com/user/address', 'pcpid', '']);">收货地址</a></li>
                 </ul>
@@ -50,7 +50,7 @@
             </div>
             <div class="box-bd">
                 <ul class="uc-nav-list">
-                    <li><a href="//service.order.mi.com/record/list?_r=13726.1499097479" data-stat-id="8a49455bc55c699d" onclick="_msq.push(['trackEvent', '73ce9fb1e71baa17-8a49455bc55c699d', '//service.order.mi.com/record/list', 'pcpid', '']);">服务记录</a></li>
+                    <li><a href="javascript:;" onclick="collect('2');">服务记录</a></li>
                     <li><a href="//service.order.mi.com/apply/front?_r=13726.1499097479" data-stat-id="eb07187db0d9c11d" onclick="_msq.push(['trackEvent', '73ce9fb1e71baa17-eb07187db0d9c11d', '//service.order.mi.com/apply/front', 'pcpid', '']);">申请服务</a></li>
                     <li><a href="//service.order.mi.com/user/compensate?_r=13726.1499097479" data-stat-id="b6260cb96c1b1bc1" onclick="_msq.push(['trackEvent', '73ce9fb1e71baa17-b6260cb96c1b1bc1', '//service.order.mi.com/user/compensate', 'pcpid', '']);">领取快递报销</a></li>
                 </ul>
@@ -58,12 +58,11 @@
         </div>
         <div class="uc-nav-box">
             <div class="box-hd">
-                <h3 class="title">账户管理</h3>
+                <h3 class="title" >账户管理</h3>
             </div>
             <div class="box-bd">
                 <ul class="uc-nav-list">
-                    <li><a href="{{url('personal')}}" target="_blank" data-stat-id="35eef2fd7467d6ca">个人信息</a></li>
-                    <li><a href="https://account.xiaomi.com/pass/auth/security/home#service=setPassword" target="_blank" data-stat-id="ae5ee0188510f1e6" onclick="_msq.push(['trackEvent', '73ce9fb1e71baa17-ae5ee0188510f1e6', 'https://account.xiaomi.com/pass/auth/security/home#service=setPassword', 'pcpid', '']);">修改密码</a></li>
+                    <li><a href="{{url('personal')}}" data-stat-id="35eef2fd7467d6ca">个人信息</a></li>
                     <li><a href="http://uvip.xiaomi.cn" target="_blank" data-stat-id="c130c3dbf41fd4d8" onclick="_msq.push(['trackEvent', '73ce9fb1e71baa17-c130c3dbf41fd4d8', 'http://uvip.xiaomi.cn', 'pcpid', '']);">社区VIP认证</a></li>
                 </ul>
             </div>

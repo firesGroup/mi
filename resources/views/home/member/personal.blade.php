@@ -17,6 +17,9 @@
         <link rel="stylesheet" type="text/css" href="{{ asset('/css/home/personal.css') }}">
         <link rel="stylesheet" type="text/css" href="{{ asset('/css/home/personal_01.css') }}">
         <link rel="stylesheet" type="text/css" href="{{ asset('/css/home/personal_02.css') }}">
+        <link rel="stylesheet" type="text/css" href="{{ asset('/css/admin/jquery.Jcrop.min.css') }}">
+        <link rel="stylesheet" type="text/css" href="http://www.mi.cn/plugin/layui/css/layui.css">
+
 @endsection
 
 @section('content')
@@ -31,84 +34,147 @@
         <div class="container">
             <div class="row">
     @include('home.member.member_modoul')
-                <div style="width:600px;float:right;">
+                <div class="n-frame" style="width:600px;height:500px;float:left;margin-left: 250px;margin-top: 200px">
                     <div class="uinfo c_b">
-                        <div class="">
-                            <div class="main_l">
-                                <div class="naInfoImgBox t_c">
-                                    <div class="na-img-area marauto">
-                                        <!--na-img-bg-area不能插入任何子元素-->
-                                        <div class="na-img-bg-area"></div>
-                                        <em class="na-edit"></em>
-                                    </div>
-                                    <div class="naImgLink">
-                                        <a class="color4a9" href="" title="设置头像">设置头像</a>
-                                    </div>
-                                </div>
-                            </div>
+
                             <div class="main_r">
                                 <div class="framedatabox">
+                                    <div style="text-align :center;">
+                                        <img style="border-radius: 50%" src="{{$data->avator}}">
+                                    </div>
+                                    <div style="text-align :center;">
+                                        <input type="file" name="avator" class="layui-upload-file" id="sumbit">
+                                    </div>
                                     <div class="fdata">
-                                        <a class="color4a9 fr" href="" title="编辑" id="editInfo"><i class="iconpencil"></i>编辑</a>
+
+                                        <a class="color4a9 fr" href="javascript:;" title="编辑" id="editInfo"><i class="iconpencil"></i>编辑</a>
                                         <h3>基础资料</h3>
                                     </div>
                                     <div class="fdata lblnickname">
-                                        <p><span>姓名：</span><span class="value">
-
-					&amp;hellip;&amp;hellip;
-
-			  </span></p>
+                                        <p>
+                                            <span>姓名:</span>
+                                            <span class="value" id="nick_name">{{$member->nick_name}}</span>
+                                        </p>
                                     </div>
                                     <div class="fdata lblbirthday">
-                                        <p><span>生日：</span><span class="value" _empty="">
+                                        <p><span>生日：</span><span class="value" id="birthday">
 
-
+                        {{$data->birthday}}
 
 			  </span></p>
                                     </div>
                                     <div class="fdata lblgender">
-                                        <p><span>性别：</span><span class="value">
+                                        <p><span>性别：</span><span class="value" data-id="{{$data->sex}}" id="sex">
 
-					男
+					{{$arr[$data->sex]}}
+
+			  </span></p>
+                                    </div>
+                                    <div class="fdata lblgender">
+                                        <p><span>等级：</span><span class="value">
+
+					                    {{$level->level_name}}
 
 			  </span></p>
                                     </div>
                                     <div class="btn_editinfo"><a id="editInfoWap" class="btnadpt bg_normal" href="">编辑基础资料</a></div>
                                 </div>
-                                <div class="framedatabox">
-                                    <div class="fdata">
-                                        <h3>高级设置</h3>
-                                    </div>
-                                    <div class="fdata click-row">
-                                        <a class="color4a9 fr" target="_blank" href="https://www.mipay.com" title="管理">管理</a>
-                                        <p>
-                                            <span>银行卡</span>
-                                            <span class="arrow_r"></span>
-                                        </p>
-                                    </div>
-                                    <div class="fdata click-row">
-                                        <a class="color4a9 fr" target="_blank" href="javascript:;" title="管理" id="switchRegion">修改</a>
-                                        <p>
-                                            <span>帐号地区：  </span>
-                                            <span class="box_center"><em id="region" _code="CN">中国</em><i class="arrow_r"></i></span>
-                                        </p>
-                                    </div>
-                                </div>
                             </div>
-                        </div>
-                        <div class="logout_wap">
-                            <a class="btnadpt bg_white" href="/pass/logout?userId=1275088740&amp;callback=https://account.xiaomi.com">退出</a>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+    <div class="modal fade" id="exampleModal" tabindex="-1">
+        <div class="modal-dialog modal-md" role="document">
+            <div class="modal-content">
+                {!! Form::open( [ 'url' => ['/admin/ponseral_change'], 'method' => 'POST', 'onsubmit'=>'return checkCoords();','files' => true ] ) !!}
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true" style="color: #ffffff">&times;</span></button>
+                    <h4 class="modal-title" id="exampleModalLabel">裁剪头像</h4>
+                </div>
+
+                        <div class="crop-image-wrapper">
+                            <img src="/images/default-avatar.png"
+                                 class="ui centered image" id="cropbox" >
+                            <input type="hidden" name="id" value="{{session('user_deta')['id']}}">
+                            <input type="hidden" id="photo" name="photo" />
+                            <input type="hidden" id="x" name="x" />
+                            <input type="hidden" id="y" name="y" />
+                            <input type="hidden" id="w" name="w" />
+                            <input type="hidden" id="h" name="h" />
+                        </div>
+                    </div>
 
 
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                    <button type="submit" class="btn btn-primary">裁剪头像</button>
+                </div>
+                {!! Form::close() !!}
+            </div>
+        </div>
 
     @endsection
 
 @section('js')
     @parent
+    <script type="text/javascript" src="{{ asset('/js/public/jquery.Jcrop.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('/plugin/bootstrap/js/bootstrap.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('/js/home/collect/collect.js') }}"></script>
+    <script  src="{{ asset('/js/home/member/member.js') }}"></script>
+
+    <script>
+        layui.use(['form','upload','jquery'],function(){
+            var $ = layui.jquery;
+            var form = layui.form();
+            function extra_data(input,data){
+                var item=[];
+                $.each(data,function(k,v){
+                    item.push('<input type="hidden" name="'+k+'" value="'+v+'">');
+                })
+                $(input).after(item.join(''));
+            }
+
+            layui.upload({
+                url: '{{url('admin/avator')}}' ,//上传接口
+                unwrap: false,
+            before: function(input){
+                    var data = {"id":"{{$data->id}}"};
+                    extra_data(input, data);
+                }
+                ,title : '上传头像'
+                ,success: function(res){
+                    //上传成功后的回调
+                    $("#upload").attr("src", res.src);
+                    var cropBox = $("#cropbox");
+                    cropBox.attr('src', res.src);
+                    $('#photo').val(res.src);
+                    $('#upload-avatar').html('更换新头像');
+                    $('#exampleModal').modal('show');
+                    cropBox.Jcrop({
+                        aspectRatio: 1,
+                        onSelect: updateCoords,
+                        setSelect: [120,120,10,10]
+                    });
+                    $('.jcrop-holder img').attr('src',response.avatar);
+                    function updateCoords(c)
+                    {
+                        $('#x').val(c.x);
+                        $('#y').val(c.y);
+                        $('#w').val(c.w);
+                        $('#h').val(c.h);
+                    }
+                    function checkCoords()
+                    {
+                        if (parseInt($('#w').val())) return true;
+                        alert('请选择图片.');
+                        return false;
+                    }
+                }
+
+            });
+
+        });
+    </script>
 @endsection
