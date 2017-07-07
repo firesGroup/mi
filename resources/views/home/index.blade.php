@@ -31,37 +31,37 @@
         </div>
     </div>
     <!-- 主要内容 start -->
-    <div class="page-main home-main">
-        <div class="container">
-            <!-- 家电 start-->
-            @include('home.index.homeElec')
-            <!-- 家电 end -->
-            <!-- 智能 start -->
-            @include('home.index.smart')
-            <!-- 智能 end -->
-            <!-- 搭配 start -->
-            @include('home.index.match')
-            <!-- 搭配 end -->
-            <!-- 配件 start -->
-            @include('home.index.accessories')
-            <!-- 配件 start -->
-            <!-- 周边 start -->
-            @include('home.index.around')
-            <!-- 周边 end -->
-            <!-- 首页为您推荐 end -->
-            @include('home.index.recommend')
-            <!-- 首页为您推荐 end -->
-            <!-- 热评 start -->
-            @include('home.index.commen')
-            <!-- 热评 end -->
-            <!-- 内容 start -->
-            @include('home.index.content')
-            <!-- 内容 end -->
-            <!-- 视频 start -->
-            @include('home.index.video')
-            <!-- 视频 end -->
-        </div>
-    </div>
+    {{--<div class="page-main home-main">--}}
+        {{--<div class="container">--}}
+            {{--<!-- 家电 start-->--}}
+            {{--@include('home.index.homeElec')--}}
+            {{--<!-- 家电 end -->--}}
+            {{--<!-- 智能 start -->--}}
+            {{--@include('home.index.smart')--}}
+            {{--<!-- 智能 end -->--}}
+            {{--<!-- 搭配 start -->--}}
+            {{--@include('home.index.match')--}}
+            {{--<!-- 搭配 end -->--}}
+            {{--<!-- 配件 start -->--}}
+            {{--@include('home.index.accessories')--}}
+            {{--<!-- 配件 start -->--}}
+            {{--<!-- 周边 start -->--}}
+            {{--@include('home.index.around')--}}
+            {{--<!-- 周边 end -->--}}
+            {{--<!-- 首页为您推荐 end -->--}}
+            {{--@include('home.index.recommend')--}}
+            {{--<!-- 首页为您推荐 end -->--}}
+            {{--<!-- 热评 start -->--}}
+            {{--@include('home.index.commen')--}}
+            {{--<!-- 热评 end -->--}}
+            {{--<!-- 内容 start -->--}}
+            {{--@include('home.index.content')--}}
+            {{--<!-- 内容 end -->--}}
+            {{--<!-- 视频 start -->--}}
+            {{--@include('home.index.video')--}}
+            {{--<!-- 视频 end -->--}}
+        {{--</div>--}}
+    {{--</div>--}}
     <!-- 主要内容 end -->
     @include('home.public.footer')
 @endsection

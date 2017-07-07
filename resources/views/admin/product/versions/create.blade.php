@@ -106,8 +106,8 @@
                         </div>
                         <div class="layui-form-item">
                             <label class="layui-form-label">版本图片</label>
-                            <div class="layui-input-block" id="verimgs" data-id="0">
-                                <div id="brand_logo"><input type="file" name="file" id="imgUpload" class="layui-upload-file" accept="image/*"  lay-ext="jpg|png|gif|bmp" lay-title="点击上传图片"></div>
+                            <div class="layui-input-block" id="verimgs" data-id="0" data-url-id="0">
+                                <div id="brand_logo"><input type="file" name="file" id="imgUpload" class="layui-upload-file" accept="image/*"  lay-ext="jpg|png|gif|bmp" lay-title="点击上传图片"><a class="layui-btn layui-btn-primary" id="addUrl" title="添加远程图片地址">[+]</a></div>
                             </div>
                         </div>
                         <div class="layui-form-item">
@@ -175,46 +175,50 @@
 
             //上传版本图片
             layui.upload({
-                    elem: '#imgUpload',
-                    method: 'post',
-                    url: '{{ url('/upload') }}',
-                    before: function (input) {
+                elem: '#imgUpload',
+                method: 'post',
+                url: '{{ url('/upload') }}',
+                before: function (input) {
+                    var dataId = $('#verimgs').data('id');
+                    var str='<input class="id'+ dataId +'" type="hidden" name="ver_img['+ dataId +']" value="">';
+                    $('#brand_logo').before(str);
+                    $('#imgUpload').parent().append('<input type="hidden" name="_token" value="{{ csrf_token() }}"><input type="hidden" name="path" value="versions">');
+                    l = layer.msg('正在上传 请稍后...', {icon: 6});
+                }
+                , success: function (res) {
+                    if (res.status == 0) {
+                        layer.close(l);
+                        layer.msg('上传成功',{
+                            icon: 6,
+                            time: 1000
+                        });
                         var dataId = $('#verimgs').data('id');
-                        var str='<input class="id'+ dataId +'" type="hidden" name="ver_img['+ dataId +']" value="">';
-                        $('#brand_logo').before(str);
-                        $('#imgUpload').parent().append('<input type="hidden" name="_token" value="{{ csrf_token() }}"><input type="hidden" name="path" value="versions">');
-                        l = layer.msg('正在上传 请稍后...', {icon: 6});
-                    }
-                    , success: function (res) {
-                        if (res.status == 0) {
-                            layer.close(l);
-                            layer.msg('上传成功',{
-                                icon: 6,
-                                time: 1000
-                            });
-                            var dataId = $('#verimgs').data('id');
-                            $('#brand_logo').prev().val(res.src);
-                            if( dataId == 0 ){
-                                $('#imgs ul').html('');
-                            }
-                            $('#imgs ul').append('<li data-id="id'+ dataId +'"><img width="200" height="100" src='+ res.src +'><span class="del layui-btn">删除</span></li>');
-                            $('#verimgs').data('id', dataId+1);
-                            if( dataId == 5 ){
-                                $('#brand_logo').hide();
-                                layer.msg('最多上传5张图片!',{icon:2,time:1000});
-                            }
-                        }else if( res == 1 ){
-                            layer.close(l);
-                            layer.msg('上传失败', {'time': 2000});
+                        $('#brand_logo').prev().val(res.src);
+                        if( dataId == 0 ){
+                            $('#imgs ul').html('');
                         }
+                        $('#imgs ul').append('<li data-id="id'+ dataId +'" data-iid="'+dataId+'"><img width="200" height="100" src='+ res.src +'><span class="del layui-btn">删除</span></li>');
+                        $('#verimgs').data('id', dataId+1);
+                        var urlId = $('#verimgs').data('urlId');
+                        dataId = $('#verimgs').data('id')
+                        if( (dataId + urlId) == 5 ){
+                            $('#brand_logo').hide();
+                            layer.msg('最多上传5张图片!',{icon:2,time:1000});
+                        }
+                    }else if( res == 1 ){
+                        layer.close(l);
+                        layer.msg('上传失败', {'time': 2000});
                     }
-                });
+                }
+            });
             //图片删除
             $('#imgs').on('click','span.del',function(){
                 var classid = $(this).parent().data('id');
+                var id = $(this).parent().data('iid');
                 var th = $(this);
                 var src = $('#verimgs').find('input.'+classid).attr('value');
                 var index= layer.load();
+                var dataId;
                 $.ajax({
                     url: "{{ url('/admin/product') }}/images/0",
                     type: 'DELETE',
@@ -225,12 +229,13 @@
                             layer.msg('删除成功!',{ icon:6,time:1000 });
                             $('#verimgs').find('input.'+classid).remove();
                             th.parent().remove();
+                            dataId = $('#verimgs').data('id');
                             $('#verimgs').data('id', (dataId-1));
                             dataId = $('#verimgs').data('id');
-                            console.log(dataId);
-                            if( dataId < 5 ){
+                            var urlId = $('#verimgs').data('urlId');
+                            if( ( dataId + urlId ) < 5 ){
                                 $('#brand_logo').show();
-                            }else if( dataId <= 0 ){
+                            }else if( ( dataId + urlId ) <= 0 ){
                                 $('#imgs ul').html('');
                                 $('#imgs ul').append('您还没有上传图片');
                             }
@@ -264,7 +269,7 @@
                 });
                 layer.open({
                     type: 2,
-                    title: '很多时候，我们想最大化看，比如像这个页面。',
+                    title: '添加颜色',
                     shadeClose: true,
                     shade: false,
                     maxmin: true, //开启最大化最小化按钮
@@ -284,6 +289,35 @@
                     }
                 });
             });
-        } );
+
+            $('a#addUrl').on('click', function(){
+                var t = $(this);
+                var dataId = $('#verimgs').data('id');
+                var urlId = $('#verimgs').data('urlId');
+                    t.parent().parent().append('<div style="position: relative;width: 100%;margin: 10px 0;"><input class="layui-input" type="text" name="ver_img_url['+ urlId +']" lay-verify="required" placeholder="远程图片地址" autocomplete="off">' +
+                        '<a class="layui-btn close"  style="position:absolute;top:0;right:0">删除</a></div>');
+                    form.render();//刷新渲染
+                    $('#verimgs').data('urlId', urlId+1);
+                urlId = $('#verimgs').data('urlId')
+                if( (dataId+urlId) == 5 ){
+                    $('#brand_logo').hide();
+                    layer.msg('最多上传5张图片!',{icon:2,time:1000});
+                }
+
+            });
+            $('#verimgs').on('click','div a.close', function(){
+                var urlId = $('#verimgs').data('urlId');
+                var dataId = $('#verimgs').data('id');
+                $('#verimgs').data('urlId',urlId-1);
+                $(this).parent().remove();
+                //再次获取
+                urlId = $('#verimgs').data('urlId');
+                if( (dataId+urlId) < 5 ){
+                    $('#brand_logo').show();
+                }
+
+            });
+        });
+
     </script>
 @endsection

@@ -14,7 +14,7 @@
 <div class="site-topbar">
     <div class="container">
         <div class="topbar-nav">
-            <a rel="nofollow" href="">小米商城</a>
+            <a rel="nofollow" href="./">小米商城</a>
             <span class="sep">|</span>
             <a rel="nofollow" href="" target="_blank">MIUI</a>
             <span class="sep">|</span>

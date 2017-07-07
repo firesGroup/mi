@@ -6,6 +6,7 @@ use App\Entity\SlideShow;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use DB;
+use Storage;
 
 use App\Http\Requests;
 
@@ -22,7 +23,7 @@ class SlideShowController extends Controller
     {
         $status = $this->status;
 //        dd(1);
-        $data = DB::table('slide_show')->select('id', 'images', 'url', 'status')->orderby('id')->paginate(5);
+        $data = DB::table('slide_show')->select('id', 'images', 'url', 'status')->orderby('id','desc')->paginate(5);
 //        dd($data);
 
         $sum = SlideShow::count('id');
@@ -48,8 +49,9 @@ class SlideShowController extends Controller
      */
     public function store(Request $request)
     {
-        $data = $request->all();
-//        dd($data);
+        $data['url'] = $request->url;
+        $img = $request->images;
+        $data['images'] = getUrlImages($img,'slideShow');
 
         if(SlideShow::create($data)){
             return redirect('admin/slideShow');
@@ -103,13 +105,21 @@ class SlideShowController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $data = $request->all();
-//        dd($data);
 
-//        $id = $data['id'];
-        $images = $data['images'];
-        $url = $data['url'];
-//        dd($images);
+        $url = $request->url;
+        $img = $request->images;
+
+        //获取原来的图片地址
+        $oldImg = SlideShow::where('id', $id)->value('images');
+
+        if( $oldImg != '' ){
+            //修正地址
+            $path = substr($oldImg, 8);
+            //删除原图
+            Storage::disk('uploads')->delete($path);
+        }
+        //处理上传的图片 若为远程就下载到本地
+        $images = getUrlImages($img,'slideShow');
 
         if(SlideShow::where('id', $id)->update(['images'=>$images, 'url'=>$url])){
             return redirect('admin/slideShow');

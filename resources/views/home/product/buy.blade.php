@@ -11,9 +11,9 @@
 ?>
 @extends('layouts.home')
 
-@section('title', '首页')
-@section('keywords','')
-@section('description','')
+@section('title'){{ $info->p_name }} - {{ $detail->summary or "" }}@endsection
+@section('keywords'){{ $info->p_name }},{{ $info->tags }}@endsection
+@section('description'){{ $info->p_name }} - {{ $detail->summary or "" }}@endsection
 
 @section('css')
     @parent
