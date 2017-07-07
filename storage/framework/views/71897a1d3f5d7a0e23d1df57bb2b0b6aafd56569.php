@@ -10,21 +10,21 @@
  * Time: 18:19
  */
 ?>
-@extends('layouts.home')
 
-@section('title','')
 
-@section('css')
+<?php $__env->startSection('title',''); ?>
+
+<?php $__env->startSection('css'); ?>
     @parent
 
-    <link rel="stylesheet" type="text/css" href="{{ asset('/css/home/comment.css') }}">
+    <link rel="stylesheet" type="text/css" href="<?php echo e(asset('/css/home/comment.css')); ?>">
 
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section('content')
+<?php $__env->startSection('content'); ?>
 
-    <link rel="stylesheet" href="{{ asset('/css/home/order.css') }}">
-    <link rel="stylesheet" href="{{ asset('/css/home/orderbase.css') }}">
+    <link rel="stylesheet" href="<?php echo e(asset('/css/home/order.css')); ?>">
+    <link rel="stylesheet" href="<?php echo e(asset('/css/home/orderbase.css')); ?>">
 
     <div class="uc-box uc-main-box">
         <div class="uc-content-box order-list-box">
@@ -37,11 +37,11 @@
                 <div class="more clearfix">
                     <ul class="filter-list J_orderType">
                         <li class="first active li" >
-                            {{--<a href="#type=1" id="J_validTab">全部有效订单</a>--}}
+                            <?php /*<a href="#type=1" id="J_validTab">全部有效订单</a>*/ ?>
                             <a id="J_validTab" href="#type1">全部有效订单</a>
                         </li>
                         <li class="li">
-                            <a href="#type=2" id="J_unpaidTab">待支付 ({{$num}})</a>
+                            <a href="#type=2" id="J_unpaidTab">待支付 (<?php echo e($num); ?>)</a>
                         </li>
 
                         <li class="li">
@@ -63,34 +63,34 @@
             <div class="box-bd">
                 <div id="J_orderList">
 
-                    {{--全部订单--}}
+                    <?php /*全部订单*/ ?>
                     <ul class="order-list all" style="display: block;">
-                        @foreach($data as $v)
-                            @if($v->order_status != 7)
-                            @if($v->order_status !=  5 )
-                        <li class="uc-order-item uc-order-item-pay">{{-- 颜色 finish灰色--}}
-                            @else
+                        <?php foreach($data as $v): ?>
+                            <?php if($v->order_status != 7): ?>
+                            <?php if($v->order_status !=  5 ): ?>
+                        <li class="uc-order-item uc-order-item-pay"><?php /* 颜色 finish灰色*/ ?>
+                            <?php else: ?>
                                 <li class="uc-order-item uc-order-item-finish">
-                                @endif
+                                <?php endif; ?>
                             <div class="order-detail">
                                 <div class="order-summary">
-                                    <div class="order-status">{{$status[$v->order_status]}}</div>
-                                    @if($v->order_status == 1 || $v->order_status == 2)
+                                    <div class="order-status"><?php echo e($status[$v->order_status]); ?></div>
+                                    <?php if($v->order_status == 1 || $v->order_status == 2): ?>
                                     <p class="order-desc J_deliverDesc">  我们将尽快为您发货 </p>
-                                        @endif
+                                        <?php endif; ?>
                                 </div>
                                 <table class="order-detail-table">
                                     <thead>
                                     <tr>
                                         <th class="col-main">
-                                            <p class="caption-info">{{$v->add_time}}<span class="sep">|</span>
-                                                {{$v->buy_user}}<span class="sep">|</span>
-                                    订单号： <a href="{{url('orderdetail/'.$v->id)}}" id="ordersn">{{$v->order_sn}}</a>
+                                            <p class="caption-info"><?php echo e($v->add_time); ?><span class="sep">|</span>
+                                                <?php echo e($v->buy_user); ?><span class="sep">|</span>
+                                    订单号： <a href="<?php echo e(url('orderdetail/'.$v->id)); ?>" id="ordersn"><?php echo e($v->order_sn); ?></a>
                                                 <span class="sep">|</span>在线支付</p>
                                         </th>
 
                                         <th class="col-sub">
-                                            <p class="caption-price">订单金额：<span class="num">{{$v->total}}</span>元</p>
+                                            <p class="caption-price">订单金额：<span class="num"><?php echo e($v->total); ?></span>元</p>
                                         </th>
                                     </tr>
                                     </thead>
@@ -98,8 +98,8 @@
                                     <tr>
                                         <td class="order-items">
                                             <ul class="goods-list">
-                                                @foreach($orderdetail as $d)
-                                                    @if($v->id == $d->order_id)
+                                                <?php foreach($orderdetail as $d): ?>
+                                                    <?php if($v->id == $d->order_id): ?>
                                                 <li>
                                                     <div class="figure figure-thumb">
                                                         <a href="//item.mi.com/1163700032.html" target="_blank">
@@ -109,35 +109,36 @@
                                                         </a>
                                                     </div>
                                                     <p class="name">
-                                                        {{--跳转链接--}}
+                                                        <?php /*跳转链接*/ ?>
                                                         <a target="_blank" href="//item.mi.com/1163700032
                                                         .html">
-                                                            {{$d->p_name}}
+                                                            <?php echo e($d->p_name); ?>
+
                                                         </a>
                                                     </p>
-                                                    <p class="price">{{$d->p_price}}元 × {{$d->buy_num}}</p>
+                                                    <p class="price"><?php echo e($d->p_price); ?>元 × <?php echo e($d->buy_num); ?></p>
                                                 </li>
-                                                    @endif
-                                                @endforeach
+                                                    <?php endif; ?>
+                                                <?php endforeach; ?>
 
                                             </ul>
                                         </td>
                                         <td class="order-actions">
-                                            @if($v->order_status == 3)
+                                            <?php if($v->order_status == 3): ?>
                                                 <a class="btn btn-small btn-primary Receiving"
                                                    href="javascript: void(0);" target="_blank">确认收货</a>
-                                            @endif
+                                            <?php endif; ?>
 
-                                            @if($v->order_status == 0)
+                                            <?php if($v->order_status == 0): ?>
                                                 <a class="btn btn-small btn-primary" href="" target="_blank">立即支付</a>
-                                            @endif
+                                            <?php endif; ?>
 
-                                                <a class="btn btn-small btn-line-gray" href="{{url('orderdetail').'/'
-                                                .+$v->id}}">订单详情</a>
+                                                <a class="btn btn-small btn-line-gray" href="<?php echo e(url('orderdetail').'/'
+                                                .+$v->id); ?>">订单详情</a>
 
-                                            @if($v->order_status == 4 && $v->order_status == 6)
+                                            <?php if($v->order_status == 4 && $v->order_status == 6): ?>
                                                 <a class="btn btn-small btn-line-gray" href="" target="_blank">申请售后</a>
-                                            @endif
+                                            <?php endif; ?>
 
                                         </td>
 
@@ -146,40 +147,40 @@
                                 </table>
                             </div>
                         </li>
-                                @endif
-                                @endforeach
+                                <?php endif; ?>
+                                <?php endforeach; ?>
                     </ul>
 
-                    {{--未支付订单--}}
+                    <?php /*未支付订单*/ ?>
                     <ul class="order-list pay" style="display: none;">
-                        @foreach($data as $v)
+                        <?php foreach($data as $v): ?>
 
-                            @if($num != 0 && $v->order_status == 0)
+                            <?php if($num != 0 && $v->order_status == 0): ?>
 
-                            @if($v->order_status !=  5 && $v->order_status !=  7)
-                                <li class="uc-order-item uc-order-item-pay">{{-- 颜色 finish灰色--}}
-                            @else
+                            <?php if($v->order_status !=  5 && $v->order_status !=  7): ?>
+                                <li class="uc-order-item uc-order-item-pay"><?php /* 颜色 finish灰色*/ ?>
+                            <?php else: ?>
                                 <li class="uc-order-item uc-order-item-finish">
-                                    @endif
+                                    <?php endif; ?>
                                     <div class="order-detail">
                                         <div class="order-summary">
-                                            <div class="order-status">{{$status[$v->order_status]}}</div>
-                                            @if($v->order_status == 1 || $v->order_status == 2)
+                                            <div class="order-status"><?php echo e($status[$v->order_status]); ?></div>
+                                            <?php if($v->order_status == 1 || $v->order_status == 2): ?>
                                                 <p class="order-desc J_deliverDesc">  我们将尽快为您发货 </p>
-                                            @endif
+                                            <?php endif; ?>
                                         </div>
                                         <table class="order-detail-table">
                                             <thead>
                                             <tr>
                                                 <th class="col-main">
-                                                    <p class="caption-info">{{$v->add_time}}<span class="sep">|</span>
-                                                        {{$v->buy_user}}<span class="sep">|</span>
-                                                        订单号： <a href="//order.mi.com/user/orderView/1170702438900346">{{$v->order_sn}}</a>
+                                                    <p class="caption-info"><?php echo e($v->add_time); ?><span class="sep">|</span>
+                                                        <?php echo e($v->buy_user); ?><span class="sep">|</span>
+                                                        订单号： <a href="//order.mi.com/user/orderView/1170702438900346"><?php echo e($v->order_sn); ?></a>
                                                         <span class="sep">|</span>在线支付</p>
                                                 </th>
 
                                                 <th class="col-sub">
-                                                    <p class="caption-price">订单金额：<span class="num">{{$v->total}}</span>元</p>
+                                                    <p class="caption-price">订单金额：<span class="num"><?php echo e($v->total); ?></span>元</p>
                                                 </th>
                                             </tr>
                                             </thead>
@@ -187,8 +188,8 @@
                                             <tr>
                                                 <td class="order-items">
                                                     <ul class="goods-list">
-                                                        @foreach($orderdetail as $d)
-                                                            @if($v->id == $d->order_id)
+                                                        <?php foreach($orderdetail as $d): ?>
+                                                            <?php if($v->id == $d->order_id): ?>
                                                                 <li>
                                                                     <div class="figure figure-thumb">
                                                                         <a href="//item.mi.com/1163700032.html" target="_blank">
@@ -198,37 +199,38 @@
                                                                         </a>
                                                                     </div>
                                                                     <p class="name">
-                                                                        {{--跳转链接--}}
+                                                                        <?php /*跳转链接*/ ?>
                                                                         <a target="_blank" href="//item.mi.com/1163700032
                                                         .html">
-                                                                            {{$d->p_name}}
+                                                                            <?php echo e($d->p_name); ?>
+
                                                                         </a>
                                                                     </p>
-                                                                    <p class="price">{{$d->p_price}}元 × {{$d->buy_num}}</p>
+                                                                    <p class="price"><?php echo e($d->p_price); ?>元 × <?php echo e($d->buy_num); ?></p>
                                                                 </li>
-                                                            @endif
-                                                        @endforeach
+                                                            <?php endif; ?>
+                                                        <?php endforeach; ?>
 
                                                     </ul>
                                                 </td>
                                                 <td class="order-actions">
-                                                    @if($v->order_status == 3)
+                                                    <?php if($v->order_status == 3): ?>
                                                         <a class="btn btn-small btn-primary Receiving"
                                                            href="javascript: void(0);" target="_blank">确认收货</a>
-                                                    @endif
+                                                    <?php endif; ?>
 
-                                                    @if($v->order_status == 0)
+                                                    <?php if($v->order_status == 0): ?>
                                                         <a class="btn btn-small btn-primary"
                                                            href="" target="_blank">立即支付</a>
-                                                    @endif
+                                                    <?php endif; ?>
 
                                                     <a class="btn btn-small btn-line-gray"
-                                                       href="{{url('orderdetail').'/'.+$v->id}}">订单详情</a>
+                                                       href="<?php echo e(url('orderdetail').'/'.+$v->id); ?>">订单详情</a>
 
-                                                    @if($v->order_status == 4 && $v->order_status == 6)
+                                                    <?php if($v->order_status == 4 && $v->order_status == 6): ?>
                                                         <a class="btn btn-small btn-line-gray"
                                                            href="" target="_blank">申请售后</a>
-                                                    @endif
+                                                    <?php endif; ?>
 
                                                 </td>
 
@@ -237,42 +239,42 @@
                                         </table>
                                     </div>
                                 </li>
-                                    @elseif($num == 0 && $v->order_status == 0)
+                                    <?php elseif($num == 0 && $v->order_status == 0): ?>
                                         <p class="empty">当前没有待支付订单。</p>
 
-                                    @endif
-                                @endforeach
+                                    <?php endif; ?>
+                                <?php endforeach; ?>
                     </ul>
 
-                    {{--待收货订单--}}
+                    <?php /*待收货订单*/ ?>
                     <ul class="order-list Receiving" style="display: none;">
-                        @foreach($data as $v)
-                            @if($Receiving != 0 && $v->order_status == 3)
+                        <?php foreach($data as $v): ?>
+                            <?php if($Receiving != 0 && $v->order_status == 3): ?>
 
-                            @if($v->order_status !=  5 && $v->order_status !=  7)
-                                <li class="uc-order-item uc-order-item-pay">{{-- 颜色 finish灰色--}}
-                            @else
+                            <?php if($v->order_status !=  5 && $v->order_status !=  7): ?>
+                                <li class="uc-order-item uc-order-item-pay"><?php /* 颜色 finish灰色*/ ?>
+                            <?php else: ?>
                                 <li class="uc-order-item uc-order-item-finish">
-                                    @endif
+                                    <?php endif; ?>
                                     <div class="order-detail">
                                         <div class="order-summary">
-                                            <div class="order-status">{{$status[$v->order_status]}}</div>
-                                            @if($v->order_status == 1 || $v->order_status == 2)
+                                            <div class="order-status"><?php echo e($status[$v->order_status]); ?></div>
+                                            <?php if($v->order_status == 1 || $v->order_status == 2): ?>
                                                 <p class="order-desc J_deliverDesc">  我们将尽快为您发货 </p>
-                                            @endif
+                                            <?php endif; ?>
                                         </div>
                                         <table class="order-detail-table">
                                             <thead>
                                             <tr>
                                                 <th class="col-main">
-                                                    <p class="caption-info">{{$v->add_time}}<span class="sep">|</span>
-                                                        {{$v->buy_user}}<span class="sep">|</span>
-                                                        订单号： <a href="//order.mi.com/user/orderView/1170702438900346">{{$v->order_sn}}</a>
+                                                    <p class="caption-info"><?php echo e($v->add_time); ?><span class="sep">|</span>
+                                                        <?php echo e($v->buy_user); ?><span class="sep">|</span>
+                                                        订单号： <a href="//order.mi.com/user/orderView/1170702438900346"><?php echo e($v->order_sn); ?></a>
                                                         <span class="sep">|</span>在线支付</p>
                                                 </th>
 
                                                 <th class="col-sub">
-                                                    <p class="caption-price">订单金额：<span class="num">{{$v->total}}</span>元</p>
+                                                    <p class="caption-price">订单金额：<span class="num"><?php echo e($v->total); ?></span>元</p>
                                                 </th>
                                             </tr>
                                             </thead>
@@ -280,8 +282,8 @@
                                             <tr>
                                                 <td class="order-items">
                                                     <ul class="goods-list">
-                                                        @foreach($orderdetail as $d)
-                                                            @if($v->id == $d->order_id)
+                                                        <?php foreach($orderdetail as $d): ?>
+                                                            <?php if($v->id == $d->order_id): ?>
                                                                 <li>
                                                                     <div class="figure figure-thumb">
                                                                         <a href="//item.mi.com/1163700032.html" target="_blank">
@@ -291,34 +293,35 @@
                                                                         </a>
                                                                     </div>
                                                                     <p class="name">
-                                                                        {{--跳转链接--}}
+                                                                        <?php /*跳转链接*/ ?>
                                                                         <a target="_blank" href="//item.mi.com/1163700032
                                                         .html">
-                                                                            {{$d->p_name}}
+                                                                            <?php echo e($d->p_name); ?>
+
                                                                         </a>
                                                                     </p>
-                                                                    <p class="price">{{$d->p_price}}元 × {{$d->buy_num}}</p>
+                                                                    <p class="price"><?php echo e($d->p_price); ?>元 × <?php echo e($d->buy_num); ?></p>
                                                                 </li>
-                                                            @endif
-                                                        @endforeach
+                                                            <?php endif; ?>
+                                                        <?php endforeach; ?>
 
                                                     </ul>
                                                 </td>
                                                 <td class="order-actions">
-                                                    @if($v->order_status == 3)
+                                                    <?php if($v->order_status == 3): ?>
                                                         <a class="btn btn-small btn-primary" href="" target="_blank">确认收货</a>
-                                                    @endif
+                                                    <?php endif; ?>
 
-                                                    @if($v->order_status == 0)
+                                                    <?php if($v->order_status == 0): ?>
                                                         <a class="btn btn-small btn-primary" href="" target="_blank">立即支付</a>
-                                                    @endif
+                                                    <?php endif; ?>
 
-                                                    <a class="btn btn-small btn-line-gray" href="{{url('orderdetail').'/'
-                                                .+$v->id}}">订单详情</a>
+                                                    <a class="btn btn-small btn-line-gray" href="<?php echo e(url('orderdetail').'/'
+                                                .+$v->id); ?>">订单详情</a>
 
-                                                    @if($v->order_status == 4 && $v->order_status == 6)
+                                                    <?php if($v->order_status == 4 && $v->order_status == 6): ?>
                                                         <a class="btn btn-small btn-line-gray" href="" target="_blank">申请售后</a>
-                                                    @endif
+                                                    <?php endif; ?>
 
                                                 </td>
 
@@ -327,41 +330,41 @@
                                         </table>
                                     </div>
                                 </li>
-                                    @elseif($v->order_status !=3 && $Receiving == 0)
+                                    <?php elseif($v->order_status !=3 && $Receiving == 0): ?>
                                         <p class="empty">当前没有待收货订单。</p>
 
-                                    @endif
-                                @endforeach
+                                    <?php endif; ?>
+                                <?php endforeach; ?>
                     </ul>
 
-                    {{--已关闭订单--}}
+                    <?php /*已关闭订单*/ ?>
                     <ul class="order-list close" style="display: none;">
-                        @foreach($data as $v)
-                            @if($close != 0 && $v->order_status == 7)
-                            @if($v->order_status !=  5 && $v->order_status !=  7)
-                                <li class="uc-order-item uc-order-item-pay">{{-- 颜色 finish灰色--}}
-                            @else
+                        <?php foreach($data as $v): ?>
+                            <?php if($close != 0 && $v->order_status == 7): ?>
+                            <?php if($v->order_status !=  5 && $v->order_status !=  7): ?>
+                                <li class="uc-order-item uc-order-item-pay"><?php /* 颜色 finish灰色*/ ?>
+                            <?php else: ?>
                                 <li class="uc-order-item uc-order-item-finish">
-                                    @endif
+                                    <?php endif; ?>
                                     <div class="order-detail">
                                         <div class="order-summary">
-                                            <div class="order-status">{{$status[$v->order_status]}}</div>
-                                            @if($v->order_status == 1 || $v->order_status == 2)
+                                            <div class="order-status"><?php echo e($status[$v->order_status]); ?></div>
+                                            <?php if($v->order_status == 1 || $v->order_status == 2): ?>
                                                 <p class="order-desc J_deliverDesc">  我们将尽快为您发货 </p>
-                                            @endif
+                                            <?php endif; ?>
                                         </div>
                                         <table class="order-detail-table">
                                             <thead>
                                             <tr>
                                                 <th class="col-main">
-                                                    <p class="caption-info">{{$v->add_time}}<span class="sep">|</span>
-                                                        {{$v->buy_user}}<span class="sep">|</span>
-                                                        订单号： <a href="//order.mi.com/user/orderView/1170702438900346">{{$v->order_sn}}</a>
+                                                    <p class="caption-info"><?php echo e($v->add_time); ?><span class="sep">|</span>
+                                                        <?php echo e($v->buy_user); ?><span class="sep">|</span>
+                                                        订单号： <a href="//order.mi.com/user/orderView/1170702438900346"><?php echo e($v->order_sn); ?></a>
                                                         <span class="sep">|</span>在线支付</p>
                                                 </th>
 
                                                 <th class="col-sub">
-                                                    <p class="caption-price">订单金额：<span class="num">{{$v->total}}</span>元</p>
+                                                    <p class="caption-price">订单金额：<span class="num"><?php echo e($v->total); ?></span>元</p>
                                                 </th>
                                             </tr>
                                             </thead>
@@ -369,8 +372,8 @@
                                             <tr>
                                                 <td class="order-items">
                                                     <ul class="goods-list">
-                                                        @foreach($orderdetail as $d)
-                                                            @if($v->id == $d->order_id)
+                                                        <?php foreach($orderdetail as $d): ?>
+                                                            <?php if($v->id == $d->order_id): ?>
                                                                 <li>
                                                                     <div class="figure figure-thumb">
                                                                         <a href="//item.mi.com/1163700032.html" target="_blank">
@@ -380,34 +383,35 @@
                                                                         </a>
                                                                     </div>
                                                                     <p class="name">
-                                                                        {{--跳转链接--}}
+                                                                        <?php /*跳转链接*/ ?>
                                                                         <a target="_blank" href="//item.mi.com/1163700032
                                                         .html">
-                                                                            {{$d->p_name}}
+                                                                            <?php echo e($d->p_name); ?>
+
                                                                         </a>
                                                                     </p>
-                                                                    <p class="price">{{$d->p_price}}元 × {{$d->buy_num}}</p>
+                                                                    <p class="price"><?php echo e($d->p_price); ?>元 × <?php echo e($d->buy_num); ?></p>
                                                                 </li>
-                                                            @endif
-                                                        @endforeach
+                                                            <?php endif; ?>
+                                                        <?php endforeach; ?>
 
                                                     </ul>
                                                 </td>
                                                 <td class="order-actions">
-                                                    @if($v->order_status == 3)
+                                                    <?php if($v->order_status == 3): ?>
                                                         <a class="btn btn-small btn-primary" href="" target="_blank">确认收货</a>
-                                                    @endif
+                                                    <?php endif; ?>
 
-                                                    @if($v->order_status == 0)
+                                                    <?php if($v->order_status == 0): ?>
                                                         <a class="btn btn-small btn-primary" href="" target="_blank">立即支付</a>
-                                                    @endif
+                                                    <?php endif; ?>
 
-                                                    <a class="btn btn-small btn-line-gray" href="{{url('orderdetail').'/'
-                                                .+$v->id}}">订单详情</a>
+                                                    <a class="btn btn-small btn-line-gray" href="<?php echo e(url('orderdetail').'/'
+                                                .+$v->id); ?>">订单详情</a>
 
-                                                    @if($v->order_status == 4 && $v->order_status == 6)
+                                                    <?php if($v->order_status == 4 && $v->order_status == 6): ?>
                                                         <a class="btn btn-small btn-line-gray" href="" target="_blank">申请售后</a>
-                                                    @endif
+                                                    <?php endif; ?>
 
                                                 </td>
 
@@ -416,11 +420,11 @@
                                         </table>
                                     </div>
                                 </li>
-                                    @elseif($close == 0 && $v->order_status == 7)
+                                    <?php elseif($close == 0 && $v->order_status == 7): ?>
                                         <p class="empty">当前没有已关闭订单。</p>
 
-                                    @endif
-                                @endforeach
+                                    <?php endif; ?>
+                                <?php endforeach; ?>
                     </ul>
 
                 </div>
@@ -445,9 +449,9 @@
     </div>
 
     <div class="modal-backdrop fade in" style="width: 100%; height: 5695px;display: none;"></div>
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section('js')
+<?php $__env->startSection('js'); ?>
     @parent
 <script>
     layui.use(['jquery', 'layer'], function () {
@@ -512,15 +516,15 @@
             //获取订单ID
             var oid = $('#ordersn').text();
 //            alert(a);
-            var url = '{{url('Receiving')}}';
+            var url = '<?php echo e(url('Receiving')); ?>';
             $.ajax({
                 url:url,
                 type:'get',
-                data:{'_token': "{{csrf_token()}}",'oid':oid},
+                data:{'_token': "<?php echo e(csrf_token()); ?>",'oid':oid},
                 success:function(data){
 
                     if(data){
-                       document.URL=location.href
+//                        window.location.reload();
                     }
 
                 }
@@ -533,4 +537,5 @@
     });
 </script>
 
-    @endsection
+    <?php $__env->stopSection(); ?>
+<?php echo $__env->make('layouts.home', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

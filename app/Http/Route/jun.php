@@ -38,9 +38,15 @@ Route::group(['namespace' => 'Home'], function () {
     Route::get('store','CommentController@store');
 
     Route::resource('order','OrderController');
-    Route::get('order','OrderController@show');
+    Route::get('order/{id}','OrderController@show');
+    Route::get('orderdetail/{id?}','OrderController@detail');
+
+    Route::post('orderdetail/chooseAddress', 'AddressController@Provices');
+    Route::post('orderdetail/cities', 'AddressController@Cities');
+    Route::put('orderdetail/orderaddress','OrderController@addressUpdate');
+    Route::get('Receiving','OrderController@orderStatus');
 
 
 });
 
-//Route::get('comment', 'CommentController@index');
+

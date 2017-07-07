@@ -14,4 +14,9 @@ class order extends Model
     {
         return $this->belongsTo('App\Entity\Member','member_id');
     }
+
+    public function order_detail()
+    {
+        return $this->belongsTo('App\Entity\OrderDetail','order_id');
+    }
 }

@@ -310,14 +310,11 @@
 
 
     <div class="modal fade modal-hide comment-modal in" id="J_commentModal" aria-hidden="true" style="display: none;"><a
-                class="close" data-dismiss="modal" href="javascript: void(0);" data-stat-id="c556f3fed6708ea5"
-                onclick="_msq.push(['trackEvent', '31107451fd43f190-c556f3fed6708ea5', 'javascript:void0', 'pcpid', '']);"><i
-                    class="iconfont"></i></a>
+                class="close" data-dismiss="modal" href="javascript: void(0);">
+            <i class="iconfont"></i></a>
         <div class="modal-body">
             <div class="txt"><h2 class="tit">输入不能为空</h2></div>
-            <a href="javascript: void(0);" class="btn btn-primary affirm" data-dismiss="modal"
-               data-stat-id="3df29cfd1ab609f8"
-               onclick="_msq.push(['trackEvent', '31107451fd43f190-3df29cfd1ab609f8', 'javascript:void0', 'pcpid', '']);">确定</a>
+            <a href="javascript: void(0);" class="btn btn-primary affirm" data-dismiss="modal">确定</a>
         </div>
     </div>
     <div class="modal-backdrop fade in" style="width: 100%; height: 5695px;display: none;"></div>
