@@ -13,6 +13,14 @@ Route::group(['namespace'=>'Admin','prefix'=>'admin'], function(){
     Route::get('/', 'AdminController@index');
     Route::get('/cancle', 'AdminController@cancle');
 
+    //轮播图路由
+    Route::resource('slideShow', 'SlideShowController');
+
+    Route::get('showStatus', 'SlideShowController@showStatus');
+
+    Route::get('slideImage', 'SlideShowController@slideImage');
+
+
     //分类路由
     Route::post('category_edit', 'CateGoryController@category_edit');
     Route::post('add_category', 'CateGoryController@add_category');
@@ -51,7 +59,8 @@ Route::get( '/upload/{path}/{id}/{url}', 'PublicC\UploadController@getUpload' );
 Route::post( '/upload', 'PublicC\UploadController@postUpload' );
 
 Route::group(['namespace'=>'Home',], function(){
-    Route::get('/search/{key}','SearchController@index' );
+    Route::get('/search/{word}','SearchController@index' );
+    Route::get('/search','SearchController@index' );
     Route::get('/product/buy/{p_id}','HomeController@productBuy');
     Route::get('/product/info/{p_id}','HomeController@productIndex');
     Route::get('/product/ajaxGetVersion/{ver_id}', 'HomeController@ajaxGetVersion');
