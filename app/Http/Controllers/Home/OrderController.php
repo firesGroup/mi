@@ -148,12 +148,16 @@ class OrderController extends Controller
 
     public function orderStatus(Request $request)
     {
+        //获取订单编号
         $oid = $request->oid;
 
+        //修改订单为已收货
         $data = DB::table('order')->where('order_sn',$oid)->update(['order_status'=>4]);
 
         if($data){
             return $data;
+        } else {
+            return false;
         }
     }
 }
