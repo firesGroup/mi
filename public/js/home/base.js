@@ -84,9 +84,11 @@ $(document).ready(function() {
 
 //顶部用户登陆成功后的下拉菜单
 $('#J_userInfo').on('mouseenter', '#user', function(){
+    alert(123);
     // $('#user').css({"z-index":'50'});
-    $('#J_userInfo').css({"z-index":'50'});
-    $('#hidden').css({"display":"block"});
+    // $('#J_userInfo').css({"z-index":'50'});
+    // $('#hidden').css({"display":"block"});
+    $('#hidden').slideDown();
     $('span.user').addClass('user-active');
 
 });

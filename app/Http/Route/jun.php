@@ -46,6 +46,10 @@ Route::group(['namespace' => 'Home'], function () {
     Route::put('orderdetail/orderaddress','OrderController@addressUpdate');
     Route::get('Receiving','OrderController@orderStatus');
 
+    Route::get('orderstatus','OrderController@status');
+
+    Route::get('orderpay/{id}','OrderController@pay');
+
 
 });
 

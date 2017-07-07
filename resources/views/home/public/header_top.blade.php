@@ -78,7 +78,7 @@
                         </ul>
                     </span>
                     <span class="sep">|</span><span class="sep">|</span>
-                    <a rel="nofollow" class="link" href="" data-needlogin="true">我的订单</a>
+                    <a rel="nofollow" class="link" href="{{url('order/'.session('user_deta')['id'])}}" data-needlogin="true">我的订单</a>
             @else
                     <a rel="nofollow" class="link" href="{{url('login')}}" data-needlogin="true">登录</a>
                     <span class="sep">|</span>

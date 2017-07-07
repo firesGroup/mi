@@ -6,9 +6,10 @@ use Illuminate\Http\Request;
 use App\Entity\Order;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Home\BaseController;
 use DB;
 
-class OrderController extends Controller
+class OrderController extends BaseController
 {
     /**
      * Display a listing of the resource.
@@ -61,21 +62,21 @@ class OrderController extends Controller
         //查询待收货订单总数
         $Receiving = DB::table('order')->where('member_id',$id)->where('order_status',3)->count();
 
+        //查询全部有效订单
+        $validorder = DB::table('order')->where('member_id',$id)->where('order_status','!=',7)->count();
+
         //获取订单ID
         $orderid = DB::table('order')->where('member_id',$id)->lists('id');
 
         //根据订单ID 查询订单详情表信息
         $orderdetail =DB::table('order_detail')->whereIn('order_id',$orderid)->get();
 
-        //查询出商品ID
-        $pid = DB::table('order_detail')->where('order_id',$orderid)->value('p_id');
+        $status = [
+            '0'=>'等待支付','1'=>'已支付','2'=>'正在配货', '3'=>'已出库',
+            '4'=>'已收货','5'=>'退款中','6'=>'交易成功','7'=>'已取消'
+        ];
 
-        //获取价格
-        $price = DB::table('product')->where('id',$pid)->value('price');
-
-        $status = ['0'=>'等待支付','1'=>'已支付','2'=>'未发货','3'=>'已发货','4'=>'已收货','5'=>'退款中','6'=>'交易成功','7'=>'已取消'];
-
-        return view ('home.order.order',compact('data','orderdetail','status','price','orderid','num','close','Receiving'));
+        return view ('home.order.order',compact('data','orderdetail','status','orderid','num','close','Receiving','validorder'));
 
     }
 
@@ -88,11 +89,11 @@ class OrderController extends Controller
         //查询订单信息
         $orderid = DB::table('order')->where('id',$id)->get();
 
-        $mid = DB::table('order')->where('id',$id)->value('member_id');
-//
+        $status = [
+            '0'=>'等待支付','1'=>'已支付','2'=>'正在配货','3'=>'已出库',
+            '4'=>'已收货','5'=>'退款中','6'=>'交易成功','7'=>'已取消'
+        ];
 
-        $status = ['0'=>'等待支付','1'=>'已支付','2'=>'未发货','3'=>'已发货','4'=>'已收货','5'=>'退款中','6'=>'交易成功','7'=>'已取消'];
-//
         $data = DB::table('district')->where('id', '<=', 36)->get();
 
         return view('home.order.orderDetail',compact('odetail','orderid','status','data'));
@@ -159,5 +160,34 @@ class OrderController extends Controller
         } else {
             return false;
         }
+    }
+
+    public function status(Request $request)
+    {
+        //订单ID
+        $oid = $request->oid;
+
+        $data = DB::table('order')->where('id',$oid)->update(['order_status'=>7]);
+
+        if($data){
+            return $data;
+        }else{
+            return false;
+        }
+    }
+
+    public function pay(Request $request,$id)
+    {
+
+        //根据订单编号ID查订单表
+        $order = DB::table('order')->where('order_sn',$id)->get();
+
+        //查出订单ID
+        $detailid = DB::table('order')->where('order_sn',$id)->value('id');
+
+        //根据订单ID查出订单详情信息
+        $detail = DB::table('order_detail')->where('order_id',$detailid)->get();
+
+        return view('home/order/payorder',compact('order','detail'));
     }
 }

@@ -26,8 +26,21 @@
 
 @section('content')
 
+    @include('home.public.header_top')
+    @include('home.public.header_nav')
 
-    <div class="uc-box uc-main-box">
+    <div class="breadcrumbs">
+        <div class="container">
+            <a href="#">首页</a><span class="sep">&gt;</span><span>个人中心</span>
+        </div>
+    </div>
+
+    <div class="page-main user-main">
+        <div class="container">
+            <div class="row">
+                @include('home.member.member_modoul')
+                <div class="span16">
+                <div class="uc-box uc-main-box">
         <div class="uc-content-box order-view-box">
             <div class="box-hd">
                 <h1 class="title">订单详情
@@ -42,8 +55,16 @@
                     <h2 class="subtitle">订单号：{{$orderid[0]->order_sn}} <span class="tag tag-subsidy"></span>
                     </h2>
                     <div class="actions">
-                        <a title="申请售后" href="http://service.order.mi.com/apply/order/id/1161107696915384"
-                           class="btn btn-small btn-line-gray">申请售后</a>
+
+                        @if($orderid[0]->order_status == 0)
+                            <a id="J_cancelOrder" class="btn btn-small btn-line-gray" title="取消订单" >取消订单</a>
+
+                            <a id="J_payOrder" class="btn btn-small btn-primary" title="立即支付" href="#" target="_blank" >立即支付</a>
+                        @endif
+
+                            @if($orderid[0]->order_status == 4 && $orderid[0]->order_status == 6)
+                                <a title="申请售后" href="" class="btn btn-small btn-line-gray">申请售后</a>
+                                @endif
                     </div>
                 </div>
             </div>
@@ -62,29 +83,31 @@
                                 @endif
                                 <span id="statusid" style="display: none;">{{$orderid[0]->order_status}}</span>
                                 <span id="oid" style="display: none;">{{$orderid[0]->id}}</span>
+                                <span id="time" style="display:none;">{{$orderid[0]->add_time}}</span>
                             </div>
+
 
                             <div class="order-progress">
                                 <ul class="progress-list clearfix">
                                     <li class="step li1">
                                         <div class="progress"><span class="text">下单</span></div>
-                                        <div class="info">2016年11月07日 20:11</div>
+                                        <div class="info"></div>
                                     </li>
                                     <li class="step li2">
                                         <div class="progress"><span class="text">付款</span></div>
-                                        <div class="info">2016年11月07日 20:12</div>
+                                        <div class="info"></div>
                                     </li>
                                     <li class="step li3">
                                         <div class="progress"><span class="text">配货</span></div>
-                                        <div class="info">2016年11月07日 20:12</div>
+                                        <div class="info"></div>
                                     </li>
                                     <li class="step  li4">
                                         <div class="progress"><span class="text">出库</span></div>
-                                        <div class="info">2016年11月07日 23:36</div>
+                                        <div class="info"></div>
                                     </li>
                                     <li class="step  li5">
                                         <div class="progress"><span class="text">交易成功</span></div>
-                                        <div class="info">2016年11月08日 10:42</div>
+                                        <div class="info"></div>
                                     </li>
                                 </ul>
                             </div>
@@ -219,7 +242,10 @@
             </div>
         </div>
     </div>
-
+            </div>
+            </div>
+        </div>
+    </div>
 
     <div class="modal modal-hide fade modal-edit-address in" id="J_modalEditAddress" style="display: none;"
          aria-hidden="true">
@@ -344,6 +370,7 @@
     @parent
 
     <script type="text/javascript" src="{{asset('js/home/order/order_address.js')}}"></script>
+    <script type="text/javascript" src="{{asset('js/home/order/showTime.js')}}"></script>
 
     <script>
         layui.use(['jquery', 'layer'], function () {
@@ -445,7 +472,6 @@
                         if(data == 1){
                             $('#J_modalEditAddress').css("display", "none");
                             $('.modal-backdrop').css('display', 'none');
-
                             td1.html(name);
                             td2.html(p);
                             td3.html(address);
@@ -456,7 +482,29 @@
                 });
             });
 
+            //当点击取消
+            $('#J_cancelOrder').on('click',function () {
 
+                //订单ID
+                var oid = $('#oid').text();
+
+                //状态ID
+                var statusid = $('#statusid').text();
+
+                var url = '{{url('orderstatus')}}';
+
+                $.ajax({
+                    url:url,
+                    type:'get',
+                    data:{'oid':oid,'statusid':statusid,'_token':"{{csrf_token()}}"},
+                    success:function (data){
+
+                       if(data){
+                           location.reload();
+                       }
+                    }
+                });
+            });
 
 
         });

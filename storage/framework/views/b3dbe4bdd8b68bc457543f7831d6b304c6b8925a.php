@@ -78,7 +78,7 @@
                         </ul>
                     </span>
                     <span class="sep">|</span><span class="sep">|</span>
-                    <a rel="nofollow" class="link" href="" data-needlogin="true">我的订单</a>
+                    <a rel="nofollow" class="link" href="<?php echo e(url('order/'.session('user_deta')['id'])); ?>" data-needlogin="true">我的订单</a>
             <?php else: ?>
                     <a rel="nofollow" class="link" href="<?php echo e(url('login')); ?>" data-needlogin="true">登录</a>
                     <span class="sep">|</span>
