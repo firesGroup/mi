@@ -1,8 +1,5 @@
 <?php
 
-
-
-
 namespace App\Http\Controllers\Home;
 
 
@@ -34,7 +31,6 @@ class HomeController extends BaseController
         return view('home.index', compact('nav', 'slide', 'recommended', 'homeElec', 'smart'));
     }
 
-
     /*
      *
      * 获得头部横排导航商品数据
@@ -59,9 +55,6 @@ class HomeController extends BaseController
         //智能硬件
         $nav['zhineng'] = self::getNavSql([24, 94], 6);
 
-
-
-
         return $nav;
     }
 
@@ -72,7 +65,6 @@ class HomeController extends BaseController
      * return $arr  关联数组
      *
      */
-
     public static function headerNavPort()
     {
         //头部纵向分类导航
@@ -111,9 +103,6 @@ class HomeController extends BaseController
     }
 
 
-
-
-
     public static function getNavSql($category_id, $num)
     {
         if (is_array($category_id)) {
@@ -123,8 +112,6 @@ class HomeController extends BaseController
             $sql = Product::where('category_id', $category_id)->where('recommend', 0)->where('status', 0)->orderBy('id', 'desc')->limit($num)->get();
 
         }
-
-
         return $sql;
     }
 
@@ -140,7 +127,6 @@ class HomeController extends BaseController
 
         return $sql;
     }
-
 
     /*
      * 商品详情页
@@ -195,13 +181,11 @@ class HomeController extends BaseController
         if ($allColor != null) {
             foreach ($allColor as $color) {
                 if ($color['ver_id'] == $firstVersionId) {
-                    [
-                        'ver_id' => $color['ver_id'],
-                        'color_id' => $color['color_id'],
+                    $colorArr[] = [
+                        'ver_id'     => $color['ver_id'],
+                        'color_id'   => $color['color_id'],
                         'color_name' => $color['color_name'],
-                        'color_img' => $color['color_img']
-
-
+                        'color_img'  => $color['color_img']
                     ];
                 }
             }
@@ -211,9 +195,6 @@ class HomeController extends BaseController
         if (!isset($imgArr)) {
             $imgArr[] = $imgIndex;
         }
-
-
-
 
         return view('home.product.buy', compact('p_id', 'imgArr', 'info', 'noversions', 'versions', 'colorArr'));
     }
@@ -230,7 +211,7 @@ class HomeController extends BaseController
         if ($versions) {
             return $versions[0]['status'];
 
-        }else {
+        } else {
 
             return $pro->status;
         }
@@ -292,12 +273,12 @@ class HomeController extends BaseController
      * 获得首页轮播图数据
      *
      */
-
-
     public function slideShow()
     {
         $slide = SlideShow::where('status', 0)->get();
 
         return $slide;
     }
+
 }
+
