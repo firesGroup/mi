@@ -60,6 +60,8 @@ Route::group( ['namespace'=>'Home'], function(){
    Route::get('personal', 'UserDetailController@personal');
    Route::post('collect', 'CollectController@add_collect');
    Route::get('ponseral_collect', 'CollectController@ponseral_collect');
+   Route::post('collect_delete', 'CollectController@collect_delete');
+   Route::get('member_address', 'UserDetailController@member_address');
 });
 
 Route::get('kit/captcha/{tmp}', 'Home\CodeController@captcha');

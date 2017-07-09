@@ -64,36 +64,22 @@
                                 <span class="name" id="user">{{session('user_deta')['nick_name']}}</span>
                                 <i class="iconfont"></i>
                             </a>
-                            <ul id="hidden" class="user-menu" style="display: none;">
-                                <li>
-                                    <a rel="nofollow" href="{{url('user_detail')}}" target="_blank"
-                                       data-stat-id="e0b9e1d1fa8052a2"
-                                       onclick="_msq.push(['trackEvent', '79fe2eae924d2a2e-e0b9e1d1fa8052a2', '//my.mi.com/portal', 'pcpid', '']);">个人中心
-                                    </a>
-                                </li>
-                                <li>
-                                    <a rel="nofollow" href="//order.mi.com/user/comment" target="_blank"
-                                   data-stat-id="6d05445058873c2c" onclick="">评价晒单</a>
-                                </li>
-                                <li>
-                                    <a rel="nofollow" href="//order.mi.com/user/favorite" target="_blank"
-                                   data-stat-id="32e2967e9a749d3d" onclick="">我的喜欢</a>
-                                </li>
-                                <li>
-                                    <a rel="nofollow" href="{{url('login/exit')}}" data-stat-id="770a31519c713b11"
-                                       onclick="">退出登录</a>
-                                </li>
-                            </ul>
-                        </span>
-                            <span class="sep">|</span><span class="sep">|</span>
-                            <a rel="nofollow" class="link" href="" data-needlogin="true">我的订单</a>
-                            @else
-                                <a rel="nofollow" class="link" href="{{url('login')}}" data-needlogin="true">登录</a>
-                                <span class="sep">|</span>
-                                <a rel="nofollow" class="link" href="{{url('reg')}}">注册</a>
-                            @endif
-                        </div>
-                    </div>
+                            </li>
+                            <li>
+                                <a rel="nofollow" href="{{url('login/exit')}}" data-stat-id="770a31519c713b11" onclick="">退出登录</a>
+                            </li>
+                        </ul>
+                    </span>
+                    <span class="sep">|</span><span class="sep">|</span>
+                    <a rel="nofollow" class="link" href="{{url('order/'.session('user_deta') ['id'])}}" data-needlogin="true">我的订单</a>
+                  @else
+                    <a rel="nofollow" class="link" href="{{url('login')}}" data-needlogin="true">登录</a>
+                    <span class="sep">|</span>
+                    <a rel="nofollow" class="link" href="{{url('reg')}}">注册</a>
+                    @endif
+
+
+                </div>
             </div>
     </div>
 </div>

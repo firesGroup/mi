@@ -14,9 +14,9 @@
     @section('css')
         @parent
         <link rel="stylesheet" type="text/css" href="{{ asset('/css/home/member_center.css') }}">
-        <link rel="stylesheet" type="text/css" href="{{ asset('/css/home/personal.css') }}">
         <link rel="stylesheet" type="text/css" href="{{ asset('/css/home/personal_01.css') }}">
-        <link rel="stylesheet" type="text/css" href="{{ asset('/css/home/personal_02.css') }}">
+        <link rel="stylesheet" type="text/css" href="{{ asset('/css/home/personal.css') }}">
+
         <link rel="stylesheet" type="text/css" href="{{ asset('/css/admin/jquery.Jcrop.min.css') }}">
         <link rel="stylesheet" type="text/css" href="http://www.mi.cn/plugin/layui/css/layui.css">
 
@@ -27,7 +27,7 @@
     @include('home.public.header_nav')
     <div class="breadcrumbs">
         <div class="container">
-            <a href="//www.mi.com/index.html" data-stat-id="b0bcd814768c68cc" onclick="_msq.push(['trackEvent', '45a270e10b1f8e93-b0bcd814768c68cc', '//www.mi.com/index.html', 'pcpid', '']);">首页</a><span class="sep">&gt;</span><span>个人信息</span>    </div>
+            <a href="//www.mi.com/index.html" data-stat-id="b0bcd814768c68cc" onclick="_msq.push(['trackEvent', '45a270e10b1f8e93-b0bcd814768c68cc', '//www.mi.com/index.html', 'pcpid', '']);">首页</a><span class="sep">&gt;</span><span>个人信息</span>   </div>
     </div>
 
     <div class="page-main user-main">
@@ -77,7 +77,6 @@
 
 			  </span></p>
                                     </div>
-                                    <div class="btn_editinfo"><a id="editInfoWap" class="btnadpt bg_normal" href="">编辑基础资料</a></div>
                                 </div>
                             </div>
                         </div>
@@ -121,60 +120,7 @@
     @parent
     <script type="text/javascript" src="{{ asset('/js/public/jquery.Jcrop.min.js') }}"></script>
     <script type="text/javascript" src="{{ asset('/plugin/bootstrap/js/bootstrap.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('/js/home/collect/collect.js') }}"></script>
+{{--    <script type="text/javascript" src="{{ asset('/js/home/collect/collect.js') }}"></script>--}}
     <script  src="{{ asset('/js/home/member/member.js') }}"></script>
 
-    <script>
-        layui.use(['form','upload','jquery'],function(){
-            var $ = layui.jquery;
-            var form = layui.form();
-            function extra_data(input,data){
-                var item=[];
-                $.each(data,function(k,v){
-                    item.push('<input type="hidden" name="'+k+'" value="'+v+'">');
-                })
-                $(input).after(item.join(''));
-            }
-
-            layui.upload({
-                url: '{{url('admin/avator')}}' ,//上传接口
-                unwrap: false,
-            before: function(input){
-                    var data = {"id":"{{$data->id}}"};
-                    extra_data(input, data);
-                }
-                ,title : '上传头像'
-                ,success: function(res){
-                    //上传成功后的回调
-                    $("#upload").attr("src", res.src);
-                    var cropBox = $("#cropbox");
-                    cropBox.attr('src', res.src);
-                    $('#photo').val(res.src);
-                    $('#upload-avatar').html('更换新头像');
-                    $('#exampleModal').modal('show');
-                    cropBox.Jcrop({
-                        aspectRatio: 1,
-                        onSelect: updateCoords,
-                        setSelect: [120,120,10,10]
-                    });
-                    $('.jcrop-holder img').attr('src',response.avatar);
-                    function updateCoords(c)
-                    {
-                        $('#x').val(c.x);
-                        $('#y').val(c.y);
-                        $('#w').val(c.w);
-                        $('#h').val(c.h);
-                    }
-                    function checkCoords()
-                    {
-                        if (parseInt($('#w').val())) return true;
-                        alert('请选择图片.');
-                        return false;
-                    }
-                }
-
-            });
-
-        });
-    </script>
 @endsection

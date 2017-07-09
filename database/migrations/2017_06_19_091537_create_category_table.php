@@ -17,7 +17,7 @@ class CreateCategoryTable extends Migration
             $table->string('category_name')->comment('分类名称');
             $table->integer('parent_id')->comment('父类id');
             $table->string('parent_path')->comment('家族图谱');
-            $table->tinyInteger('sort')->comment('排序');
+            $table->tinyInteger('status')->default(1)->comment('是否推荐');
             $table->timestamps();
             $table->charset='utf8';
             $table->engine='InnoDB';

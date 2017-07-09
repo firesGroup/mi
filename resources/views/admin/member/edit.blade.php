@@ -65,17 +65,6 @@
                                                    lay-verify="required|phone">
                                         </div>
                                     </div>
-                                    <div class="layui-form-item">
-                                        <label class="layui-form-label">会员等级</label>
-                                        <div class="layui-input-block">
-                                            <select name="level_id" lay-verify="">
-                                                @foreach($array as $k => $v)
-                                                    <option value="{{$k}}"
-                                                    {{($user_detail->level_id == $k)?'selected':'' }}>{{$v}}</option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                    </div>
                                     <div class="layui-form-item" pane>
                                         <label class="layui-form-label">会员状态</label>
                                         <div class="layui-input-block">

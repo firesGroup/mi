@@ -142,7 +142,7 @@ class AddressController extends BaseController
     public function addAddress(Request $request)
     {
         $data = $request->all();
-//        dd($data);
+        dd($data);
         $arr = $data['arr'];
 
         $buy_user = $arr[0];

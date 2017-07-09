@@ -43,7 +43,6 @@ class HomeController extends BaseController
         $nav['luyou'] = self::getNavSql(3, 6);
         //智能硬件
         $nav['zhineng'] = self::getNavSql([24, 94], 6);
-
         return $nav;
     }
 
@@ -93,7 +92,6 @@ class HomeController extends BaseController
 
     public static function getNavSql($category_id, $num)
     {
-
         if( is_array($category_id) ){
             $sql = Product::whereIn('category_id',$category_id)->where('recommend',0)->where('status',0)->orderBy('id','desc')->limit($num)->get();
         }else{
@@ -127,8 +125,7 @@ class HomeController extends BaseController
         $is_btn = true;//按钮是否显示
         if ($desc != '') {
             return view('home.product.info', compact('info', 'detail', 'desc', 'is_btn'));
-        }
-        else {
+        } else {
             return redirect('/product/buy/' . $p_id);
         }
     }
@@ -154,8 +151,7 @@ class HomeController extends BaseController
                     $imgArr = json_decode($ver['ver_img']);
                 }
             }
-        }
-        else {
+        } else {
             $versions = null;
         }
         $allColor = $info->color->toArray();
@@ -193,8 +189,9 @@ class HomeController extends BaseController
         $versions = $pro->versions->toArray();
         if ($versions) {
             return $versions[0]['status'];
-        }
-        else {
+
+        } else {
+
             return $pro->status;
         }
     }
@@ -261,8 +258,6 @@ class HomeController extends BaseController
 
         return $slide;
     }
-
-
 
 }
 
