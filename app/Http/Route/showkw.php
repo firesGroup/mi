@@ -9,6 +9,9 @@
  * Time: 11:34
  */
 
+Route::get('/uploads/{pathName}/{imgSrc}', 'PublicC\ImageController@oneDirImage');
+Route::get('/uploads/{pathName}/{date}/{imgSrc}', 'PublicC\ImageController@twoDirImage');
+
 Route::group(['namespace'=>'Admin','prefix'=>'admin'], function(){
     Route::get('/', 'AdminController@index');
     Route::get('/cancle', 'AdminController@cancle');
@@ -68,10 +71,6 @@ Route::group(['namespace'=>'Home',], function(){
     Route::get('/product/getVersionStatus/{p_id}', 'HomeController@getVersionStatus');
     Route::get('/','HomeController@index');
 });
-
-Route::get('uploads/{pathName}/{imgSrc}', 'PublicC\ImageController@oneDirImage');
-Route::get('uploads/{pathName}/{date}/{imgSrc}', 'PublicC\ImageController@twoDirImage');
-
 
 Route::get('/makedoc/{title}/', function ($title){
     $xs = new XS('product');

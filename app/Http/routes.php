@@ -12,17 +12,14 @@
 |
 */
 
-//肖开文-路由文件
+////肖开文-路由文件
  include('Route/showkw.php');
-
-//王明-路由文件
- include('Route/wim.php');
-
+//
+////王明-路由文件
+// //include('Route/wim.php');
+//
 ////龙彪-路由文件
- include('Route/long.php');
-
-//龙彪-路由文件
- include('Route/long.php');
+// include('Route/long.php');
 
 
 //这个不要动
@@ -30,6 +27,3 @@ Route::get('/admin/welcome', function(){
     return view('welcome');
 });
 
-Route::get('admin', function () {
-    return view('login');
-});
