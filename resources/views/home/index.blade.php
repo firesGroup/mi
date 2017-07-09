@@ -31,13 +31,13 @@
         </div>
     </div>
     <!-- 主要内容 start -->
-    {{--<div class="page-main home-main">--}}
-        {{--<div class="container">--}}
+    <div class="page-main home-main">
+        <div class="container">
             {{--<!-- 家电 start-->--}}
-            {{--@include('home.index.homeElec')--}}
+            @include('home.index.homeElec')
             {{--<!-- 家电 end -->--}}
             {{--<!-- 智能 start -->--}}
-            {{--@include('home.index.smart')--}}
+            @include('home.index.smart')
             {{--<!-- 智能 end -->--}}
             {{--<!-- 搭配 start -->--}}
             {{--@include('home.index.match')--}}
@@ -60,8 +60,8 @@
             {{--<!-- 视频 start -->--}}
             {{--@include('home.index.video')--}}
             {{--<!-- 视频 end -->--}}
-        {{--</div>--}}
-    {{--</div>--}}
+        </div>
+    </div>
     <!-- 主要内容 end -->
     @include('home.public.footer')
 @endsection

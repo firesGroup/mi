@@ -66,9 +66,6 @@
                             </a>
                             </li>
                             <li>
-                            <a rel="nofollow" href="//order.mi.com/user/comment" target="_blank" data-stat-id="6d05445058873c2c" onclick="">评价晒单</a>
-                            </li>
-                            <li>
                             <a rel="nofollow" href="//order.mi.com/user/favorite" target="_blank" data-stat-id="32e2967e9a749d3d" onclick="">我的喜欢
                             </a>
                             </li>

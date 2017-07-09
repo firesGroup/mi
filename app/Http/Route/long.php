@@ -33,6 +33,8 @@ Route::group( ['namespace'=>'Admin', 'prefix'=>'admin'], function(){
     Route::get('showStatus', 'AdvertController@showStatus');
     Route::resource('advert', 'AdvertController');
 
+    Route::resource('advert_location', 'AdvertLocationController');
+
 
 } );
 

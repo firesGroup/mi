@@ -2,8 +2,11 @@
 
 
 
+
 namespace App\Http\Controllers\Home;
 
+
+namespace App\Http\Controllers\Home;
 use App\Entity\CateGory;
 use App\Entity\Product;
 use App\Entity\SlideShow;
@@ -12,14 +15,23 @@ use App\Entity\ProductVersionsColors;
 use Illuminate\Http\Request;
 use Illuminate\Support\HtmlString;
 use App\Http\Controllers\Home\BaseController;
+use DB;
 class HomeController extends BaseController
 {
 
     public function index()
     {
         $slide = $this->SlideShow();
+        $recommended = Product::limit(10)->orderBy('click_num', 'desc')->get();
+        $Elecarray = array(94, 37, 24, 25, 17, 36);
+        $homeElec = DB::table('product')->orderBy('category_id')->whereIn('category_id', $Elecarray)->get();
+//
+//        dd($homeElec);
+        $smartarray = array(32, 64, 42, 99, 36,3, 32, 14);
 
-        return view('home.index', compact('nav', 'slide'));
+        $smart = DB::table('product')->orderBy('category_id')->whereIn('category_id', $smartarray)->get();
+//            dd($smartarray);
+        return view('home.index', compact('nav', 'slide', 'recommended', 'homeElec', 'smart'));
     }
 
 
@@ -46,6 +58,10 @@ class HomeController extends BaseController
         $nav['luyou'] = self::getNavSql(3, 6);
         //智能硬件
         $nav['zhineng'] = self::getNavSql([24, 94], 6);
+
+
+
+
         return $nav;
     }
 
@@ -90,18 +106,25 @@ class HomeController extends BaseController
         //生活周边
         $zhoubianIds = CateGory::where('parent_path', 'like', "%86,%")->lists('id')->toArray();
         $navPort['zhoubian'] = self::getPortNavSql($zhoubianIds);
+
         return $navPort;
     }
+
+
+
 
 
     public static function getNavSql($category_id, $num)
     {
         if (is_array($category_id)) {
             $sql = Product::whereIn('category_id', $category_id)->where('recommend', 0)->where('status', 0)->orderBy('id', 'desc')->limit($num)->get();
+
         } else {
             $sql = Product::where('category_id', $category_id)->where('recommend', 0)->where('status', 0)->orderBy('id', 'desc')->limit($num)->get();
 
         }
+
+
         return $sql;
     }
 
@@ -109,9 +132,12 @@ class HomeController extends BaseController
     {
         if (is_array($category_id)) {
             $sql = Product::whereIn('category_id', $category_id)->where('status', 0)->orderBy('id', 'desc')->limit(24)->get();
-        } else {
+
+        }
+        else {
             $sql = Product::where('category_id', $category_id)->where('status', 0)->orderBy('id', 'desc')->limit(24)->get();
         }
+
         return $sql;
     }
 
@@ -128,7 +154,10 @@ class HomeController extends BaseController
         $is_btn = true;//按钮是否显示
         if ($desc != '') {
             return view('home.product.info', compact('info', 'detail', 'desc', 'is_btn'));
-        } else {
+
+        }
+        else {
+
             return redirect('/product/buy/' . $p_id);
         }
     }
@@ -154,7 +183,10 @@ class HomeController extends BaseController
                     $imgArr = json_decode($ver['ver_img']);
                 }
             }
-        } else {
+
+        }
+        else {
+
             $versions = null;
         }
         $allColor = $info->color->toArray();
@@ -163,11 +195,13 @@ class HomeController extends BaseController
         if ($allColor != null) {
             foreach ($allColor as $color) {
                 if ($color['ver_id'] == $firstVersionId) {
-                    $colorArr[] = [
+                    [
                         'ver_id' => $color['ver_id'],
                         'color_id' => $color['color_id'],
                         'color_name' => $color['color_name'],
                         'color_img' => $color['color_img']
+
+
                     ];
                 }
             }
@@ -177,6 +211,10 @@ class HomeController extends BaseController
         if (!isset($imgArr)) {
             $imgArr[] = $imgIndex;
         }
+
+
+
+
         return view('home.product.buy', compact('p_id', 'imgArr', 'info', 'noversions', 'versions', 'colorArr'));
     }
 
@@ -191,7 +229,9 @@ class HomeController extends BaseController
         $versions = $pro->versions->toArray();
         if ($versions) {
             return $versions[0]['status'];
-        } else {
+
+        }else {
+
             return $pro->status;
         }
     }
@@ -204,6 +244,7 @@ class HomeController extends BaseController
     public function ajaxGetVersionColor($ver_id)
     {
         $color = ProductVersionsColors::where('ver_id', $ver_id)->get();
+
         return response()->json($color);
     }
 
@@ -215,6 +256,7 @@ class HomeController extends BaseController
     public function ajaxGetVersion($ver_id)
     {
         $info = ProductVersions::where('id', $ver_id)->get();
+
         return $info;
     }
 
@@ -251,9 +293,11 @@ class HomeController extends BaseController
      *
      */
 
+
     public function slideShow()
     {
         $slide = SlideShow::where('status', 0)->get();
+
         return $slide;
     }
 }
