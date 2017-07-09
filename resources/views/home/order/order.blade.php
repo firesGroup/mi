@@ -29,7 +29,7 @@
 
 <div class="breadcrumbs">
     <div class="container">
-        <a href="//www.mi.com/index.html" data-stat-id="b0bcd814768c68cc" onclick="_msq.push(['trackEvent', '45a270e10b1f8e93-b0bcd814768c68cc', '//www.mi.com/index.html', 'pcpid', '']);">首页</a><span class="sep">&gt;</span><span>个人中心</span>    </div>
+        <a href="">首页</a><span class="sep">&gt;</span><span>个人中心</span>    </div>
 </div>
 
 <div class="page-main user-main">
@@ -71,6 +71,7 @@
                     </div>
 
                     <div class="box-bd">
+
                         <div id="J_orderList">
 
                             {{--全部订单--}}
@@ -96,12 +97,14 @@
                                                         <th class="col-main">
                                                             <p class="caption-info">{{$v->add_time}}<span class="sep">|</span>
                                                                 {{$v->buy_user}}<span class="sep">|</span>
-                                                                订单号： <a href="{{url('orderdetail/'.$v->id)}}" >{{$v->order_sn}}</a>
+                                                                订单号：
+                                                                <a href="{{url('orderdetail/'.$v->id)}}" >{{$v->order_sn}}</a>
                                                                 <span class="sep">|</span>在线支付</p>
                                                         </th>
 
                                                         <th class="col-sub">
-                                                            <p class="caption-price">订单金额：<span class="num">{{$v->total}}</span>元</p>
+                                                            <p class="caption-price">订单金额：<span
+                                                                        class="num">{{$v->total}}</span>元</p>
                                                         </th>
                                                     </tr>
                                                     </thead>
@@ -153,6 +156,10 @@
                                                                 <a class="btn btn-small btn-line-gray" href="" target="_blank">申请售后</a>
                                                             @endif
 
+                                                            @if($v->order_status == 1 && $v->order_status !=8 )
+                                                                <a class="btn btn-small btn-primary orderpay"
+                                                               href="{{url('shopcomment/'.$v->order_sn)}}" >立即评价</a>
+                                                                @endif
                                                         </td>
 
                                                     </tr>
@@ -471,6 +478,10 @@
     </div>
 
     <div class="modal-backdrop fade in" style="width: 100%; height: 5695px;display: none;"></div>
+
+
+@include('home.public.footer')
+
 @endsection
 
 @section('js')
@@ -565,22 +576,6 @@
             });
 
         });
-
-
-
-        {{--$('.orderpay').on('click',function () {--}}
-         {{--orderpay = $(this).next().text();--}}
-
-            {{--$.ajax({--}}
-                {{--url:'{{url('orderpay')}}',--}}
-                {{--type:'POST',--}}
-                {{--data:{'oid':orderpay,'_token': "{{csrf_token()}}"},--}}
-                {{--success:function (data){--}}
-
-
-                {{--}--}}
-            {{--});--}}
-        {{--});--}}
 
     });
 </script>

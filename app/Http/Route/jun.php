@@ -36,6 +36,7 @@ Route::group(['namespace' => 'Home'], function () {
     Route::resource('comment','CommentController');
     Route::get('comment','CommentController@show');
     Route::get('store','CommentController@store');
+    Route::get('commentshop','CommentController@commentshop');
 
     Route::resource('order','OrderController');
     Route::get('order/{id}','OrderController@show');
@@ -48,7 +49,14 @@ Route::group(['namespace' => 'Home'], function () {
 
     Route::get('orderstatus','OrderController@status');
 
+    //支付页面
+    Route::post('commit_upload', 'OrderController@postUpload');
     Route::get('orderpay/{id}','OrderController@pay');
+
+    //支付页面ajax请求路由
+    Route::get('pay','OrderController@ppay');
+
+    Route::get('shopcomment/{id}','CommentController@commentIndex');
 
 
 });

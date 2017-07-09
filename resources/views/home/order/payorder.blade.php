@@ -30,6 +30,9 @@
     </script>
 </head>
 <body>
+
+
+
 <div class="site-header site-mini-header" >
     <div class="container " style=" height: 100px;">
         <div class="header-logo">
@@ -81,14 +84,13 @@
                     <div class="fl">
                         <h2 class="title">订单提交成功！去付款咯～</h2>
                         <p class="order-time" id="J_deliverDesc">我们将尽快为您发货</p>
-                        <p class="order-time">请在<span class="pay-time-tip">47小时38分</span>内完成支付, 超时后将取消订单</p>
                         <p class="post-info" id="J_postInfo">
-                            收货信息：潘珺 135****5920 &nbsp;&nbsp;
-                            广东&nbsp;&nbsp;珠海市&nbsp;&nbsp;香洲区&nbsp;&nbsp;前山街道&nbsp;&nbsp;夏湾河畔豪庭346号德晋商贸 </p>
+                            收货信息：{{$order[0]->buy_user}} {{substr($order[0]->buy_phone,0,3).'*****'.substr($order[0]->buy_phone,8,3)}}&nbsp;&nbsp; &nbsp;&nbsp;
+                            {{$order[0]->address}} </p>
                     </div>
                     <div class="fr">
                         <p class="total">
-                            应付总额：<span class="money"><em>399.00</em>元</span>
+                            应付总额：<span class="money"><em>{{$order[0]->total}}</em>元</span>
                         </p>
                         <a href="javascript:void(0);" class="show-detail" id="J_showDetail">订单详情<i class="iconfont">&#xe61c;</i></a>
                     </div>
@@ -99,9 +101,7 @@
                         <li class="clearfix">
                             <div class="label">订单号：</div>
                             <div class="content">
-                                <span class="order-num">
-                                    {{$order[0]->order_sn}}
-                                </span>
+                                <span class="order-num">{{$order[0]->order_sn}}</span>
                             </div>
                         </li>
                         <li class="clearfix">
@@ -113,9 +113,7 @@
                         </li>
                         <li class="clearfix">
                             <div class="label">商品名称：</div>
-                            <div class="content">
-                                {{$detail[0]->p_name}}
-                            </div>
+                            <div class="content">{{$detail[0]->p_name}}</div>
                         </li>
                         <li class="clearfix">
                             <div class="label">配送时间：</div>
@@ -130,6 +128,11 @@
                             </div>
                         </li>
                     </ul>
+
+                    <div>
+                        <a class="btn btn-small btn-primary affirmhuo"
+                            href="javascript: void(0);">付款</a>
+                    </div>
                 </div>
             </div>
 
@@ -341,6 +344,8 @@
         </form>
     </div>
 </div>
+
+
 
 <!--现金账户 提示框-->
 <div class="modal  modal-hide modal-balance-pay" id="J_balancePay">
@@ -680,6 +685,26 @@
     </div>
 </div>
 <!-- .modal-globalSites END -->
+<div class="modal fade modal-hide comment-modal in" id="J_commentModal" aria-hidden="true" style="display: none;text-align: center;"><a
+            class="close" data-dismiss="modal" href="javascript: void(0);">
+        <i class="iconfont"></i></a>
+    <div class="modal-body">
+        <div class="txt"><h2 class="tit">支付成功</h2></div>
+        <br>
+        <br>
+        <a href="{{url('order/'.$order[0]->member_id)}}" class="btn btn-primary" id="goorder">去我的订单</a>
+
+    </div>
+
+
+    <br>
+</div>
+
+
+<div class="modal-backdrop fade in" style="width: 100%; height: 5695px;display: none;"></div>
+
+
+
 
 <script src="//s01.mifile.cn/js/base.min.js?v2017a25"></script>
 <script>
@@ -724,10 +749,7 @@
     })();
 
     $('#J_userInfo').on('mouseenter', '#user', function(){
-//        alert(123);
-        // $('#user').css({"z-index":'50'});
-        // $('#J_userInfo').css({"z-index":'50'});
-        // $('#hidden').css({"display":"block"});
+
         $('#hidden').slideDown();
         $('span.user').addClass('user-active');
 
@@ -739,6 +761,31 @@
         $('span.user').removeClass('user-active');
 
     });
+
+    $('.affirmhuo').on('click', function () {
+
+        var oid = $('.order-num').text();
+
+        var url = '{{url('pay')}}';
+        $.ajax({
+            url:url,
+            type:'get',
+            data:{'_token':'{{csrf_token()}}','oid':oid},
+            success:function (data) {
+
+                if(data){
+
+                    $('.modal-backdrop').css('display','block');
+                    $('#J_commentModal').css('display','block');
+
+                }else{
+                    alert('未知原因失败,请重新提交');
+                }
+            }
+
+        });
+    });
+
 </script>
 </body>
 </html>

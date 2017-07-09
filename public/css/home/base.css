@@ -1002,6 +1002,21 @@ textarea.input-text {
     filter:alpha(opacity=50)\9
 }
 .modal {
+     position:fixed !important;
+     top:50%;
+     left:50%;
+     _position:absolute;
+     _top:15%;
+     _margin-top:0;
+     z-index:1050;
+     width:660px;
+     margin-left:-330px;
+     margin-top:-300px;
+     background-color:#fff;
+     outline:none
+ }
+
+.modal2 {
     position:fixed !important;
     top:50%;
     left:50%;
@@ -1009,7 +1024,7 @@ textarea.input-text {
     _top:15%;
     _margin-top:0;
     z-index:1050;
-    width:660px;
+    width:550px;
     margin-left:-330px;
     margin-top:-300px;
     background-color:#fff;

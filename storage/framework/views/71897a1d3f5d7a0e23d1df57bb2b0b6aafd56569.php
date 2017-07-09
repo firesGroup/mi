@@ -29,7 +29,7 @@
 
 <div class="breadcrumbs">
     <div class="container">
-        <a href="//www.mi.com/index.html" data-stat-id="b0bcd814768c68cc" onclick="_msq.push(['trackEvent', '45a270e10b1f8e93-b0bcd814768c68cc', '//www.mi.com/index.html', 'pcpid', '']);">首页</a><span class="sep">&gt;</span><span>个人中心</span>    </div>
+        <a href="">首页</a><span class="sep">&gt;</span><span>个人中心</span>    </div>
 </div>
 
 <div class="page-main user-main">
@@ -71,6 +71,7 @@
                     </div>
 
                     <div class="box-bd">
+
                         <div id="J_orderList">
 
                             <?php /*全部订单*/ ?>
@@ -96,12 +97,14 @@
                                                         <th class="col-main">
                                                             <p class="caption-info"><?php echo e($v->add_time); ?><span class="sep">|</span>
                                                                 <?php echo e($v->buy_user); ?><span class="sep">|</span>
-                                                                订单号： <a href="<?php echo e(url('orderdetail/'.$v->id)); ?>" ><?php echo e($v->order_sn); ?></a>
+                                                                订单号：
+                                                                <a href="<?php echo e(url('orderdetail/'.$v->id)); ?>" ><?php echo e($v->order_sn); ?></a>
                                                                 <span class="sep">|</span>在线支付</p>
                                                         </th>
 
                                                         <th class="col-sub">
-                                                            <p class="caption-price">订单金额：<span class="num"><?php echo e($v->total); ?></span>元</p>
+                                                            <p class="caption-price">订单金额：<span
+                                                                        class="num"><?php echo e($v->total); ?></span>元</p>
                                                         </th>
                                                     </tr>
                                                     </thead>
@@ -154,6 +157,10 @@
                                                                 <a class="btn btn-small btn-line-gray" href="" target="_blank">申请售后</a>
                                                             <?php endif; ?>
 
+                                                            <?php if($v->order_status == 1 && $v->order_status !=8 ): ?>
+                                                                <a class="btn btn-small btn-primary orderpay"
+                                                               href="<?php echo e(url('shopcomment/'.$v->order_sn)); ?>" >立即评价</a>
+                                                                <?php endif; ?>
                                                         </td>
 
                                                     </tr>
@@ -475,6 +482,10 @@
     </div>
 
     <div class="modal-backdrop fade in" style="width: 100%; height: 5695px;display: none;"></div>
+
+
+<?php echo $__env->make('home.public.footer', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+
 <?php $__env->stopSection(); ?>
 
 <?php $__env->startSection('js'); ?>
@@ -569,22 +580,6 @@
             });
 
         });
-
-
-
-        <?php /*$('.orderpay').on('click',function () {*/ ?>
-         <?php /*orderpay = $(this).next().text();*/ ?>
-
-            <?php /*$.ajax({*/ ?>
-                <?php /*url:'<?php echo e(url('orderpay')); ?>',*/ ?>
-                <?php /*type:'POST',*/ ?>
-                <?php /*data:{'oid':orderpay,'_token': "<?php echo e(csrf_token()); ?>"},*/ ?>
-                <?php /*success:function (data){*/ ?>
-
-
-                <?php /*}*/ ?>
-            <?php /*});*/ ?>
-        <?php /*});*/ ?>
 
     });
 </script>

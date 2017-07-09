@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Home;
 
 use App\Entity\Comment;
 use Illuminate\Http\Request;
-
+use App\Http\Controllers\Home\BaseController;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use DB;
@@ -16,9 +16,29 @@ class CommentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function commentIndex($id)
     {
 
+        //查询订单所有信息
+        $data = DB::table('order')->where('order_sn',$id)->get();
+
+        //查出订单ID
+        $odetail = DB::table('order')->where('order_sn',$id)->value('id');
+
+        //查出商品id
+//        $pid = DB::table('order_detail')->where('order_id',$odetail)->value('p_id');
+//
+////        dd($pid);
+//        //根据商品id 查询次商品有多少评论
+//        $num = DB::table('order_detail')->where('p_id',$pid)->count();
+
+//        dd($num);
+
+
+        //查出订单详情信息
+        $orderdetail = Db::table('order_detail')->where('order_id',$odetail)->get();
+
+        return view('home.comment.shopComment',compact('data','orderdetail'));
 
 
     }
@@ -89,7 +109,7 @@ class CommentController extends Controller
         $answer = Comment::where('p_id',$id)->where('type',2)->get();
 
         //查询最新的评论
-        $lim = Comment::where('p_id',$id)->paginate(8);
+        $lim = Comment::where('p_id',$id)->get();
 
         return view('home.comment.comment',compact('data','shop','lim','num','answer'));
     }
@@ -126,5 +146,17 @@ class CommentController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+
+    public function commentshop(Request $request)
+    {
+        $text = $request->text;
+
+        $pid = $request->pid;
+
+        $mid = $request->mid;
+dd($request->all());
+
     }
 }

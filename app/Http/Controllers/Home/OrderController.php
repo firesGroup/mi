@@ -8,6 +8,7 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Home\BaseController;
 use DB;
+use Storage;
 
 class OrderController extends BaseController
 {
@@ -190,4 +191,73 @@ class OrderController extends BaseController
 
         return view('home/order/payorder',compact('order','detail'));
     }
+
+    public function ppay(Request $request)
+    {
+        //获取订单编号
+        $oid = $request->oid;
+
+        //根据订单编号ID修改订单为已支付
+        $data = DB::table('order')->where('order_sn',$oid)->update(['order_status'=>1]);
+
+        if($data){
+            return $data;
+        }
+    }
+
+    public function postUpload(Request $request)
+    {
+        //获取表单提交的上传文件Input的属性name的值
+        $inputName = $request->input('inputName')?$request->input('inputName'):'file';
+
+        //定义文件存储路径
+        $path = $request->input('path')?$request->input('path'):date('Ymd',time());
+        //检查目录是否存在
+        //若不存在则创建目录
+        if( !file_exists( 'uploads/'.$path ) ) {
+            mkdir('uploads/'.$path, 0755, true);
+        }
+
+        //判断是否为POST请求---文件上传必须为post
+        if( $request->isMethod('post') ){
+            //获取上传文件
+            $file = $request->file($inputName);
+            //判断文件是否上传成功
+            if($file->isValid()){
+                //获取上传文件相关信息
+
+                // 获得文件原名
+                $originalName = $file->getClientOriginalName();
+
+                // 获得扩展名
+                $ext = $file->getClientOriginalExtension();
+                //获得临时文件的绝对路径
+                $realPath = $file->getRealPath();
+                //获取文件MIME类型
+                $type = $file->getClientMimeType();
+
+                //生成新文件名
+                $fileName = md5(date('YmdHis').$originalName).'.'.$ext;
+
+                //拼接文件存储路径
+                $newPath = $path.'/'.date('Ymd',time()).'/'.$fileName;
+
+                //移动文件
+                $bool = Storage::disk('uploads')->put( $newPath, file_get_contents($realPath));
+
+                if( $bool ){
+                  $res['code'] = '0';
+                  $res['data']['src'] = '/uploads/'.$newPath;
+                    $res['data']['title'] = "评论图片";
+
+                }else{
+                    $res['status'] = 1;
+                }
+                return json_encode($res);
+            }
+        }else{
+            return '{status: 2 }';
+        }
+    }
+
 }
