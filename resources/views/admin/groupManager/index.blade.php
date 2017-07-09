@@ -57,11 +57,6 @@
                 <br><br>
 
                 <table class="layui-table larry-table-info">
-                    <colgroup>
-                        <col width="100">
-                        <col width="200">
-                        <col>
-                    </colgroup>
                     <thead>
                     <tr>
                         <th>ID</th>
@@ -98,7 +93,7 @@
                                 ?>
 
                             </td>
-                            <td style="width: 600px">{{ $group->group_desc }}</td>
+                            <td>{{ $group->group_desc }}</td>
                             <td>
                                 <div class="layui-btn-group">
                                     <a href="{{ url('admin/group').'/'.$group->id }}" class="layui-btn  layui-btn-small"

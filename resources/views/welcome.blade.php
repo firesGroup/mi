@@ -24,7 +24,7 @@
         <blockquote class="layui-elem-quote col-md-4 head-con" style="border-radius:0px 10px 10px 0px ;
     }">
             <div class="title">
-                <span>尊敬的    ,您好!  &nbsp;現在時間是:  </span><span id="showtime" value=""></span>
+                <span>尊敬的 {{ session('adminInfo')['username'] }},您好!  &nbsp;現在時間是: </span><span id="showtime" value=""></span>
             </div>
             <i class="larry-icon larry-guanbi close" id="closeInfo"></i>
         </blockquote>

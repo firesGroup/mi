@@ -9,17 +9,6 @@
  * Time: 0:18
  */
 ?>
-<?php
-/**
- * File Name: index.blade.php
- * Description: 商品列表页模版
- * Created by PhpStorm.
- * Group: FiresGroup
- * Auth: Showkw
- * Date: 2017/6/19
- * Time: 16:09
- */
-?>
 @extends('layouts.iframe')
 
 @section('title','修改商品信息')

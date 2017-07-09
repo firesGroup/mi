@@ -33,12 +33,12 @@
             <div class="span4">
                 <ul class="home-channel-list clearfix">
                     <li class="exposure top left">
-                        <a href="//www.mi.com/compare/" target="_blank">
+                        <a href="" target="_blank">
                             <i class="iconfont">&#xe908;</i>选购手机
                         </a>
                     </li>
                     <li class="exposure top">
-                        <a href="http://qiye.mi.com/" target="_blank">
+                        <a href="" target="_blank">
                             <i class="iconfont">&#xe905;</i>企业团购
                         </a>
                     </li>
@@ -52,12 +52,12 @@
                         </a>
                     </li>
                     <li class="exposure ">
-                        <a href="//huanxin.mi.com" target="_blank">
+                        <a href="" target="_blank">
                             <i class="iconfont">&#xe904;</i>以旧换新
                         </a>
                     </li>
                     <li class="exposure ">
-                        <a href="http://recharge.10046.mi.com/" target="_blank">
+                        <a href="" target="_blank">
                             <i class="iconfont">&#xe907;</i>话费充值
                         </a>
                     </li>

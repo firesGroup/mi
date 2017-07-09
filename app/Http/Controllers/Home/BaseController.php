@@ -5,11 +5,13 @@ use App\Http\Controllers\Controller;
 use App\Http\Controllers\Home\HomeController as HomeC;
 use Session;
 use DB;
-
 class BaseController extends Controller
 {
+    public $config;//全局配置
+
     public function __construct()
     {
+        $this->config = $this->loadConfig();
         //头部横排导航 商品
         $header_nav = HomeC::headerNav();
         //头部纵向导航 商品
@@ -17,6 +19,13 @@ class BaseController extends Controller
         view()->share([
             'header_nav'=>$header_nav,
             'header_nav_port'=>$header_nav_port,
+            'C'=>$this->config,
         ]);
+    }
+
+    public function loadConfig()
+    {
+        $config=config('system');
+        return $config;
     }
 }

@@ -100,5 +100,7 @@ return [
         'nick_name' => '会员名字',
         'category_name'=>'分类名字',
         'p_num'     => '商品货号',
+        'web_domain' => '网站网址',
+        'web_title' => '网站标题'
     ],
 ];

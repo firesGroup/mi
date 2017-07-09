@@ -11,9 +11,9 @@
 ?>
 @extends('layouts.home')
 
-@section('title', '首页')
-@section('keywords','')
-@section('description','')
+@section('title'){{ isset($word)?$word.' - ':''  }}{{ isset($cate_name)?$cate_name.' - ':'' }}{{ $C['seo']['search_title'] or $C['web']['web_title'] }}@endsection
+@section('keywords'){{ isset($word)?$word.',':''  }}{{ isset($cate_name)?$cate_name.',':'' }}{{ $C['seo']['search_keys'] or $C['web']['web_keys'] }}@endsection
+@section('description'){{ $C['seo']['search_desc'] or $C['web']['web_desc']}}@endsection
 
 @section('css')
     @parent
@@ -69,16 +69,13 @@
     <div class="content">
         <div class="container">
             <div class="order-list-box clearfix">
-                <ul class="order-list">
+                <ul class="order-list" id="sort">
                     <li class="active first">
                         <a href="javascript:void(0);" id="recommend">推荐</a></li>
                     <li><a href="javascript:void(0);" id="new">新品</a></li>
                     <li class="up">
-                        <a href="javascript:void(0);" id="price">价格 <i class="iconfont"></i>
+                        <a href="javascript:void(0);" id="price" data-id="">价格 <i class="iconfont"></i>
                         </a>
-                    </li>
-                    <li>
-                        <a href="javascript:void(0);" id="comment">评论最多</a>
                     </li>
                 </ul>
             </div>
@@ -87,7 +84,7 @@
                     @foreach( $data as $pro )
                     <div class="goods-item">
                         <div class="figure">
-                            <a href="{{ url('/product/info'.$pro['id']) }}"  >
+                            <a href="{{ url('/product/info/'.$pro['id']) }}"  >
                                 <img src="{{ $pro['p_index_image'] }}!250_200" width="250" height="200" alt="{{ $pro['p_name'] }}"></a></div>
                         <p class="desc"></p>
                         <h2 class="title"><a href="{{ url('/product/info/'.$pro['id']) }}">{{ $pro['p_name'] }}</a></h2>
@@ -97,7 +94,7 @@
                                 <li ><a  ><img src="{{ $pro['p_index_image'] }}!34_34" width="34" height="34" alt="小米MIX 黑色"></a></li>                        </ul>
                         </div>
                         <div class="actions clearfix">
-                            <a class="btn-like J_likeGoods" data-cid="1164400010" href="javascript: void(0);"  ><i class="iconfont"></i> <span>喜欢</span></a>
+                            <a class="btn-like J_likeGoods" data-cid="1164400010" href="javascript: void(0);"  onclick="" ><i class="iconfont"></i> <span>喜欢</span></a>
                             <a class="btn-buy btn-buy-detail J_buyGoods" href="//www.mi.com/mix/?cfrom=search"  ><span>立即购买</span> <i class="iconfont"></i></a>                    </div>
                         <div class="flags">
 
@@ -136,6 +133,23 @@
     <script>
         $(function() {
             $(".cacheload").scrollLoading();
+            if( '{{ isset($sort) }}' != ''){
+                if( '{{ $sort }}' == 'price_up' ){
+                    $('a#price').data('id','up');
+                    $('a#price').parent('li').addClass('active up').removeClass('down');
+                    $('a#price').parent('li').siblings().removeClass('active');
+                    $('a#price').children('i').html('');
+                }else if( '{{ $sort }}' == 'price_down' ){
+                    $('a#price').data('id','down');
+                    $('a#price').parent('li').addClass('active down').removeClass('up');
+                    $('a#price').parent('li').siblings().removeClass('active');
+                    $('a#price').children('i').html('');
+                }else if( '{{ $sort }}' == 'new' ){
+                    $('a#new').parent('li').addClass('active').siblings().removeClass('active');
+                }else if( '{{ $sort }}' == 'recommend' ){
+                    $('a#recommend').parent('li').addClass('active').siblings().removeClass('active');
+                }
+            }
         });
         $('div.filter-box').on('click','a.J_filterToggle', function(){
             if($(this).parent().hasClass('filter-list-wrap-toggled')){
@@ -149,6 +163,49 @@
                 return false;
             }
         });
+
+        $('a#price').click(function(){
+            $(this).parent().addClass('active').siblings().removeClass('active');
+            if( $(this).data('id') == 'up' ){
+                $(this).data('id','down');
+                setParam('sort','price_down');
+                $(this).parent().addclass('down').removeClass('up');
+                $(this).children('i').html('');
+            }else if( $(this).data('id')  == 'down' ){
+                $(this).data('id','up');
+                setParam('sort','price_up');
+                $(this).parent().addclass('up').removeClass('down');
+                $(this).children('i').html('');
+            }else{
+                $(this).data('id','up');
+                setParam('sort','price_up');
+                $(this).parent().addclass('up').removeClass('down');
+                $(this).children('i').html('');
+            }
+        });
+        $('a#new').click(function(){
+            $(this).parent().addClass('active').siblings().removeClass('active');
+            setParam('sort','new');
+        });
+        $('a#recommend').click(function(){
+            $(this).parent().addClass('active').siblings().removeClass('active');
+            setParam('sort','recommend');
+        });
+        function setParam(name, value){
+            var url = location.search; //获取url中"?"符后的字串
+            if (url.indexOf("?") != -1) { //有问号存在,说明有参数
+                var urlStr ="//"+location.host + location.pathname;
+                if( '{{ isset($cid)?$cid:'' }}' != '' ){
+                    urlStr += "?cid=" + '{{ $cid }}';
+                }else if( '{{ isset($word)?$word:'' }}' != '' ){
+                    urlStr += "&keyword=" + '{{ $word }}';
+                }
+                urlStr += "&"+ name + "=" + value;
+                location.href=urlStr;
+            }else{
+                location.href=location.href + "?"+ name + "=" + value;
+            }
+        }
 
     </script>
 @endsection

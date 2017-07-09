@@ -11,9 +11,10 @@
 ?>
 @extends('layouts.home')
 
-@section('title', '首页')
-@section('keywords','')
-@section('description','')
+@section('title'){{ $C['seo']['index_title'] or $C['web']['web_title'] }}@endsection
+@section('keywords'){{ $C['seo']['index_keys'] or $C['web']['web_keys'] }}@endsection
+@section('description'){{ $C['seo']['index_desc'] or $C['web']['web_desc']}}@endsection
+
 
 @section('css')
     @parent

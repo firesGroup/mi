@@ -16,7 +16,7 @@ layui.use(['elements','jquery','layer','larry','navtab','form','common','global'
 	    larry = layui.larry(),
 	    form = layui.form(),
         global=layui.global,
-	    common = layui.common;
+	    common = layui.common,
       navtab = layui.navtab({
            elem: '#larry-tab'
       });
@@ -33,8 +33,8 @@ layui.use(['elements','jquery','layer','larry','navtab','form','common','global'
 		AdminInit();
 		//绑定导航数据
 		$.ajaxSettings.async = false;
-		$.getJSON('', {
-			Param: 'index_menu'
+		$.getJSON('/admin/menu/getMenu', {
+			position: 'top'
 		}, function(result) {
 			larry.set({
 				elem: '#menu',
@@ -51,9 +51,9 @@ layui.use(['elements','jquery','layer','larry','navtab','form','common','global'
 			$that.on('click', function() {
 				var id = $that.data('pid');
 				$.ajaxSettings.async = false;
-				$.getJSON(''+new Date(), {
+				$.getJSON('/admin/menu/getMenu', {
 					pid: id,
-					Param: 'index_menu'
+                    position: 'left'
 				}, function(result) {
 					larry.set({
 						elem: '#larrySideNav',
@@ -70,7 +70,7 @@ layui.use(['elements','jquery','layer','larry','navtab','form','common','global'
 
 		});
 		// 左侧导航点击事件			
-		$menu.find('li[data-pid=0]').click();
+		$menu.find('li[data-pid=1]').click();
 		$("#larrySideNav").find("li").eq(0).addClass('layui-this');
         $.ajaxSettings.async = true;
 
@@ -365,7 +365,7 @@ layui.use(['elements','jquery','layer','larry','navtab','form','common','global'
 
 	// 登出系统
 	$('#logout').on('click',function(){
-		var url ='login.php';
+		var url ='/admin/logout';
 		common.logOut('退出登陆提示！','你真的确定要退出系统吗？',url);
 	})
      // 左侧导航菜单控制
