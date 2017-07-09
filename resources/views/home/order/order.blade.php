@@ -37,7 +37,6 @@
                 <div class="more clearfix">
                     <ul class="filter-list J_orderType">
                         <li class="first active li" >
-                            {{--<a href="#type=1" id="J_validTab">全部有效订单</a>--}}
                             <a id="J_validTab" href="#type1">全部有效订单</a>
                         </li>
                         <li class="li">
@@ -65,8 +64,13 @@
 
                     {{--全部订单--}}
                     <ul class="order-list all" style="display: block;">
+
                         @foreach($data as $v)
-                            @if($v->order_status != 7)
+                            @if($v->order_status == 7)
+                                <p class="empty">当前没有有效订单。</p>
+                                @break
+                            @else
+
                             @if($v->order_status !=  5 )
                         <li class="uc-order-item uc-order-item-pay">{{-- 颜色 finish灰色--}}
                             @else
@@ -85,7 +89,7 @@
                                         <th class="col-main">
                                             <p class="caption-info">{{$v->add_time}}<span class="sep">|</span>
                                                 {{$v->buy_user}}<span class="sep">|</span>
-                                    订单号： <a href="{{url('orderdetail/'.$v->id)}}" id="ordersn">{{$v->order_sn}}</a>
+                                    订单号： <a href="{{url('orderdetail/'.$v->id)}}" >{{$v->order_sn}}</a>
                                                 <span class="sep">|</span>在线支付</p>
                                         </th>
 
@@ -126,6 +130,7 @@
                                             @if($v->order_status == 3)
                                                 <a class="btn btn-small btn-primary Receiving"
                                                    href="javascript: void(0);" target="_blank">确认收货</a>
+                                                <span style="display: none;" id="ordersn">{{$v->order_sn}}</span>
                                             @endif
 
                                             @if($v->order_status == 0)
@@ -135,7 +140,7 @@
                                                 <a class="btn btn-small btn-line-gray" href="{{url('orderdetail').'/'
                                                 .+$v->id}}">订单详情</a>
 
-                                            @if($v->order_status == 4 && $v->order_status == 6)
+                                            @if($v->order_status == 4 || $v->order_status == 6)
                                                 <a class="btn btn-small btn-line-gray" href="" target="_blank">申请售后</a>
                                             @endif
 
@@ -148,9 +153,10 @@
                         </li>
                                 @endif
                                 @endforeach
+
                     </ul>
 
-                    {{--未支付订单--}}
+                    {{--待支付订单--}}
                     <ul class="order-list pay" style="display: none;">
                         @foreach($data as $v)
 
@@ -215,6 +221,7 @@
                                                     @if($v->order_status == 3)
                                                         <a class="btn btn-small btn-primary Receiving"
                                                            href="javascript: void(0);" target="_blank">确认收货</a>
+                                                        <span style="display: none;"id="ordersn">{{$v->order_sn}}</span>
                                                     @endif
 
                                                     @if($v->order_status == 0)
@@ -225,9 +232,9 @@
                                                     <a class="btn btn-small btn-line-gray"
                                                        href="{{url('orderdetail').'/'.+$v->id}}">订单详情</a>
 
-                                                    @if($v->order_status == 4 && $v->order_status == 6)
+                                                    @if($v->order_status == 4 || $v->order_status == 6)
                                                         <a class="btn btn-small btn-line-gray"
-                                                           href="" target="_blank">申请售后</a>
+                                                           href="#" >申请售后</a>
                                                     @endif
 
                                                 </td>
@@ -237,101 +244,196 @@
                                         </table>
                                     </div>
                                 </li>
-                                    @elseif($num == 0 && $v->order_status == 0)
+                                    @elseif($num == 0 && $v->order_status != 0)
                                         <p class="empty">当前没有待支付订单。</p>
+                                        @break
 
                                     @endif
                                 @endforeach
                     </ul>
 
                     {{--待收货订单--}}
+                    {{--<ul class="order-list Receiving" style="display: none;">--}}
+                        {{--@foreach($data as $v)--}}
+                            {{--@if($Receiving != 0 && $v->order_status == 3)--}}
+
+                            {{--@if($v->order_status !=  5 && $v->order_status !=  7)--}}
+                                {{--<li class="uc-order-item uc-order-item-pay">--}}{{-- 颜色 finish灰色--}}
+                            {{--@else--}}
+                                {{--<li class="uc-order-item uc-order-item-finish">--}}
+                                    {{--@endif--}}
+                                    {{--<div class="order-detail">--}}
+                                        {{--<div class="order-summary">--}}
+                                            {{--<div class="order-status">{{$status[$v->order_status]}}</div>--}}
+                                            {{--@if($v->order_status == 1 || $v->order_status == 2)--}}
+                                                {{--<p class="order-desc J_deliverDesc">  我们将尽快为您发货 </p>--}}
+                                            {{--@endif--}}
+                                        {{--</div>--}}
+                                        {{--<table class="order-detail-table">--}}
+                                            {{--<thead>--}}
+                                            {{--<tr>--}}
+                                                {{--<th class="col-main">--}}
+                                                    {{--<p class="caption-info">{{$v->add_time}}<span class="sep">|</span>--}}
+                                                        {{--{{$v->buy_user}}<span class="sep">|</span>--}}
+                                                        {{--订单号： <a href="{{url('orderdetail/'.$v->id)}}">{{$v->order_sn}}</a>--}}
+                                                        {{--<span class="sep">|</span>在线支付</p>--}}
+                                                {{--</th>--}}
+
+                                                {{--<th class="col-sub">--}}
+                                                    {{--<p class="caption-price">订单金额：<span class="num">{{$v->total}}</span>元</p>--}}
+                                                {{--</th>--}}
+                                            {{--</tr>--}}
+                                            {{--</thead>--}}
+                                            {{--<tbody>--}}
+                                            {{--<tr>--}}
+                                                {{--<td class="order-items">--}}
+                                                    {{--<ul class="goods-list">--}}
+                                                        {{--@foreach($orderdetail as $d)--}}
+                                                            {{--@if($v->id == $d->order_id)--}}
+                                                                {{--<li>--}}
+                                                                    {{--<div class="figure figure-thumb">--}}
+                                                                        {{--<a href="//item.mi.com/1163700032.html" target="_blank">--}}
+                                                                            {{--<img src="//i1.mifile.cn/a1/pms_1490088796.67026066!80x80.jpg"--}}
+                                                                                 {{--width="80" height="80"--}}
+                                                                                 {{--alt="小米手机5s Plus 全网通版 4GB内存 灰色 64GB">--}}
+                                                                        {{--</a>--}}
+                                                                    {{--</div>--}}
+                                                                    {{--<p class="name">--}}
+                                                                        {{--跳转链接--}}
+                                                                        {{--<a target="_blank" href="//item.mi.com/1163700032--}}
+                                                        {{--.html">--}}
+                                                                            {{--{{$d->p_name}}--}}
+                                                                        {{--</a>--}}
+                                                                    {{--</p>--}}
+                                                                    {{--<p class="price">{{$d->p_price}}元 × {{$d->buy_num}}</p>--}}
+                                                                {{--</li>--}}
+                                                            {{--@endif--}}
+                                                        {{--@endforeach--}}
+
+                                                    {{--</ul>--}}
+                                                {{--</td>--}}
+                                                {{--<td class="order-actions">--}}
+                                                    {{--@if($v->order_status == 3)--}}
+                                                        {{--<a class="btn btn-small btn-primary Receiving"--}}
+                                                           {{--href="javascript: void(0);" >确认收货</a>--}}
+                                                        {{--<span style="display: none;" id="ordersn">{{$v->order_sn}}</span>--}}
+
+                                                    {{--@endif--}}
+
+                                                    {{--<a class="btn btn-small btn-line-gray"--}}
+                                                       {{--href="{{url('orderdetail').'/'.+$v->id}}">订单详情</a>--}}
+
+                                                    {{--@if($v->order_status == 4 || $v->order_status == 6)--}}
+                                                        {{--<a class="btn btn-small btn-line-gray"--}}
+                                                           {{--href="javascript: void(0);">申请售后</a>--}}
+                                                    {{--@endif--}}
+
+                                                {{--</td>--}}
+
+                                            {{--</tr>--}}
+                                            {{--</tbody>--}}
+                                        {{--</table>--}}
+                                    {{--</div>--}}
+                                {{--</li>--}}
+                                    {{--@elseif($v->order_status !=3 && $Receiving == 0)--}}
+                                        {{--<p class="empty">当前没有待收货订单。</p>--}}
+                                        {{--@break--}}
+                                    {{--@endif--}}
+                                {{--@endforeach--}}
+                    {{--</ul>--}}
+
                     <ul class="order-list Receiving" style="display: none;">
+
                         @foreach($data as $v)
                             @if($Receiving != 0 && $v->order_status == 3)
 
-                            @if($v->order_status !=  5 && $v->order_status !=  7)
-                                <li class="uc-order-item uc-order-item-pay">{{-- 颜色 finish灰色--}}
-                            @else
-                                <li class="uc-order-item uc-order-item-finish">
-                                    @endif
-                                    <div class="order-detail">
-                                        <div class="order-summary">
-                                            <div class="order-status">{{$status[$v->order_status]}}</div>
-                                            @if($v->order_status == 1 || $v->order_status == 2)
-                                                <p class="order-desc J_deliverDesc">  我们将尽快为您发货 </p>
-                                            @endif
-                                        </div>
-                                        <table class="order-detail-table">
-                                            <thead>
-                                            <tr>
-                                                <th class="col-main">
-                                                    <p class="caption-info">{{$v->add_time}}<span class="sep">|</span>
-                                                        {{$v->buy_user}}<span class="sep">|</span>
-                                                        订单号： <a href="//order.mi.com/user/orderView/1170702438900346">{{$v->order_sn}}</a>
-                                                        <span class="sep">|</span>在线支付</p>
-                                                </th>
+                                @if($v->order_status !=  5 )
+                                    <li class="uc-order-item uc-order-item-pay">{{-- 颜色 finish灰色--}}
+                                @else
+                                    <li class="uc-order-item uc-order-item-finish">
+                                        @endif
+                                        <div class="order-detail">
+                                            <div class="order-summary">
+                                                <div class="order-status">{{$status[$v->order_status]}}</div>
+                                                @if($v->order_status == 1 || $v->order_status == 2)
+                                                    <p class="order-desc J_deliverDesc">  我们将尽快为您发货 </p>
+                                                @endif
+                                            </div>
+                                            <table class="order-detail-table">
+                                                <thead>
+                                                <tr>
+                                                    <th class="col-main">
+                                                        <p class="caption-info">{{$v->add_time}}<span class="sep">|</span>
+                                                            {{$v->buy_user}}<span class="sep">|</span>
+                                                            订单号： <a href="{{url('orderdetail/'.$v->id)}}" >{{$v->order_sn}}</a>
+                                                            <span class="sep">|</span>在线支付</p>
+                                                    </th>
 
-                                                <th class="col-sub">
-                                                    <p class="caption-price">订单金额：<span class="num">{{$v->total}}</span>元</p>
-                                                </th>
-                                            </tr>
-                                            </thead>
-                                            <tbody>
-                                            <tr>
-                                                <td class="order-items">
-                                                    <ul class="goods-list">
-                                                        @foreach($orderdetail as $d)
-                                                            @if($v->id == $d->order_id)
-                                                                <li>
-                                                                    <div class="figure figure-thumb">
-                                                                        <a href="//item.mi.com/1163700032.html" target="_blank">
-                                                                            <img src="//i1.mifile.cn/a1/pms_1490088796.67026066!80x80.jpg"
-                                                                                 width="80" height="80"
-                                                                                 alt="小米手机5s Plus 全网通版 4GB内存 灰色 64GB">
-                                                                        </a>
-                                                                    </div>
-                                                                    <p class="name">
-                                                                        {{--跳转链接--}}
-                                                                        <a target="_blank" href="//item.mi.com/1163700032
+                                                    <th class="col-sub">
+                                                        <p class="caption-price">订单金额：<span class="num">{{$v->total}}</span>元</p>
+                                                    </th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                <tr>
+                                                    <td class="order-items">
+                                                        <ul class="goods-list">
+                                                            @foreach($orderdetail as $d)
+                                                                @if($v->id == $d->order_id)
+                                                                    <li>
+                                                                        <div class="figure figure-thumb">
+                                                                            <a href="//item.mi.com/1163700032.html" target="_blank">
+                                                                                <img src="//i1.mifile.cn/a1/pms_1490088796.67026066!80x80.jpg"
+                                                                                     width="80" height="80"
+                                                                                     alt="小米手机5s Plus 全网通版 4GB内存 灰色 64GB">
+                                                                            </a>
+                                                                        </div>
+                                                                        <p class="name">
+                                                                            {{--跳转链接--}}
+                                                                            <a target="_blank" href="//item.mi.com/1163700032
                                                         .html">
-                                                                            {{$d->p_name}}
-                                                                        </a>
-                                                                    </p>
-                                                                    <p class="price">{{$d->p_price}}元 × {{$d->buy_num}}</p>
-                                                                </li>
-                                                            @endif
-                                                        @endforeach
+                                                                                {{$d->p_name}}
+                                                                            </a>
+                                                                        </p>
+                                                                        <p class="price">{{$d->p_price}}元 × {{$d->buy_num}}</p>
+                                                                    </li>
+                                                                @endif
+                                                            @endforeach
 
-                                                    </ul>
-                                                </td>
-                                                <td class="order-actions">
-                                                    @if($v->order_status == 3)
-                                                        <a class="btn btn-small btn-primary" href="" target="_blank">确认收货</a>
-                                                    @endif
+                                                        </ul>
+                                                    </td>
+                                                    <td class="order-actions">
+                                                        @if($v->order_status == 3)
+                                                            <a class="btn btn-small btn-primary Receiving"
+                                                               href="javascript: void(0);" target="_blank">确认收货</a>
+                                                            <span style="display: none;" id="ordersn">{{$v->order_sn}}</span>
+                                                        @endif
 
-                                                    @if($v->order_status == 0)
-                                                        <a class="btn btn-small btn-primary" href="" target="_blank">立即支付</a>
-                                                    @endif
+                                                        @if($v->order_status == 0)
+                                                            <a class="btn btn-small btn-primary" href="" target="_blank">立即支付</a>
+                                                        @endif
 
-                                                    <a class="btn btn-small btn-line-gray" href="{{url('orderdetail').'/'
+                                                        <a class="btn btn-small btn-line-gray" href="{{url('orderdetail').'/'
                                                 .+$v->id}}">订单详情</a>
 
-                                                    @if($v->order_status == 4 && $v->order_status == 6)
-                                                        <a class="btn btn-small btn-line-gray" href="" target="_blank">申请售后</a>
-                                                    @endif
+                                                        @if($v->order_status == 4 || $v->order_status == 6)
+                                                            <a class="btn btn-small btn-line-gray" href="" target="_blank">申请售后</a>
+                                                        @endif
 
-                                                </td>
+                                                    </td>
 
-                                            </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </li>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </li>
+
                                     @elseif($v->order_status !=3 && $Receiving == 0)
-                                        <p class="empty">当前没有待收货订单。</p>
-
+                                    <p class="empty">当前没有待收货订单。</p>
+                                    @break
                                     @endif
                                 @endforeach
+
                     </ul>
 
                     {{--已关闭订单--}}
@@ -356,7 +458,7 @@
                                                 <th class="col-main">
                                                     <p class="caption-info">{{$v->add_time}}<span class="sep">|</span>
                                                         {{$v->buy_user}}<span class="sep">|</span>
-                                                        订单号： <a href="//order.mi.com/user/orderView/1170702438900346">{{$v->order_sn}}</a>
+                                                        订单号： <a href="{{url('orderdetail/'.$v->id)}}">{{$v->order_sn}}</a>
                                                         <span class="sep">|</span>在线支付</p>
                                                 </th>
 
@@ -394,20 +496,9 @@
                                                     </ul>
                                                 </td>
                                                 <td class="order-actions">
-                                                    @if($v->order_status == 3)
-                                                        <a class="btn btn-small btn-primary" href="" target="_blank">确认收货</a>
-                                                    @endif
-
-                                                    @if($v->order_status == 0)
-                                                        <a class="btn btn-small btn-primary" href="" target="_blank">立即支付</a>
-                                                    @endif
 
                                                     <a class="btn btn-small btn-line-gray" href="{{url('orderdetail').'/'
                                                 .+$v->id}}">订单详情</a>
-
-                                                    @if($v->order_status == 4 && $v->order_status == 6)
-                                                        <a class="btn btn-small btn-line-gray" href="" target="_blank">申请售后</a>
-                                                    @endif
 
                                                 </td>
 
@@ -416,9 +507,9 @@
                                         </table>
                                     </div>
                                 </li>
-                                    @elseif($close == 0 && $v->order_status == 7)
+                                    @elseif($close == 0 && $v->order_status != 7)
                                         <p class="empty">当前没有已关闭订单。</p>
-
+                                        @break
                                     @endif
                                 @endforeach
                     </ul>
@@ -435,11 +526,12 @@
         </div>
     </div>
 
-    <div class="modal fade modal-hide comment-modal in" id="J_commentModal" aria-hidden="true" style="display: none;"><a
-                class="close" data-dismiss="modal" href="javascript: void(0);"><i
-                    class="iconfont" id="xx"></i></a>
+    <div class="modal fade modal-hide comment-modal in" id="J_commentModal" aria-hidden="true" style="display: none;">
+        <a class="close" data-dismiss="modal" href="javascript: void(0);">
+            <i class="iconfont"></i>
+        </a>
         <div class="modal-body">
-            <div class="txt"><h2 class="tit">您确认收货吗?</h2></div>
+            <div class="txt"><h2 class="tit">确认收货吗?</h2></div>
             <a href="javascript: void(0);" class="btn btn-primary affirm" id="confirm">确定</a>
         </div>
     </div>
@@ -500,33 +592,38 @@
         $('.Receiving').on('click', function () {
             $('.modal-backdrop').css('display','block');
             $('#J_commentModal').css('display','block');
+//            当前获取点击的订单编号
+            ordersnid = $(this).next().text();
         });
 
-        $('#xx').on('click',function () {
+        $('.close').on('click',function () {
             $('.modal-backdrop').css('display','none');
             $('#J_commentModal').css('display','none');
         });
 
+
         $('#confirm').on('click',function () {
 
-            //获取订单ID
-            var oid = $('#ordersn').text();
-//            alert(a);
             var url = '{{url('Receiving')}}';
             $.ajax({
                 url:url,
                 type:'get',
-                data:{'_token': "{{csrf_token()}}",'oid':oid},
+                data:{'_token': "{{csrf_token()}}",'oid':ordersnid},
                 success:function(data){
 
-                    if(data){
-                       document.URL=location.href
+                    if(data == 1){
+                       location.reload();
+                        $('.modal-backdrop').css('display','none');
+                        $('#J_commentModal').css('display','none');
+                    } else {
+                        var h2 = "收货失败,请重亲提交";
+
+                        $('.tit').html(h2);
                     }
 
                 }
 
             });
-
 
         });
 

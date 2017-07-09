@@ -66,8 +66,10 @@ Route::group(['namespace' => 'Home'], function () {
 
     Route::post('addCart', 'AddCartController@addCart');
 
-    Route::get('addCartSuccess', 'AddCartController@addCartSuccess');
+    Route::get('addCartSuccess/{p_id}/{ver_id?}', 'AddCartController@addCartSuccess');
 
     Route::post('searchCart', 'AddCartController@searchCart');
+
+    Route::post('delSession', 'AddCartController@delSession');
 
 });

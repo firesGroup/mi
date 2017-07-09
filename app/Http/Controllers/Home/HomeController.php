@@ -1,7 +1,5 @@
 <?php
 
-
-
 namespace App\Http\Controllers\Home;
 
 use App\Entity\CateGory;
@@ -21,7 +19,6 @@ class HomeController extends BaseController
 
         return view('home.index', compact('nav', 'slide'));
     }
-
 
     /*
      *
@@ -56,7 +53,6 @@ class HomeController extends BaseController
      * return $arr  关联数组
      *
      */
-
     public static function headerNavPort()
     {
         //头部纵向分类导航
@@ -90,9 +86,9 @@ class HomeController extends BaseController
         //生活周边
         $zhoubianIds = CateGory::where('parent_path', 'like', "%86,%")->lists('id')->toArray();
         $navPort['zhoubian'] = self::getPortNavSql($zhoubianIds);
+
         return $navPort;
     }
-
 
     public static function getNavSql($category_id, $num)
     {
@@ -100,10 +96,7 @@ class HomeController extends BaseController
             $sql = Product::whereIn('category_id', $category_id)->where('recommend', 0)->where('status', 0)->orderBy('id', 'desc')->limit($num)->get();
         } else {
             $sql = Product::where('category_id', $category_id)->where('recommend', 0)->where('status', 0)->orderBy('id', 'desc')->limit($num)->get();
-
         }
-        return $sql;
-    }
 
     public static function getPortNavSql($category_id)
     {
@@ -114,7 +107,6 @@ class HomeController extends BaseController
         }
         return $sql;
     }
-
 
     /*
      * 商品详情页
@@ -129,6 +121,7 @@ class HomeController extends BaseController
         if ($desc != '') {
             return view('home.product.info', compact('info', 'detail', 'desc', 'is_btn'));
         } else {
+
             return redirect('/product/buy/' . $p_id);
         }
     }
@@ -164,10 +157,10 @@ class HomeController extends BaseController
             foreach ($allColor as $color) {
                 if ($color['ver_id'] == $firstVersionId) {
                     $colorArr[] = [
-                        'ver_id' => $color['ver_id'],
-                        'color_id' => $color['color_id'],
+                        'ver_id'     => $color['ver_id'],
+                        'color_id'   => $color['color_id'],
                         'color_name' => $color['color_name'],
-                        'color_img' => $color['color_img']
+                        'color_img'  => $color['color_img']
                     ];
                 }
             }
@@ -192,6 +185,7 @@ class HomeController extends BaseController
         if ($versions) {
             return $versions[0]['status'];
         } else {
+
             return $pro->status;
         }
     }
@@ -204,6 +198,7 @@ class HomeController extends BaseController
     public function ajaxGetVersionColor($ver_id)
     {
         $color = ProductVersionsColors::where('ver_id', $ver_id)->get();
+
         return response()->json($color);
     }
 
@@ -215,6 +210,7 @@ class HomeController extends BaseController
     public function ajaxGetVersion($ver_id)
     {
         $info = ProductVersions::where('id', $ver_id)->get();
+
         return $info;
     }
 
@@ -254,6 +250,9 @@ class HomeController extends BaseController
     public function slideShow()
     {
         $slide = SlideShow::where('status', 0)->get();
+
         return $slide;
     }
+
 }
+

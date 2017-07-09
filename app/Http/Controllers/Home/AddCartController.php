@@ -21,26 +21,19 @@ class AddCartController extends BaseController
 //        dd($data);
         $p_id = $data['p_id'];
 
-//        dd(explode(' ', $data['total']));
+        $ver_id = $data['ver_id'];
 
-        $arr = explode(' ', $data['pName']);
+        $price = $data['Price'];
 
-        $sum = count($arr);
-//        dd($sum);
-
-        $price = $arr[$sum - 1];
-//        dd($price);
-
-        array_pop($arr);
-        $str = implode('', $arr);
-//        dd($str);
+        $pName = $data['pName'];
 
         $img = DB::table('product')->where('id', $p_id)->lists('p_index_image');
 
         $goods = [
             [
+                'ver_id' => $ver_id,
                 'img' => $img[0],
-                'pName' => $str,
+                'pName' => $pName,
                 'price' => $price,
                 'p_id' => $p_id,
                 'num' => 1
@@ -48,19 +41,52 @@ class AddCartController extends BaseController
         ];
 
         if (session('goods')) {
-//            dd(1);
-            $goods = array_merge(session('goods'), $goods);
-//            dd($goods);
 
-            session([
-                'goods' => $goods
-            ]);
+            for ($i = 0; $i < count(session('goods')); $i++) {
+                if (session('goods')[$i]['ver_id'] == null) {
 
-            return session('goods');
+                    if (session('goods')[$i]['p_id'] == $p_id) {
+                        $sum = "";
+                        $sum = 1 + (session('goods')[$i]['num']);
+                        $goods[$i]['num'] = $sum;
+
+//                        dd($goods);
+                        $request->session()->put('goods', $goods);
+
+//                        dd(session('goods'));
+
+                        return session('goods');
+                    } else {
+                        $goods = array_merge(session('goods'), $goods);
+                        session([
+                            'goods' => $goods
+                        ]);
+                        return session('goods');
+                    }
+
+                } else {
+
+                    if (session('goods')[$i]['ver_id'] == $ver_id) {
+
+                        $sum = "";
+                        $sum = 1 + (session('goods')[$i]['num']);
+                        $goods[$i]['num'] = $sum;
+                        $request->session()->put('goods', $goods);
+                        return session('goods');
+
+                    } else {
+                        $goods = array_merge(session('goods'), $goods);
+                        session([
+                            'goods' => $goods
+                        ]);
+                        return session('goods');
+                    }
+
+                }
+            }
 
         } else {
 
-//            dd(2);
             session([
 
                 'goods' => $goods
@@ -73,9 +99,37 @@ class AddCartController extends BaseController
 
     }
 
-    public function addCartSuccess()
+    public function addCartSuccess($p_id, $ver_id = 0)
     {
-        return view('home.addCart.addCart');
+//        dd($p_id);
+//        dd($ver_id);
+//        dd(session('goods'));
+
+        if ($ver_id === 'undefined') {
+            for ($i = 0; $i < count(session('goods')); $i++) {
+
+                if (in_array($p_id, session('goods')[$i])) {
+//                dd(session('goods')[$i]['pName']);
+
+                    $pName = session('goods')[$i]['pName'];
+//                    dd($pName);
+                    return view('home.addCart.addCart', compact('pName'));
+                }
+            }
+        } else {
+            for ($i = 0; $i < count(session('goods')); $i++) {
+
+                if (in_array($ver_id, session('goods')[$i])) {
+//                dd(session('goods')[$i]['pName']);
+
+                    $pName = session('goods')[$i]['pName'];
+//                    dd($pName);
+                    return view('home.addCart.addCart', compact('pName'));
+                }
+            }
+        }
+
+
     }
 
     public function searchCart()
@@ -85,5 +139,18 @@ class AddCartController extends BaseController
         return session('goods');
 
     }
+
+    public function delSession(Request $request)
+    {
+
+        $i = $request->all()['i'];
+
+        $request->session()->pull('goods', $i);
+
+        dd(session('goods'));
+        return session('goods');
+
+    }
+
 
 }
