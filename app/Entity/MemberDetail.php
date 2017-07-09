@@ -12,7 +12,5 @@ class MemberDetail extends Model
 
     public $fillable = ['member_id','sex', 'birthday', 'avator', 'level_id'];
 
-    public function level () {
-        $this->belongsTo('App\Entity\Level','level_id');
-    }
+
 }

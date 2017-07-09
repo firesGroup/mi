@@ -192,9 +192,3 @@ $('#editInfo').click( function () {
 
 });
 
-$('#one ').children().each( function (i) {
-    $(this).children().click( function () {
-        $(this).parent().siblings().removeClass();
-        $(this).parent().addClass('active');
-    })
-});

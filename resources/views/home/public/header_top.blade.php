@@ -56,7 +56,6 @@
                         </div>
                     </div>
                     <div class="topbar-info" id="J_userInfo">
-                        {{--{{dd(session('user_deta'))}}--}}
                         @if(session('user_deta'))
                         <div class="topbar-info" id="J_userInfo">
                             <span class="user">

@@ -63,7 +63,7 @@ class MemberController extends Controller
 
             if(session('img_code') != $data['code']) {
 //                dd(session('img_code'));
-                return back()->with('error', '验证码错误,')->withInput();
+                return back()->with('error', '验证码错误')->withInput();
             }
 
         if(session('sms_code') != $data['sms_code']){
@@ -135,7 +135,7 @@ class MemberController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update( MemberRequest $request, $id)
+    public function update(Request $request, $id)
     {
 
                 $nick_name = $request->get('nick_name');

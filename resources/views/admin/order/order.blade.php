@@ -42,12 +42,12 @@
                     <i class="layui-icon">&#x1002;</i> 刷新本页
                 </button>
 
-                <div class="order">
-                    <input class="layui-input-inline" placeholder="搜索关键词" name="search" value="">
-                    <span class="layui-btn" >
-                                    <i class="layui-icon">&#xe615;</i>搜索
-                                </span>
-                </div>
+                {{--<div class="order">--}}
+                    {{--<input class="layui-input-inline" placeholder="搜索关键词" name="search" value="{{ isset($word)?$word:''}}">--}}
+                    {{--<span class="layui-btn" id="serach" onclick="search();" >--}}
+                        {{--<i class="layui-icon">&#xe615;</i>搜索--}}
+                    {{--</span>--}}
+                {{--</div>--}}
 
             </header>
 
@@ -97,6 +97,7 @@
             <div class="larry-table-page">
                 {{ $data->render() }}
             </div>
+        </div>
     </section>
 
 @endsection
@@ -104,9 +105,10 @@
 @section('js')
     @parent
     <script>
-        layui.use(['jquery', 'layer'], function () {
+        layui.use(['jquery', 'layer', 'elements'], function () {
             var $ = layui.jquery,
-                layer = layui.layer;
+                layer = layui.layer,
+                elements = layui.elements;
             var index;
             $('a.layui-btn').on('mouseover', function () {
                 var alt = $(this).attr('data-alt');
@@ -154,10 +156,10 @@
                     layer.close(Index);
                 });
             });
-            $('button#refresh').on('click', function () {
-                location.href = location.href;
+            $('#refresh').click(function () {
+                window.location.reload()
             });
-        });
+        })
 
     </script>
 @endsection

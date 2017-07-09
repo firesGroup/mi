@@ -74,7 +74,7 @@
                                 <td id="id">{{$v->id}}</td>
                                 <td><img src="{{$v->advert_image}}" width="100"></td>
                                 <td>{{$v->advert_url}}</td>
-                                <td>{{$v->ad_location}}</td>
+                                <td>{{$array[$v->ad_location]}}</td>
                                 <td>
                                     <form class="layui-form" action="" text-align="center">
                                         <input type="checkbox" name="open" lay-skin="switch"
