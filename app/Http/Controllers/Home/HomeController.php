@@ -1,6 +1,5 @@
 <?php
 
-
 namespace App\Http\Controllers\Home;
 use App\Entity\CateGory;
 use App\Entity\Product;
@@ -93,11 +92,10 @@ class HomeController extends BaseController
 
     public static function getNavSql($category_id, $num)
     {
-        if (is_array($category_id)) {
-            $sql = Product::whereIn('category_id', $category_id)->where('recommend', 0)->where('status', 0)->orderBy('id', 'desc')->limit($num)->get();
-        }
-        else {
-            $sql = Product::where('category_id', $category_id)->where('recommend', 0)->where('status', 0)->orderBy('id', 'desc')->limit($num)->get();
+        if( is_array($category_id) ){
+            $sql = Product::whereIn('category_id',$category_id)->where('recommend',0)->where('status',0)->orderBy('id','desc')->limit($num)->get();
+        }else{
+            $sql = Product::where('category_id',$category_id)->where('recommend',0)->where('status',0)->orderBy('id','desc')->limit($num)->get();
         }
 
         return $sql;
@@ -114,7 +112,6 @@ class HomeController extends BaseController
 
         return $sql;
     }
-
 
     /*
      * 商品详情页
@@ -262,4 +259,6 @@ class HomeController extends BaseController
 
         return $slide;
     }
+
 }
+

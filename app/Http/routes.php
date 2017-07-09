@@ -20,7 +20,6 @@
 //
 ////龙彪-路由文件
 // include('Route/long.php');
-//
 
 
 //这个不要动
@@ -28,6 +27,3 @@ Route::get('/admin/welcome', function(){
     return view('welcome');
 });
 
-//Route::get('admin', function () {
-//    return view('login');
-//});
