@@ -60,16 +60,9 @@
                         @foreach($userAdd as $UserAdd)
                         <div class="address-item J_addressItem ">
                             <dl>
-                                <dt>
-                                    <span class="tag"></span>
-                                    <em class="uname">{{$UserAdd->buy_user}}</em>
-                                </dt>
-                                <dd class="utel">
-                                    {{$UserAdd->buy_phone}}
-                                </dd>
-                                <dd class="uaddress">
-                                    {{$UserAdd->address}}
-                                </dd>
+                                <dt><span class="tag"></span><em class="uname">{{$UserAdd->buy_user}}</em></dt>
+                                <dd class="utel">{{$UserAdd->buy_phone}}</dd>
+                                <dd class="uaddress">{{$UserAdd->address}}</dd>
                             </dl>
                             <div class="actions">
                                 <a href="javascript:;" class="modify J_addressModify">修改</a>
@@ -205,28 +198,30 @@
                         </div>
                     </div>
                     <div class="section-body">
+                        @foreach(session('goBlance') as $v)
                         <ul class="goods-list" id="J_goodsList">
                             <li class="clearfix">
                                 <div class="col col-img">
-                                    <img src="//i1.mifile.cn/a1/pms_1490088796.67026066!30x30.jpg" width="30"
+                                    <img src="{{$v['img']}}" width="30"
                                          height="30">
                                 </div>
                                 <div class="col col-name">
                                     <a href="//item.mi.com/1163700032.html">
-                                        小米手机5s Plus 全网通版 4GB内存 灰色 64GB
+                                        {{$v['pName']}}
                                     </a>
                                 </div>
                                 <div class="col col-price">
-                                    2299元 x 1
+                                    {{$v['price'].'X'.$v['num']}}
                                 </div>
                                 <div class="col col-status">
                                     有货
                                 </div>
                                 <div class="col col-total">
-                                    2299元
+                                    {{intval($v['price'])*$v['num']}} 元
                                 </div>
                             </li>
                         </ul>
+                        @endforeach
                     </div>
                 </div>
 
@@ -236,11 +231,11 @@
                         <ul>
                             <li class="clearfix">
                                 <label>商品件数：</label>
-                                <span class="val">1件</span>
+                                <span class="val">{{session('Num')}}件</span>
                             </li>
                             <li class="clearfix">
                                 <label>金额合计：</label>
-                                <span class="val">2299元</span>
+                                <span class="val">{{session('total')}}元</span>
                             </li>
                             <li class="clearfix">
                                 <label>活动优惠：</label>
@@ -256,7 +251,7 @@
                             </li>
                             <li class="clearfix total-price">
                                 <label>应付总额：</label>
-                                <span class="val"><em data-id="J_totalPrice">2099</em>元</span>
+                                <span class="val"><em data-id="J_totalPrice">{{session('total')-200}}</em>元</span>
                             </li>
 
                         </ul>
@@ -270,7 +265,7 @@
                         <div class="big-pro-tip hide J_confirmBigProTip"></div>
                     </div>
                     <div class="fr">
-                        <a href="javascript:;" class="btn btn-primary" id="J_checkoutToPay">去结算</a>
+                        <a href="javascript:;" class="btn btn-primary" id="J_checkoutToPay">请选择地址</a>
                     </div>
                 </div>
 
@@ -404,6 +399,26 @@
             var $ = layui.jquery,
                 layer = layui.layer;
             var index;
+            $('div.fr').on('click', '#J_ToPay', function () {
+                var name = uname;
+                var phone = uphone;
+                var address = uaddress;
+
+                $.ajax({
+                    url: "/toPay",
+                    type: 'get',
+                    data: {'name': name, 'phone': phone, 'address': address},
+                    success: function (data) {
+                        console.log(data);
+                        if (data == 1) {
+
+                        }
+                    },
+                    dataType: 'json'
+                });
+            });
+
+
         });
 
     </script>

@@ -1,5 +1,6 @@
 <?php
 namespace App\Http\Controllers\Home;
+
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Home\HomeController as HomeC;
 use Session;
