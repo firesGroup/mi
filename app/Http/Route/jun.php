@@ -41,8 +41,8 @@ Route::group(['namespace' => 'Home'], function () {
     Route::get('order/{id}','OrderController@show');
     Route::get('orderdetail/{id?}','OrderController@detail');
 
-    Route::post('orderdetail/chooseAddress', 'AddressController@Provices');
-    Route::post('orderdetail/cities', 'AddressController@Cities');
+    Route::post('orderdetail/chooseAddress', 'AddressController@provices');
+    Route::post('orderdetail/cities', 'AddressController@cities');
     Route::put('orderdetail/orderaddress','OrderController@addressUpdate');
     Route::get('Receiving','OrderController@orderStatus');
 

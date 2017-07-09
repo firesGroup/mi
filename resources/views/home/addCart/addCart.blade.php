@@ -24,13 +24,13 @@
     @include('home.public.header_nav')
     <!-- 主要内容 start -->
 
-
+{{--{{dd($pName)}}--}}
     <div class="container">
 
         <div class="buy-succ-box clearfix">
             <div class="goods-content" id="J_goodsBox">
                 <div class="goods-img"><img src="//c1.mifile.cn/f/i/17/static/success.png" width="64" height="64"></div>
-                <div class="goods-info"><h3>已成功加入购物车！</h3> <span class="name">小米Max2 全网通版 4GB内存 金色 128GB  </span></div>
+                <div class="goods-info"><h3>已成功加入购物车！</h3> <span class="name">{{$pName}}  </span></div>
             </div>
 
             <div class="actions J_actBox">

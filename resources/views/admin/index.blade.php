@@ -130,6 +130,18 @@
                                     <cite>会员管理</cite>
                                 </a>
                             </li>
+                            <li class="layui-nav-item" data-pid="undefined">
+                                <a data-url="{{url('/admin/category')}}">
+                                    <i class="larry-icon larry-houtaishouye" data-icon="larry-houtaishouye" aria-hidden="true"></i>
+                                    <cite>分类管理</cite>
+                                </a>
+                            </li>
+                            <li class="layui-nav-item" data-pid="undefined">
+                                <a data-url="{{url('/admin/advert')}}">
+                                    <i class="larry-icon larry-houtaishouye" data-icon="larry-houtaishouye" aria-hidden="true"></i>
+                                    <cite>广告管理</cite>
+                                </a>
+                            </li>
                         </ul>
                     </div>
                 </div>

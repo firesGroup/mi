@@ -9,8 +9,8 @@
  * Time: 11:34
  */
 
-    Route::get('/admin/login', 'Admin\AdminController@login');
-    Route::post('/admin/login', 'Admin\AdminController@doLogin');
+Route::get('/admin/login', 'Admin\AdminController@login');
+Route::post('/admin/login', 'Admin\AdminController@doLogin');
 Route::group(['namespace'=>'Admin','prefix'=>'admin','middleware'=>'admin'], function(){
     Route::get('/','AdminController@index');
     Route::get('index','AdminController@index');
@@ -45,7 +45,6 @@ Route::group(['namespace'=>'Admin','prefix'=>'admin','middleware'=>'admin'], fun
     Route::get('ajaxRoleName', 'RoleController@ajaxRoleName')->name('admin.role.ajaxrolename');
 
     Route::get('ajaxRole', 'RoleController@ajaxRole')->name('admin.role.ajaxrole');
-
 
     //轮播图路由
     Route::resource('slideShow', 'SlideShowController');
@@ -97,7 +96,8 @@ Route::group(['namespace'=>'Admin','prefix'=>'admin','middleware'=>'admin'], fun
 });
 Route::get( '/upload/{path}/{id}/{url}', 'PublicC\UploadController@getUpload' );
 Route::post( '/upload', 'PublicC\UploadController@postUpload' );
-
+Route::get('/uploads/{pathName}/{imgSrc}', 'PublicC\ImageController@oneDirImage');
+Route::get('/uploads/{pathName}/{date}/{imgSrc}', 'PublicC\ImageController@twoDirImage');
 Route::group(['namespace'=>'Home',], function(){
     Route::get('/search/{word}','SearchController@index' );
     Route::get('/search','SearchController@index' );
@@ -125,7 +125,4 @@ Route::group(['namespace'=>'Home',], function(){
 
     Route::post('searchCart', 'AddCartController@searchCart');
 });
-
-Route::get('uploads/{pathName}/{imgSrc}', 'PublicC\ImageController@oneDirImage');
-Route::get('uploads/{pathName}/{date}/{imgSrc}', 'PublicC\ImageController@twoDirImage');
 

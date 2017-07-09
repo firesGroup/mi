@@ -14,12 +14,21 @@ class OrderController extends Controller
      * Ps:  订单显示页(数据表名[order])
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         //查询订单表(order)所有订单,每页五条
-        $data = order::orderby('id')->paginate(5);
+        if($request->has('search')){
+            dd(123);
+            $modelId = $request->input('word',null);
 
-        //统计订单总数
+            $data = CateGory::where('category_name','like',"%{$modelId}%")->paginate(10);
+//            dd($data);
+        }else{
+            $data = order::orderby('id')->paginate(5);
+
+            //统计订单总数
+        }
+
         $sum = order::count('id');
 
         //定义订单状态
