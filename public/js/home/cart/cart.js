@@ -18,6 +18,7 @@ $('span.user').on('mouseleave', function () {
 
 total = 0;
 $('#J_cartListBody').find('.J_cartGoods').each(function (i) {
+    // var id = [];
     var t = $(this);
 
     t.on('click', 'i.J_itemCheckbox', function () {
@@ -53,7 +54,7 @@ $('#J_cartListBody').find('.J_cartGoods').each(function (i) {
             if ($('i.J_itemCheckbox').hasClass('icon-checkbox-selected')) {
 
                 $('#J_goCheckout').removeClass('btn-disabled').addClass('btn-primary');
-
+            // .attr('href', "address")
                 $('#J_noSelectTip').addClass('hide');
 
             } else {
@@ -147,8 +148,14 @@ $('#J_cartListBody').find('.J_cartGoods').each(function (i) {
     });
 
     t.on('click', 'a.J_delGoods', function () {
+        // console.log(i);
+        id = i;
+
         $('#J_modalAlert').addClass('in').css({'display': 'block'}).attr('aria-hidden', 'true');
+
     });
+
+
 
 });
 
@@ -188,3 +195,51 @@ $('i#J_selectAll').on('click', function () {
     }
     $('em#J_cartTotalPrice').text(price);
 });
+
+$('#J_alertOk').on('click', function () {
+    // console.log(id);
+    $.ajax({
+        url: "/delGoods/"+id,
+        type: 'get',
+        success: function (data) {
+
+            if (data) {
+                $('#'+id+'item-box').remove();
+                $('#J_modalAlert').removeClass('in').css({'display': 'none'}).attr('aria-hidden', 'false');
+            }
+
+        },
+        dataType: 'json'
+    });
+
+});
+
+$('#J_goCheckout').on('click', function () {
+
+
+    var goodsId = [];
+
+    ($('.icon-checkbox-selected').parent().parent().parent().parent().each(function(i){
+            goodsId.push(parseInt($('.icon-checkbox-selected').parent().parent().parent().parent().eq(i).attr('id')));
+        }));
+
+        // console.log(goodsId);
+    $.ajax({
+        url: "/goBalance",
+        type: 'post',
+        data: {'goodsId': goodsId},headers: {
+            'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+        },
+        success: function (data) {
+            if (data == 1) {
+                window.location.href = "/address/";
+            }
+        },
+        dataType: 'json'
+    });
+
+
+
+});
+
+

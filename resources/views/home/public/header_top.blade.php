@@ -41,7 +41,7 @@
                         @endif
                         <a rel="nofollow" class="cart-mini" id="J_miniCartBtn" href="{{url('cart')}}">
                             <i class="iconfont">&#xe60c;</i>购物车
-                            <span class="cart-mini-num J_cartNum">({{count(session('goods'))}})类</span>
+                            <span class="cart-mini-num J_cartNum">({{(count(session('goods')))}})</span>
                         </a>
                         <div class="cart-menu" id="J_miniCartMenu">
                             <div class="loading">
@@ -57,7 +57,7 @@
                     </div>
                     <div class="topbar-info" id="J_userInfo">
                         {{--{{dd(session('user_deta'))}}--}}
-                        @if(session('user_deta') != null )
+                        @if(session('user_deta'))
                         <div class="topbar-info" id="J_userInfo">
                             <span class="user">
                             <a rel="nofollow" class="user-name" href="{{url('user_detail')}}" target="_blank">
@@ -122,6 +122,7 @@
                                     str += "<span class='price'>" + data[i]['price'] + 'X' + data[i]['num'] + "</span><a class='btn-del J_delItem' href='javascript:;' data-isbigtap='false'><i class='iconfont'>╳</i>";
 
                                     str += "</a></div></li>";
+                                    str += "<hr>";
                                     totalPrice += parseInt(data[i]['price']) * data[i]['num'];
                                     num += data[i]['num'];
                                 }
@@ -131,6 +132,8 @@
                                 str += "<span class='total'>共 <em>" + num + "</em>件商品<span class='price'><em>" + totalPrice + "</em>元</span></span>";
 
                                 str += "<a class='btn btn-primary btn-cart' href='{{url('cart')}}'>去购物车结算</a></div>";
+
+                                $('a#J_miniCartBtn').children('span').text('('+num+')');
 
                                 $('div#J_miniCartMenu').append(str);
 
@@ -144,8 +147,42 @@
                                             type: 'post',
                                             data: {'_token': '{{csrf_token()}}', 'i': i},
                                             success:function (data) {
-                                                console.log(data);
+//                                                console.log(data.length);
+                                                if(data) {
+                                                    $('div#J_miniCartMenu').children().remove();
 
+                                                    var str = "<ul class='cart-list'>";
+
+                                                    var totalPrice = 0;
+                                                    var num = 0;
+                                                    for (var i = 0; i < data.length; i++) {
+
+                                                        str += "<li><div class='cart-item clearfix first'>";
+
+                                                        str += "<a class='thumb' href=''><img src='" + data[i]['img'] + "!60_60'></a>";
+
+                                                        str += "<a class='name' href=''>" + data[i]['pName'] + "</a>";
+
+                                                        str += "<span class='price'>" + data[i]['price'] + 'X' + data[i]['num'] + "</span><a class='btn-del J_delItem' href='javascript:;' data-isbigtap='false'><i class='iconfont'>╳</i>";
+
+                                                        str += "</a></div></li>";
+
+                                                        str += "<hr>";
+
+                                                        totalPrice += parseInt(data[i]['price']) * data[i]['num'];
+                                                        num += data[i]['num'];
+                                                    }
+
+                                                    str += "</ul><div class='cart-total clearfix'>";
+
+                                                    str += "<span class='total'>共 <em>" + num + "</em>件商品<span class='price'><em>" + totalPrice + "</em>元</span></span>";
+
+                                                    str += "<a class='btn btn-primary btn-cart' href='{{url('cart')}}'>去购物车结算</a></div>";
+
+                                                    $('a#J_miniCartBtn').children('span').text('('+num+')');
+
+                                                    $('div#J_miniCartMenu').append(str);
+                                                }
                                             },
 
                                             dataType: 'json'

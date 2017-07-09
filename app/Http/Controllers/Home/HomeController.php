@@ -92,11 +92,15 @@ class HomeController extends BaseController
 
     public static function getNavSql($category_id, $num)
     {
-        if (is_array($category_id)) {
-            $sql = Product::whereIn('category_id', $category_id)->where('recommend', 0)->where('status', 0)->orderBy('id', 'desc')->limit($num)->get();
-        } else {
-            $sql = Product::where('category_id', $category_id)->where('recommend', 0)->where('status', 0)->orderBy('id', 'desc')->limit($num)->get();
+        if( is_array($category_id) ){
+            $sql = Product::whereIn('category_id',$category_id)->where('recommend',0)->where('status',0)->orderBy('id','desc')->limit($num)->get();
+        }else{
+            $sql = Product::where('category_id',$category_id)->where('recommend',0)->where('status',0)->orderBy('id','desc')->limit($num)->get();
+
         }
+
+        return $sql;
+    }
 
     public static function getPortNavSql($category_id)
     {
@@ -105,6 +109,7 @@ class HomeController extends BaseController
         } else {
             $sql = Product::where('category_id', $category_id)->where('status', 0)->orderBy('id', 'desc')->limit(24)->get();
         }
+
         return $sql;
     }
 
@@ -121,7 +126,6 @@ class HomeController extends BaseController
         if ($desc != '') {
             return view('home.product.info', compact('info', 'detail', 'desc', 'is_btn'));
         } else {
-
             return redirect('/product/buy/' . $p_id);
         }
     }
@@ -170,6 +174,7 @@ class HomeController extends BaseController
         if (!isset($imgArr)) {
             $imgArr[] = $imgIndex;
         }
+
         return view('home.product.buy', compact('p_id', 'imgArr', 'info', 'noversions', 'versions', 'colorArr'));
     }
 
@@ -184,6 +189,7 @@ class HomeController extends BaseController
         $versions = $pro->versions->toArray();
         if ($versions) {
             return $versions[0]['status'];
+
         } else {
 
             return $pro->status;
@@ -246,7 +252,6 @@ class HomeController extends BaseController
      * 获得首页轮播图数据
      *
      */
-
     public function slideShow()
     {
         $slide = SlideShow::where('status', 0)->get();

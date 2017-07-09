@@ -93,9 +93,9 @@ $('ul li.option').on('click', function () {
     $('div.select-first').addClass('active').text(address).next('.select-item').removeClass('hide').text('选择城市/地区');
 
     $.ajax({
-        url: "{{url('chooseAddress')}}",
+        url: "/chooseAddress",
         type: 'get',
-        data: {'_token': '{{csrf_token()}}', 'id': id},
+        data: {'id': id},
         success: function (data) {
 //                        console.log(data);
 //                        console.log($('ul li.option').parent());
@@ -116,9 +116,9 @@ $('ul li.option').on('click', function () {
                 $('div.select-first').next().text(cities).next().removeClass('hide').text('选择区县');
 
                 $.ajax({
-                    url: "{{url('cities')}}",
+                    url: "/cities",
                     type: 'get',
-                    data: {'_token': '{{csrf_token()}}', 'id': citiesId},
+                    data: {'id': citiesId},
                     success: function (data) {
                         for (var i = 0; i < data.length; i++) {
                             var arr = data[i];
@@ -176,9 +176,9 @@ $('#J_editAddressSave').on('click', function () {
     var id = "{{$UserAdd->member_id}}";
 
     $.ajax({
-        url: "{{url('addAddress')}}",
+        url: "/addAddress",
         type: 'get',
-        data: {'_token': '{{csrf_token()}}', 'arr': arr, 'id': id},
+        data: {'arr': arr, 'id': id},
         success: function (data) {
 //                        console.log(1);
             if (data == 1) {
@@ -214,13 +214,16 @@ $('input[name=user_phone]').on('blur', function () {
 
 $('#J_addressList').on('click', '.J_addressItem', function () {
 //                console.log($(this));
+
+    $('div.fr').children('#J_ToPay').remove();
     $(this).addClass('selected').siblings().removeClass('selected');
 
-    $('div.fr').children('#J_checkoutToPay').text('立即下单');
+    $('div.fr').children('#J_checkoutToPay').remove();
+    $('div.fr').append('<a href="javascript:;" class="btn btn-primary" id="J_ToPay">立即下单</a>');
 
-    var uname = $(this).children('dl').children('dt').text();
-    var uphone = $(this).children('dl').children('dd.utel').text();
-    var uaddress = $(this).children('dl').children('dd.uaddress').text();
+    uname = $(this).children('dl').children('dt').text();
+    uphone = $(this).children('dl').children('dd.utel').text();
+    uaddress = $(this).children('dl').children('dd.uaddress').text();
 //                console.log(uphone);
     $('#J_confirmAddress').removeClass('hide').html(uname+'&nbsp;&nbsp;&nbsp;&nbsp;'+uphone+'<br/>'+uaddress);
 

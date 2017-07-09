@@ -213,7 +213,7 @@
 
             var ver_id = $('div#version ul').children('.active').attr('data-ver_id');
 
-            var verid = ver_id ? ver_id : null;
+            var verid = ver_id ? ver_id : 0;
 
 //            console.log(verid);
             var p_id = "{{ $info->id }}";
@@ -223,9 +223,9 @@
                 type: 'post',
                 data: {'_token': '{{csrf_token()}}', 'pName': pName, 'Price': Price, 'p_id': p_id, 'ver_id': verid},
                 success: function (data) {
-//                    console.log(data);
+                    console.log(data);
                     if (data) {
-                        window.location.href = "/addCartSuccess/" + p_id + '/' + ver_id;
+                        window.location.href = "/addCartSuccess/" + p_id + '/' + verid;
                     }
 
                 },
