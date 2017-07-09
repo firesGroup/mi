@@ -45,18 +45,21 @@
                 </div>
             </div>
             <div class="btn-group clearfix">
-        <span class="layui-btn layui-btn-small">
-            <i class="layui-icon">&#xe615;</i>搜索分类
-        </span>
                 <button class="layui-btn layui-btn-small" id="add_category">
                     <i class="layui-icon" style="color:white">&#xe608;</i> <a style="color:white"
                                                                               href="{{url('admin/category/create')}}">添加一级分类</a>
                 </button>
-                <button class="layui-btn layui-btn-small" id="refresh">
+                <span class="layui-btn layui-btn-small" id="refresh">
                     <i class="layui-icon">&#x1002;</i> 刷新本页
-                </button>
-                <input class="layui-input clearfix" placeholder="搜索关键词" name="search" value=""
-                       style="width:400px;margin-top:10px;">
+                </span>
+            </div>
+            <div style="float:right">
+                <input class="layui-input clearfix" placeholder="搜索关键词" name="search"
+                       value="{{ isset($word)?$word:'' }}"
+                       style="width:400px;display:inline-block">
+                <span class="layui-btn" id="search">
+                    <i class="layui-icon">&#xe615;</i>搜索分类
+                </span>
             </div>
             <div>
                 <table class="layui-table" style="margin-top: 20px;">
@@ -73,7 +76,7 @@
                         <th>分类名称</th>
                         <th>父类id</th>
                         <th>父类路径</th>
-                        <th>排序</th>
+                        <th>推荐</th>
                         <th>操作</th>
                     </tr>
                     <tr>
@@ -98,7 +101,7 @@
                             </td>
                             <td>{{$v->parent_id}}</td>
                             <td>{{$v->parent_path}}</td>
-                            <td>{{$v->sort}}</td>
+                            <td>{{($v->status)==0?"推荐":"不推荐"}}</td>
                             <td>
                                 <div class="layui-btn-group">
                                     <a href="{{ url('admin/category').'/'.$v->id."/edit" }}" class="layui-btn"
@@ -177,6 +180,8 @@
                                     layer.alert('删除失败!', {icon: 2});
                                 } else if (data == 2) {
                                     layer.alert('删除错误!该分类下有子分类!不能删除', {icon: 2});
+                                } else if (data == 3) {
+                                    layer.alert('删除错误!该分类下商品!不能删除', {icon: 2});
                                 }
                             } else {
                                 layer.alert('服务器错误!', {icon: 2});
@@ -188,8 +193,18 @@
                 });
             });
 
+            $('span#search').on('click', function () {
+
+                location.href = '{{ url('/admin/category?search=oneSelect') }}' + '&word=' + $('input[name=search]').val();
+            });
+
+            $('#refresh').click(function () {
+                window.location.reload()
+            });
 
         });
+
+
     </script>
 @endsection
 

@@ -174,6 +174,7 @@
                 location.href='{{ url('/admin/product?search=oneSelect') }}'+'&sort_price='+ $(this).val();
             });
             $('span#search').on('click', function(){
+
                 location.href='{{ url('/admin/product?search=oneSelect') }}'+'&word='+ $('input[name=search]').val();
             });
         });

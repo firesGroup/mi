@@ -85,15 +85,20 @@ $(document).ready(function() {
 //顶部用户登陆成功后的下拉菜单
 $('#J_userInfo').on('mouseenter', '#user', function(){
     // $('#user').css({"z-index":'50'});
-    $('#J_userInfo').css({"z-index":'50'});
-    $('#hidden').css({"display":"block"});
+    // $('#J_userInfo').css({"z-index":'50'});
+    // $('a.user-name').parent().css({'background':'white'});
+    // $('#hidden').css({"display":"block"});
+    $('#hidden').slideDown();
+
+
     $('span.user').addClass('user-active');
 
 });
 
 $('#J_userInfo').mouseleave( function () {
     // alert(123);
-    $('#hidden').css({"display":"none"});
+    $('#hidden').slideUp();
+    // $('a.user-name').parent().reovecss();
     $('span.user').removeClass('user-active');
 
 });

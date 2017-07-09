@@ -56,17 +56,28 @@
                                     {{csrf_field()}}
                                     <input type="hidden" name="_method" value="PUT">
                                     <input type="hidden" name="id" value="{{$data->id}}">
+                                    {{--{{dd($data->id)}}--}}
                                     <input type="hidden" name="cate_id" value="">
-                                    <div class="layui-form-item" id="item">
-                                        <label class="layui-form-label">上级分类</label>
-                                        <div class="layui-input-inline">
-                                            <select name="parent_id" lay-verify="" id="select1" data-id='1' lay-filter="select1" style="width:200px">
-                                                <option value="">请选择分类</option>
-                                                <option value="0" {{$data->parent_id ==0?" selected":""}}>顶级分类</option>
-                                                @foreach($res as $category)
-                                                    <option value="{{$category->id}} " {{$data->parent_id ==$category->id?"selected":""}} {{ $id == $category->id?" disabled":"" }}>{{$category->category_name}}</option>
-                                                @endforeach
-                                            </select>
+                                    <div class="layui-form-item" id="category">
+                                        <label class="layui-form-label">商品分类</label>
+                                        <div class="layui-input-block">
+                                            <div class="layui-input-inline">
+                                                <select name="category[1]" id="select1" data-id='1' lay-filter="select1">
+                                                    <option value="">请选择商品分类</option>
+                                                    @forelse( $res as $cate)
+                                                        <option value="{{ $cate->id }}" {{(($cate->id)==($data->id))?'disabled':''}}>{{ $cate->category_name }}</option>
+                                                    @empty
+                                                        一个分类都没有呢!
+                                                    @endforelse
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="layui-form-item">
+                                        <label class="layui-form-label">是否推荐</label>
+                                        <div class="layui-input-block">
+                                            <input type="radio" name="status" value=0 {{($data->status==0)?"checked":""}} title="推荐">
+                                            <input type="radio" name="status" value=1 {{($data->status==1)?"checked":""}} title="不推荐">
                                         </div>
                                     </div>
                                     <div class="layui-form-item">
@@ -110,7 +121,7 @@
 
             function addSelect()
             {
-                var num = $('div.layui-input-inline').length;
+                var num = $('div#category div.layui-input-inline').size();
                 for( var i=1;i <= num; i++ ){
                     formOn(i);
                 }
@@ -123,41 +134,37 @@
                         $('select#select1').parent().siblings('div').remove();
                         $('select#select1').data('id',1)
                     }
+                    var id = $('input[name=id]').val();
                     $.ajax({
-                        url: "{{url('admin/category_edit')}}"
-                        , type: 'post'
-                        , data: {"_token": "{{csrf_token()}}", "c_id": data.value, "id": '{{$data->id}}'}
+                        url: "{{url('admin/product/getAjaxCategoryChild')}}/"+data.value
+                        , type: 'get'
                         , success: function (data) {
                             if (data == 1) {
                                 return false;
                             } else if(data == 2){
                                 //说明选择的是顶级分类
                                 //那么如果存在之前选择的子分类,就应该删掉元素
-                                    $('select#select1').parent().next('div').remove();
-
+                                $('select#select1').parent().next('div').remove();
                                 return false;
                             }else if( data == null ){
                                 return false;
                             }else{
                                 var did = $('select#select1').data('id');
                                 var newDid = did+1;
-                                var str = "<div class='layui-input-inline'><select name='cate_id' id='select"+newDid+"'  lay-filter='select"+newDid+"' lay-verify='required'><option value=''>请选择分类</option>";
+                                var str = "<div class='layui-input-inline'><select " +
+                                    "name='category["+ newDid +"]' id='select"+newDid+"'  lay-filter='select"+newDid+"'><option value='0'>请选择分类</option>";
                                 for (var i = 0; i < data.length; i++) {
-                                    if (data[i].id == {{$data->id}}) {
-                                        return false;
-                                    }
-                                    str += "<option value='" + data[i].id +"'>" + data[i].category_name + "</option>";
+                                    str += '<option value="'+data[i].id +'"'+((data[i].id == id)?"disabled=\"\" ":"")+'>'+ data[i].category_name + '</option>';
                                 }
                                 str += "</select></div>";
                                 $('select#select'+n).parent().next('div').remove();
                                 $('select#select'+n).parent().parent().append(str);
-                                $('select#select1').data('id',n);
+                                $('select#select1').data('id',n+1);
                                 form.render();
                             }
                         },
                         typeOf: 'json'
                     })
-
                 });
             }
 

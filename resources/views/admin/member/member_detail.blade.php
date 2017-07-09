@@ -21,7 +21,7 @@
     <section class="larry-grid">
         <div class="larry-personal">
             <header class="larry-personal-tit">
-                <span>商品管理-列表</span>
+                <span>会员管理-列表</span>
             </header>
             <div class="row" id="infoSwitch">
                 <blockquote class="layui-elem-quote col-md-12 head-con">
@@ -30,8 +30,7 @@
                         <h4 title="提示相关设置操作时应注意的要点">操作提示</h4>
                     </div>
                     <ul>
-                        <li>商品管理注意发布商品后清理缓存.</li>
-                        <li>商品缩列图也有缓存.</li>
+                        <li>请务必正确填写会员信息</li>
                     </ul>
                     <i class="larry-icon larry-guanbi close" id="closeInfo"></i>
                 </blockquote>
@@ -53,14 +52,6 @@
                         <div class="layui-input-inline" style="width:300px">
                             <div class="layui-input">
                                 {{$data->nick_name}}
-                            </div>
-                        </div>
-                    </div>
-                    <div class="layui-form-item">
-                        <div class="layui-form-label">会员等级</div>
-                        <div class="layui-input-inline" style="width:300px">
-                            <div class="layui-input">
-                                {{$array[$user_detail->level_id]}}
                             </div>
                         </div>
                     </div>
