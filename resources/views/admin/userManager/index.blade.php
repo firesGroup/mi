@@ -66,7 +66,6 @@
                         <th>ID</th>
                         <th>所属组</th>
                         <th>管理员名</th>
-                        <th>密码</th>
                         <th>状态</th>
                         <th>添加时间</th>
                         <th>最后登录时间</th>
@@ -82,7 +81,6 @@
                             <td>{{ $user->id }}</td>
                             <td>{{ ($user->group_id > 0)?$group_name[$user->group_id]:'未分组' }}</td>
                             <td style="color:#1E9FFF">{{ $user->username }}</td>
-                            <td>{{ $user->password }}</td>
                             <td>{{ $status[$user->status] }}</td>
                             <td>{{ $user->add_time }}</td>
                             <td>{{ $user->last_time }}</td>

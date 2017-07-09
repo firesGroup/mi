@@ -43,10 +43,6 @@
                     </div>
                     <!-- 右侧常用菜单导航 -->
                     <div class="larry-right-menu posb">
-                        <button class="layui-btn layui-btn-small" id="dianzhan">
-                            <i class="larry-icon larry-dianzan"></i>
-                            打赏作者
-                        </button>
                         <ul class="layui-nav clearfix">
                             <li class="layui-nav-item">
                                 <a class="onFullScreen" id="FullScreen"><i class="larry-icon larry-quanping"></i>全屏</a>
@@ -61,10 +57,7 @@
                                 <a class="kuaijiefangshi"><i class="larry-icon larry-kuaijie"></i><cite>快捷方式</cite></a>
                                 <dl class="layui-nav-child">
                                     <dd>
-                                        <a href="http://www.larrycms.com/" target="_blank">网站主页</a>
-                                    </dd>
-                                    <dd>
-                                        <a href="http://blog.larrycms.com/" target="_blank">我的博客</a>
+                                        <a href="/" target="_blank">网站前台</a>
                                     </dd>
                                 </dl>
                             </li>
@@ -83,7 +76,7 @@
                         <div class="photo">
                             <img src="<?php echo e(asset('/images/admin/user.jpg')); ?>" alt="">
                         </div>
-                        <p>admin您好！欢迎登录</p>
+                        <p><?php echo e(session('adminInfo')['username']); ?>您好！欢迎登录</p>
                     </div>
                     <!-- 系统菜单 -->
                     <div class="sys-menu-box" >
@@ -249,8 +242,8 @@
             <div class="lock-wrapper" id="lock-screen">
                 <div id="time"></div>
                 <div class="lock-box">
-                    <img src="images/admin/user.jpg" alt="">
-                    <h1>admin</h1>
+                    <img src="/images/admin/user.jpg" alt="">
+                    <h1><?php echo e(session('adminInfo')['username']); ?></h1>
                     <form action="" class="layui-form lock-form">
                         <div class="layui-form-item">
                             <input type="password" name="lock_password" lay-verify="pass" placeholder="锁屏状态，请输入密码解锁"
@@ -267,9 +260,10 @@
         <script type="text/javascript" src="<?php echo e(asset('/plugin/layui/layui.js')); ?>"></script>
         <script type="text/javascript" src="<?php echo e(asset('/js/admin/larry.js')); ?>"></script>
         <script>
-            layui.use(['jquery','layer','navtab'],function() {
+            layui.use(['jquery','layer','navtab','elements'],function() {
                 var $ = layui.jquery,
                     layer = layui.layer,
+                    element = layui.elements(),
                     navtab = layui.navtab({
                         elem: '#larry-tab'
                     });

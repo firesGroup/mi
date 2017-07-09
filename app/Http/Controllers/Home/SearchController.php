@@ -24,15 +24,19 @@ class SearchController extends BaseController
      */
     public function index(Request $request,$word=null)
     {
+            //获取搜索关键字
             $keyword = $request->keyword?new HtmlString($request->keyword):'';
             $word = $word?new HtmlString($word):$keyword;
+            //获取选择的分类id
             $cid = intval($request->cid);
+            //获取排序
             if ( $cid ){
                 $cate_name = CateGory::find($cid)->category_name;
             }
             $xs = new \XS(config_path('product.ini'));
             $search = $xs->search; // 获取 搜索对象
             $query = '';
+
             if( $word ){
                 $where[] = $word;
             }
@@ -53,10 +57,35 @@ class SearchController extends BaseController
                 $current_page = 1;
             }
             $search->setQuery($query)
+                    ->setFuzzy()
                     ->setLimit($perPage,($current_page-1)*$perPage);// 设置搜索语句, 分页, 偏移量
+
+            if( $request->has('sort') ){
+                $sort = $request->sort;
+                switch($sort){
+                    case 'recommend':
+                        $search->setSort('recommend',true);
+                        break;
+                    case 'new':
+                        $search->setSort('id');
+                        break;
+                    case 'price_up':
+                        $search->setSort('price', true);
+                        break;
+                    case 'price_down':
+                        $search->setSort('price');
+                        break;
+                    default:
+                        $search->setSort('recommend',true);
+                        break;
+                }
+                if( $word ){
+                    $search->addWeight($word);
+                }
+            }
+
             $item = $search->search(); // 执行搜索，将搜索结果文档保存在 $docs 数组中
             $count = $search->count(); // 获取搜索结果的匹配总数
-//            $item = array_slice($data, ($current_page-1)*$perPage, $perPage);
 
             $paginator =new LengthAwarePaginator($item, $count, $perPage, $currentPage, [
                 'path' => Paginator::resolveCurrentPath(),
@@ -65,7 +94,7 @@ class SearchController extends BaseController
 
             $data = $paginator->toArray()['data'];
             $category = $this->getCategory();
-            return view('home.search.index',compact('cid','totalPage','cate_name','word','data','count','category','paginator'));
+            return view('home.search.index',compact('cid','totalPage','cate_name','word','data','count','category','paginator','sort'));
 
     }
 

@@ -58,7 +58,7 @@
                                     <div class="layui-form-item">
                                         <label class="layui-form-label">管理员名</label>
                                         <div class="layui-input-block">
-                                            <input type="text" name="username" required lay-verify="required"
+                                            <input type="text" name="username"
                                                    placeholder="{{$data->username}}" autocomplete="off"
                                                    class="layui-input" value="{{$data->username}}">
                                         </div>
@@ -66,21 +66,21 @@
                                     <div class="layui-form-item">
                                         <label class="layui-form-label">旧密码</label>
                                         <div class="layui-input-block">
-                                            <input type="password" name="oldPassword" lay-verify="required"
-                                                   autocomplete="off" class="layui-input">
+                                            <input type="password" name="oldPassword"
+                                                   autocomplete="off" class="layui-input" placeholder="留空表示不修改">
                                         </div>
                                     </div>
                                     <div class="layui-form-item">
                                         <label class="layui-form-label">新密码</label>
                                         <div class="layui-input-block">
-                                            <input type="password" name="newPassword" lay-verify="required"
-                                                   autocomplete="off" class="layui-input" value="">
+                                            <input type="password" name="newPassword"
+                                                   autocomplete="off" class="layui-input" value="" placeholder="留空表示不修改">
                                         </div>
                                     </div>
                                     <div class="layui-form-item">
                                         <label class="layui-form-label">所属于的权限组</label>
                                         <div class="layui-input-block">
-                                            <select name="group_id" lay-verify="required">
+                                            <select name="group_id">
                                                 {{--<option value="{{$str->id}}">{{$str->group_name}}</option>--}}
                                                 @foreach($arr as $v)
                                                     {{--{{dump($v)}}--}}

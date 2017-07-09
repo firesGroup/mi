@@ -81,7 +81,7 @@ class ProductController extends Controller
         //颜色列表
         $colorList = ProductColor::all();
         //查询所有顶级分类列表
-        $categoryList = CateGory::where('sort',1)->get();
+        $categoryList = CateGory::where('status',1)->get();
         return view('admin.product.create', compact('categoryList','zhStatus','colorList'));
     }
 

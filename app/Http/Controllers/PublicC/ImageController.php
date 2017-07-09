@@ -81,8 +81,9 @@ class ImageController extends Controller
         // 获取参数
         $width = $wh[1];
         $height = $wh[2];
+        ob_clean();
         $img = Image::make($src)->resize($width,$height);
-        return $img->response('jpeg');
+        return $img->response('png');
     }
 
 

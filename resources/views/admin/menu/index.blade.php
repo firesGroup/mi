@@ -51,39 +51,39 @@
                     </colgroup>
                     <thead>
                     <tr>
-                        <th>排序</th>
                         <th>菜单ID</th>
                         <th>菜单标题</th>
                         <th>菜单图标</th>
-                        <th>菜单链接</th>
+                        <th>菜单分组</th>
+                        <th>菜单路由</th>
                         <th>是否启用</th>
                         <th>操作</th>
                     </tr>
                     </thead>
                     <tbody>
-                    @foreach( $list as $l )
+                    @foreach( $list as $menu )
                         <tr>
-                            <td>{{ $l->order }}</td>
-                            <td>{{ $l->id }}</td>
-                            <td>{{ $l->title }}</td>
-                            <td><i class="larry-icon {{ $l->icon }} "></i></td>
-                            <td>{{ $l->href }}</td>
+                            <td>{{ $menu->id }}</td>
+                            <td>{{ $menu->menu_title }}</td>
+                            <td><i class="larry-icon {{ strtolower($menu->menu_icon) }} "></i></td>
+                            <td>{{ $menu->groupM->menu_group_name or '菜单分组'  }}</td>
+                            <td>{{ $menu->roleM->role or "无链接"}}</td>
                             <td>
-                                @if( $l->status == 0 )
-                                    启用
-                                @elseif( $product->status == 1 )
-                                    禁止
+                                @if( $menu->status == 0 )
+                                    显示
+                                @elseif( $menu->status == 1 )
+                                    不显示
                                 @endif
                             </td>
                             <td>
                                 <div class="layui-btn-group">
-                                    <a href="{{ url('admin/menu').'/'.$l->id }}" class="layui-btn  layui-btn-small" data-alt="查看">
+                                    <a href="{{ url('admin/menu').'/'.$menu->id }}" class="layui-btn  layui-btn-small" data-alt="查看">
                                         <i class="layui-icon" >&#xe60b;</i>
                                     </a>
-                                    <a href="{{ url('admin/menu').'/'.$l->id."/edit" }}" class="layui-btn  layui-btn-small" data-alt="修改">
+                                    <a href="{{ url('admin/menu').'/'.$menu->id."/edit" }}" class="layui-btn  layui-btn-small" data-alt="修改">
                                         <i class="layui-icon">&#xe642;</i>
                                     </a>
-                                    <a id="delete" data-id="{{ $l->id }}" class="layui-btn  layui-btn-small" data-alt="删除">
+                                    <a id="delete" data-id="{{ $menu->id }}" class="layui-btn  layui-btn-small" data-alt="删除">
                                         <i class="layui-icon">&#xe640;</i>
                                     </a>
                                 </div>
@@ -110,6 +110,13 @@
                 });
             var index;
 
+            //添加按钮点击
+            $('button#addmenu').on('click', function(){
+                layer.msg('正在加载!请稍后...', {
+                    icon: 16
+                });
+                location.href='{{ url('/admin/menu/create') }}';
+            });
 
             //操作按钮 鼠标移入提示
             $('a.layui-btn').on('mouseover', function(){
@@ -141,13 +148,14 @@
                         , type: "POST"
                         , data: {'_method': 'DELETE', '_token': '{{ csrf_token() }}' }
                         ,success:function (data) {
-                            alert(data);
                             layer.close(l);
-                            if( data == 1 ){
+                            if( data == 0 ){
                                 layer.alert('删除成功', {icon: 1});
                                 t.remove();
-                            }else if ( data == 0 ){
-                                layer.alert('数据不存在!', {icon: 2});
+                            }else if ( data == 1 ) {
+                                layer.alert('删除失败!', {icon: 2});
+                            }else if ( data == 2 ){
+                                layer.alert('该菜单下有子菜单!请先移除子菜单', {icon: 3});
                             }else{
                                 layer.alert('id错误!', {icon: 2});
                             }

@@ -11,9 +11,9 @@
 ?>
 @extends('layouts.home')
 
-@section('title'){{ $info->p_name }} - {{ $detail->summary }}@endsection
-@section('keywords'){{ $info->p_name }},{{ $info->tags }}@endsection
-@section('description'){{ $info->p_name }} - {{ $detail->summary }}@endsection
+@section('title'){{ $info->p_name }} - {{ $C['seo']['product_title'] or $C['web']['web_title'] }}@endsection
+@section('keywords'){{ $info->p_name }},{{ $info->tags }},{{ $C['seo']['product_keys'] or $C['web']['web_keys'] }}@endsection
+@section('description'){{ $info->p_name }}{{ isset($detail->summary)?' - '.$detail->summary:'' }}.{{ $C['seo']['product_desc'] or $C['web']['web_desc']}}@endsection
 
 @section('css')
     @parent

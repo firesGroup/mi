@@ -76,7 +76,7 @@ return [
         ],
         'adminUser' => [
             'driver' => 'eloquent',
-            'model' => App\AdminUser::class,
+            'model' => App\Entity\Admin::class,
         ],
         // 'users' => [
         //     'driver' => 'database',
@@ -110,6 +110,9 @@ return [
             'table' => 'password_resets',
             'expire' => 60,
         ],
+        'adminUser'=>[
+
+        ]
     ],
 
 ];

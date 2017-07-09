@@ -42,9 +42,9 @@ layui.define(['jquery','elements','layer','common'],function(exports){
 		if (typeof(_config.elem) === 'object') {
 			$container = _config.elem;
 		}
-		if ($container.length === 0) {
-			common.cmsError('LarryTab error: 找不到elem参数配置的容器', '容器参数设置错误');
-		}
+		// if ($container.length === 0) {
+		// 	common.cmsError('LarryTab error: 找不到elem参数配置的容器', '容器参数设置错误');
+		// }
 		var filter = $container.attr('lay-filter');
 		if (filter === undefined || filter === '') {
 			common.cmsError('LarryTab error: 请为elem容器设置一个lay-filter过滤器', 'lay-filter过滤器设置错误');

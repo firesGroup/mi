@@ -9,17 +9,6 @@
  * Time: 15:52
  */
 ?>
-<?php
-/**
- * File Name: create.blade.php
- * Description: 商品颜色添加页面模版
- * Created by PhpStorm.
- * Group: FiresGroup
- * Auth: Showkw
- * Date: 2017/6/23
- * Time: 11:21
- */
-?>
 @extends('layouts.iframe')
 
 @section('title','商品颜色管理-修改颜色')

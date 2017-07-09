@@ -65,11 +65,11 @@
                                         </div>
                                     </div>
                                     <div class="layui-form-item">
-                                        <label class="layui-form-label">权限方法</label>
+                                        <label class="layui-form-label">权限路由</label>
                                         <div class="layui-input-block">
 
                                             <input type="text" name="role" required lay-verify="required"
-                                                   placeholder="请输入方法" autocomplete="off" class="layui-input" value="{{old('role')}}">
+                                                   placeholder="请输入权限操作地址" autocomplete="off" class="layui-input" value="{{old('role')}}">
 
                                         </div>
                                     </div>
