@@ -6,6 +6,7 @@ use App\Entity\CateGory;
 use App\Http\Controllers\Controller;
 use DB;
 use Illuminate\Http\Request;
+use App\Entity\Product;
 use App\Http\Requests\Admin\CateGoryRequest;
 
 class CateGoryController extends Controller
@@ -15,12 +16,17 @@ class CateGoryController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $map = "concat(parent_path,id)";
-        $data = DB::table('category')->orderBy(DB::raw('concat(parent_path,id)'))->paginate(7);
+        if($request->has('search')){
+            $modelId = $request->input('word',null);
 
-
+            $data = CateGory::where('category_name','like',"%{$modelId}%")->paginate(10);
+//            dd($data);
+        }else{
+            $map = "concat(parent_path,id)";
+            $data = DB::table('category')->orderBy(DB::raw('concat(parent_path,id)'))->paginate(15);
+        }
         return view('admin/category/index', compact('data'));
     }
 
@@ -47,7 +53,7 @@ class CateGoryController extends Controller
 //        dump($data);
         $data['parent_id'] = '0';
         $data['parent_path'] = "0,";
-        $data['sort'] = "1";
+        $data['status'] = 1;
         if (CateGory::create($data)) {
             return redirect('admin/category');
 
@@ -86,6 +92,7 @@ class CateGoryController extends Controller
         $res = CateGory::where('parent_id',0)->get();
 
 //        CateGory::where()
+
         return view('admin/category/edit', compact('id','data', 'res'));
     }
 
@@ -99,32 +106,34 @@ class CateGoryController extends Controller
     public function update(CateGoryRequest $request, $id)
     {
         $data = $request->all();
-//       dump($data);
-//        if ($data['parent_id'] == 0) {
-//            return back();
-//        }
-        if (empty($data['cate_id'])) {
-            $id = $data['parent_id'];
-            $data['parent_path'] = '0,' . $data['parent_id'] . ',';
-//            dd($data);
-        } else {
-            $id = rtrim($data['cate_id'], ',');
-            $arr = CateGory::find($id);
-//            dump($arr);
-            $path = $arr->parent_path;
-
-            $data['parent_path'] = $path . $data['cate_id'];
-
-
-            $m = substr_count($data['parent_path'], ',');
-            if (CateGory::where('parent_path', 'like', '%' . $id . '%')->get()) {
-                return back()->with('error', '该分类不可修改底下有子分类');
+//        dd((int)$data['status']);
+        $a= "";
+        foreach ($data['category'] as $k=>$v) {
+            if($v == 0){
+                continue;
             }
-            $data['sort'] = $m;
-            if (CateGory::where('category_name', '=', $data['category_name'])->update(['category_name' => $data['category_name'], 'parent_id' => $id, 'parent_path' => $data['parent_path'], 'sort' => $m])) {
-                return redirect('admin/category');
-            };
+
+            if($data['cate_id']== ''){
+
+            }
+                $a .= ','.$v;
         }
+        $a ='0'.$a.',';
+        $array = explode(',', rtrim($a,','));
+
+        $num = CateGory::where('parent_id','like','%'.$data['id'].'%')->get()->toArray();
+        $product =    Product::where('category_id','=', $id)->get()->toArray();
+        if($num != []){
+            return back()->with(['error'=>'底下有子分类不能移动']);
+        } elseif($product != []){
+            return back()->with(['error'=>'该分类底下有商品, 不能移动']);
+        }
+
+       if( CateGory::find($data['id'])->update(['parent_path'=>$a, 'parent_id'=>end($array), 'status' => 0, 'category_name'=>$data['category_name']])){
+           return redirect('admin/category');
+       }
+
+
 
     }
 
@@ -137,13 +146,21 @@ class CateGoryController extends Controller
     public function destroy($id)
     {
 
-        $data = CateGory::where('parent_path', 'like', '%' . $id . '%')->get();
-//        dump($data);
-        if ($data->first()) {
+        $data = CateGory::where('parent_path', 'like', '%' . $id . '%')->get()->toArray();
+
+            $num =    Product::where('category_id','=', $id)->get()->toArray();
+//            dd($num);
+
+        if($data == []){
+            if($num == [] ){
+                $res = DB::table('category')->delete($id);
+                return $res ? 0 : 1;
+            }else{
+                return 3;
+            }
+
+        }else{
             return 2;
-        } else {
-            $res = DB::table('category')->delete($id);
-            return $res ? 0 : 1;
         }
 
     }
@@ -156,11 +173,8 @@ class CateGoryController extends Controller
             return 2;
         }else{
             $all =CateGory::where('parent_id', $c_id)->get()->toArray();
-//        dd($all[0]->id);
 
-//       $res = DB::table('category')->where('parent_id', $data['id'])->lists('id');
-//       $all = array_merge($all,$res);
-//            dd($all);
+
             if ($all) {
                 return response()->json($all);
             } else {
@@ -187,14 +201,17 @@ class CateGoryController extends Controller
 //        dump($data);
         $arr = CateGory::where('id', $data['parent_id'])->get();
         $number = $arr['0']->parent_path;
-        $m = substr_count($number, ',') + 1;
         $data['parent_path'] = $data['parent_path'] . $data['parent_id'] . ',';
 
-        $data['sort'] = $m;
+        $data['status'] = 1;
+//        dd($data);
         if (CateGory::create($data)) {
             return redirect('admin/category');
         } else {
             return back();
         }
     }
+
+
+
 }

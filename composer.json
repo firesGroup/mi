@@ -8,13 +8,13 @@
         "php": ">=5.5.9",
         "laravel/framework": "5.2.*",
         "laravelcollective/html": "5.2.*",
-        "intervention/image": "^2.3",
         "stevenyangecho/laravel-u-editor": "~1.4",
         "iscms/alisms-for-laravel": "^0.0.3",
         "gregwar/captcha": "1.*",
-        "predis/predis": "1.0.*",
+        "predis/predis": "^1.1",
         "flc/alidayu": "^2.0",
-        "hightman/xunsearch": "*@beta"
+        "hightman/xunsearch": "*@beta",
+        "intervention/image": "2.3.0"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

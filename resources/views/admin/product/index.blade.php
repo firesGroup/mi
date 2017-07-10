@@ -79,7 +79,7 @@
                         <tr>
                             <td>{{ $product->id }}</td>
                             <td>{{ $product->p_name }}</td>
-                            <td>{{ $product->category->category_name }}</td>
+                            <td>{{ $product->category->category_name or ''}}</td>
                             <td>{{ $product->price }}元</td>
                             <td>{{ $product->sell_num }}</td>
                             <td>{{ $product->store }}</td>
@@ -98,7 +98,7 @@
                             </td>
                             <td>
                                 <div class="layui-btn-group">
-                                    <a href="{{ url('/product/info').'/'.$product->id }}" target="_top"
+                                    <a href="{{ url('/product/info').'/'.$product->id }}" target="_blank"
                                        class="layui-btn  layui-btn-small" alt="查看商品">
                                         <i class="larry-icon">&#xe638;</i>
                                     </a>
@@ -174,6 +174,7 @@
                 location.href='{{ url('/admin/product?search=oneSelect') }}'+'&sort_price='+ $(this).val();
             });
             $('span#search').on('click', function(){
+
                 location.href='{{ url('/admin/product?search=oneSelect') }}'+'&word='+ $('input[name=search]').val();
             });
         });

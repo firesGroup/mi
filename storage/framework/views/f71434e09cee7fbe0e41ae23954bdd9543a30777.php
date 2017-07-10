@@ -59,7 +59,8 @@
                         <?php if($orderid[0]->order_status == 0): ?>
                             <a id="J_cancelOrder" class="btn btn-small btn-line-gray" title="取消订单" >取消订单</a>
 
-                            <a id="J_payOrder" class="btn btn-small btn-primary" title="立即支付" href="#" target="_blank" >立即支付</a>
+                            <a id="J_payOrder" class="btn btn-small btn-primary" title="立即支付"
+                               href="<?php echo e(url('orderpay/'.$orderid[0]->order_sn)); ?>" target="_blank" >立即支付</a>
                         <?php endif; ?>
 
                             <?php if($orderid[0]->order_status == 4 && $orderid[0]->order_status == 6): ?>

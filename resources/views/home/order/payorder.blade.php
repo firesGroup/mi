@@ -113,7 +113,9 @@
                         </li>
                         <li class="clearfix">
                             <div class="label">商品名称：</div>
-                            <div class="content">{{$detail[0]->p_name}}</div>
+                            @foreach($detail as $v)
+                                <div class="content" style="float: left;">{{$v->p_name}}</div>
+                            @endforeach
                         </li>
                         <li class="clearfix">
                             <div class="label">配送时间：</div>

@@ -59,7 +59,8 @@
                         @if($orderid[0]->order_status == 0)
                             <a id="J_cancelOrder" class="btn btn-small btn-line-gray" title="取消订单" >取消订单</a>
 
-                            <a id="J_payOrder" class="btn btn-small btn-primary" title="立即支付" href="#" target="_blank" >立即支付</a>
+                            <a id="J_payOrder" class="btn btn-small btn-primary" title="立即支付"
+                               href="{{url('orderpay/'.$orderid[0]->order_sn)}}" target="_blank" >立即支付</a>
                         @endif
 
                             @if($orderid[0]->order_status == 4 && $orderid[0]->order_status == 6)
@@ -124,13 +125,15 @@
                             @foreach($odetail as $d)
                                 <tr>
                                     <td class="col col-thumb">
+                                    {{--@foreach($imagesrc as $i)--}}
                                         <div class="figure figure-thumb">
-                                            <a target="_blank" href="//item.mi.com/1160800072.html">
-                                                <img src="//i1.mifile.cn/a1/T1AaJQBbZT1RXrhCrK!80x80.jpg" width="80"
+                                            <a target="_blank" href="">
+                                                <img src="{{$i->path}}" width="80"
                                                      height="80"
                                                      alt="">
                                             </a>
                                         </div>
+                                        {{--@endforeach--}}
                                     </td>
                                     <td class="col col-name">
                                         <p class="name">

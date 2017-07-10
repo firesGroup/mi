@@ -48,12 +48,6 @@ layui.define(['layer'],function(exports){
             }, function () {
 
 			location.href = url;
-            }, function () {
-                layer.msg('返回系统', {
-                    time: 1500,
-                    btnAlign: 'c',
-                    btn: ['OK']
-                });
             });
         }
 

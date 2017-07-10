@@ -106,7 +106,7 @@ class GroupController extends Controller
 //        dump($array);
 
 //        dd($data);
-        if (in_array($name, $array)) {
+        if (@in_array($name, $array)) {
             return back()->with(['success' => '组名已存在, 添加失败！！！！！！！'])->withInput();
         } else {
             //执行添加

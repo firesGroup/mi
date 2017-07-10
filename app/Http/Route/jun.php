@@ -33,30 +33,31 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function () {
 
 Route::group(['namespace' => 'Home'], function () {
 
+    //评论
     Route::resource('comment','CommentController');
     Route::get('comment','CommentController@show');
     Route::get('store','CommentController@store');
     Route::get('commentshop','CommentController@commentshop');
+    Route::get('shopcomment/{id}','CommentController@commentIndex');
+    Route::post('commit_upload', 'OrderController@postUpload');
 
+    //订单
     Route::resource('order','OrderController');
     Route::get('order/{id}','OrderController@show');
     Route::get('orderdetail/{id?}','OrderController@detail');
-
-    Route::post('orderdetail/chooseAddress', 'AddressController@Provices');
-    Route::post('orderdetail/cities', 'AddressController@Cities');
+    Route::post('orderdetail/chooseAddress', 'AddressController@provices');
+    Route::post('orderdetail/cities', 'AddressController@cities');
     Route::put('orderdetail/orderaddress','OrderController@addressUpdate');
     Route::get('Receiving','OrderController@orderStatus');
-
     Route::get('orderstatus','OrderController@status');
 
-    //支付页面
-    Route::post('commit_upload', 'OrderController@postUpload');
-    Route::get('orderpay/{id}','OrderController@pay');
 
+    //去付款页面
+    Route::get('orderpay/{id}','OrderController@pay');
     //支付页面ajax请求路由
     Route::get('pay','OrderController@ppay');
 
-    Route::get('shopcomment/{id}','CommentController@commentIndex');
+
 
 
 });

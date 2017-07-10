@@ -63,13 +63,13 @@ class MemberController extends Controller
 
             if(session('img_code') != $data['code']) {
 //                dd(session('img_code'));
-                return back()->with('error', '验证码错误,')->withInput();
+                return back()->with('error', '验证码错误')->withInput();
             }
 
         if(session('sms_code') != $data['sms_code']){
 //            dd(session('sms_code'));
             return back()->with('sms', '请输入正确的手机验证码')->withInput();
-
+//
         }
         //拼接数据库所需要的数据
         $data['password'] = bcrypt($data['password']);
@@ -78,18 +78,23 @@ class MemberController extends Controller
         $request->setTrustedProxies(array('10.32.0.1/16'));
         $ip = $request->getClientIp();
         $data['last_ip'] = $ip;
+        DB::beginTransaction();
         if(Member::create($data)){
 
             $arr =  DB::table('member')->where('nick_name', '=', $data['nick_name'])->get()[0];
             $request->session()->put('user_deta', ['nick_name'=>$arr->nick_name, 'phone'=>$arr->phone, 'email'=>$arr->email, 'id'=>$arr->id]);
+
             $array['member_id'] = $arr->id;
             $array['sex'] = 0;
             $array['avator'] = '/uploads/avator/default.jpg' ;
             if(MemberDetail::create($array)){
+                DB::commit();
                 return redirect('/');
             }
+            DB::rollBack();
             return back();
         }else{
+            DB::rollBack();
             return back();
         }
     }
@@ -103,11 +108,10 @@ class MemberController extends Controller
     public function show($id)
     {
         $data = Member::find($id);
-        $array = DB::table('level')->lists('level_name', 'id');
         $user_detail = MemberDetail::find($data->id);
         $state = array('0'=>'普通', '1' => '锁定');
         $arr = array('0'=>'保密', '1'=>'男', '2'=>'女');
-        return view('admin/member/member_detail', compact('data', 'user_detail', 'state', 'arr', 'array'));
+        return view('admin/member/member_detail', compact('data', 'user_detail', 'state', 'arr'));
     }
 
     /**
@@ -118,7 +122,6 @@ class MemberController extends Controller
      */
     public function edit($id)
     {
-        $array = DB::table('level')->lists('level_name','id');
        $data = Member::find($id);
        $user_detail = MemberDetail::find($data->id);
        //dd($user_detail);
@@ -132,7 +135,7 @@ class MemberController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update( MemberRequest $request, $id)
+    public function update(Request $request, $id)
     {
 
                 $nick_name = $request->get('nick_name');
@@ -142,11 +145,11 @@ class MemberController extends Controller
                 $sex = $request->get('sex');
                 $birthday = $request->get('birthday');
                 $phone = $request->get('phone');
-                $level_id = $request->get('level_id');
+
 
                 DB::beginTransaction();
                 if (Member::where('id', '=', $id)->update(['nick_name' => $nick_name, 'email' => $email, 'phone' => $phone, 'status' => $status, 'last_ip' => $lastIp])) {
-                    if (MemberDetail::where('member_id', '=', $id)->update(['sex' => $sex, 'birthday' => $birthday, 'level_id' => $level_id])) {
+                    if (MemberDetail::where('member_id', '=', $id)->update(['sex' => $sex, 'birthday' => $birthday])) {
                         DB::commit();
                         return redirect('admin/member');
                     } else {
@@ -166,8 +169,12 @@ class MemberController extends Controller
     {
         //dd($id);
         $data = Member::find($id);
-        DB::table('member')->delete($id);
-       return DB::table('memberdetail')->where('mid', $data->id)->delete();
+
+        DB::transaction(function () use($data, $id) {
+            DB::table('member')->delete($id);
+            return DB::table('memberdetail')->where('member_id', $data->id)->delete();
+        });
+
     }
 
     public function changeavator(Request $request)
@@ -314,15 +321,18 @@ class MemberController extends Controller
 
            $arr =  DB::table('member')->where('nick_name', '=', $data['nick_name'])->get()[0];
             $request->session()->put('user_deta', ['nick_name'=>$arr->nick_name, 'phone'=>$arr->phone, 'email'=>$arr->email, 'id'=>$arr->id]);
+
+
            $array['member_id'] = $arr->id;
-           $array['level_id'] = 0;
            $array['sex'] = 0;
            $array['avator'] = '/uploads/avator/default.jpg' ;
           if(MemberDetail::create($array)){
+              DB::commit();
               return 0;
             }
         }else{
             return 3;
+            DB::rollBack();
         }
 
 

@@ -57,10 +57,13 @@
                                         <div class="layui-form-item">
                                             <label class="layui-form-label">广告位置</label>
                                             <div class="layui-input-block">
-                                                <input type="text" name="ad_location" lay-verify="required"
-                                                       placeholder="请输入位置"
-                                                       autocomplete="off" class="layui-input"
-                                                       value="{{$data->ad_location}}">
+                                                <select name="ad_location" lay-verify="required">
+                                                    <option value="">请选择广告位置</option>
+                                                    @foreach($advert as $v)
+                                                        <option value="{{$v->id}}" {{($v->id==$data->ad_location)?"selected":''}}>{{$v->desc}}</option>
+
+                                                    @endforeach
+                                                </select>
                                             </div>
                                         </div>
                                         <div class="layui-form-item">

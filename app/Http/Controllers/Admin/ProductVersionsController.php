@@ -71,8 +71,21 @@ class ProductVersionsController extends Controller
         $data['contact_p_num'] = $request->contact_p_num;
         $data['store'] = $request->store;
         $data['status'] = $request->status;
-        if( $request->ver_img ){
-            $data['ver_img'] = json_encode($request->ver_img);
+        //如果有远程图片
+        if( $request->has('ver_img_url') ){
+            foreach( $request->ver_img_url as $imgUrl ){
+                //保存远程图片到本地
+                $imgArr[]=getUrlImages($imgUrl,'product');
+            }
+            //如果有上传的图片文件
+        }elseif( $request->has('ver_img') ){
+            foreach( $request->ver_img as $img ){
+                $imgArr[] = $img;
+            }
+        }
+        //若$imgArr存在
+        if( isset($imgArr) ){
+            $data['ver_img'] = json_encode($imgArr);
         }else{
             $data['ver_img'] = NULL;
         }
@@ -162,9 +175,21 @@ class ProductVersionsController extends Controller
         $data['contact_p_num'] = $request->contact_p_num;
         $data['store'] = $request->store;
         $data['status'] = $request->status;
-        if( $request->ver_img ){
-            $imgs = $request->ver_img;
-            $data['ver_img'] = json_encode($imgs);
+        //如果有远程图片
+        if( $request->has('ver_img_url') ){
+            foreach( $request->ver_img_url as $imgUrl ){
+                //保存远程图片到本地
+                $imgArr[]=getUrlImages($imgUrl,'product');
+            }
+            //如果有上传的图片文件
+        }elseif( $request->has('ver_img') ){
+            foreach( $request->ver_img as $img ){
+                $imgArr[] = $img;
+            }
+        }
+        //若$imgArr不为空
+        if( $imgArr ){
+            $data['ver_img'] = json_encode($imgArr);
         }else{
             $data['ver_img'] = NULL;
         }

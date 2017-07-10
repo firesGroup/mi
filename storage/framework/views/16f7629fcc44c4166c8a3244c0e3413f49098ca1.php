@@ -151,7 +151,7 @@
                             , form = layui.form();
 
                         element.on('tab(demo)', function (data) {
-                            layer.msg('切换了：' + this.innerHTML);
+
                         });
 
                         $('input[name=password_confirmation]').blur(function () {

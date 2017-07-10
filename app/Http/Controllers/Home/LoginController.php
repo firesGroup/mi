@@ -5,10 +5,10 @@ namespace App\Http\Controllers\Home;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Requests;
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\Home\BaseController;
 use Hash;
 use Session;
-class LoginController extends Controller
+class LoginController extends BaseController
 {
     public function login(Request $request)
     {
@@ -20,8 +20,13 @@ class LoginController extends Controller
         //判断传过来的nick_name 来判断用户时用手机号登陆还是邮箱登陆
         if(strpos($data['nick_name'],$str ) == true){
             $email = DB::table('member')->where('email', '=', $data['nick_name'])->get();
+
             if($email == []){
                 return back()->with('error', '邮箱错误')->withInput();
+            }
+
+            if($email[0]->status == 1 ){
+                return back()->with('error', '你的账号已被锁定, 暂时无法登陆')->withInput();
             }
 //            dd($email[0]->password);
 
@@ -35,10 +40,15 @@ class LoginController extends Controller
         }else{
 
             $phone = DB::table('member')->where('phone', '=', $data['nick_name'])->get();
-//            dump($phone);
+//            dd($phone);
             if($phone == []){
-                return back()->with('error', '手机号码错误错误')->withInput();
+                return back()->with('error', '手机号码错误')->withInput();
             }
+//            dd($phone);
+            if($phone[0]->status == 1){
+                return back()->with('error', '你的账号已被锁定, 暂时无法登陆')->withInput();
+            }
+
 
             if(Hash::check($data['password'], $phone[0]->password)){
 //                dd($phone);

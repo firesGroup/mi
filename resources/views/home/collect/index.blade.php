@@ -43,18 +43,24 @@
                             <div class="box-bd">
                                 <div class="xm-goods-list-wrap">
                                     <ul class="xm-goods-list clearfix">
+                                        @foreach($data as $v)
                                         <li class="xm-goods-item">
-                                            <div class="figure figure-img"><a href="" target="_blank" data-stat-id="fc9873efedb44702"><img src="//i1.mifile.cn/a1/pms_1480575206.66418698!200x200.jpg"></a></div>
-                                            <h3 class="title"><a href="" target="_blank" data-stat-id="f2ac222821cd93f4" onclick="">Amazfit手环 月霜</a></h3>
+                                            <div class="figure figure-img">
+                                                <a href="" target="_blank">
+                                            <img src="/images/public/default.gif"  data-url="{{$v->p_index_image}}!200_150" class="cacheload">
+                                                </a>
+                                            </div>
+                                            <h3 class="title"><a href="" target="_blank" data-stat-id="f2ac222821cd93f4" onclick="">{{$v->p_name}}</a></h3>
                                             <p class="price">
-                                                299元                                                                                    </p>
+                                               {{$v->price}}                                                                                   </p>
                                             <p class="rank">
                                             </p>
                                             <div class="actions">
-                                                <a id="1154600018_favorite" class="btn btn-small btn-line-gray J_delFav" href="" onclick="">删除</a>
-                                                <a class="btn btn-small btn-primary" target="_blank" href="" data-stat-id="7ebd40e42b39e0b4" onclick="">查看详情</a>
+                                                <a id="1154600018_favorite" class="btn btn-small btn-line-gray J_delFav" href="javascript:;" onclick="collect_delete({{$v->id}})">删除</a>
+                                                <a class="btn btn-small btn-primary" target="_blank" href="{{url('product/info/'.$v->id)}}" data-stat-id="7ebd40e42b39e0b4" onclick="">查看详情</a>
                                             </div>
                                         </li>
+                                            @endforeach
                                     </ul>
                                 </div>
                                 <div class="xm-pagenavi"></div>
@@ -71,5 +77,11 @@
     @endsection
 @section('js')
     @parent
+    <script type="text/javascript" src="{{ asset('/js/home/collect/collect.js') }}"></script>
+    <script>
+        $(function() {
+            $(".cacheload").scrollLoading();
+        });
+    </script>
     @endsection
 

@@ -12,7 +12,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>@yield('title') - 小米商城 - FiresGroup</title>
+    <title>@yield('title') - Powered By FiresGroup</title>
     <meta name="keywords" content="@yield('keywords')"/>
     <meta name="description" content="@yield('description')" />
     <meta http-equiv="Content-Language" content="zh-cn" />

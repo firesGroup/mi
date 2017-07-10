@@ -87,7 +87,7 @@ class UserController extends Controller
 //        dd($name);
 
         //判断用户输入的用户名是否在数据库中, 存在则不能添加, 不存在可以添加
-        if (in_array($data['username'], $name)) {
+        if (@in_array($data['username'], $name)) {
             return back()->with(['success' => '添加失败！！！！！！！']);
         } else {
 
@@ -198,8 +198,6 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-
-
         //获取用户提交的旧密码
         $oldpassword = $request->oldPassword;
 
@@ -224,18 +222,29 @@ class UserController extends Controller
         $name = $arr[0]->username;
 //        dd($name);
 
-        if ($username !== $name && in_array($username, $uname)) {
-
-            return back()->with(['success' => '用户名已存在, 修改失败！！！！！！！']);
-
-        } else {
+        if( $username !== $name ){
+            if( in_array($username,$uname) ){
+                return back()->with(['success' => '用户名已存在, 修改失败！！！！！！！']);
+            }
+        }
+        //如果旧密码存在
+        if( $oldpassword !== '' ){
             //哈希校验  密码相同则可以修改
             if (Hash::check($oldpassword, $pass)) {
-//            dd($request->status);
 
                 if (Admin::where('id', '=', $id)->update(['username' => $request->username, 'password' => bcrypt($request->newPassword), 'group_id' => $request->group_id, 'status' => $request->status])) {
 //
-                    return redirect('/admin/user');
+                    //判断 如果修改的管理员是当前登陆的管理员
+                    //则重新登陆
+
+                    $adminInfo = session('adminInfo');
+                    if( $adminInfo['id'] == $id  ){
+                        $request->session()->forget('adminInfo');
+                        return redirect('/admin/login');
+                    }else{
+                        return redirect('/admin/user');
+                    }
+
                 } else {
                     return back();
                 }
@@ -244,9 +253,21 @@ class UserController extends Controller
                 //密码不同
                 return back()->with(['success' => '旧密码错误！！！！！！！']);
             }
+        }else{
+            //修改
+            if (Admin::where('id', '=', $id)->update(['username' => $request->username, 'group_id' => $request->group_id, 'status' => $request->status])) {
+//
+                $adminInfo = session('adminInfo');
+                if( $adminInfo['id'] == $id  ){
+                    $request->session()->forget('adminInfo');
+                    return redirect('/admin/login');
+                }else{
+                    return redirect('/admin/user');
+                }
+            } else {
+                return back();
+            }
         }
-
-
     }
 
     /**
@@ -259,6 +280,8 @@ class UserController extends Controller
     {
         return DB::table('admin')->delete($id);
     }
+
+
 
     public function ajax(Request $request)
     {
@@ -336,36 +359,6 @@ class UserController extends Controller
         }
 
 //        dd($pass);
-
-    }
-
-    public function login(Request $request)
-    {
-//        dd(1);
-
-        $data = $request->all();
-//        dd($data['name']);
-
-        $name = $data['name'];
-
-
-        $arr = DB::table('admin')->where('username', '=', $name)->select('password')->get();
-//        dd(($arr[0])->password);
-        $password = $arr[0]->password;
-
-        if (empty($arr)) {
-            return back()->with(['error'=>'用户名错误'])->withInput();
-        } else {
-            $passwd = $data['password'];
-            if (Hash::check($passwd, $password)) {
-                $request->session()->put('username', $name);
-                return redirect('admin/index ');
-
-            } else {
-                return back()->with(['wrong'=>'密码错误']);
-            }
-        }
-
 
     }
 

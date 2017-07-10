@@ -26,7 +26,7 @@ class RoleController extends Controller
         $status = $this->status;
 
         //查询出所有权限内容
-        $data = DB::table('admin_role')->orderby('id')->paginate(5);
+        $data = DB::table('admin_role')->orderby('id')->paginate(15);
 //        dump($data);
 
         //统计总条数
@@ -195,7 +195,7 @@ class RoleController extends Controller
      */
     public function destroy($id)
     {
-
+        return 11;
     }
 
     public function ajaxRoleName(Request $request)

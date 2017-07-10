@@ -26,7 +26,7 @@
 
 @section('content')
     @include('home.public.header_top')
-    {{--@include('home.public.header_nav')--}}
+    @include('home.public.header_nav')
 
 
     <div id="J_proHeader">
@@ -107,8 +107,12 @@
                     <div class="m-comment-box J_commentList">
                         {{--全部图片--}}
                         <ul class="m-comment-list J_listBody ass" style="display: block;">
+
+
                             @foreach($data as $v)
+                                @if($v->comment_id == null)
                                 @if($v->member_id != 4)
+
                                     <li class="com-item J_resetImgCon J_canZoomBox" data-id="144906250">
                                         <input type="hidden" value="{{$v->id}}" id="commentid">
                                         <input type="hidden" value="{{$v->p_id}}" id="p_id">
@@ -131,48 +135,21 @@
                                             </a>
                                         </div>
                                         <!-- 评论图片 -->
+                                        @if($v->images != null)
                                         <div class="m-img-list clearfix h-img-list">
                                             {{--这里循环图片--}}
-                                            <div class="img-item img-item1  showimg">
-                                                <img data-src="//i1.mifile.cn/a2/1498699087_9622448_s1080_1920wh.jpg"
-                                                     class="J_resetImgItem J_canZoom" data-index="0"
-                                                     src="//i1.mifile.cn/a2/1498234933_7644320_s729_1296wh.jpg"
-                                                     data-width="1080" data-height="1920"
-                                                     style="width: 160px; margin-top: -62.2222px;">
-                                                <div class="loader loader-gray"></div>
-                                            </div>
-                                            <div class="img-item img-item1  showimg">
-                                                <img data-src="//i1.mifile.cn/a2/1498699087_9622448_s1080_1920wh.jpg"
-                                                     class="J_resetImgItem J_canZoom" data-index="0"
-                                                     src="//i1.mifile.cn/a2/1498234933_7644320_s729_1296wh.jpg"
-                                                     data-width="1080" data-height="1920"
-                                                     style="width: 160px; margin-top: -62.2222px;">
-                                                <div class="loader loader-gray"></div>
-                                            </div>
-                                            <div class="img-item img-item1  showimg">
-                                                <img data-src="//i1.mifile.cn/a2/1498965769_6463408_s720_720wh.jpg"
-                                                     class="J_resetImgItem J_canZoom" data-index="0"
-                                                     src="//i1.mifile.cn/a2/1498699087_9622448_s1080_1920wh.jpg"
-                                                     data-width="1080" data-height="1920"
-                                                     style="width: 160px; margin-top: -62.2222px;">
-                                                <div class="loader loader-gray"></div>
-                                            </div>
-                                            <div class="img-item img-item1  showimg">
-                                                <img data-src="//i1.mifile.cn/a2/1498699087_9622448_s1080_1920wh.jpg"
-                                                     class="J_resetImgItem J_canZoom" data-index="0"
-                                                     src="//i1.mifile.cn/a2/1498699087_9622448_s1080_1920wh.jpg"
-                                                     data-width="1080" data-height="1920"
-                                                     style="width: 160px; margin-top: -62.2222px;">
-                                                <div class="loader loader-gray"></div>
-                                            </div>
 
-
-                                            <div class="J_zoomImgList" style="display: none;">
-                                                <span data-src="//i1.mifile.cn/a2/1498699087_9622448_s1080_1920wh.jpg"></span>
-                                                <span data-src="//i1.mifile.cn/a2/1498699088_1061119_s972_1296wh.jpg"></span>
+                                            <div class="img-item img-item1  showimg">
+                                                <img data-src="//i1.mifile.cn/a2/1498699087_9622448_s1080_1920wh.jpg"
+                                                     class="J_resetImgItem J_canZoom" data-index="0"
+                                                     src="{{$v->images}}"
+                                                     data-width="1080" data-height="1920"
+                                                     style="width: 160px; margin-top: -62.2222px;">
+                                                <div class="loader loader-gray"></div>
                                             </div>
 
                                         </div>
+                                        @endif
 
                                         <div class="comment-handler">
                                             <a href="javascript:;" data-commentid="144906250" class="J_hasHelp "> <i
@@ -212,6 +189,7 @@
                                         </div>
 
                                     </li>
+                                    @endif
                                     @endforeach
                         </ul>
 
@@ -418,8 +396,9 @@
 
     <script>
 
-        layui.use(['jquery', 'layer'], function () {
+        layui.use(['jquery', 'layer', 'form'], function () {
             var $ = layui.jquery,
+                form = layui.form(),
                 layer = layui.layer;
             var index;
 
@@ -484,17 +463,21 @@
                             success: function (data) {
 
                                 if (data) {
+                                    console.log(data);
                                     var append =
+                                        " <div class='comment-answer' id='suibian'>"+
                                         "<div class='answer-item'>" +
                                         "<img class='answer-img' src='//s01.mifile.cn/i/logo.png' style='width: 32px;height: 32px;'>" +
                                         "<div class='answer-content'> " +
-                                        "<h3 class='official-name'>" + '{{$value->member->nick_name}}' + "</h3>" +
-                                        "<p>" + data + "<a href='javascript:void(0);' class='J_csLike 'data-commentid='144906250'> <i class='iconfont'></i>&nbsp;<spanclass='amount'>  158 </span> </a> " +
+                                        "<h3 class='official-name'>" + data.name + "</h3>" +
+                                        "<p>" + data.content + "<a href='javascript:void(0);' class='J_csLike 'data-commentid='144906250'> <i class='iconfont'></i>&nbsp;<spanclass='amount'>  158 </span> </a> " +
                                         "</p> " +
+                                        "</div> " +
                                         "</div> " +
                                         "</div>";
 
                                     t.parent().next('.comment-answer').after(append);
+                                    form.render();
 
                                 }
                             }

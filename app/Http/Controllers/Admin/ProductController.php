@@ -29,6 +29,7 @@ use Illuminate\Support\HtmlString;
 use Storage;
 use DB;
 
+
 class ProductController extends Controller
 {
     /**
@@ -38,6 +39,7 @@ class ProductController extends Controller
      */
     public function index(Request $request)
     {
+
         if( $request->has('search') ){
             $search = $request->search;
             $category_id = $request->category;
@@ -79,7 +81,7 @@ class ProductController extends Controller
         //颜色列表
         $colorList = ProductColor::all();
         //查询所有顶级分类列表
-        $categoryList = CateGory::where('sort',1)->get();
+        $categoryList = CateGory::where('status',1)->get();
         return view('admin.product.create', compact('categoryList','zhStatus','colorList'));
     }
 

@@ -70,385 +70,396 @@
                         </div>
                     </div>
 
-                    <div class="box-bd">
+            <div class="box-bd">
 
-                        <div id="J_orderList">
+            <div id="J_orderList">
 
-                            <?php /*全部订单*/ ?>
-                            <ul class="order-list all" style="display: block;">
-                            <?php foreach($data as $v): ?>
-                                <?php if($validorder != 0 && $v->order_status != 7): ?>
-
-                                    <?php if($v->order_status !=  5 ): ?>
-                                        <li class="uc-order-item uc-order-item-pay"><?php /* 颜色 finish灰色*/ ?>
-                                    <?php else: ?>
-                                        <li class="uc-order-item uc-order-item-finish">
-                                            <?php endif; ?>
-                                            <div class="order-detail">
-                                                <div class="order-summary">
-                                                    <div class="order-status"><?php echo e($status[$v->order_status]); ?></div>
-                                                    <?php if($v->order_status == 1 || $v->order_status == 2): ?>
-                                                        <p class="order-desc J_deliverDesc">  我们将尽快为您发货 </p>
-                                                    <?php endif; ?>
-                                                </div>
-                                                <table class="order-detail-table">
-                                                    <thead>
-                                                    <tr>
-                                                        <th class="col-main">
-                                                            <p class="caption-info"><?php echo e($v->add_time); ?><span class="sep">|</span>
-                                                                <?php echo e($v->buy_user); ?><span class="sep">|</span>
-                                                                订单号：
-                                                                <a href="<?php echo e(url('orderdetail/'.$v->id)); ?>" ><?php echo e($v->order_sn); ?></a>
-                                                                <span class="sep">|</span>在线支付</p>
-                                                        </th>
-
-                                                        <th class="col-sub">
-                                                            <p class="caption-price">订单金额：<span
-                                                                        class="num"><?php echo e($v->total); ?></span>元</p>
-                                                        </th>
-                                                    </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                    <tr>
-                                                        <td class="order-items">
-                                                            <ul class="goods-list">
-                                                                <?php foreach($orderdetail as $d): ?>
-                                                                    <?php if($v->id == $d->order_id): ?>
-                                                                        <li>
-                                                                            <div class="figure figure-thumb">
-                                                                                <a href="//item.mi.com/1163700032.html" target="_blank">
-                                                                                    <img src="//i1.mifile.cn/a1/pms_1490088796.67026066!80x80.jpg"
-                                                                                         width="80" height="80"
-                                                                                         alt="小米手机5s Plus 全网通版 4GB内存 灰色 64GB">
-                                                                                </a>
-                                                                            </div>
-                                                                            <p class="name">
-                                                                                <?php /*跳转链接*/ ?>
-                                                                                <a target="_blank" href="//item.mi.com/1163700032
-                                                    .html">
-                                                                                    <?php echo e($d->p_name); ?>
-
-                                                                                </a>
-                                                                            </p>
-                                                                            <p class="price"><?php echo e($d->p_price); ?>元 × <?php echo e($d->buy_num); ?></p>
-                                                                        </li>
-                                                                    <?php endif; ?>
-                                                                <?php endforeach; ?>
-
-                                                            </ul>
-                                                        </td>
-                                                        <td class="order-actions">
-                                                            <?php if($v->order_status == 3): ?>
-                                                                <a class="btn btn-small btn-primary affirmhuo"
-                                                                   href="javascript: void(0);" target="_blank">确认收货</a>
-                                                                <span style="display: none;" id="ordersn"><?php echo e($v->order_sn); ?></span>
-                                                            <?php endif; ?>
-
-                                                            <?php if($v->order_status == 0): ?>
-                                                                <a class="btn btn-small btn-primary orderpay"
-                                                                   href="<?php echo e(url('orderpay/'.$v->order_sn)); ?>" >立即支付</a>
-                                                                    <span style="display: none;" id="ordersn"><?php echo e($v->order_sn); ?></span>
-                                                            <?php endif; ?>
-
-                                                            <a class="btn btn-small btn-line-gray" href="<?php echo e(url('orderdetail').'/'
-                                            .+$v->id); ?>">订单详情</a>
-
-                                                            <?php if($v->order_status == 4 || $v->order_status == 6 || $v->order_status == 1): ?>
-                                                                <a class="btn btn-small btn-line-gray" href="" target="_blank">申请售后</a>
-                                                            <?php endif; ?>
-
-                                                            <?php if($v->order_status == 1 && $v->order_status !=8 ): ?>
-                                                                <a class="btn btn-small btn-primary orderpay"
-                                                               href="<?php echo e(url('shopcomment/'.$v->order_sn)); ?>" >立即评价</a>
-                                                                <?php endif; ?>
-                                                        </td>
-
-                                                    </tr>
-                                                    </tbody>
-                                                </table>
-                                            </div>
-                                        </li>
-                                        <?php elseif($validorder == 0 && $v->order_status == 7): ?>
-                                            <p class="empty">当前没有订单。</p>
-                                            <?php break; ?>
-
+                <?php /*全部订单*/ ?>
+                <ul class="order-list all" style="display: block;">
+                <?php foreach($data as $v): ?>
+                    <?php if($v->order_status != 7 && $validorder != 0 ): ?>
+                        <?php if($v->order_status !=  5 ): ?>
+                            <li class="uc-order-item uc-order-item-pay"><?php /* 颜色 finish灰色*/ ?>
+                        <?php else: ?>
+                            <li class="uc-order-item uc-order-item-finish">
+                                <?php endif; ?>
+                                <div class="order-detail">
+                                    <div class="order-summary">
+                                        <div class="order-status"><?php echo e($status[$v->order_status]); ?></div>
+                                        <?php if($v->order_status == 1 || $v->order_status == 2): ?>
+                                            <p class="order-desc J_deliverDesc">  我们将尽快为您发货 </p>
                                         <?php endif; ?>
-                                    <?php endforeach; ?>
+                                    </div>
+                                    <table class="order-detail-table">
+                                        <thead>
+                                        <tr>
+                                            <th class="col-main">
+                                                <p class="caption-info"><?php echo e($v->add_time); ?><span class="sep">|</span>
+                                                    <?php echo e($v->buy_user); ?><span class="sep">|</span>
+                                                    订单号：
+                                                    <a href="<?php echo e(url('orderdetail/'.$v->id)); ?>" ><?php echo e($v->order_sn); ?></a>
+                                                    <span class="sep">|</span>在线支付</p>
+                                            </th>
 
-                            </ul>
+                                            <th class="col-sub">
+                                                <p class="caption-price">订单金额：<span
+                                                            class="num"><?php echo e($v->total); ?></span>元</p>
+                                            </th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr>
+                                            <td class="order-items">
+                                                <ul class="goods-list">
+                                                    <?php foreach($orderdetail as $d): ?>
+                                                        <?php if($v->id == $d->order_id): ?>
+                                                            <li>
 
-                            <?php /*待支付订单*/ ?>
-                            <ul class="order-list pay" style="display: none;">
-                                <?php foreach($data as $v): ?>
 
-                                    <?php if($num != 0 && $v->order_status == 0): ?>
 
-                                        <?php if($v->order_status !=  5 && $v->order_status !=  7): ?>
-                                            <li class="uc-order-item uc-order-item-pay"><?php /* 颜色 finish灰色*/ ?>
-                                        <?php else: ?>
-                                            <li class="uc-order-item uc-order-item-finish">
-                                                <?php endif; ?>
-                                                <div class="order-detail">
-                                                    <div class="order-summary">
-                                                        <div class="order-status"><?php echo e($status[$v->order_status]); ?></div>
-                                                        <?php if($v->order_status == 1 || $v->order_status == 2): ?>
-                                                            <p class="order-desc J_deliverDesc">  我们将尽快为您发货 </p>
-                                                        <?php endif; ?>
-                                                    </div>
-                                                    <table class="order-detail-table">
-                                                        <thead>
-                                                        <tr>
-                                                            <th class="col-main">
-                                                                <p class="caption-info"><?php echo e($v->add_time); ?><span class="sep">|</span>
-                                                                    <?php echo e($v->buy_user); ?><span class="sep">|</span>
-                                                                    订单号： <a href="//order.mi.com/user/orderView/1170702438900346"><?php echo e($v->order_sn); ?></a>
-                                                                    <span class="sep">|</span>在线支付</p>
-                                                            </th>
-
-                                                            <th class="col-sub">
-                                                                <p class="caption-price">订单金额：<span class="num"><?php echo e($v->total); ?></span>元</p>
-                                                            </th>
-                                                        </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                        <tr>
-                                                            <td class="order-items">
-                                                                <ul class="goods-list">
-                                                                    <?php foreach($orderdetail as $d): ?>
-                                                                        <?php if($v->id == $d->order_id): ?>
-                                                                            <li>
-                                                                                <div class="figure figure-thumb">
-                                                                                    <a href="//item.mi.com/1163700032.html" target="_blank">
-                                                                                        <img src="//i1.mifile.cn/a1/pms_1490088796.67026066!80x80.jpg"
-                                                                                             width="80" height="80"
-                                                                                             alt="小米手机5s Plus 全网通版 4GB内存 灰色 64GB">
-                                                                                    </a>
-                                                                                </div>
-                                                                                <p class="name">
-                                                                                    <?php /*跳转链接*/ ?>
-                                                                                    <a target="_blank" href="//item.mi.com/1163700032
-                                                        .html">
-                                                                                        <?php echo e($d->p_name); ?>
-
-                                                                                    </a>
-                                                                                </p>
-                                                                                <p class="price"><?php echo e($d->p_price); ?>元 × <?php echo e($d->buy_num); ?></p>
-                                                                            </li>
+                                                                    <?php foreach($imagesrc as $i): ?>
+                                                                        <?php if($i->p_id == $d->p_id): ?>
+                                                                        <div class="figure figure-thumb">
+                                                                    <a href="" target="_blank">
+                                                                        <img src="<?php echo e($i->path); ?>"
+                                                                             width="80" height="80">
+                                                                    </a></div>
                                                                         <?php endif; ?>
                                                                     <?php endforeach; ?>
+                                                                        <p class="name">
+                                                                            <?php /*跳转链接*/ ?>
+                                                                            <a target="_blank" href="">
+                                                                                <?php echo e($d->p_name); ?>
 
-                                                                </ul>
-                                                            </td>
-                                                            <td class="order-actions">
-                                                                <?php if($v->order_status == 3): ?>
-                                                                    <a class="btn btn-small btn-primary affirmhuo"
-                                                                       href="javascript: void(0);" target="_blank">确认收货</a>
-                                                                    <span style="display: none;"id="ordersn"><?php echo e($v->order_sn); ?></span>
-                                                                <?php endif; ?>
-
-                                                                <?php if($v->order_status == 0): ?>
-                                                                    <a class="btn btn-small btn-primary"
-                                                                       href="" target="_blank">立即支付</a>
-                                                                <?php endif; ?>
-
-                                                                <a class="btn btn-small btn-line-gray"
-                                                                   href="<?php echo e(url('orderdetail').'/'.+$v->id); ?>">订单详情</a>
-
-                                                                <?php if($v->order_status == 4 || $v->order_status == 6): ?>
-                                                                    <a class="btn btn-small btn-line-gray"
-                                                                       href="#" >申请售后</a>
-                                                                <?php endif; ?>
-
-                                                            </td>
-
-                                                        </tr>
-                                                        </tbody>
-                                                    </table>
-                                                </div>
-                                            </li>
-                                            <?php elseif($num == 0 && $v->order_status != 0): ?>
-                                                <p class="empty">当前没有待支付订单。</p>
-                                                <?php break; ?>
-
-                                            <?php endif; ?>
-                                            <?php endforeach; ?>
-                            </ul>
-
-                            <?php /*待收货订单*/ ?>
-                            <ul class="order-list Receiving" style="display: none;">
-                                <?php foreach($data as $v): ?>
-                                    <?php if($Receiving != 0 && $v->order_status == 3): ?>
-
-                                        <?php if($v->order_status !=  5 ): ?>
-                                            <li class="uc-order-item uc-order-item-pay"><?php /* 颜色 finish灰色*/ ?>
-                                        <?php else: ?>
-                                            <li class="uc-order-item uc-order-item-finish">
-                                                <?php endif; ?>
-                                                <div class="order-detail">
-                                                    <div class="order-summary">
-                                                        <div class="order-status"><?php echo e($status[$v->order_status]); ?></div>
-                                                        <?php if($v->order_status == 1 || $v->order_status == 2): ?>
-                                                            <p class="order-desc J_deliverDesc">  我们将尽快为您发货 </p>
-                                                        <?php endif; ?>
-                                                    </div>
-                                                    <table class="order-detail-table">
-                                                        <thead>
-                                                        <tr>
-                                                            <th class="col-main">
-                                                                <p class="caption-info"><?php echo e($v->add_time); ?><span class="sep">|</span>
-                                                                    <?php echo e($v->buy_user); ?><span class="sep">|</span>
-                                                                    订单号： <a href="<?php echo e(url('orderdetail/'.$v->id)); ?>" ><?php echo e($v->order_sn); ?></a>
-                                                                    <span class="sep">|</span>在线支付</p>
-                                                            </th>
-
-                                                            <th class="col-sub">
-                                                                <p class="caption-price">订单金额：<span class="num"><?php echo e($v->total); ?></span>元</p>
-                                                            </th>
-                                                        </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                        <tr>
-                                                            <td class="order-items">
-                                                                <ul class="goods-list">
-                                                                    <?php foreach($orderdetail as $d): ?>
-                                                                        <?php if($v->id == $d->order_id): ?>
-                                                                            <li>
-                                                                                <div class="figure figure-thumb">
-                                                                                    <a href="//item.mi.com/1163700032.html" target="_blank">
-                                                                                        <img src="//i1.mifile.cn/a1/pms_1490088796.67026066!80x80.jpg"
-                                                                                             width="80" height="80"
-                                                                                             alt="小米手机5s Plus 全网通版 4GB内存 灰色 64GB">
-                                                                                    </a>
-                                                                                </div>
-                                                                                <p class="name">
-                                                                                    <?php /*跳转链接*/ ?>
-                                                                                    <a target="_blank" href="//item.mi.com/1163700032
-                                                        .html">
-                                                                                        <?php echo e($d->p_name); ?>
-
-                                                                                    </a>
-                                                                                </p>
-                                                                                <p class="price"><?php echo e($d->p_price); ?>元 × <?php echo e($d->buy_num); ?></p>
-                                                                            </li>
+                                                                            </a>
+                                                                        </p>
+                                                                        <p class="price"><?php echo e($d->p_price); ?>元 × <?php echo e($d->buy_num); ?></p></div>
                                                                         <?php endif; ?>
-                                                                    <?php endforeach; ?>
 
-                                                                </ul>
-                                                            </td>
-                                                            <td class="order-actions">
-                                                                <?php if($v->order_status == 3): ?>
-                                                                    <a class="btn btn-small btn-primary affirmhuo"
-                                                                       href="javascript: void(0);" target="_blank">确认收货</a>
-                                                                    <span style="display: none;" id="ordersn"><?php echo e($v->order_sn); ?></span>
-                                                                <?php endif; ?>
 
-                                                                <?php if($v->order_status == 0): ?>
-                                                                    <a class="btn btn-small btn-primary" href="" target="_blank">立即支付</a>
-                                                                <?php endif; ?>
+                                                            </li>
 
-                                                                <a class="btn btn-small btn-line-gray" href="<?php echo e(url('orderdetail').'/'
-                                                .+$v->id); ?>">订单详情</a>
+                                                    <?php endforeach; ?>
 
-                                                                <?php if($v->order_status == 4 || $v->order_status == 6): ?>
-                                                                    <a class="btn btn-small btn-line-gray" href="" target="_blank">申请售后</a>
-                                                                <?php endif; ?>
-
-                                                            </td>
-
-                                                        </tr>
-                                                        </tbody>
-                                                    </table>
-                                                </div>
-                                            </li>
-
-                                            <?php elseif($v->order_status !=3 && $Receiving == 0): ?>
-
-                                                <p class="empty">当前没有待收货订单。</p>
-                                                <?php break; ?>
-
-                                            <?php endif; ?>
-                                            <?php endforeach; ?>
-
-                            </ul>
-
-                            <?php /*已关闭订单*/ ?>
-                            <ul class="order-list closeorder" style="display: none;">
-                                <?php foreach($data as $v): ?>
-                                    <?php if($close != 0 && $v->order_status == 7): ?>
-                                        <?php if($v->order_status !=  5 && $v->order_status !=  7): ?>
-                                            <li class="uc-order-item uc-order-item-pay"><?php /* 颜色 finish灰色*/ ?>
-                                        <?php else: ?>
-                                            <li class="uc-order-item uc-order-item-finish">
+                                                </ul>
+                                            </td>
+                                            <td class="order-actions">
+                                                <?php if($v->order_status == 3): ?>
+                                                    <a class="btn btn-small btn-primary affirmhuo"
+                                                       href="javascript: void(0);" target="_blank">确认收货</a>
+                                                    <span style="display: none;" id="ordersn"><?php echo e($v->order_sn); ?></span>
                                                 <?php endif; ?>
-                                                <div class="order-detail">
-                                                    <div class="order-summary">
-                                                        <div class="order-status"><?php echo e($status[$v->order_status]); ?></div>
-                                                        <?php if($v->order_status == 1 || $v->order_status == 2): ?>
-                                                            <p class="order-desc J_deliverDesc">  我们将尽快为您发货 </p>
+
+                                                <?php if($v->order_status == 0): ?>
+                                                    <a class="btn btn-small btn-primary orderpay"
+                                                       href="<?php echo e(url('orderpay/'.$v->order_sn)); ?>" >立即支付</a>
+                                                        <span style="display: none;" id="ordersn"><?php echo e($v->order_sn); ?></span>
+                                                <?php endif; ?>
+
+                                                <a class="btn btn-small btn-line-gray"
+                                                   href="<?php echo e(url('orderdetail').'/'.+$v->id); ?>">订单详情</a>
+
+                                                <?php if($v->order_status == 4 || $v->order_status == 6 || $v->order_status == 1): ?>
+                                                    <a class="btn btn-small btn-line-gray" href="" target="_blank">申请售后</a>
+                                                <?php endif; ?>
+
+                                                    <?php foreach($orderdetail as $c): ?>
+                                                        <?php if($v->order_status == 4 && $c->comment_status != 1 ): ?>
+                                                            <a class="btn btn-small btn-primary orderpay"
+                                                           href="<?php echo e(url('shopcomment/'.$v->member_id)); ?>" >立即评价</a>
+                                                            <?php break; ?>
                                                         <?php endif; ?>
-                                                    </div>
-                                                    <table class="order-detail-table">
-                                                        <thead>
-                                                        <tr>
-                                                            <th class="col-main">
-                                                                <p class="caption-info"><?php echo e($v->add_time); ?><span class="sep">|</span>
-                                                                    <?php echo e($v->buy_user); ?><span class="sep">|</span>
-                                                                    订单号： <a href="<?php echo e(url('orderdetail/'.$v->id)); ?>"><?php echo e($v->order_sn); ?></a>
-                                                                    <span class="sep">|</span>在线支付</p>
-                                                            </th>
+                                                    <?php endforeach; ?>
+                                            </td>
 
-                                                            <th class="col-sub">
-                                                                <p class="caption-price">订单金额：<span class="num"><?php echo e($v->total); ?></span>元</p>
-                                                            </th>
-                                                        </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                        <tr>
-                                                            <td class="order-items">
-                                                                <ul class="goods-list">
-                                                                    <?php foreach($orderdetail as $d): ?>
-                                                                        <?php if($v->id == $d->order_id): ?>
-                                                                            <li>
-                                                                                <div class="figure figure-thumb">
-                                                                                    <a href="//item.mi.com/1163700032.html" target="_blank">
-                                                                                        <img src="//i1.mifile.cn/a1/pms_1490088796.67026066!80x80.jpg"
-                                                                                             width="80" height="80"
-                                                                                             alt="小米手机5s Plus 全网通版 4GB内存 灰色 64GB">
-                                                                                    </a>
-                                                                                </div>
-                                                                                <p class="name">
-                                                                                    <?php /*跳转链接*/ ?>
-                                                                                    <a target="_blank" href="//item.mi.com/1163700032
-                                                        .html">
-                                                                                        <?php echo e($d->p_name); ?>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </li>
+                                <?php elseif($v->order_status == 7 && $validorder == 0 ): ?>
 
-                                                                                    </a>
-                                                                                </p>
-                                                                                <p class="price"><?php echo e($d->p_price); ?>元 × <?php echo e($d->buy_num); ?></p>
-                                                                            </li>
-                                                                        <?php endif; ?>
-                                                                    <?php endforeach; ?>
+                                <p class="empty">当前没有订单。</p>
+                                <?php break; ?>
 
-                                                                </ul>
-                                                            </td>
-                                                            <td class="order-actions">
+                            <?php endif; ?>
+                        <?php endforeach; ?>
 
-                                                                <a class="btn btn-small btn-line-gray" href="<?php echo e(url('orderdetail').'/'
-                                                .+$v->id); ?>">订单详情</a>
+                </ul>
 
-                                                            </td>
+                <?php /*待支付订单*/ ?>
+                <ul class="order-list pay" style="display: none;">
+                    <?php foreach($data as $v): ?>
 
-                                                        </tr>
-                                                        </tbody>
-                                                    </table>
-                                                </div>
-                                            </li>
-                                            <?php elseif($close == 0 && $v->order_status != 7): ?>
-                                                <p class="empty">没有已关闭订单。</p>
-                                                <?php break; ?>
+                        <?php if($num != 0 && $v->order_status == 0): ?>
+
+                            <?php if($v->order_status !=  5 && $v->order_status !=  7): ?>
+                                <li class="uc-order-item uc-order-item-pay"><?php /* 颜色 finish灰色*/ ?>
+                            <?php else: ?>
+                                <li class="uc-order-item uc-order-item-finish">
+                                    <?php endif; ?>
+                                    <div class="order-detail">
+                                        <div class="order-summary">
+                                            <div class="order-status"><?php echo e($status[$v->order_status]); ?></div>
+                                            <?php if($v->order_status == 1 || $v->order_status == 2): ?>
+                                                <p class="order-desc J_deliverDesc">  我们将尽快为您发货 </p>
                                             <?php endif; ?>
-                                            <?php endforeach; ?>
-                            </ul>
+                                        </div>
+                                        <table class="order-detail-table">
+                                            <thead>
+                                            <tr>
+                                                <th class="col-main">
+                                                    <p class="caption-info"><?php echo e($v->add_time); ?><span class="sep">|</span>
+                                                        <?php echo e($v->buy_user); ?><span class="sep">|</span>
+                                                        订单号： <a href="//order.mi.com/user/orderView/1170702438900346"><?php echo e($v->order_sn); ?></a>
+                                                        <span class="sep">|</span>在线支付</p>
+                                                </th>
+
+                                                <th class="col-sub">
+                                                    <p class="caption-price">订单金额：<span class="num"><?php echo e($v->total); ?></span>元</p>
+                                                </th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr>
+                                                <td class="order-items">
+                                                    <ul class="goods-list">
+                                                        <?php foreach($orderdetail as $d): ?>
+                                                            <?php if($v->id == $d->order_id): ?>
+                                                                <li>
+                                                                    <div class="figure figure-thumb">
+                                                                        <a href="//item.mi.com/1163700032.html" target="_blank">
+                                                                            <img src="//i1.mifile.cn/a1/pms_1490088796.67026066!80x80.jpg"
+                                                                                 width="80" height="80"
+                                                                                 alt="小米手机5s Plus 全网通版 4GB内存 灰色 64GB">
+                                                                        </a>
+                                                                    </div>
+                                                                    <p class="name">
+                                                                        <?php /*跳转链接*/ ?>
+                                                                        <a target="_blank" href="//item.mi.com/1163700032
+                                            .html">
+                                                                            <?php echo e($d->p_name); ?>
+
+                                                                        </a>
+                                                                    </p>
+                                                                    <p class="price"><?php echo e($d->p_price); ?>元 × <?php echo e($d->buy_num); ?></p>
+                                                                </li>
+                                                            <?php endif; ?>
+                                                        <?php endforeach; ?>
+
+                                                    </ul>
+                                                </td>
+                                                <td class="order-actions">
+                                                    <?php if($v->order_status == 3): ?>
+                                                        <a class="btn btn-small btn-primary affirmhuo"
+                                                           href="javascript: void(0);" target="_blank">确认收货</a>
+                                                        <span style="display: none;"id="ordersn"><?php echo e($v->order_sn); ?></span>
+                                                    <?php endif; ?>
+
+                                                    <?php if($v->order_status == 0): ?>
+                                                        <a class="btn btn-small btn-primary"
+                                                           href="<?php echo e(url('orderpay/'.$v->order_sn)); ?>"
+                                                           >立即支付</a>
+                                                    <?php endif; ?>
+
+                                                    <a class="btn btn-small btn-line-gray"
+                                                       href="<?php echo e(url('orderdetail').'/'.+$v->id); ?>">订单详情</a>
+
+                                                    <?php if($v->order_status == 4 || $v->order_status == 6): ?>
+                                                        <a class="btn btn-small btn-line-gray"
+                                                           href="#" >申请售后</a>
+                                                    <?php endif; ?>
+
+                                                </td>
+
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </li>
+                                <?php elseif($num == 0 && $v->order_status != 0): ?>
+                                    <p class="empty">当前没有待支付订单。</p>
+                                    <?php break; ?>
+
+                                <?php endif; ?>
+                                <?php endforeach; ?>
+                                    </ul>
+
+                  <?php /*待收货订单*/ ?>
+                 <ul class="order-list Receiving" style="display: none;">
+                                        <?php foreach($data as $v): ?>
+                                            <?php if($Receiving != 0 && $v->order_status == 3): ?>
+
+                                                <?php if($v->order_status !=  5 ): ?>
+                                                    <li class="uc-order-item uc-order-item-pay"><?php /* 颜色 finish灰色*/ ?>
+                                                <?php else: ?>
+                                                    <li class="uc-order-item uc-order-item-finish">
+                                                        <?php endif; ?>
+                                                        <div class="order-detail">
+                                                            <div class="order-summary">
+                                                                <div class="order-status"><?php echo e($status[$v->order_status]); ?></div>
+                                                                <?php if($v->order_status == 1 || $v->order_status == 2): ?>
+                                                                    <p class="order-desc J_deliverDesc">  我们将尽快为您发货 </p>
+                                                                <?php endif; ?>
+                                                            </div>
+                                                            <table class="order-detail-table">
+                                                                <thead>
+                                                                <tr>
+                                                                    <th class="col-main">
+                                                                        <p class="caption-info"><?php echo e($v->add_time); ?><span class="sep">|</span>
+                                                                            <?php echo e($v->buy_user); ?><span class="sep">|</span>
+                                                                            订单号： <a href="<?php echo e(url('orderdetail/'.$v->id)); ?>" ><?php echo e($v->order_sn); ?></a>
+                                                                            <span class="sep">|</span>在线支付</p>
+                                                                    </th>
+
+                                                                    <th class="col-sub">
+                                                                        <p class="caption-price">订单金额：<span class="num"><?php echo e($v->total); ?></span>元</p>
+                                                                    </th>
+                                                                </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                <tr>
+                                                                    <td class="order-items">
+                                                                        <ul class="goods-list">
+                                                                            <?php foreach($orderdetail as $d): ?>
+                                                                                <?php if($v->id == $d->order_id): ?>
+                                                                                    <li>
+                                                                                        <div class="figure figure-thumb">
+                                                                                            <a href="//item.mi.com/1163700032.html" target="_blank">
+                                                                                                <img src="//i1.mifile.cn/a1/pms_1490088796.67026066!80x80.jpg"
+                                                                                                     width="80" height="80"
+                                                                                                     alt="小米手机5s Plus 全网通版 4GB内存 灰色 64GB">
+                                                                                            </a>
+                                                                                        </div>
+                                                                                        <p class="name">
+                                                                                            <?php /*跳转链接*/ ?>
+                                                                                            <a target="_blank" href="//item.mi.com/1163700032
+                                                                .html">
+                                                                                                <?php echo e($d->p_name); ?>
+
+                                                                                            </a>
+                                                                                        </p>
+                                                                                        <p class="price"><?php echo e($d->p_price); ?>元 × <?php echo e($d->buy_num); ?></p>
+                                                                                    </li>
+                                                                                <?php endif; ?>
+                                                                            <?php endforeach; ?>
+
+                                                                        </ul>
+                                                                    </td>
+                                                                    <td class="order-actions">
+                                                                        <?php if($v->order_status == 3): ?>
+                                                                            <a class="btn btn-small btn-primary affirmhuo"
+                                                                               href="javascript: void(0);" target="_blank">确认收货</a>
+                                                                            <span style="display: none;" id="ordersn"><?php echo e($v->order_sn); ?></span>
+                                                                        <?php endif; ?>
+
+                                                                        <?php if($v->order_status == 0): ?>
+                                                                            <a class="btn btn-small btn-primary" href="" target="_blank">立即支付</a>
+                                                                        <?php endif; ?>
+
+                                                                        <a class="btn btn-small btn-line-gray" href="<?php echo e(url('orderdetail').'/'
+                                                        .+$v->id); ?>">订单详情</a>
+
+                                                                        <?php if($v->order_status == 4 || $v->order_status == 6): ?>
+                                                                            <a class="btn btn-small btn-line-gray" href="" target="_blank">申请售后</a>
+                                                                        <?php endif; ?>
+
+                                                                    </td>
+
+                                                                </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </li>
+
+                                                    <?php elseif($v->order_status !=3 && $Receiving == 0): ?>
+
+                                                        <p class="empty">当前没有待收货订单。</p>
+                                                        <?php break; ?>
+
+                                                    <?php endif; ?>
+                                                    <?php endforeach; ?>
+
+                                    </ul>
+
+                  <?php /*已关闭订单*/ ?>
+                 <ul class="order-list closeorder" style="display: none;">
+                                        <?php foreach($data as $v): ?>
+                                            <?php if($close != 0 && $v->order_status == 7): ?>
+                                                <?php if($v->order_status !=  5 && $v->order_status !=  7): ?>
+                                                    <li class="uc-order-item uc-order-item-pay"><?php /* 颜色 finish灰色*/ ?>
+                                                <?php else: ?>
+                                                    <li class="uc-order-item uc-order-item-finish">
+                                                        <?php endif; ?>
+                                                        <div class="order-detail">
+                                                            <div class="order-summary">
+                                                                <div class="order-status"><?php echo e($status[$v->order_status]); ?></div>
+                                                                <?php if($v->order_status == 1 || $v->order_status == 2): ?>
+                                                                    <p class="order-desc J_deliverDesc">  我们将尽快为您发货 </p>
+                                                                <?php endif; ?>
+                                                            </div>
+                                                            <table class="order-detail-table">
+                                                                <thead>
+                                                                <tr>
+                                                                    <th class="col-main">
+                                                                        <p class="caption-info"><?php echo e($v->add_time); ?><span class="sep">|</span>
+                                                                            <?php echo e($v->buy_user); ?><span class="sep">|</span>
+                                                                            订单号： <a href="<?php echo e(url('orderdetail/'.$v->id)); ?>"><?php echo e($v->order_sn); ?></a>
+                                                                            <span class="sep">|</span>在线支付</p>
+                                                                    </th>
+
+                                                                    <th class="col-sub">
+                                                                        <p class="caption-price">订单金额：<span class="num"><?php echo e($v->total); ?></span>元</p>
+                                                                    </th>
+                                                                </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                <tr>
+                                                                    <td class="order-items">
+                                                                        <ul class="goods-list">
+                                                                            <?php foreach($orderdetail as $d): ?>
+                                                                                <?php if($v->id == $d->order_id): ?>
+                                                                                    <li>
+                                                                                        <div class="figure figure-thumb">
+                                                                                            <a href="//item.mi.com/1163700032.html" target="_blank">
+                                                                                                <img src="//i1.mifile.cn/a1/pms_1490088796.67026066!80x80.jpg"
+                                                                                                     width="80" height="80"
+                                                                                                     alt="小米手机5s Plus 全网通版 4GB内存 灰色 64GB">
+                                                                                            </a>
+                                                                                        </div>
+                                                                                        <p class="name">
+                                                                                            <?php /*跳转链接*/ ?>
+                                                                                            <a target="_blank" href="//item.mi.com/1163700032
+                                                                .html">
+                                                                                                <?php echo e($d->p_name); ?>
+
+                                                                                            </a>
+                                                                                        </p>
+                                                                                        <p class="price"><?php echo e($d->p_price); ?>元 × <?php echo e($d->buy_num); ?></p>
+                                                                                    </li>
+                                                                                <?php endif; ?>
+                                                                            <?php endforeach; ?>
+
+                                                                        </ul>
+                                                                    </td>
+                                                                    <td class="order-actions">
+
+                                                                        <a class="btn btn-small btn-line-gray" href="<?php echo e(url('orderdetail').'/'
+                                                        .+$v->id); ?>">订单详情</a>
+
+                                                                    </td>
+
+                                                                </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </li>
+                                                    <?php elseif($close == 0 && $v->order_status != 7): ?>
+                                                        <p class="empty">没有已关闭订单。</p>
+                                                        <?php break; ?>
+                                                    <?php endif; ?>
+                                                    <?php endforeach; ?>
+                                    </ul>
 
                         </div>
                         <div id="J_orderListPages">
@@ -459,7 +470,6 @@
                             </div>
                         </div>
                     </div>
-
 
 
 
