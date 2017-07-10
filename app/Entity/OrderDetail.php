@@ -17,4 +17,9 @@ class OrderDetail extends Model
         return $this->hasMany('App\Entity\OrderDetail', 'order_id');
     }
 
+    public function product()
+    {
+        return $this->belongsto('App\Entity\Product','p_id','id');
+    }
+
 }

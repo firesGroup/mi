@@ -18,52 +18,13 @@ Route::group( ['namespace'=>'Admin', 'prefix'=>'admin'], function(){
     Route::post('avator', 'MemberController@changeavator');
     Route::post('mail_code', 'MemberController@mail_code');
     Route::resource('member', 'MemberController' );
-    //等级路由
-
-    Route::post('create_ajax', 'LevelController@ajax');
-    Route::post('level_edit/{id}', 'LevelController@edit_ajax');
-    Route::resource('level', 'LevelController');
-
-    //分类路由
-    Route::post('category_edit', 'CateGoryController@category_edit');
-    Route::post('add_category', 'CateGoryController@add_category');
-    Route::get('create_category/{id}', 'CateGoryController@create_category');
-    Route::resource('category', 'CateGoryController');
-
-    Route::get('showStatus', 'AdvertController@showStatus');
-    Route::resource('advert', 'AdvertController');
-
-    Route::resource('advert_location', 'AdvertLocationController');
-
-
 } );
 
 Route::post( '/upload', 'PublicC\UploadController@postUpload' );
 
 Route::group( ['namespace'=>'Home'], function(){
 
-   Route::get('reg', function () {
-       return view('home/reg_login/reg');
 
-   });
-   Route::post('sms', 'SmsController@sms');
-   Route::post('mailBox', 'SmsController@smsCode');
-   Route::get('login', function () {
-      return view('home/reg_login/login');
-   });
-   Route::post('login', 'LoginController@login');
-   Route::get('login/exit', 'LoginController@loginout');
-
-   Route::get('user_detail', 'UserDetailController@user_detail')->middleware('ponseral');
-   Route::post('mail_code', 'UserDetailController@mailcode');
-   Route::post('phone_code', 'UserDetailController@phonecode');
-   Route::post('member_update', 'UserDetailController@update_pass');
-   Route::post('personal_update', 'UserDetailController@personal_update');
-   Route::get('personal', 'UserDetailController@personal')->middleware('ponseral');;
-   Route::post('collect', 'CollectController@add_collect')->middleware('ponseral');
-   Route::get('ponseral_collect', 'CollectController@ponseral_collect')->middleware('ponseral');
-   Route::post('collect_delete', 'CollectController@collect_delete');
-   Route::get('member_address', 'UserDetailController@member_address')->middleware('ponseral');
 });
 
 Route::get('kit/captcha/{tmp}', 'Home\CodeController@captcha');

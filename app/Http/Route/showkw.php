@@ -223,16 +223,16 @@ Route::group(['namespace'=>'Home',], function(){
     Route::post('login', 'LoginController@login');
     Route::get('login/exit', 'LoginController@loginout');
 
-    Route::get('user_detail', 'UserDetailController@user_detail');
+    Route::get('user_detail', 'UserDetailController@user_detail')->middleware('ponseral');
     Route::post('mail_code', 'UserDetailController@mailcode');
     Route::post('phone_code', 'UserDetailController@phonecode');
     Route::post('member_update', 'UserDetailController@update_pass');
     Route::post('personal_update', 'UserDetailController@personal_update');
-    Route::get('personal', 'UserDetailController@personal');
-    Route::post('collect', 'CollectController@add_collect');
-    Route::get('ponseral_collect', 'CollectController@ponseral_collect');
+    Route::get('personal', 'UserDetailController@personal')->middleware('ponseral');;
+    Route::post('collect', 'CollectController@add_collect')->middleware('ponseral');
+    Route::get('ponseral_collect', 'CollectController@ponseral_collect')->middleware('ponseral');
     Route::post('collect_delete', 'CollectController@collect_delete');
-    Route::get('member_address', 'UserDetailController@member_address');
+    Route::get('member_address', 'UserDetailController@member_address')->middleware('ponseral');
 });
 
 Route::get('kit/captcha/{tmp}', 'Home\CodeController@captcha');

@@ -90,7 +90,7 @@ class OrderController extends BaseController
             '4'=>'已收货','5'=>'退款中','6'=>'交易成功','7'=>'已取消'
         ];
         $data = DB::table('district')->where('id', '<=', 36)->get();
-        return view('home.order.orderDetail',compact('odetail','orderid','status','data','imagessrc'));
+        return view('home.order.orderDetail',compact('odetail','orderid','status','data','imagesrc'));
     }
     /**
      * Show the form for editing the specified resource.

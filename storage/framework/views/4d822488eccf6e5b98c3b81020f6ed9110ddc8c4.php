@@ -159,6 +159,13 @@
 </body>
 <script type="text/javascript" src="<?php echo e(asset('/plugin/layui/layui.js')); ?>"></script>
 <script type="text/javascript" src="<?php echo e(asset('/js/admin/larry.js')); ?>"></script>
+<<<<<<< HEAD
+<script type="text/javascript" src="<?php echo e(asset('/js/public/base.js')); ?>"></script>
+
+
+
+=======
+>>>>>>> 5f8ec4abfbe161096924a09aa2a35992968d08b9
 <script>
 
     function showTime() {
@@ -182,6 +189,11 @@
     }
 
     showTime();
+<<<<<<< HEAD
+
+
+=======
+>>>>>>> 5f8ec4abfbe161096924a09aa2a35992968d08b9
 </script>
 </html>
 <?php echo $__env->make('layouts.iframe', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

@@ -20,7 +20,7 @@ class UserDetailController extends BaseController
             $data = session('user_deta')['nick_name'];
             $id = session('user_deta')['id'];
 
-            $arr = DB::table('member')->where('nick_name', '=', $data)->get();
+            $arr = DB::table('member')->where('id', '=', $id)->get();
 
             $array = MemberDetail::find($id);
 //            dd($array);

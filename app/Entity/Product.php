@@ -75,4 +75,12 @@ class Product extends Model
     {
         return $this->hasMany('App\Entity\ProductAttributeValue', 'p_id');
     }
+
+    /*
+     * 获取商品属性
+     */
+    public function orderDetail()
+    {
+        return $this->hasMany('App\Entity\OrderDetail', 'p_id');
+    }
 }

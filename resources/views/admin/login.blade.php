@@ -57,7 +57,7 @@
         //Demo
         (function(){
             if(top.location!=self.location){
-                top.location ="/admin/login";
+                top.location =self.location;
             }
         })();
 

@@ -62,8 +62,8 @@
                                             @if($v->comment_status == 0)
                                                 <li class="xm-goods-item">
                                             <div class="figure figure-img">
-                                                <a href="" target="_blank">
-                                                    <img src="//i1.mifile.cn/a1/T1ycK_BjYv1RXrhCrK!200x200.jpg"></a>
+                                                <a href="{{ url('/product/info/'.$v->id) }}" target="_blank">
+                                                    <img src=""></a>
                                             </div>
                                             <h3 class="title">
                                                 <a href="">{{$v->p_name}}</a>
@@ -98,8 +98,8 @@
                                             @if($v->comment_status == 1)
                                             <li class="xm-goods-item">
                                                 <div class="figure figure-img">
-                                                    <a href="" target="_blank">
-                                                        <img src="//i1.mifile.cn/a1/T1ycK_BjYv1RXrhCrK!200x200.jpg"></a>
+                                                    <a href="{{ url('product/info/'.$v->p_id) }}" target="_blank">
+                                                        <img src="!200_200"></a>
                                                 </div>
                                                 <h3 class="title">
                                                     <a href="">{{$v->p_name}}</a>

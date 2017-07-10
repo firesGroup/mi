@@ -16,10 +16,10 @@
             </div>
             <div class="box-bd">
                 <ul class="uc-nav-list" id="one">
-            <li><a href="javascript:;" data-stat-id="8f3d1bffd166dc22">我的订单</a></li>
+            <li><a href="/order/{{ session('user_deta')['id'] }}" data-stat-id="8f3d1bffd166dc22">我的订单</a></li>
                     <li><a href="" data-stat-id="27e28cea14a6a442">意外保</a></li>
                     <li><a href="" data-stat-id="1a3f726cf268373b" onclick="">团购订单</a></li>
-                    <li><a href="" data-count="comment" data-count-style="bracket" data-stat-id="5f9f5c27483df260">评价晒单</a></li>
+                    <li><a href="{{ url('/shopcomment/'.session('user_deta')['id']) }}" data-count="comment" data-count-style="bracket" data-stat-id="5f9f5c27483df260">评价晒单</a></li>
                     <li><a href="" data-stat-id="dfa55526dc42769c">话费充值订单</a></li>
                     <li><a href="" data-stat-id="b9e200a355e96de4">以旧换新订单</a></li>
                 </ul>

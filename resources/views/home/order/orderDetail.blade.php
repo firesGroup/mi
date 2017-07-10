@@ -125,7 +125,8 @@
                             @foreach($odetail as $d)
                                 <tr>
                                     <td class="col col-thumb">
-                                    {{--@foreach($imagesrc as $i)--}}
+                                        @foreach($imagesrc as $i)
+                                            @if($d->p_id == $i->p_id)
                                         <div class="figure figure-thumb">
                                             <a target="_blank" href="">
                                                 <img src="{{$i->path}}" width="80"
@@ -133,7 +134,8 @@
                                                      alt="">
                                             </a>
                                         </div>
-                                        {{--@endforeach--}}
+                                            @endif
+                                        @endforeach
                                     </td>
                                     <td class="col col-name">
                                         <p class="name">
