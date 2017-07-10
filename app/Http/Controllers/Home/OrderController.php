@@ -59,25 +59,38 @@ class OrderController extends BaseController
         $orderid = DB::table('order')->where('member_id',$id)->lists('id');
         //根据订单ID 查询订单详情表信息
         $orderdetail =DB::table('order_detail')->whereIn('order_id',$orderid)->get();
+
+        //查询
+        $pid = DB::table('order_detail')->whereIn('order_id',$orderid)->lists('p_id');
+
+        //根据商品ID
+        $imagesrc = DB::table('product_images')->whereIn('p_id',$pid)->get();
         $status = [
             '0'=>'等待支付','1'=>'已支付','2'=>'正在配货', '3'=>'已出库',
             '4'=>'已收货','5'=>'退款中','6'=>'交易成功','7'=>'已取消'
         ];
-        return view ('home.order.order',compact('data','orderdetail','status','orderid','num','close','Receiving','validorder'));
+        return view ('home.order.order',compact('data','orderdetail','status', 'orderid','num','close','Receiving', 'validorder','imagesrc'));
     }
 
     public function detail($id)
     {
-        //根据订单详情ID查订单详情表
+        //根据订单ID查订单详情表
         $odetail = DB::table('order_detail')->where('order_id',$id)->get();
         //查询订单信息
         $orderid = DB::table('order')->where('id',$id)->get();
+
+        //查询
+        $pid = DB::table('order_detail')->where('order_id',$id)->lists('p_id');
+
+        //根据商品ID
+        $imagesrc = DB::table('product_images')->whereIn('p_id',$pid)->get();
+
         $status = [
             '0'=>'等待支付','1'=>'已支付','2'=>'正在配货','3'=>'已出库',
             '4'=>'已收货','5'=>'退款中','6'=>'交易成功','7'=>'已取消'
         ];
         $data = DB::table('district')->where('id', '<=', 36)->get();
-        return view('home.order.orderDetail',compact('odetail','orderid','status','data'));
+        return view('home.order.orderDetail',compact('odetail','orderid','status','data','imagessrc'));
     }
     /**
      * Show the form for editing the specified resource.

@@ -12,22 +12,22 @@
 
 ?>
 
-@extends('layouts.home')
 
-@section('title','')
 
-@section('css')
+<?php $__env->startSection('title',''); ?>
+
+<?php $__env->startSection('css'); ?>
     @parent
 
-    <link rel="stylesheet" href="{{ asset('/css/home/order.css') }}">
-    <link rel="stylesheet" href="{{ asset('/css/home/orderbase.css') }}">
+    <link rel="stylesheet" href="<?php echo e(asset('/css/home/order.css')); ?>">
+    <link rel="stylesheet" href="<?php echo e(asset('/css/home/orderbase.css')); ?>">
 
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section('content')
+<?php $__env->startSection('content'); ?>
 
-    @include('home.public.header_top')
-    @include('home.public.header_nav')
+    <?php echo $__env->make('home.public.header_top', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+    <?php echo $__env->make('home.public.header_nav', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
 
     <div class="breadcrumbs">
         <div class="container">
@@ -38,7 +38,7 @@
     <div class="page-main user-main">
         <div class="container">
             <div class="row">
-                @include('home.member.member_modoul')
+                <?php echo $__env->make('home.member.member_modoul', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
                 <div class="span16">
                 <div class="uc-box uc-main-box">
         <div class="uc-content-box order-view-box">
@@ -52,20 +52,20 @@
                     </small>
                 </h1>
                 <div class="more clearfix">
-                    <h2 class="subtitle">订单号：{{$orderid[0]->order_sn}} <span class="tag tag-subsidy"></span>
+                    <h2 class="subtitle">订单号：<?php echo e($orderid[0]->order_sn); ?> <span class="tag tag-subsidy"></span>
                     </h2>
                     <div class="actions">
 
-                        @if($orderid[0]->order_status == 0)
+                        <?php if($orderid[0]->order_status == 0): ?>
                             <a id="J_cancelOrder" class="btn btn-small btn-line-gray" title="取消订单" >取消订单</a>
 
                             <a id="J_payOrder" class="btn btn-small btn-primary" title="立即支付"
-                               href="{{url('orderpay/'.$orderid[0]->order_sn)}}" target="_blank" >立即支付</a>
-                        @endif
+                               href="<?php echo e(url('orderpay/'.$orderid[0]->order_sn)); ?>" target="_blank" >立即支付</a>
+                        <?php endif; ?>
 
-                            @if($orderid[0]->order_status == 4 && $orderid[0]->order_status == 6)
+                            <?php if($orderid[0]->order_status == 4 && $orderid[0]->order_status == 6): ?>
                                 <a title="申请售后" href="" class="btn btn-small btn-line-gray">申请售后</a>
-                                @endif
+                                <?php endif; ?>
                     </div>
                 </div>
             </div>
@@ -76,15 +76,15 @@
 
 
                             <div class="order-status">
-                                @if($orderid[0]->order_status == 5 || $orderid[0]->order_status == 7 || $orderid[0]->order_status == 6 )
-                                    <span style="color: #b0b0b0;">{{$status[$orderid[0]->order_status]}}</span>
-                                @else
-                                    <span style="color: #ff6700;">{{$status[$orderid[0]->order_status]}}</span>
+                                <?php if($orderid[0]->order_status == 5 || $orderid[0]->order_status == 7 || $orderid[0]->order_status == 6 ): ?>
+                                    <span style="color: #b0b0b0;"><?php echo e($status[$orderid[0]->order_status]); ?></span>
+                                <?php else: ?>
+                                    <span style="color: #ff6700;"><?php echo e($status[$orderid[0]->order_status]); ?></span>
 
-                                @endif
-                                <span id="statusid" style="display: none;">{{$orderid[0]->order_status}}</span>
-                                <span id="oid" style="display: none;">{{$orderid[0]->id}}</span>
-                                <span id="time" style="display:none;">{{$orderid[0]->add_time}}</span>
+                                <?php endif; ?>
+                                <span id="statusid" style="display: none;"><?php echo e($orderid[0]->order_status); ?></span>
+                                <span id="oid" style="display: none;"><?php echo e($orderid[0]->id); ?></span>
+                                <span id="time" style="display:none;"><?php echo e($orderid[0]->add_time); ?></span>
                             </div>
 
 
@@ -122,34 +122,35 @@
 
                         <table class="order-items-table">
                             <tbody>
-                            @foreach($odetail as $d)
+                            <?php foreach($odetail as $d): ?>
                                 <tr>
                                     <td class="col col-thumb">
-                                    {{--@foreach($imagesrc as $i)--}}
+                                    <?php foreach($imagesrc as $i): ?>
                                         <div class="figure figure-thumb">
                                             <a target="_blank" href="">
-                                                <img src="{{$i->path}}" width="80"
+                                                <img src="<?php echo e($i->path); ?>" width="80"
                                                      height="80"
                                                      alt="">
                                             </a>
                                         </div>
-                                        {{--@endforeach--}}
+                                        <?php endforeach; ?>
                                     </td>
                                     <td class="col col-name">
                                         <p class="name">
                                             <a target="_blank" href="//item.mi.com/1160800072.html">
-                                                {{$d->p_name}}
+                                                <?php echo e($d->p_name); ?>
+
                                             </a>
 
                                         </p>
                                     </td>
                                     <td class="col col-price">
-                                        <p class="price">{{$d->p_price}}元 × {{$d->buy_num}}</p>
+                                        <p class="price"><?php echo e($d->p_price); ?>元 × <?php echo e($d->buy_num); ?></p>
                                     </td>
                                     <td class="col col-actions">
                                     </td>
                                 </tr>
-                            @endforeach
+                            <?php endforeach; ?>
 
                             </tbody>
                         </table>
@@ -163,23 +164,23 @@
                             <tbody>
                             <tr>
                                 <th>姓&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;名：</th>
-                                <td id="buy_user">{{$orderid[0]->buy_user}}</td>
+                                <td id="buy_user"><?php echo e($orderid[0]->buy_user); ?></td>
                             </tr>
                             <tr>
                                 <th>联系电话：</th>
-                                <td id="buy_phone">{{substr($orderid[0]->buy_phone,0,3).'*****'.substr($orderid[0]->buy_phone,8,3)}}</td>
+                                <td id="buy_phone"><?php echo e(substr($orderid[0]->buy_phone,0,3).'*****'.substr($orderid[0]->buy_phone,8,3)); ?></td>
                             </tr>
                             <tr>
                                 <th>收货地址：</th>
-                                <td id="buy_address">{{$orderid[0]->address}}</td>
+                                <td id="buy_address"><?php echo e($orderid[0]->address); ?></td>
                             </tr>
                             </tbody>
                         </table>
                         <div class="actions">
-                            @if($orderid[0]->order_status == 0)
+                            <?php if($orderid[0]->order_status == 0): ?>
                                 <a class="btn btn-small btn-line-gray J_editAddr updateaddress" id="J_newAddress"
                                    href="#editAddr">修改</a>
-                            @endif
+                            <?php endif; ?>
                         </div>
 
                     </div>
@@ -228,7 +229,7 @@
                             <tbody>
                             <tr>
                                 <th>商品总价：</th>
-                                <td><span class="num">{{$orderid[0]->total}}</span>元</td>
+                                <td><span class="num"><?php echo e($orderid[0]->total); ?></span>元</td>
                             </tr>
                             <tr>
                                 <th>运费：</th>
@@ -236,7 +237,7 @@
                             </tr>
                             <tr>
                                 <th class="total">实付金额：</th>
-                                <td class="total"><span class="num">{{$orderid[0]->total}}</span>元</td>
+                                <td class="total"><span class="num"><?php echo e($orderid[0]->total); ?></span>元</td>
                             </tr>
                             </tbody>
                         </table>
@@ -263,16 +264,16 @@
                 <div class="form-section form-name">
                     <label class="input-label" for="user_name">姓名</label>
                     <input class="input-text J_addressInput" id="J_addressNameInput" name="user_name"
-                           placeholder="收货人姓名" type="text" value="{{$orderid[0]->buy_user}}">
+                           placeholder="收货人姓名" type="text" value="<?php echo e($orderid[0]->buy_user); ?>">
                 </div>
                 <div class="form-section form-phone">
                     <label class="input-label" for="user_phone">手机号</label>
                     <input class="input-text J_addressInput" id="J_addressPhoneInput" name="user_phone"
-                           placeholder="11位手机号" type="text" value="{{$orderid[0]->buy_phone}}">
+                           placeholder="11位手机号" type="text" value="<?php echo e($orderid[0]->buy_phone); ?>">
                 </div>
                 <div class="form-section form-four-address form-section-active">
                     <input id="J_selectAddressTrigger" class="input-text J_addressInput four_address"
-                           name="four_address" readonly="readonly" value="{{$orderid[0]->address}}"
+                           name="four_address" readonly="readonly" value="<?php echo e($orderid[0]->address); ?>"
                            placeholder="选择省 / 市 / 区 / 街道" type="text" >
                     <i class="iconfont" id="chooseAddress"></i>
                 </div>
@@ -343,9 +344,9 @@
                         </div>
                         <div class="options-box">
                             <ul class="options-list J_optionsWrapper clearfix">
-                                @foreach($data as $v)
-                                    <li class="option J_option" value="{{$v->id}}">{{$v->name}}</li>
-                                @endforeach
+                                <?php foreach($data as $v): ?>
+                                    <li class="option J_option" value="<?php echo e($v->id); ?>"><?php echo e($v->name); ?></li>
+                                <?php endforeach; ?>
                             </ul>
                             <ul class="options-list J_optionsWrapper clearfix hide"></ul>
                             <ul class="options-list J_optionsWrapper clearfix hide"></ul>
@@ -367,13 +368,13 @@
 
     <div class="modal-backdrop  in" style="width: 100%; height: 1823px;display: none;"></div>
 
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section('js')
+<?php $__env->startSection('js'); ?>
     @parent
 
-    <script type="text/javascript" src="{{asset('js/home/order/order_address.js')}}"></script>
-    <script type="text/javascript" src="{{asset('js/home/order/showTime.js')}}"></script>
+    <script type="text/javascript" src="<?php echo e(asset('js/home/order/order_address.js')); ?>"></script>
+    <script type="text/javascript" src="<?php echo e(asset('js/home/order/showTime.js')); ?>"></script>
 
     <script>
         layui.use(['jquery', 'layer'], function () {
@@ -468,9 +469,9 @@
                 var td3 = $('#buy_address');
 
                 $.ajax({
-                    url:'{{url('orderdetail/orderaddress')}}',
+                    url:'<?php echo e(url('orderdetail/orderaddress')); ?>',
                     type:'put',
-                    data:{'address':address,'name':name,'phone':phone,'_token': '{{ csrf_token() }}','oid':oid},
+                    data:{'address':address,'name':name,'phone':phone,'_token': '<?php echo e(csrf_token()); ?>','oid':oid},
                     success: function (data) {
                         if(data == 1){
                             $('#J_modalEditAddress').css("display", "none");
@@ -494,12 +495,12 @@
                 //状态ID
                 var statusid = $('#statusid').text();
 
-                var url = '{{url('orderstatus')}}';
+                var url = '<?php echo e(url('orderstatus')); ?>';
 
                 $.ajax({
                     url:url,
                     type:'get',
-                    data:{'oid':oid,'statusid':statusid,'_token':"{{csrf_token()}}"},
+                    data:{'oid':oid,'statusid':statusid,'_token':"<?php echo e(csrf_token()); ?>"},
                     success:function (data){
 
                        if(data){
@@ -514,4 +515,5 @@
 
 
     </script>
-@endsection
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layouts.home', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

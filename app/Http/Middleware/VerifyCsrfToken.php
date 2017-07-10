@@ -12,6 +12,10 @@ class VerifyCsrfToken extends BaseVerifier
      * @var array
      */
     protected $except = [
+
+        '/upload','/admin/avator','commit_upload',
+
         '/upload','/admin/avator'
+
     ];
 }
