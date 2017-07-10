@@ -47,7 +47,6 @@ class OrderController extends BaseController
     {
         //根据用户ID 查出订单信息
         $data = Order::where('member_id',$id)->get();
-
         //查询未支付订单总数
         $num = DB::table('order')->where('member_id',$id)->where('order_status',0)->count();
         //查询已关闭订单总数
@@ -66,20 +65,17 @@ class OrderController extends BaseController
 
         //根据商品ID
         $imagesrc = DB::table('product_images')->whereIn('p_id',$pid)->get();
-//        dd($imagesrc);
         $status = [
             '0'=>'等待支付','1'=>'已支付','2'=>'正在配货', '3'=>'已出库',
             '4'=>'已收货','5'=>'退款中','6'=>'交易成功','7'=>'已取消'
         ];
-        return view ('home.order.order'
-            ,compact('data','orderdetail','status', 'orderid','num','close','Receiving', 'validorder','imagesrc'));
+        return view ('home.order.order',compact('data','orderdetail','status', 'orderid','num','close','Receiving', 'validorder','imagesrc'));
     }
 
     public function detail($id)
     {
         //根据订单ID查订单详情表
         $odetail = DB::table('order_detail')->where('order_id',$id)->get();
-
         //查询订单信息
         $orderid = DB::table('order')->where('id',$id)->get();
 

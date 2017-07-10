@@ -53,26 +53,38 @@ class AddCartController extends BaseController
                     $goods[$i]['num'] = $sum;
 
 //                        dd($goods);
-                    $request->session()->put('goods', $goods);
+                    if ($request->session()->put('goods', $goods)) {
 
-//                        dd(session('goods'));
+                        return 0;
 
-                    return session('goods');
+                    } else {
+
+                        return 1;
+
+                    }
 
                 } else {
+
                     $goods = array_merge(session('goods'), $goods);
-                    session([
-                        'goods' => $goods
-                    ]);
-                    return session('goods');
+
+                    if (session(['goods' => $goods])) {
+
+                        return 0;
+                    } else {
+                        return 1;
+                    }
+
                 }
             }
 
         } else {
-            session(['goods' => $goods]);
 
+            if (session(['goods' => $goods])) {
+                return 0;
+            } else {
+                return 1;
+            }
 
-            return session('goods');
         }
 
 
@@ -135,7 +147,7 @@ class AddCartController extends BaseController
         $request->session()->forget("goods." . $id);
 //        session('goods',array_values(session('goods')));
         $goods = array_values(session('goods'));
-
+//        dd($goods);
         session(['goods' => $goods]);
 //    dd(session('goods'));
 
@@ -156,7 +168,7 @@ class AddCartController extends BaseController
 
         $data = $request->all();
 
-//        dd($data);
+//        dd($data['goodsId']);
         $Num = 0;
         $total = 0;
         foreach ($data['goodsId'] as $k => $v) {
@@ -208,11 +220,9 @@ class AddCartController extends BaseController
 
         $array = ['member_id' => $member_id, 'buy_user' => $name, 'buy_phone'=>$phone, 'order_sn'=>$order_sn, 'address' => $address, 'total'=>$total, 'order_status' => $order_status];
 
-        if (Order::create($array)) {
+            $id = DB::table('order')->insertGetId($array);
+//            dd($id);
 
-            $id = DB::table('order')->where('member_id','=', $member_id,'and','order_sn','=', $order_sn)->select('id')->get()[0];
-
-            $order_id = intval($id->id);
             for($i=0;$i<count(session('goBlance'));$i++){
 
                 $p_id = session('goBlance')[$i]['p_id'];
@@ -224,7 +234,7 @@ class AddCartController extends BaseController
                 $p_price = session('goBlance')[$i]['price'];
                 $buy_num = session('goBlance')[$i]['num'];
 
-                $arr = ['order_id'=>$order_id, 'p_id'=>$p_id, 'p_name'=>$p_name, 'p_price'=>$p_price, 'buy_num'=>$buy_num];
+                $arr = ['order_id'=>$id, 'p_id'=>$p_id, 'p_name'=>$p_name, 'p_price'=>$p_price, 'buy_num'=>$buy_num];
 //            dump($arr);
 
                 OrderDetail::create($arr);
@@ -234,14 +244,9 @@ class AddCartController extends BaseController
 
             $request->session()->forget('goods');
 
-            return $order_sn;
-
-        } else {
-
-           return 2;
-
-        }
-
+            $ord_sn = DB::table('order')->where('id', $id)->select('order_sn')->get()[0];
+            $orderSn = $ord_sn->order_sn;
+            return $orderSn;
 
     }
 

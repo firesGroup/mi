@@ -211,7 +211,7 @@
                                     </a>
                                 </div>
                                 <div class="col col-price">
-                                    {{$v['price'].'X'.$v['num']}}
+                                    {{$v['price'].'X'.$v['num']}}件
                                 </div>
                                 <div class="col col-status">
                                     有货
@@ -409,8 +409,10 @@
                     type: 'get',
                     data: {'name': name, 'phone': phone, 'address': address},
                     success: function (data) {
-                        console.log(data);
-                        if (data == 1) {
+//                        console.log(data);
+                        if (data !== 2) {
+                            window.location.href = "/orderpay/" + data;
+                        } else {
 
                         }
                     },

@@ -125,13 +125,15 @@
                             <?php foreach($odetail as $d): ?>
                                 <tr>
                                     <td class="col col-thumb">
+                                    <?php foreach($imagesrc as $i): ?>
                                         <div class="figure figure-thumb">
-                                            <a target="_blank" href="//item.mi.com/1160800072.html">
-                                                <img src="//i1.mifile.cn/a1/T1AaJQBbZT1RXrhCrK!80x80.jpg" width="80"
+                                            <a target="_blank" href="">
+                                                <img src="<?php echo e($i->path); ?>" width="80"
                                                      height="80"
                                                      alt="">
                                             </a>
                                         </div>
+                                        <?php endforeach; ?>
                                     </td>
                                     <td class="col col-name">
                                         <p class="name">

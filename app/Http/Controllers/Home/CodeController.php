@@ -13,7 +13,7 @@ class CodeController extends Controller
 {
     public function captcha(Request $request, $tmp)
     {
-        ob_clean();
+
         //生成验证码图片的Builder对象，配置相应属性
         $builder = new CaptchaBuilder;
         //可以设置图片宽高及字体
@@ -24,6 +24,7 @@ class CodeController extends Controller
         //把内容存入session
        $request->session()->put('img_code',$phrase);
         //生成图片
+        ob_clean();
         header("Cache-Control: no-cache, must-revalidate");
         header('Content-Type: image/jpeg');
         $builder->output();
@@ -31,7 +32,7 @@ class CodeController extends Controller
 
     public function capt(Request $request, $tmp)
     {
-        ob_clean();
+
         //生成验证码图片的Builder对象，配置相应属性
         $builder = new CaptchaBuilder;
         //可以设置图片宽高及字体
@@ -40,8 +41,9 @@ class CodeController extends Controller
         $phrase = $builder->getPhrase();
 
         //把内容存入session
-        $request->session()->put('img_code',$phrase);
+        $request->session()->put('image_code',$phrase);
         //生成图片
+        ob_clean();
         header("Cache-Control: no-cache, must-revalidate");
         header('Content-Type: image/jpeg');
         $builder->output();

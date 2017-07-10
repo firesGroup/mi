@@ -86,12 +86,10 @@ $(document).ready(function() {
 });
 
 //顶部用户登陆成功后的下拉菜单
-$('span.user').mouseenter( function () {
+$('span.user').mouseenter( function(){
+    // alert(123);
 
     $('ul.user-menu').slideDown();
-
-    $('span.user').removeClass('user-active');
-
 
 
     $('span.user').addClass('user-active');
@@ -100,7 +98,7 @@ $('span.user').mouseenter( function () {
 
 $('span.user').mouseleave( function () {
 
-    $('ul.user-menu').slideUp();
+    $('ul.user-menu').slideUp("fast");
 
     $('span.user').removeClass('user-active');
 

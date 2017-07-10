@@ -51,14 +51,10 @@ Route::group(['namespace' => 'Home'], function () {
     Route::get('Receiving','OrderController@orderStatus');
     Route::get('orderstatus','OrderController@status');
 
-
     //去付款页面
     Route::get('orderpay/{id}','OrderController@pay');
     //支付页面ajax请求路由
     Route::get('pay','OrderController@ppay');
-
-
-
 
 });
 

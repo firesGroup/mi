@@ -70,14 +70,13 @@
         @if (empty(session('goods')))
             <div class="cart-empty cart-empty-nologin" id="J_cartEmpty">
                 <h2>您的购物车还是空的！</h2>
-                @if (!session('user_detail'))
+                @if (!session('user_deta'))
                     <p class="login-desc">登录后将显示您之前加入的商品</p>
                     <a href="{{url('login')}}" class="btn btn-primary btn-login">立即登录</a>
                 @endif
-                <a href="//list.mi.com/0" class="btn btn-primary btn-shoping J_goShoping">马上去购物</a>
+                <a href="{{url('/')}}" class="btn btn-primary btn-shoping J_goShoping">马上去购物</a>
             </div>
-        @endif
-
+        @elseif(session('goods'))
             <div class="cart-goods-list">
                 <div class="list-head clearfix">
                     <div class="col col-check"><i class="iconfont icon-checkbox" id="J_selectAll">√</i>全选</div>
@@ -158,6 +157,7 @@
 
 
         </div>
+        @endif
 
     </div>
 

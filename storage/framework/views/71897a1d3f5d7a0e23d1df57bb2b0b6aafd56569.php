@@ -114,9 +114,6 @@
                                                     <?php foreach($orderdetail as $d): ?>
                                                         <?php if($v->id == $d->order_id): ?>
                                                             <li>
-
-
-
                                                                     <?php foreach($imagesrc as $i): ?>
                                                                         <?php if($i->p_id == $d->p_id): ?>
                                                                         <div class="figure figure-thumb">
@@ -133,7 +130,10 @@
 
                                                                             </a>
                                                                         </p>
-                                                                        <p class="price"><?php echo e($d->p_price); ?>元 × <?php echo e($d->buy_num); ?></p></div>
+                                                                        <p class="price">
+                                                                            <?php echo e($d->p_price); ?>元 × <?php echo e($d->buy_num); ?>
+
+                                                                        </p>
                                                                         <?php endif; ?>
 
 
