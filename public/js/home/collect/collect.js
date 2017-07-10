@@ -13,6 +13,8 @@ function collect(product_id) {
                     case 1:
                         layer.msg('商品已收藏', {time:2000});
                         break;
+                    case 2:
+                        layer
                 }
              }
          })

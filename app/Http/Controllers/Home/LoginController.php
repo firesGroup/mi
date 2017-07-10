@@ -40,12 +40,12 @@ class LoginController extends BaseController
         }else{
 
             $phone = DB::table('member')->where('phone', '=', $data['nick_name'])->get();
-
+//            dd($phone);
             if($phone == []){
                 return back()->with('error', '手机号码错误')->withInput();
             }
-
-            if($phone[0]->status == 1 ){
+//            dd($phone);
+            if($phone[0]->status == 1){
                 return back()->with('error', '你的账号已被锁定, 暂时无法登陆')->withInput();
             }
 

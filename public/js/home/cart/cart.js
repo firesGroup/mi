@@ -199,12 +199,12 @@ $('i#J_selectAll').on('click', function () {
 $('#J_alertOk').on('click', function () {
     // console.log(id);
     $.ajax({
-        url: "/delGoods/"+id,
+        url: "/delGoods/" + id,
         type: 'get',
         success: function (data) {
 
             if (data) {
-                $('#'+id+'item-box').remove();
+                $('#' + id + 'item-box').remove();
                 $('#J_modalAlert').removeClass('in').css({'display': 'none'}).attr('aria-hidden', 'false');
             }
 
@@ -217,29 +217,32 @@ $('#J_alertOk').on('click', function () {
 $('#J_goCheckout').on('click', function () {
 
 
-    var goodsId = [];
+        var goodsId = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16];
 
-    ($('.icon-checkbox-selected').parent().parent().parent().parent().each(function(i){
-            goodsId.push(parseInt($('.icon-checkbox-selected').parent().parent().parent().parent().eq(i).attr('id')));
-        }));
+        // ($('.icon-checkbox-selected').parent().parent().parent().parent().each(function (i) {
+        //     // goodsId.push(parseInt($('.icon-checkbox-selected').parent().parent().parent().parent().eq(i).attr('id')));
+        //
+        // }));
 
-        // console.log(goodsId);
-    $.ajax({
-        url: "/goBalance",
-        type: 'post',
-        data: {'goodsId': goodsId},headers: {
-            'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
-        },
-        success: function (data) {
-            if (data == 1) {
-                window.location.href = "/address/";
-            }
-        },
-        dataType: 'json'
+    var i = $('.icon-checkbox-selected').length;
+
+    goodsId = goodsId.slice(0,i);
+    // console.log(goodsId);
+
+        $.ajax({
+            url: "/goBalance",
+            type: 'post',
+            data: {'goodsId': goodsId}, headers: {
+                'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+            },
+            success: function (data) {
+                if (data == 1) {
+                    window.location.href = "/address/";
+                }
+            },
+            dataType: 'json'
+        });
+
+
     });
-
-
-
-});
-
 

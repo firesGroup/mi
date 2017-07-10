@@ -70,13 +70,6 @@
 
 			  </span></p>
                                     </div>
-                                    <div class="fdata lblgender">
-                                        <p><span>等级：</span><span class="value">
-
-					                    {{$level->level_name}}
-
-			  </span></p>
-                                    </div>
                                 </div>
                             </div>
                         </div>

@@ -11,6 +11,7 @@ use App\Entity\ProductVersionsColors;
 use Illuminate\Http\Request;
 use Illuminate\Support\HtmlString;
 use App\Http\Controllers\Home\BaseController;
+use DB;
 
 
 class HomeController extends BaseController
@@ -19,14 +20,26 @@ class HomeController extends BaseController
     public function index()
     {
         $slide = $this->SlideShow();
-        $recommended = Product::limit(10)->orderBy('click_num', 'desc')->get();
-        $ElecArray = [94,37,24,25,17,36];
-        $homeElec = Product::whereIn('category_id',$ElecArray)->orderBy('category_id')->get();
+        $recommended = Product::orderBy('click_num', 'desc')->limit(10)->get();
 
-        $smartArray = [32,64,42,99,36,3,32,14];
-        $smart = Product::whereIn('category_id',$smartArray)->orderBy('category_id')->get();
+        $Elecarray = array(98, 14, 36, 42 ,48, 4, 14,11);
 
-        return view('home.index',compact('nav','slide','recommended','homeElec','smart'));
+        $homeElec = DB::table('product')->whereIn('category_id', $Elecarray)->get();
+//        dd($homeElec);
+        $television = DB::table('product')->where('category_id', 37)->limit(8)->get();
+//        dd($television);
+
+        $smartaraay = array(97, 29, 45,99, 37,98);
+        $smart =DB::table('product')->whereIn('category_id', $smartaraay)->get();
+//        dd($smart);
+
+        $aroundaraay = array(75, 76, 20, 11, 14, 27, 92, 76, 94, 6, 5, 3);
+        $around =DB::table('product')->whereIn('category_id', $aroundaraay)->get();
+//        dd($around);
+        $recommen = Product::orderBy('click_num')->limit(10)->get();
+
+        $accessArray = array(5, 6, 96, 14);
+        return view('home.index',compact('nav','slide', 'recommended', 'homeElec', 'television', 'smart', 'around', 'recommen'));
     }
   
     /*

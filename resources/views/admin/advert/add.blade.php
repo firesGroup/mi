@@ -120,7 +120,7 @@
                 before: function (input) {
                     //上传前回调
                     $('input#createUpload').parent().append('<input type="hidden" name="_token" value="{{ csrf_token() }}"><input type="hidden" name="path" value="ad">');
-                    l = layer.msg('正在上传 请稍后...', {icon: 6});
+
                 }
                 , success: function (res) {
                     if (res.status == 0) {
