@@ -37,7 +37,7 @@ class CollectController extends BaseController
             }
 
         }else{
-           return 2;
+            return 2;
         }
     }
 

@@ -24,7 +24,7 @@
                         </div>
                         <div class="layui-form-item">
                             <div class="layui-input-block">
-                                <button class="layui-btn" lay-submit="" lay-filter="addGrou">添加</button>
+                                <button class="layui-btn" lay-submit="" lay-filter="addGroup">添加</button>
                             </div>
                         </div>
                     </form>
@@ -46,7 +46,7 @@
                     icon: 16
                 });
                 $.ajax({
-                    url:'{{ url('admin/menuGroup') }}',
+                    url:'{{ url('admin/menugroup') }}',
                     type: 'POST',
                     data: data.field,
                     success:function(res){
@@ -55,13 +55,13 @@
                             layer.msg('添加成功', {icon:6, time:1000, end:function(){
                                 var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
                                 parent.layer.close(index);
-                                location.href= '{{ url('admin/menuGroup') }}';
+                                location.href= '{{ url('admin/menugroup') }}';
                             }});
                         }else{
                             layer.msg('添加失败', {icon:2, time:2000, end:function(){
                                 var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
                                 parent.layer.close(index);
-                                location.href= '{{ url('admin/menuGroup/create') }}';
+                                location.href= '{{ url('admin/menugroup/create') }}';
                             }});
                         }
                     },

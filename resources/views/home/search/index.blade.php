@@ -94,7 +94,10 @@
                                 <li ><a  ><img src="{{ $pro['p_index_image'] }}!34_34" width="34" height="34" alt="小米MIX 黑色"></a></li>                        </ul>
                         </div>
                         <div class="actions clearfix">
-                            <a class="btn-like J_likeGoods" data-cid="1164400010" href="javascript: void(0);"  onclick="" ><i class="iconfont"></i> <span>喜欢</span></a>
+                            <a class="btn-like J_likeGoods
+                               @if( in_array( $pro['id'], $collect ) )
+                                    btn-liked
+                               @endif     " data-cid="{{ $pro['id'] }}" href="javascript: void(0);"><i class="iconfont"></i> <span>喜欢</span></a>
                             <a class="btn-buy btn-buy-detail J_buyGoods" href="//www.mi.com/mix/?cfrom=search"  ><span>立即购买</span> <i class="iconfont"></i></a>                    </div>
                         <div class="flags">
 
@@ -151,6 +154,35 @@
                 }
             }
         });
+
+        //like
+        $('div.goods-list').find('div.goods-item a.J_likeGoods i').on('click',function(){
+            var id = $(this).parent().attr('data-cid');
+            var t = $(this);
+            $.ajax({
+                url:"collect",
+                type:'post',
+                data:{'_token':'{{ csrf_token() }}', 'product_id': id },
+                success:function(data) {
+                    switch(parseInt(data)){
+                        case 0:
+                            layer.msg('收藏商品成功', {time:2000});
+                            t.parent().addClass('btn-liked');
+                            break;
+                        case 1:
+                            layer.msg('商品已收藏', {time:2000});
+                            break;
+                        case 2:
+                            var index = layer.alert('您还没有登陆!请先登陆',{title:'提醒',icon:3,btnAlign: 'c',btn:['立即登陆','取消'],yes:function(){
+                                location.href="/login";
+                            },canale:function(){
+                                layui.close(index);
+                            }});
+                    }
+                }
+            })
+        });
+
         $('div.filter-box').on('click','a.J_filterToggle', function(){
             if($(this).parent().hasClass('filter-list-wrap-toggled')){
                 $(this).parent().removeClass('filter-list-wrap-toggled');

@@ -24,14 +24,14 @@
             <div class="box-bd">
                 <div class="xm-carousel-wrapper">
                     <ul class="xm-carousel-list xm-carousel-col-5-list goods-list rainbow-list clearfix J_carouselList" id="J_carouselList">
-                        {{--@foreach($recommended as $k=>$v)--}}
-                        {{--<li class="{{'rainbow-item-'.$k}}">--}}
-                            {{--<a class="thumb exposure" href="//item.mi.com/product/10000030.html" target="_blank"><img class='cacheload' data-url="{{url($v->p_index_image)}}!160_160" alt="小米5c 64GB 移动版"></a>--}}
-                            {{--<h3 class="title"><a href="//item.mi.com/product/10000030.html" target="_blank">{{$v->p_name}}</a></h3>--}}
-                            {{--<p class="desc">{{$v->flag}}</p>--}}
-                            {{--<p class="price">{{$v->price}}</p>--}}
-                        {{--</li>--}}
-                    {{--@endforeach--}}
+                        @foreach($recommended as $k=>$v)
+                        <li class="{{'rainbow-item-'.$k}}">
+                            <a class="thumb exposure" href="/product/info/{{ $v->id }}" target="_blank"><img class='cacheload' data-url="{{url($v->p_index_image)}}!160_160" alt="{{ $v->p_name }}"></a>
+                            <h3 class="title"><a href="/product/info/{{ $v->id }}" target="_blank">{{$v->p_name}}</a></h3>
+                            <p class="desc">{{$v->flag}}</p>
+                            <p class="price">{{$v->price}}</p>
+                        </li>
+                    @endforeach
                     </ul></div>
             </div>
         </div>

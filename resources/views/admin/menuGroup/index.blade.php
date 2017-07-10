@@ -47,7 +47,7 @@
                             <td>{{ $group->menu_group_name }}</td>
                             <td>
                                 <div class="layui-btn-group">
-                                    <a href="{{ url('admin/menuGroup').'/'.$group->id."/edit" }}"
+                                    <a href="{{ url('admin/menugroup').'/'.$group->id."/edit" }}"
                                        class="layui-btn  layui-btn-small" data-alt="修改">
                                         <i class="larry-icon larry-xiugai"></i>编辑
                                     </a>

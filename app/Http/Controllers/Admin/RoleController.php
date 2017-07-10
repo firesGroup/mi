@@ -195,7 +195,28 @@ class RoleController extends Controller
      */
     public function destroy($id)
     {
-        return 11;
+       $role = AdminRole::find($id);
+       //查找所有包含这个权限的组
+        $groups = AdminGroup::where('role_list','like',"%{$id}%")->get();
+        foreach($groups as $k=>$group){
+            $role_list = $group->role_list;
+            $gid = $group->id;
+            //清除两边逗号
+            $role_list = trim($role_list,',');
+            //分隔
+            $roles = explode(',',$role_list);
+            foreach( $roles as $key=>$v ){
+                if( $v == $id ){
+                    unset($roles[$key]);
+                }
+            }
+            //重组
+            $newRoles = implode(',',$roles);
+            AdminGroup::where('id',$gid)->update(['role_list'=>$newRoles]);
+        }
+        $re = AdminRole::destroy($id);
+        return $re ? 0 : 1;
+
     }
 
     public function ajaxRoleName(Request $request)

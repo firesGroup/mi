@@ -40,8 +40,6 @@ class HomeController extends BaseController
 
         $accessArray = array(5, 6, 96, 14);
         return view('home.index',compact('nav','slide', 'recommended', 'homeElec', 'television', 'smart', 'around', 'recommen'));
-
-
     }
   
     /*
@@ -268,5 +266,20 @@ class HomeController extends BaseController
     {
         $slide = SlideShow::where('status',0)->get();
         return  $slide;
+    }
+
+
+    /*
+     * 获取商品默认版本
+     *
+     */
+    public function getVersion($p_id)
+    {
+        $res = ProductVersions::where('p_id',$p_id)->lists('id')->toArray();
+        if( $res ){
+            return $res[0];
+        }else{
+            return 0;
+        }
     }
 }

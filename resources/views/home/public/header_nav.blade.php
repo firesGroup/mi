@@ -519,59 +519,16 @@
                     @if( isset($cid) && $cid != 0 )
                         <input value="{{ $cid }}" type="hidden" name="cid">
                     @endif
-                    <input value="{{ isset($word)?$word:'' }}" class="search-text" type="search" id="search" name="keyword" autocomplete="off" data-search-config="{'defaultWords':[{'Key':'小米6','Rst':7},{'Key':'红米Note&nbsp;4X','Rst':8},{'Key':'小米MIX','Rst':1},{'Key':'小米Max2','Rst':3},{'Key':'小米手机5c','Rst':3},{'Key':'手环','Rst':6},{'Key':'耳机','Rst':19},{'Key':'充电宝','Rst':19},{'Key':'运动鞋','Rst':2},{'Key':'路由器','Rst':17},{'Key':'小米盒子','Rst':8}]}" />
+                    <input value="{{ isset($word)?$word:'' }}" class="search-text" type="search" id="search" name="keyword" autocomplete="off" />
                     <input type="submit" class="search-btn iconfont" value="&#xe616;" />
                     <div class="search-hot-words">
                         <a href="https://item.mi.com/product/10000031.html">红米4X</a>
                         <a href="https://www.mi.com/scooter/">平衡车</a>
                     </div>
-                    <div id="J_keywordList" class="keyword-list hide">
-                        <ul class="result-list">
-                            <li data-key="小米6">
-                                <a href="//search.mi.com/search_%E5%B0%8F%E7%B1%B36">
-                                    小米6
-                                    <span class="result">约有7件</span>
-                                </a>
-                            </li>
-                            <li data-key="红米Note&nbsp;4X">
-                                <a href="//search.mi.com/search_%E7%BA%A2%E7%B1%B3Note%C2%A04X">
-                                    红米Note&nbsp;4X
-                                    <span class="result">
-                                        约有8件
-                                    </span>
-                                </a>
-                            </li>
-                            <li data-key="小米MIX">
-                                <a href="//search.mi.com/search_%E5%B0%8F%E7%B1%B3MIX">小米MIX
-                                    <span class="result">约有1件</span>
-                                </a>
-                            </li>
-                            <li data-key="小米Max2">
-                                <a href="//search.mi.com/search_%E5%B0%8F%E7%B1%B3Max2">小米Max2
-                                    <span class="result">约有3件</span></a></li>
-                            <li data-key="小米手机5c"><a href="//search..com/search_%E5%B0%8F%E7%B1%B3%E6%89%8B%E6%9C%BA5c">小米手机5c
-                                    <span class="result">约有3件</span></a>
-                            </li>
-                            <li data-key="手环">
-                                <a href="//search.mi.com/search_%E6%89%8B%E7%8E%AF">手环
-                                    <span class="result">约有6件</span>
-                                </a>
-                            </li>
-                            <li data-key="耳机">
-                                <a href="//search.mi.com/search_%E8%80%B3%E6%9C%BA">耳机
-                                    <span class="result">约有19件</span>
-                                </a>
-                            </li>
-                            <li data-key="充电宝"><a href="//search.mi.com/search_%E5%85%85%E7%94%B5%E5%AE%9D">充电宝<span
-                                            class="result">约有19件</span></a></li>
-                            <li data-key="运动鞋"><a href="//search.mi.com/search_%E8%BF%90%E5%8A%A8%E9%9E%8B">运动鞋<span
-                                            class="result">约有2件</span></a></li>
-                            <li data-key="路由器"><a href="//search.mi.com/search_%E8%B7%AF%E7%94%B1%E5%99%A8">路由器<span
-                                            class="result">约有17件</span></a></li>
-                            <li data-key="小米盒子"><a href="//search.mi.com/search_%E5%B0%8F%E7%B1%B3%E7%9B%92%E5%AD%90">小米盒子<span
-                                            class="result">约有8件</span></a></li>
-                        </ul>
-                    </div>
+                    {{--<div id="J_keywordList" class="keyword-list hide">--}}
+                        {{--<ul class="result-list">--}}
+                        {{--</ul>--}}
+                    {{--</div>--}}
 
                 </form>
             </div>
