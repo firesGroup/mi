@@ -27,8 +27,10 @@
     @include('home.product.product_nav')
     <!-- 商品导航条 end -->
     <!-- 商品信息 start -->
+    {{--{{dd(session('user_deta'))}}--}}
     <div class="xm-buyBox" id="J_buyBox">
         <div class="box clearfix">
+            @if(session('uesr_deta') !== null)
             <div class="login-notic J_notic">
                 <div class="container">
                     为方便您购买，请提前登录
@@ -36,6 +38,7 @@
                     <a href="javascript:void(0);" class="iconfont J_proLoginClose"></a>
                 </div>
             </div>
+            @endif
             <div class="pro-choose-main container clearfix">
                 <div class="pro-view span10">
                     <div class="J_imgload imgload hide">
@@ -223,7 +226,7 @@
                 type: 'post',
                 data: {'_token': '{{csrf_token()}}', 'pName': pName, 'Price': Price, 'p_id': p_id, 'ver_id': verid},
                 success: function (data) {
-                    console.log(data);
+//                    console.log(data);
                     if (data) {
                         window.location.href = "/addCartSuccess/" + p_id + '/' + verid;
                     }
