@@ -25,7 +25,7 @@ class AddressController extends BaseController
             $userArr = DB::table('member')->where('id', '=', $id)->select('nick_name')->get();
 //        dd($userArr[0]->nick_name);
 //        dd($userArr);
-            $UserArr = $userArr[0]->nick_name;
+//            $UserArr = $userArr[0]->nick_name;
 
 
             $userAdd = DB::table('address')->where('member_id', '=', $id)->select('member_id', 'buy_user', 'buy_phone', 'address')->get();
@@ -142,7 +142,7 @@ class AddressController extends BaseController
     public function addAddress(Request $request)
     {
         $data = $request->all();
-        dd($data);
+//        dd($data);
         $arr = $data['arr'];
 
         $buy_user = $arr[0];

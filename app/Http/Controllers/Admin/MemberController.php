@@ -308,7 +308,7 @@ class MemberController extends Controller
 
 //        dd($data);
 //        dd($data);
-        if(session('img_code') != $data['code']) {
+        if(session('image_code') != $data['code']) {
 //                dd(session('img_code'));
             return 1;
         }

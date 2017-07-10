@@ -13,6 +13,7 @@ class CollectController extends BaseController
 {
     public function ponseral_collect()
     {
+        //获取session
         $member_id = session('user_deta')['id'];
         $p_id = DB::table('collect')->lists('p_id');
 //        dump($p_id);
@@ -36,7 +37,7 @@ class CollectController extends BaseController
             }
 
         }else{
-            return redirect('login');
+           return 2;
         }
     }
 

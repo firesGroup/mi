@@ -40,7 +40,7 @@ class LoginController extends BaseController
         }else{
 
             $phone = DB::table('member')->where('phone', '=', $data['nick_name'])->get();
-
+//            dd($phone);
             if($phone == []){
                 return back()->with('error', '手机号码错误')->withInput();
             }

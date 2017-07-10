@@ -50,7 +50,7 @@
             @include('home.index.around')
             {{--<!-- 周边 end -->--}}
             {{--<!-- 首页为您推荐 end -->--}}
-            {{--@include('home.index.recommend')--}}
+            @include('home.index.recommend')
             {{--<!-- 首页为您推荐 end -->--}}
             {{--<!-- 热评 start -->--}}
             @include('home.index.commen')

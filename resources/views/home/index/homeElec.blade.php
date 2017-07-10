@@ -9,7 +9,7 @@
  * Time: 20:49
  */
 ?>
-<div id="homeelec" class="home-brick-box home-brick-row-2-box xm-plain-box J_itemBox J_brickBox is-visible loaded" >
+<div id="homeelec" class="home-brick-box home-brick-row-2-box xm-plain-box J_itemBox J_brickBox is-visible loaded">
     <div class="box-hd">
         <h2 class="title">家电</h2>
         <div class="more J_brickNav">
@@ -17,7 +17,6 @@
                 <li class="tab-active">热门</li>
                 <li class="">电视</li>
                 <li class="">电脑</li>
-                <li class="">家居</li>
             </ul>
         </div>
     </div>
@@ -26,27 +25,67 @@
             <div class="span4 span-first">
                 <ul class="brick-promo-list clearfix">
                     <li class="brick-item brick-item-l">
-                        <a href="" class="exposure" target="_blank"  onclick=""><img class="cacheload" src="/images/public/default.gif" data-url="//i3.mifile.cn/a4/xmad_14985509176175_GZPwv.jpg" width="160" height="160" alt=""></a> </li></ul></div><div class="span16"><div id="homeelec-content" class="tab-container">
+                        <a href="" class="exposure" target="_blank" onclick=""><img class="cacheload"
+                                                                                    src="/images/public/default.gif"
+                                                                                    data-url="//i3.mifile.cn/a4/xmad_14985509176175_GZPwv.jpg"
+                                                                                    width="160" height="160" alt=""></a>
+                    </li>
+                </ul>
+            </div>
+            <div class="span16">
+                <div id="homeelec-content" class="tab-container">
                     <ul class="brick-list tab-content clearfix tab-content-active J_recommendActive" style="">
-                        @for($i=0; $i<7; $i++)
-                        <li class="brick-item brick-item-m" > <div class="figure figure-img"> <a class="exposure" href=""  target="_blank"   onclick=""><img class="cacheload" src="/images/public/default.gif" data-url="{{url($homeElec[$i]->p_index_image)}}!150_150" width="150" height="150" alt="{{$homeElec[$i]->p_name}}"></a> </div> <h3 class="title"> <a href="" target="_blank"  onclick="">{{$homeElec[$i]->p_name}}</a></h3>  <p class="desc">{{$homeElec[$i]->flag}}</p>  <p class="price"> <span class="num">{{$homeElec[$i]->price}}</span>元  </p> <p class="rank"></p>   <div class="review-wrapper"> <a href="" target="_blank"  onclick=""> <span class="review">为什么我这么稀罕小米</span> <span class="author"> 来自于 天枰壮壮 的评价 <span class="date" ></span> </span> </a> </div> </li>
+                        @for($i=0; $i<8; $i++)
+                            <li class="brick-item brick-item-m">
+                                <div class="figure figure-img"><a class="exposure" href="{{url('product/info/'.$homeElec[$i]->id)}}" target="_blank"
+                            onclick=""><img class="cacheload" src="/images/public/default.gif" data-url="{{url($homeElec[$i]->p_index_image)}}!150_150" width="150" height="150" alt="{{$homeElec[$i]->p_name}}"></a>
+                                </div>
+                                <h3 class="title"><a href="" target="_blank" onclick="">{{$homeElec[$i]->p_name}}</a>
+                                </h3>
+                                <p class="desc">{{$homeElec[$i]->flag}}</p>
+                                <p class="price"><span class="num">{{$homeElec[$i]->price}}</span>元 </p>
+                                <p class="rank"></p>
+                            </li>
                         @endfor
-                        <li class="brick-item brick-item-s" > <div class="figure figure-img"> <a href="" class="exposure" target="_blank"  onclick=""> <img class="cacheload" src="/images/public/default.gif" data-url="//i1.mifile.cn/a1/pms_1472609961.95298675!220x220.jpg" width="80" height="80" alt="米家扫地机器人"> </a> </div> <h3 class="title"><a href="" class="exposure" target="_blank"  onclick="">米家扫地机器人</a></h3> <p class="price"><span class="num">1699</span>元</p> </li>
-                        <li class="brick-item brick-item-s"><div class="figure figure-more"><a href=""  target="_blank"  onclick=""><i class="iconfont"></i></a></div><a class="more" href=""  target="_blank"  onclick="">浏览更多<small>热门</small></a></li>
                     </ul>
 
                     <ul class="brick-list tab-content clearfix tab-content-hide hide" style="display: none;">
-                        @for($i=7;$i<14;$i++)
-                        <li class="brick-item brick-item-m" > <div class="figure figure-img"> <a class="exposure" href=""  target="_blank"   onclick=""><img class="cacheload" src="/images/public/default.gif" data-url="{{$homeElec[$i]->p_index_image}}!150_150" width="150" height="150" alt="{{$homeElec[$i]->p_name}}"></a> </div> <h3 class="title"> <a href="" target="_blank"  onclick="">{{$homeElec[$i]->p_name}}</a></h3>  <p class="desc">{{$homeElec[$i]->flag}}</p>  <p class="price"> <span class="num">{{$homeElec[$i]->price}}</span>元 </p> <p class="rank"></p>  <div class="flag flag-saleoff">     享9.2折 </div>   <div class="review-wrapper"> <a href="" target="_blank"  onclick=""> <span class="review">超大的，就是厚了一点。运费安装费有点贵。</span> <span class="author"> 来自于 假の太逼真 的评价 <span class="date" ></span> </span> </a> </div>  </li>
-                      @endfor
-                        <li class="brick-item brick-item-s" > <div class="figure figure-img"> <a href="" class="exposure" target="_blank"  onclick=""> <img class="cacheload" src="/images/public/default.gif" data-url="//i3.mifile.cn/a4/T146YgBKhv1RXrhCrK.jpg" width="80" height="80" alt="小米盒子3 增强版"> </a> </div> <h3 class="title"><a href="" class="exposure" target="_blank"  onclick="">小米盒子3 增强版</a></h3> <p class="price"><span class="num">399</span>元</p> </li>
-                        <li class="brick-item brick-item-s"><div class="figure figure-more"><a href=""  target="_blank"  onclick=""><i class="iconfont"></i></a></div><a class="more" href=""  target="_blank"  onclick="">浏览更多<small>电视影音</small></a></li>
+                        @foreach($television as $v)
+                            <li class="brick-item brick-item-m">
+                                <div class="figure figure-img"><a class="exposure" href="{{url('product/info/'.$v->id)}}" target="_blank"
+                                                                  onclick=""><img class="cacheload"
+                                                                                  src="/images/public/default.gif"
+                                                                                  data-url="{{$v->p_index_image}}!150_150"
+                                                                                  width="150" height="150"
+                                                                                  alt="{{$v->p_name}}"></a></div>
+                                <h3 class="title"><a href="" target="_blank" onclick="">{{$v->p_name}}</a></h3>
+                                <p class="desc">{{$v->flag}}</p>
+                                <p class="price"><span class="num">{{$v->price}}</span>元 </p>
+                                <p class="rank"></p>
+                                <div class="flag flag-saleoff"> 享9.2折</div>
+                            </li>
+                        @endforeach
                     </ul>
                     <ul class="brick-list tab-content clearfix tab-content-hide hide" style="display: none;">
-                        @for($id=14;$i<21;$i++)
-                        <li class="brick-item brick-item-m" > <div class="figure figure-img"> <a class="exposure" href=""  target="_blank"   onclick=""><img class="cacheload" src="/images/public/default.gif" data-url="{{url($homeElec[$i]->p_index_image)}}!150_150" width="150" height="150" alt="{{$homeElec[$i]->p_name}}"></a> </div> <h3 class="title"> <a href="" target="_blank"  onclick="">{{$homeElec[$i]->p_name}}</a></h3>  <p class="desc">{{$homeElec[$i]->flag}}</p>  <p class="price"> <span class="num">{{$homeElec[$i]->price}}</span>元  </p> <p class="rank"></p>   <div class="review-wrapper"> <a href="" target="_blank"  onclick=""> <span class="review">终于等到你～     坚持就是胜利，希望下次晒单就是...</span> <span class="author"> 来自于    爱拼才会赢 的评价 <span class="date" ></span> </span> </a> </div>  </li>
+                        @for($i=8;$i<16;$i++)
+                            <li class="brick-item brick-item-m">
+                                <div class="figure figure-img"><a class="exposure" href="{{url('product/info/'.$homeElec[$i]->id)}}" target="_blank"
+                                                                  onclick=""><img class="cacheload"
+                                                                                  src="/images/public/default.gif"
+                                                                                  data-url="{{url($homeElec[$i]->p_index_image)}}!150_150"
+                                                                                  width="150" height="150"
+                                                                                  alt="{{$homeElec[$i]->p_name}}"></a>
+                                </div>
+                                <h3 class="title"><a href="" target="_blank" onclick="">{{$homeElec[$i]->p_name}}</a>
+                                </h3>
+                                <p class="desc">{{$homeElec[$i]->flag}}</p>
+                                <p class="price"><span class="num">{{$homeElec[$i]->price}}</span>元 </p>
+                                <p class="rank"></p>
+                            </li>
                         @endfor
-                        <li class="brick-item brick-item-s" > <div class="figure figure-img"> <a href="" class="exposure" target="_blank"  onclick=""> <img class="cacheload" src="/images/public/default.gif" data-url="//i1.mifile.cn/a1/pms_1469523170.25518983!220x220.jpg" width="80" height="80" alt="USB-C至HDMI多功能转接器"> </a> </div> <h3 class="title"><a href="" class="exposure" target="_blank"  onclick="">USB-C至HDMI多功能转接器</a></h3> <p class="price"><span class="num">149</span>元</p> </li>
-                        <li class="brick-item brick-item-s"><div class="figure figure-more"><a href=""  target="_blank"  onclick=""><i class="iconfont"></i></a></div><a class="more" href=""  target="_blank"  onclick="">浏览更多<small>电脑</small></a></li></ul>
-                    <ul class="brick-list tab-content clearfix tab-content-hide hide" style="display: none;">  <li class="brick-item brick-item-m" > <div class="figure figure-img"> <a class="exposure" href=""  target="_blank"   onclick=""><img class="cacheload" src="/images/public/default.gif" data-url="//i1.mifile.cn/a1/pms_1478678718.61531371!220x220.jpg" width="150" height="150" alt="米家IH电饭煲 3L"></a> </div> <h3 class="title"> <a href="" target="_blank"  onclick="">米家IH电饭煲 3L</a></h3>  <p class="desc">IH 电磁环绕加热，3000+ 煮米方案</p>  <p class="price"> <span class="num">399</span>元  </p> <p class="rank"></p>   <div class="review-wrapper"> <a href="" target="_blank"  onclick=""> <span class="review">外形中规中矩，但绝对不磕碜，细节处理很到位，白的的很...</span> <span class="author"> 来自于 宋欢 的评价 <span class="date" ></span> </span> </a> </div>  </li>   <li class="brick-item brick-item-m" > <div class="figure figure-img"> <a class="exposure" href=""  target="_blank"   onclick=""><img class="cacheload" src="/images/public/default.gif" data-url="//i1.mifile.cn/a1/pms_1498564154.53184175!220x220.jpg" width="150" height="150" alt="米家声波电动牙刷"></a> </div> <h3 class="title"> <a href="" target="_blank"  onclick="">米家声波电动牙刷</a></h3>  <p class="desc">磁悬浮声波马达，定制多种刷牙模式</p>  <p class="price"> <span class="num">199</span>元  </p> <p class="rank"></p>  <div class="flag flag-new">新品</div>   </li>   <li class="brick-item brick-item-m" > <div class="figure figure-img"> <a class="exposure" href=""  target="_blank"   onclick=""><img class="cacheload" src="/images/public/default.gif" data-url="//i1.mifile.cn/a1/T1hMK_BjEv1RXrhCrK!220x220.jpg" width="150" height="150" alt="小米净水器（厨下式）"></a> </div> <h3 class="title"> <a href="" target="_blank"  onclick="">小米净水器（厨下式）</a></h3>  <p class="desc">6月28日-29日，限量送PP棉滤芯</p>  <p class="price"> <span class="num">1999</span>元  </p> <p class="rank"></p>  <div class="flag flag-gift">有赠品</div>   </li>   <li class="brick-item brick-item-m" > <div class="figure figure-img"> <a class="exposure" href=""  target="_blank"   onclick=""><img class="cacheload" src="/images/public/default.gif" data-url="//i1.mifile.cn/a1/pms_1477916442.08799062!220x220.jpg" width="150" height="150" alt="米家空气净化器Pro"></a> </div> <h3 class="title"> <a href="" target="_blank"  onclick="">米家空气净化器Pro</a></h3>  <p class="desc">6月28日-29日，限量送59元插线板</p>  <p class="price"> <span class="num">1499</span>元  </p> <p class="rank"></p>  <div class="flag flag-gift">有赠品</div>   </li>   <li class="brick-item brick-item-m" > <div class="figure figure-img"> <a class="exposure" href=""  target="_blank"   onclick=""><img class="cacheload" src="/images/public/default.gif" data-url="//i1.mifile.cn/a1/pms_1465366178.11466342!220x220.jpg" width="150" height="150" alt="米家恒温电水壶"></a> </div> <h3 class="title"> <a href="" target="_blank"  onclick="">米家恒温电水壶</a></h3>  <p class="desc">水温智能控制，304 不锈钢内胆</p>  <p class="price"> <span class="num">199</span>元  </p> <p class="rank"></p>   <div class="review-wrapper"> <a href="" target="_blank"  onclick=""> <span class="review">小米水壶为烧水而生！看了客服妹子的评论我也爱上了她，...</span> <span class="author"> 来自于 聊米 的评价 <span class="date" ></span> </span> </a> </div>  </li>   <li class="brick-item brick-item-m" > <div class="figure figure-img"> <a class="exposure" href=""  target="_blank"   onclick=""><img class="cacheload" src="/images/public/default.gif" data-url="//i1.mifile.cn/a1/pms_1496647119.81414190!220x220.jpg" width="150" height="150" alt="飞利浦智睿球泡灯"></a> </div> <h3 class="title"> <a href="" target="_blank"  onclick="">飞利浦智睿球泡灯</a></h3>  <p class="desc">自由调节亮度，Wi-Fi随时操控</p>  <p class="price"> <span class="num">49</span>元  </p> <p class="rank"></p>  <div class="flag flag-new">新品</div>   <div class="review-wrapper"> <a href="" target="_blank"  onclick=""> <span class="review">不错，很实用，晚上看监控也一清二楚！感谢小米科技！</span> <span class="author"> 来自于 攀少 的评价 <span class="date" ></span> </span> </a> </div>  </li>   <li class="brick-item brick-item-m" > <div class="figure figure-img"> <a class="exposure" href=""  target="_blank"   onclick=""><img class="cacheload" src="/images/public/default.gif" data-url="//i1.mifile.cn/a1/pms_1495520422.36514041!220x220.jpg" width="150" height="150" alt="米家 LED 智能台灯"></a> </div> <h3 class="title"> <a href="" target="_blank"  onclick="">米家 LED 智能台灯</a></h3>  <p class="desc">无可视频闪，四种场景优化调光</p>  <p class="price"> <span class="num">169</span>元  </p> <p class="rank"></p>   <div class="review-wrapper"> <a href="" target="_blank"  onclick=""> <span class="review">灯超级漂亮 手机居然可以操控真是太棒了。现在家里基本...</span> <span class="author"> 来自于 上官祁傲 的评价 <span class="date" ></span> </span> </a> </div>  </li>   <li class="brick-item brick-item-s" > <div class="figure figure-img"> <a href="" class="exposure" target="_blank"  onclick=""> <img class="cacheload" src="/images/public/default.gif" data-url="//i1.mifile.cn/a1/pms_1490756071.3088664!220x220.png" width="80" height="80" alt="Yeelight LED 吸顶灯"> </a> </div> <h3 class="title"><a href="" class="exposure" target="_blank"  onclick="">Yeelight LED 吸顶灯</a></h3> <p class="price"><span class="num">359</span>元</p> </li> <li class="brick-item brick-item-s"><div class="figure figure-more"><a href=""  target="_blank"  onclick=""><i class="iconfont"></i></a></div><a class="more" href=""  target="_blank"  onclick="">浏览更多<small>家居</small></a></li></ul></div></div></div></div>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
