@@ -8,66 +8,30 @@
  * Date: 2017/6/19
  * Time: 13:52
  */
-
-
-Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function () {
-
-    //管理员路由
-    Route::get('index', 'AdminController@index');
-
-    Route::resource('user', 'UserController');
-
-    Route::get('ajax', 'UserController@ajax');
-
-    Route::post('ajaxPassword', 'UserController@ajaxPassword');
-
-    Route::post('login', 'UserController@login');
-
-    Route::get('ajaxName', 'UserController@ajaxName');
-
-
-    //权限管理组路由
-    Route::resource('group', 'GroupController');
-
-    Route::get('groupAjax', 'GroupController@groupAjax');
-
-
-    //权限路由
-    Route::resource('role', 'RoleController');
-
-    Route::get('ajaxRoleName', 'RoleController@ajaxRoleName');
-
-    Route::get('ajaxRole', 'RoleController@ajaxRole');
-
-
-    //轮播图路由
-    Route::resource('slideShow', 'SlideShowController');
-
-    Route::get('showStatus', 'SlideShowController@showStatus');
-
-    Route::get('slideImage', 'SlideShowController@slideImage');
-
-});
-
-Route::post('/upload', 'PublicC\UploadController@postUpload');
-
-
 Route::group(['namespace' => 'Home'], function () {
 
     Route::get('cart', 'CartController@index');
 
     Route::resource('address', 'AddressController');
 
-    Route::get('chooseAddress', 'AddressController@Provices');
+    Route::get('chooseAddress', 'AddressController@provices');
 
-    Route::get('cities', 'AddressController@Cities');
+    Route::get('cities', 'AddressController@cities');
 
-    Route::get('addAddress', 'AddressController@AddAddress');
+    Route::get('addAddress', 'AddressController@addAddress');
 
     Route::post('addCart', 'AddCartController@addCart');
 
-    Route::get('addCartSuccess', 'AddCartController@addCartSuccess');
+    Route::get('addCartSuccess/{p_id}/{ver_id?}', 'AddCartController@addCartSuccess');
 
     Route::post('searchCart', 'AddCartController@searchCart');
+
+    Route::post('delSession', 'AddCartController@delSession');
+
+    Route::get('delGoods/{id}', 'AddCartController@delGoods');
+
+    Route::post('goBalance', 'AddCartController@goBalance');
+
+    Route::get('toPay', 'AddCartController@toPay');
 
 });

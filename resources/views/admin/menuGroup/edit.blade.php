@@ -38,7 +38,7 @@
                             <div class="layui-input-block">
                                 <button class="layui-btn" type="submit" lay-submit="" lay-filter="editGroup">修改</button>
                                 <button type="reset" class="layui-btn layui-btn-primary">重置</button>
-                                <a class="layui-btn layui-btn-primary" href="{{ url('/admin/menuGroup') }}">返回</a>
+                                <a class="layui-btn layui-btn-primary" href="{{ url('/admin/menugroup') }}">返回</a>
                             </div>
                         </div>
                     </form>
@@ -66,7 +66,7 @@
                         icon: 16
                     });
                     $.ajax({
-                        url: '{{ url('admin/menuGroup/'.$info->id) }}',
+                        url: '{{ url('admin/menugroup/'.$info->id) }}',
                         type: 'PUT',
                         data: data.field,
                         dataType: 'json',
@@ -75,13 +75,13 @@
                             if (res == 0) {
                                 layer.msg('修改成功', {
                                     icon: 6, time: 1000, end: function () {
-                                        location.href = "{{ url('/admin/menuGroup') }}";
+                                        location.href = "{{ url('/admin/menugroup') }}";
                                     }
                                 });
                             } else {
                                 layer.msg('修改失败', {
                                     icon: 2, time: 2000, end: function () {
-                                        location.href = "{{ url('/admin/menuGroup') }}";
+                                        location.href = "{{ url('/admin/menugroup') }}";
                                     }
                                 });
                             }

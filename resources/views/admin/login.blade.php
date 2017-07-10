@@ -55,6 +55,11 @@
     <script type="text/javascript" src="{{ asset('/plugin/layui/lay/dest/layui.all.js') }}"></script>
     <script>
         //Demo
+        (function(){
+            if(top.location!=self.location){
+                top.location =self.location;
+            }
+        })();
 
         layui.use(['form', 'layer', 'jquery'], function () {
             var form = layui.form();

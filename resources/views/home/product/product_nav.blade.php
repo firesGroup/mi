@@ -18,7 +18,7 @@
                     <div class="right">
                         <a href="{{ url('/product/info/'.$info->id) }}">概述</a>
                         <span class="separator">|</span>
-                        <a href="">用户评价</a>
+                        <a href="/comment/{{ $info->id }}">用户评价</a>
                         @if( isset($is_btn) && $is_btn == true )
                         <span class="J_pro_nav_bar">
                             <a href="{{ url('/product/buy/'.$info->id) }}"  id="J_nav_buy_btn"  class="btn btn-small btn-primary">立即购买</a>
@@ -36,7 +36,7 @@
                     <div class="right">
                         <a href="{{ url('/product/info/'.$info->id) }}">概述</a>
                         <span class="separator">|</span>
-                        <a href="">用户评价</a>
+                        <a href="/comment/{{ $info->id }}">用户评价</a>
                         @if( isset($is_btn) && $is_btn == true )
                             <span class="J_pro_nav_bar">
                             <a href="{{ url('/product/buy/'.$info->id) }}"  id="J_nav_buy_btn"  class="btn btn-small btn-primary">立即购买</a>

@@ -19,6 +19,13 @@ class SmsController extends Controller
     public function sms(Request $request)
     {
         $data = $request->all();
+//        dd($data);
+        $this->validate($request, [
+            'phone' => 'phone|string|required|unique:member,phone,',
+        ],[
+            'phone.phone' => '请输入正确输入的电话号码',
+            'phone.unique' => '手机号已存在',
+        ]);
         $config = [
             'app_key'    => config('alisms.KEY'),
             'app_secret' => config('alisms.SECRETKEY'),
@@ -53,9 +60,10 @@ class SmsController extends Controller
         $to = $data['email'];
 
        $arr = Mail::raw('你好, 本次的验证码为'.$rand, function ($message) use ($to) {
-            $dump = $message ->to($to)->subject('纯文本信息邮件验证码');
+            $message ->to($to)->subject('纯文本信息邮件验证码');
 
         });
+
         return 1;
     }
 

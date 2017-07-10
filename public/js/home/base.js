@@ -9,6 +9,7 @@ $('a#J_miniCartBtn').on('mouseenter',function(e){
     //请求后台购物车数据
     //$.ajax();
 });
+
 $('#J_miniCartTrigger').on('mouseleave', function(e){
     $('#J_miniCartTrigger').removeClass('topbar-cart-active');
     $('#J_miniCartMenu').css('display','none');
@@ -42,11 +43,17 @@ $('div.site-header').on('mouseleave', function(){
     })
     $('li#J_navCategory').removeClass('nav-item-active');
 });
+
 //全部商品分类
 $('ul.J_navMainList').find('li#J_navCategory').on('mouseover','a.link-category', function(){
     $(this).next('div.site-category').css('display','block');
     $(this).parent().addClass('nav-item-active').siblings().removeClass('nav-item-active');
+    $(this).parent().find('a.link img.thumb').each(function(){
+        var src = $(this).attr('data-url');
+        $(this).attr('src',src);
+    });
     $('div#J_navMenu').css('display','none');
+
 }).on('mouseleave',function(){
     $(this).removeClass('nav-item-active');
     if(window.location.pathname !== '/'){
@@ -86,17 +93,20 @@ $(document).ready(function() {
 });
 
 //顶部用户登陆成功后的下拉菜单
-$('#J_userInfo').on('mouseenter', '#user', function(){
-    // $('#user').css({"z-index":'50'});
-    $('#J_userInfo').css({"z-index":'50'});
-    $('#hidden').css({"display":"block"});
+$('span.user').mouseenter( function(){
+    // alert(123);
+
+    $('ul.user-menu').slideDown();
+
+
     $('span.user').addClass('user-active');
 
 });
 
-$('#J_userInfo').mouseleave( function () {
-    // alert(123);
-    $('#hidden').css({"display":"none"});
+$('span.user').mouseleave( function () {
+
+    $('ul.user-menu').slideUp("fast");
+
     $('span.user').removeClass('user-active');
 
 });

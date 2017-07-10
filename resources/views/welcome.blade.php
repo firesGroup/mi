@@ -108,124 +108,66 @@
     </div>
 
     <div>
-
-        <div class="layui-collapse left">
-            <div class="layui-colla-item">
-                <h2 class="layui-colla-title h2">系统概览</h2>
-                <div class="layui-colla-content layui-show">
-                    <table class="layui-table">
-                        <tbody>
-                        <tr>
-                            <td>系统名称:</td>
-                            <td>LarryCMS</td>
-                        </tr>
-                        <tr>
-                            <td>版本信息:</td>
-                            <td>V01_UTF8_1.09 ( iframe版 )</td>
-                        </tr>
-                        <tr>
-                            <td>开发者:</td>
-                            <td style="color: #FF5722;">FiresGroup</td>
-                        </tr>
-                        <tr>
-                            <td>网站域名:</td>
-                            <td><a href="www.mi.cm" target="_blank" style="color: #FF5722;">www.mi.cm</a></td>
-                        </tr>
-                        <tr>
-                            <td>当前登录用户:</td>
-                            <td>admin</td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
+        <div class="layui-colla-content layui-show">
+            <table class="layui-table">
+                <tbody>
+                <tr>
+                    <td>系统名称:</td>
+                    <td>lvMiCMS</td>
+                    <td>版本信息:</td>
+                    <td>V01_UTF8_1.09 ( iframe版 )</td>
+                    <td>服务器操作系统：</td>
+                    <td><?php echo PHP_OS;?></td>
+                    <td>服务器域名/IP：</td>
+                    <td><?php echo $_SERVER['HTTP_HOST'];?></td>
+                </tr>
+                <tr>
+                    <td>服务器环境：</td>
+                    <td><?php echo substr($_SERVER['SERVER_SOFTWARE'],0,14);?></td>
+                    <td>PHP 版本：</td>
+                    <td><?php echo PHP_VERSION;?></td>
+                    <td>Mysql 版本：</td>
+                    <td>5.7.11</td>
+                    <td>GD 版本</td>
+                    <td><?php
+                        $gd = gd_info();
+                        echo $gd['GD Version'];
+                        ?></td>
+                </tr>
+                <tr>
+                    <td>文件上传限制：</td>
+                    <td><?php echo ini_get("upload_max_filesize");?></td>
+                    <td>最大占用内存：</td>
+                    <td><?php echo ini_get("memory_limit");?></td>
+                    <td>安全模式：</td>
+                    <td>NO</td>
+                    <td>Zlib支持：</td>
+                    <td>YES</td>
+                </tr>
+                <tr>
+                    <td>Curl支持：</td>
+                    <td>YES</td>
+                    <td>最大执行时间：</td>
+                    <td><?php echo ini_get("max_execution_time");?>s</td>
+                    <td>开发者:</td>
+                    <td style="color: #FF5722;">FiresGroup</td>
+                    <td>网站域名:</td>
+                    <td><a href="www.lvcus.cn" target="_blank" style="color: #FF5722;">www.lvcus.cn</a></td>
+                </tr>
+                </tbody>
+            </table>
         </div>
-
-        <div class="layui-collapse right">
-            <div class="layui-colla-item">
-                <h2 class="layui-colla-title" style="background-color: white;">公告</h2>
-                <div class="layui-colla-content layui-show" style="background-color: white;">
-                    &nbsp;在<b style="color: #FF5722;font-size: 18px;">FiresGroup</b>的20天不断努力下,终于完成这个伟大又有情怀的艺术品!&nbsp;&nbsp;在组长
-                    <b style="color: #FF5722;font-size: 20px;">showkw</b>的带领下,一路神挡杀神,佛挡弑佛! 遥指问天还有谁!
-                </div>
-            </div>
-        </div>
-
-        <div style="clear: both;margin-top: 15px;" class="layui-collapse left">
-            <div class="layui-collapse">
-                <div class="layui-colla-item">
-                    <h2 class="layui-colla-title h2">LarryCMS 更新日志</h2>
-                    <div class="layui-colla-content layui-show">
-                        <ul>
-                            <li style="font-size: 15px;"><b>V01_UTF8_1.09 ( iframe版 ) 2017-05-30</b></li>
-                            <li>#tab选项卡针对layui 1.09_rls 不能切换关闭的问题修复</li>
-                            <li>#增加json生成三级菜单tab选项卡切换</li>
-                            <li>#tab选项卡内页增加添加按钮，增加页面在选项卡面板上打开</li>
-                            <li>#tab选项卡增加常用操作控制功能（如关闭系列、刷新）/li>
-                            <li>#tab选项卡溢出左右滑动和自动定位当前选项卡</li>
-                            <li>#主题设置功能，可选主题（目前提供默认、深蓝、墨绿主题 后期提供自定义配色主题设置）</li>
-                            <li>#全屏切换配合主题设置，模拟F11全屏</li>
-                            <li>#tab选项卡内按钮在选项卡面板打开定位</li>
-                            <li>注：也许当前你看的LarryCMS模板只有一个基础的空架子并没有多少实用功能，如果你喜欢它，别灰心在后续更新中···它会变强大的</li>
-                        </ul>
-
-                        <fieldset class="layui-elem-field layui-field-title" style="margin-top: 50px;">
-                            <legend>未完待续</legend>
-                        </fieldset>
-
-                        <fieldset class="layui-elem-field">
-                            <legend>下个版本更新</legend>
-                            <div class="layui-field-box">
-                                如：datatable、json数据表格分页、基于flex的grid布局、通用菜单按钮级权限模块等模块功能这些会在后续更新中相继推出（当然有一些后台最常用的功能在layui官方2.0中可能会出现，同时十分期待2.0，有时候不需要重复造轮子，在后期更新中选择性更新，目前只是一个cms后台通用模版，有瑕疵和改进的地方希望大家帮忙多提建议！待LarryCMS整体完成后分享基于ThinkPHP+layim聊天功能的cms系统）
-                            </div>
-                        </fieldset>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="layui-collapse right">
-            <div class="layui-colla-item">
-                <h2 class="layui-colla-title" style="background-color: white;">数据统计</h2>
-                <div class="layui-colla-content layui-show" style="background-color: white;">
-
-                    {{--饼状图--}}
-                    <table id='myTable5'>
-                        <caption>会员地区分布</caption>
-                        <thead>
-                        <tr>
-                            <th></th>
-                            <th>河北</th>
-                            <th>河南</th>
-                            <th>湖北</th>
-                            <th>湖南</th>
-                            <th>山东</th>
-                            <th>山西</th>
-
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr>
-                            <th>1200</th>
-                            <td>540</td>
-                            <td>300</td>
-                            <td>150</td>
-                            <td>180</td>
-                            <td>120</td>
-                            <td>180</td>
-                        </tr>
-                        </tbody>
-                    </table>
-
-                </div>
-            </div>
-
-        </div>
-
     </div>
 </body>
 <script type="text/javascript" src="{{ asset('/plugin/layui/layui.js') }}"></script>
 <script type="text/javascript" src="{{ asset('/js/admin/larry.js') }}"></script>
+<<<<<<< HEAD
+<script type="text/javascript" src="{{ asset('/js/public/base.js') }}"></script>
+
+
+
+=======
+>>>>>>> 5f8ec4abfbe161096924a09aa2a35992968d08b9
 <script>
 
     function showTime() {
@@ -249,5 +191,10 @@
     }
 
     showTime();
+<<<<<<< HEAD
+
+
+=======
+>>>>>>> 5f8ec4abfbe161096924a09aa2a35992968d08b9
 </script>
 </html>

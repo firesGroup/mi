@@ -41,6 +41,7 @@
                             <div class="layui-input-block"  style="width:80%">
                                 <select name='menu_role_id'>
                                     <option value="">请选择对应权限</option>
+                                    <option value="0">无权限路由</option>
                                     @foreach( $roles as $role )
                                         <option value="{{ $role['id'] }}">{{ $role['role_name'] }}</option>
                                     @endforeach
@@ -61,7 +62,7 @@
                         <div class="layui-form-item">
                             <label class="layui-form-label">菜单图标</label>
                             <div class="layui-input-block" style="width:80%">
-                                <input type="text" name="menu_icon" placeholder="请输入图标文字代码" autocomplete="off" class="layui-input" value="">
+                                <input type="text" name="menu_icon" placeholder="请输入图标文字代码" autocomplete="off" class="layui-input" value="larry-houtaishouye">
                             </div>
                         </div>
                         <div class="layui-form-item">

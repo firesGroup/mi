@@ -29,6 +29,13 @@
                     </div>
                     <ul>
                         <li>请务必正确填写会员信息</li>
+                        @if (count($errors) > 0)
+                            @foreach ($errors->all() as $error)
+                                <li style="color:#FF5722">{{ $error }}</li>
+                            @endforeach
+                        @else
+
+                        @endif
                     </ul>
                     <i class="larry-icon larry-guanbi close" id="closeInfo"></i>
                 </blockquote>
@@ -54,7 +61,7 @@
                                     <div class="layui-form-item">
                                         <label class="layui-form-label">会员邮箱</label>
                                         <div class="layui-input-block">
-                                            <input type="text" name="email" lay-verify="email"
+                                            <input type="text" name="email" lay-verify=""
                                                    autocomplete="off" class="layui-input" value="{{$data->email}}">
                                         </div>
                                     </div>
@@ -62,18 +69,7 @@
                                         <label class="layui-form-label">会员电话</label>
                                         <div class="layui-input-block">
                                             <input type="text" name="phone" class="layui-input" value="{{$data->phone}}"
-                                                   lay-verify="required|phone">
-                                        </div>
-                                    </div>
-                                    <div class="layui-form-item">
-                                        <label class="layui-form-label">会员等级</label>
-                                        <div class="layui-input-block">
-                                            <select name="level_id" lay-verify="">
-                                                @foreach($array as $k => $v)
-                                                    <option value="{{$k}}"
-                                                    {{($user_detail->level_id == $k)?'selected':'' }}>{{$v}}</option>
-                                                @endforeach
-                                            </select>
+                                                   lay-verify="">
                                         </div>
                                     </div>
                                     <div class="layui-form-item" pane>
@@ -159,6 +155,9 @@
             });
 
             $("input[name=phone]").blur(function () {
+                if($(this).val() == ''){
+                    return false;
+                }
                 var m_phone = $(this).val();
                 var that = $(this);
                 var origin = that.data('u');

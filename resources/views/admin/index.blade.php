@@ -81,55 +81,6 @@
                     <!-- 系统菜单 -->
                     <div class="sys-menu-box" >
                         <ul class="layui-nav layui-nav-tree" id="larrySideNav" lay-filter="side" >
-                            <li class="layui-nav-item" data-pid="undefined"><a data-url="{{url('/admin/welcome')}}"><i class="larry-icon larry-houtaishouye" data-icon="larry-houtaishouye"aria-hidden="true"></i><cite>后台首页</cite></a></li>
-                            <li class="layui-nav-item" data-pid="undefined">
-                                <a data-url="{{url('/admin/menu')}}">
-                                    <i class="larry-icon larry-houtaishouye" data-icon="larry-houtaishouye" aria-hidden="true"></i>
-                                    <cite>菜单管理</cite>
-                                </a>
-                            </li>
-                            <li class="layui-nav-item" data-pid="undefined">
-                                <a data-url="{{url('/admin/product')}}">
-                                    <i class="larry-icon larry-houtaishouye" data-icon="larry-houtaishouye" aria-hidden="true"></i>
-                                    <cite>商品管理</cite>
-                                </a>
-                            </li>
-                            <li class="layui-nav-item" data-pid="undefined">
-                                <a data-url="{{url('/admin/product/brand')}}">
-                                    <i class="larry-icon larry-houtaishouye" data-icon="larry-houtaishouye" aria-hidden="true"></i>
-                                    <cite>品牌管理</cite>
-                                </a>
-                            </li>
-                            <li class="layui-nav-item" data-pid="undefined">
-                                <a data-url="{{url('/admin/product/color')}}">
-                                    <i class="larry-icon larry-houtaishouye" data-icon="larry-houtaishouye" aria-hidden="true"></i>
-                                    <cite>颜色管理</cite>
-                                </a>
-                            </li>
-                            <li class="layui-nav-item" data-pid="undefined">
-                                <a data-url="{{url('/admin/product/attr')}}">
-                                    <i class="larry-icon larry-houtaishouye" data-icon="larry-houtaishouye" aria-hidden="true"></i>
-                                    <cite>属性管理</cite>
-                                </a>
-                            </li>
-                            <li class="layui-nav-item" data-pid="undefined">
-                                <a data-url="{{url('/admin/user')}}">
-                                    <i class="larry-icon larry-houtaishouye" data-icon="larry-houtaishouye" aria-hidden="true"></i>
-                                    <cite>管理员管理</cite>
-                                </a>
-                            </li>
-                            <li class="layui-nav-item" data-pid="undefined">
-                                <a data-url="{{url('/admin/order')}}">
-                                    <i class="larry-icon larry-houtaishouye" data-icon="larry-houtaishouye" aria-hidden="true"></i>
-                                    <cite>订单管理</cite>
-                                </a>
-                            </li>
-                            <li class="layui-nav-item" data-pid="undefined">
-                                <a data-url="{{url('/admin/member')}}">
-                                    <i class="larry-icon larry-houtaishouye" data-icon="larry-houtaishouye" aria-hidden="true"></i>
-                                    <cite>会员管理</cite>
-                                </a>
-                            </li>
                         </ul>
                     </div>
                 </div>

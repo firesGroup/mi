@@ -18,8 +18,9 @@ class AdvertController extends Controller
      */
     public function index()
     {
+        $array =  DB::table('advert_location')->lists('desc', 'id');
         $data = Advert::orderby('id', 'desc')->paginate(5);
-        return view('admin/advert/index', compact('data'));
+        return view('admin/advert/index', compact('data', 'array'));
     }
 
     /**
@@ -29,7 +30,8 @@ class AdvertController extends Controller
      */
     public function create()
     {
-        return view('admin/advert/add');
+        $data = DB::table('advert_location')->get();
+        return view('admin/advert/add', compact('data'));
     }
 
     /**
@@ -71,7 +73,10 @@ class AdvertController extends Controller
     public function edit($id)
     {
         $data = Advert::find($id);
-        return view('admin/advert/edit', compact('data'));
+        $advert = DB::table('advert_location')->get();
+
+//       dd($data);
+        return view('admin/advert/edit', compact('data', 'array', 'advert'));
     }
 
     /**

@@ -5,18 +5,22 @@ namespace App\Http\Controllers\Home;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\Home\BaseController;
 use App\Entity\Collect;
 use DB;
 
-class CollectController extends Controller
+class CollectController extends BaseController
 {
     public function ponseral_collect()
     {
+        //获取session
         $member_id = session('user_deta')['id'];
         $p_id = DB::table('collect')->lists('p_id');
+//        dump($p_id);
 //
-        return view('home/collect/index');
+        $data = DB::table('product')->whereIn('id', $p_id)->get();
+//        dd($data);
+        return view('home/collect/index', compact('data'));
     }
     public function add_collect(Request $request)
     {
@@ -33,7 +37,19 @@ class CollectController extends Controller
             }
 
         }else{
-            return redirect('login');
+            return 2;
         }
+    }
+
+    public function collect_delete(Request $request)
+    {
+       $data = $request->all();
+        $int = DB::table('collect')->where('p_id', '=', $data['id']);
+
+      if(DB::table('collect')->where('p_id', '=', $data['id'])->delete()){
+          return 0;
+      }else{
+          return 1;
+      }
     }
 }

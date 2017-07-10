@@ -1,7 +1,7 @@
 
 var token = $('meta[name=_token]').attr('content');
 $('a#update').on('click', function () {
-    layer.open({
+   var pp =  layer.open({
         type: 1
         ,
         title: false //不显示标题栏
@@ -83,7 +83,8 @@ $('a#update').on('click', function () {
                     data:{'_token':token, 'data': oldpass, 'newpass':newpass, 'newpass_confirmation':newpass_confirmation},
                     success:function (data) {
                         if(data == 0){
-                            layer.closeAll();
+                            layer.close(pp);
+                            layer.alert('修改成功', {time:1000, icon:6});
                         }
 
                     }

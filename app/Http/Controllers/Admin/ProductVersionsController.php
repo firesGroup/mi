@@ -188,7 +188,7 @@ class ProductVersionsController extends Controller
             }
         }
         //若$imgArr不为空
-        if( $imgArr ){
+        if( isset($imgArr) ){
             $data['ver_img'] = json_encode($imgArr);
         }else{
             $data['ver_img'] = NULL;

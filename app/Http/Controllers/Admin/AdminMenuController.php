@@ -92,7 +92,9 @@ class AdminMenuController extends Controller
         }
 
         //权限路由id
-        if( $request->menu_role_id  ){
+        if( $request->menu_role_id == 0 || empty($request->menu_role_id) ){
+            $data['menu_role_id'] = NULL;
+        }else{
             $data['menu_role_id']=$request->menu_role_id;
         }
         //菜单分组id
@@ -204,8 +206,10 @@ class AdminMenuController extends Controller
         }else{
             $data['parent_path'] = "0,";
         }
-        if( $request->has('menu_role_id') ){
-            $data['menu_role_id'] = $request->menu_role_id;
+        if( $request->menu_role_id == 0 || empty($request->menu_role_id) ){
+            $data['menu_role_id'] = NULL;
+        }else{
+            $data['menu_role_id']=$request->menu_role_id;
         }
         $data['menu_group_id'] = $request->menu_group_id;
         $data['menu_icon'] = $request->menu_icon;
