@@ -79,7 +79,6 @@
         @elseif(session('goods'))
             <div class="cart-goods-list">
                 <div class="list-head clearfix">
-                    <div class="col col-check"><i class="iconfont icon-checkbox" id="J_selectAll">√</i>全选</div>
                     <div class="col col-img">&nbsp;</div>
                     <div class="col col-name">商品名称</div>
                     <div class="col col-price">单价</div>

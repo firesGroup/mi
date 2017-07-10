@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Home\BaseController;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use App\Entity\OrderDetail;
 use DB;
 
 class CommentController extends BaseController
@@ -26,7 +27,7 @@ class CommentController extends BaseController
         $odetail = DB::table('order')->where('member_id',$id)->lists('id');
 
         //查出订单详情信息
-        $orderdetail = Db::table('order_detail')->whereIn('order_id',$odetail)->get();
+        $orderdetail = OrderDetail::whereIn('order_id',$odetail)->get();
 
         return view('home.comment.shopComment',compact('order','orderdetail'));
 

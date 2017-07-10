@@ -91,14 +91,14 @@
                         <p class="price">{{ $pro['price'] }}元 起</p>
                         <div class="thumbs">
                             <ul class="thumb-list">
-                                <li ><a  ><img src="{{ $pro['p_index_image'] }}!34_34" width="34" height="34" alt="小米MIX 黑色"></a></li>                        </ul>
+                                <li ><a  ><img src="{{ $pro['p_index_image'] }}!34_34" width="34" height="34" alt="{{ $pro['p_name'] }}"></a></li>                        </ul>
                         </div>
                         <div class="actions clearfix">
                             <a class="btn-like J_likeGoods
                                @if( in_array( $pro['id'], $collect ) )
                                     btn-liked
                                @endif     " data-cid="{{ $pro['id'] }}" href="javascript: void(0);"><i class="iconfont"></i> <span>喜欢</span></a>
-                            <a class="btn-buy btn-buy-detail J_buyGoods" href="//www.mi.com/mix/?cfrom=search"  ><span>立即购买</span> <i class="iconfont"></i></a>                    </div>
+                            <a class="btn-buy btn-buy-detail J_buyGoods" href=""  ><span>立即购买</span> <i class="iconfont"></i></a>                    </div>
                         <div class="flags">
 
                             @if( $pro['flag'] == "新品" )

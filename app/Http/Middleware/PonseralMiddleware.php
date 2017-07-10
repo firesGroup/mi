@@ -15,9 +15,11 @@ class PonseralMiddleware
      */
     public function handle($request, Closure $next)
     {
-        if(session('user_deta')== null){
-            return redirect('login');
+        if(session('user_deta') == null){
+            return redirect('/login');
+        }else{
+            return $next($request);
         }
-        return $next($request);
+
     }
 }

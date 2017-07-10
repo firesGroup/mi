@@ -212,7 +212,7 @@ class AddCartController extends BaseController
         $name = $request->all()['name'];
         $phone = $request->all()['phone'];
         $address = $request->all()['address'];
-        $order_sn = rand(1000000000000, 9999999999999);
+        $order_sn = mt_rand(1000, 9999);
         $total = session('total');
 //        $add_time = date('Y-m-d H:i:s');
         $order_status = 0;
