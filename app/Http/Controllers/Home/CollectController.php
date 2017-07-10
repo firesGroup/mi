@@ -36,7 +36,7 @@ class CollectController extends BaseController
             }
 
         }else{
-            return redirect('login');
+            return 2;
         }
     }
 

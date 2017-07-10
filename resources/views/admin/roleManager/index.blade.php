@@ -68,7 +68,7 @@
                     <tr>
                         <th>ID</th>
                         <th>权限名</th>
-                        <th>权限拥有的控制器</th>
+                        <th>权限路由别名</th>
                         <th>权限描述</th>
                         <th>状态</th>
                         <th>操作</th>
@@ -93,6 +93,9 @@
                                     <a href="{{ url('admin/role').'/'.$role->id."/edit" }}"
                                        class="layui-btn  layui-btn-small" data-alt="修改">
                                         <i class="layui-icon">&#xe642;</i>
+                                    </a>
+                                    <a id="delete" data-id="{{ $role->id }}" class="layui-btn  layui-btn-small" data-alt="删除">
+                                        <i class="layui-icon">&#xe640;</i>
                                     </a>
                                 </div>
                             </td>
@@ -125,6 +128,44 @@
             });
             $('button#refresh').on('click', function () {
                 location.href = location.href;
+            });
+
+            //点击删除按钮
+            $('a#delete').on('click', function(){
+                var th = $(this),
+                    t = th.parent().parent().parent('tr');
+                layer.confirm('确定要删除吗?', {
+                    btn: ['确定','取消'] //按钮
+                    ,btnAlign: 'c'
+                    ,shade: 0.8
+                    ,id: 'MI_delTips' //设定一个id，防止重复弹出
+                    ,moveType: 1 //拖拽模式，0或者1
+                    ,resize: false
+                }, function(){
+                    var id =  th.data('id');
+                    var l = layer.msg('正在加载请稍后...', {
+                        icon: 6
+                    });
+                    $.ajax({
+                        url:  '{{ url('/admin/role') }}/'+ id
+                        , type: "POST"
+                        , data: {'_method': 'DELETE', '_token': '{{ csrf_token() }}' }
+                        ,success:function (data) {
+                            layer.close(l);
+                            if( data == 0 ){
+                                layer.alert('删除成功', {icon: 1});
+                                t.remove();
+                            }else if ( data == 1 ) {
+                                layer.alert('删除失败!', {icon: 2});
+                            }else{
+                                layer.alert('服务器错误!', {icon: 2});
+                            }
+                        }
+                    });
+
+                }, function(Index){
+                    layer.close(Index);
+                });
             });
         });
 

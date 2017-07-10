@@ -19,7 +19,14 @@ class HomeController extends BaseController
     public function index()
     {
         $slide = $this->SlideShow();
-        return view('home.index',compact('nav','slide'));
+        $recommended = Product::limit(10)->orderBy('click_num', 'desc')->get();
+        $ElecArray = [94,37,24,25,17,36];
+        $homeElec = Product::whereIn('category_id',$ElecArray)->orderBy('category_id')->get();
+
+        $smartArray = [32,64,42,99,36,3,32,14];
+        $smart = Product::whereIn('category_id',$smartArray)->orderBy('category_id')->get();
+
+        return view('home.index',compact('nav','slide','recommended','homeElec','smart'));
     }
   
     /*
@@ -246,5 +253,20 @@ class HomeController extends BaseController
     {
         $slide = SlideShow::where('status',0)->get();
         return  $slide;
+    }
+
+
+    /*
+     * 获取商品默认版本
+     *
+     */
+    public function getVersion($p_id)
+    {
+        $res = ProductVersions::where('p_id',$p_id)->lists('id')->toArray();
+        if( $res ){
+            return $res[0];
+        }else{
+            return 0;
+        }
     }
 }

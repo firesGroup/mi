@@ -51,6 +51,7 @@
                                         <div class="layui-input-inline">
                                             <select name='parent_id[{{ $i+1 }}]' id='select{{ $i+1 }}'  lay-filter='select{{ $i+1 }}'>
                                                 <option value="">请选择父级菜单</option>
+                                                <option value="0">无链接菜单</option>
                                                 @foreach( $menus[$i] as $par )
                                                     <option value="{{ $par['id'] }}"{{ $par['id'] == $ids[$i+1]?'selected':"" }}>{{ $par['menu_title'] }}</option>
                                                 @endforeach
@@ -65,6 +66,7 @@
                             <div class="layui-input-block"  style="width:80%">
                                 <select name='menu_role_id'>
                                     <option value="">请选择对应权限</option>
+                                    <option value="0">无权限路由</option>
                                     @foreach( $roles as $role )
                                         <option value="{{ $role['id'] }}"{{ $role['id'] == $info->menu_role_id ?'selected':'' }}>{{ $role['role_name'] }}</option>
                                     @endforeach
@@ -197,7 +199,7 @@
                                 var did = $('select#select1').data('id');
                                 var newDid = did+1;
                                 var str = "<div class='layui-input-inline'><select " +
-                                    "name='parent_id["+ newDid +"]' id='select"+newDid+"'  lay-filter='select"+newDid+"'><option value=''>请选择分类</option>";
+                                    "name='parent_id["+ newDid +"]' id='select"+newDid+"'  lay-filter='select"+newDid+"'><option value=''>请选择分类</option><option value='0'>无链接菜单</option>";
                                 for (var i = 0; i < data.length; i++) {
                                     str += "<option value='" + data[i].id +"'>" + data[i].menu_title + "</option>";
                                 }

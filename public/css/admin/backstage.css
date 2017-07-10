@@ -74,7 +74,6 @@ body{
 }
 .logo img{
 	display: block;
-	margin-left: 20px;
 }
 .header-menu .layui-main{
 	width: calc(100% - 203px);
