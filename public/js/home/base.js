@@ -86,18 +86,19 @@ $(document).ready(function() {
 });
 
 //顶部用户登陆成功后的下拉菜单
-$('#J_userInfo').on('mouseenter', '#user', function(){
+$('span.user').mouseenter( function(){
+    // alert(123);
 
-    $('#hidden').slideDown();
+    $('ul.user-menu').slideDown();
 
 
     $('span.user').addClass('user-active');
 
 });
 
-$('#J_userInfo').mouseleave( function () {
+$('span.user').mouseleave( function () {
 
-    $('#hidden').slideUp();
+    $('ul.user-menu').slideUp("fast");
 
     $('span.user').removeClass('user-active');
 

@@ -19,9 +19,10 @@ class CateGoryController extends Controller
     public function index(Request $request)
     {
         if($request->has('search')){
+            $map = "concat(parent_path,id)";
             $modelId = $request->input('word',null);
 
-            $data = CateGory::where('category_name','like',"%{$modelId}%")->paginate(10);
+            $data = CateGory::where('category_name','like',"%{$modelId}%")->orderBy(DB::raw('concat(parent_path,id)'))->paginate(15);
 //            dd($data);
         }else{
             $map = "concat(parent_path,id)";
@@ -169,6 +170,7 @@ class CateGoryController extends Controller
     {
         $id = $request->id;
         $c_id = $request->c_id;
+        dd($id);
         if ($c_id == 0) {
             return 2;
         }else{

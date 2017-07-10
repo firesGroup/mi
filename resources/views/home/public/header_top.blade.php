@@ -55,33 +55,26 @@
                             </div>
                         </div>
                     </div>
-                    <div class="topbar-info" id="J_userInfo">
-                        @if(session('user_deta'))
+
+                    @if(session('user_deta'))
                         <div class="topbar-info" id="J_userInfo">
-                            <span class="user">
-                            <a rel="nofollow" class="user-name" href="{{url('user_detail')}}" target="_blank">
-                                <span class="name" id="user">{{session('user_deta')['nick_name']}}</span>
-                                <i class="iconfont"></i>
-                            </a>
-                            </li>
-                            <li>
-                                <a rel="nofollow" href="{{url('login/exit')}}" data-stat-id="770a31519c713b11" onclick="">退出登录</a>
-                            </li>
-                        </ul>
-                    </span>
-                    <span class="sep">|</span><span class="sep">|</span>
-                    <a rel="nofollow" class="link" href="{{url('order/'.session('user_deta') ['id'])}}" data-needlogin="true">我的订单</a>
+                            <span class="user"><a rel="nofollow" class="user-name" href="{{url('personal')}}" target="_blank" ><span class="name">{{session('user_deta')['nick_name']}}</span><i class="iconfont"></i></a>
+                                <ul class="user-menu" style="display: none;">
+                                    <li><a rel="nofollow" href="" target="_blank" data-stat-id="e0b9e1d1fa8052a2">个人中心</a></li>
+                                    <li><a rel="nofollow" href="{{url('shopcomment/'.session('user_deta')['id'])}}" target="_blank" data-stat-id="6d05445058873c2c">评价晒单</a></li>
+                                    <li><a rel="nofollow" href="" target="_blank" data-stat-id="32e2967e9a749d3d">我的喜欢</a></li>
+                                    <li><a rel="nofollow" href="{{url('login/exit')}}" data-stat-id="770a31519c713b11">退出登录</a></li></ul></span>
+
+                            <span class="sep">|</span><a rel="nofollow" class="link link-order" href="{{url('order/'.session('user_deta')['id'])}}" target="_blank" data-stat-id="a9e9205e73f0742c">我的订单</a></div>
                   @else
-                    <a rel="nofollow" class="link" href="{{url('login')}}" data-needlogin="true">登录</a>
-                    <span class="sep">|</span>
-                    <a rel="nofollow" class="link" href="{{url('reg')}}">注册</a>
+                        <div class="topbar-info" id="J_userInfo">
+                            <a rel="nofollow" class="link" href="{{url('login')}}" data-needlogin="true" data-stat-id="bf3aa4c80c0ac789" >登录</a><span class="sep">|</span><a rel="nofollow" class="link" href="{{url('reg')}}" data-stat-id="749b1369201c13fb" onclick="">注册</a>        </div>
                     @endif
-
-
-                </div>
             </div>
     </div>
 </div>
+
+
     <!-- 公共顶部 end -->
 
     @section('js')
@@ -206,5 +199,4 @@
         </script>
 
 @endsection
-
 

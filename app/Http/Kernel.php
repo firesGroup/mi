@@ -2,6 +2,7 @@
 
 namespace App\Http;
 
+use App\Http\Middleware\PonseralMiddleware;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
 class Kernel extends HttpKernel
@@ -50,5 +51,6 @@ class Kernel extends HttpKernel
         'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'admin'=> \App\Http\Middleware\AdminLogin::class,
+        'ponseral' => \App\Http\Middleware\PonseralMiddleware::class,
     ];
 }
